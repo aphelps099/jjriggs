@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM to ROLL - Slide 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 1080px;
+            height: 1080px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #273647 0%, #171b20 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .accent-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background: #b61b22;
+        }
+        .logo {
+            position: absolute;
+            top: 50px;
+            left: 60px;
+            width: 160px;
+        }
+        .slide-number {
+            position: absolute;
+            top: 60px;
+            right: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #78828e;
+            letter-spacing: 2px;
+        }
+        .content {
+            margin-top: 140px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .section-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #b61b22;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        .headline {
+            font-size: 64px;
+            font-weight: 800;
+            color: #fffefe;
+            line-height: 1.1;
+            margin-bottom: 50px;
+        }
+        .headline span {
+            color: #b61b22;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .feature {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 35px;
+            text-align: center;
+        }
+        .feature-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: #b61b22;
+            margin-bottom: 8px;
+        }
+        .feature-label {
+            font-size: 18px;
+            color: #fffefe;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .feature-detail {
+            font-size: 14px;
+            color: #78828e;
+        }
+        .cta-hint {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            font-size: 18px;
+            color: #78828e;
+        }
+    </style>
+</head>
+<body>
+    <div class="accent-bar"></div>
+    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+    <div class="slide-number">03 / 05</div>
+
+    <div class="content">
+        <div class="section-label">The Solution</div>
+        <h2 class="headline">Own a <span>TYM</span> tractor.<br>Built to work.</h2>
+
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-number">25-73</div>
+                <div class="feature-label">Horsepower Range</div>
+                <div class="feature-detail">Perfect for any property size</div>
+            </div>
+            <div class="feature">
+                <div class="feature-number">6 YR</div>
+                <div class="feature-label">Warranty</div>
+                <div class="feature-detail">Best in the industry</div>
+            </div>
+            <div class="feature">
+                <div class="feature-number">$199</div>
+                <div class="feature-label">Per Month</div>
+                <div class="feature-detail">Financing available OAC</div>
+            </div>
+            <div class="feature">
+                <div class="feature-number">LOCAL</div>
+                <div class="feature-label">Service & Support</div>
+                <div class="feature-detail">Right here in Colville</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-hint">→</div>
+</body>
+</html>

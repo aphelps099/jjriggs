@@ -1,0 +1,281 @@
+[section label="Footer" bg_color="#242424" dark="true" padding="0px"]
+
+[gap]
+
+[row label="Headline"]
+
+[col span__sm="12" padding="30px 0px 0px 0px" align="center"]
+
+
+[/col]
+
+[/row]
+[gap height="10px"]
+
+[row label="Columns"]
+
+[col span__sm="12" padding__sm="0px -20px 0px 0px" margin__sm="0px -20px 0px 0px" align="center"]
+
+[row_inner style="large" width="full-width" v_align="middle"]
+
+[col_inner span="6" span__sm="12" align="left"]
+
+[ux_html]
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    .footer-section {
+        background: #242424;
+        color: white;
+        padding: 40px 20px;
+        font-family: 'Industry', sans-serif !important;
+    }
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .footer-logo {
+        width: 260px;
+        margin-bottom: 30px;
+    }
+    .contact-info {
+        line-height: 1.48;
+        margin-bottom: 25px;
+        font-size: 22px;
+        font-family: 'industry', sans-serif !important;
+
+    }
+    .hours {
+        color: #fff;
+        font-size: 16px;
+        margin: 25px 0;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .hours-label {
+        color: #fff;
+        font-weight: normal;
+    }
+    .social-links {
+        margin: 30px 0;
+        display: flex;
+        gap: 12px;
+    }
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .social-icon i {
+        color: white;
+        font-size: 22px;
+    }
+    .social-icon:hover {
+        background: rgba(255,255,255,0.15);
+    }
+    .google-review {
+        display: inline-block;
+        transition: opacity 0.3s ease;
+    }
+    .google-review:hover {
+        opacity: 0.9;
+    }
+    .google-review img {
+        max-width: 300px;
+        height: auto;
+    }
+    .contact-link {
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
+<div class="footer-section">
+    <div class="footer-container">
+        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" 
+             alt="JJ Riggs Equipment" 
+             class="footer-logo">
+        
+        <div class="contact-info">
+            685 Elm Tree Dr.<br>
+            Colville, WA 99114<br>
+            <a href="mailto:sales@jjriggsequipment.com" class="contact-link">sales@jjriggsequipment.com</a><br>
+            <a style="font-family: 'rbold', sans-serif !important;"  href="tel:509-738-2985" class="contact-link">509-738-2985</a>
+        </div>
+
+        <div class="hours">
+            <span class="hours-label">Hours:</span> Mon-Fri, 8 AM to 5 PM
+        </div>
+
+        <div class="social-links">
+            <a href="https://www.facebook.com/JJRIGGSEQUIPMENT" target="_blank" class="social-icon" rel="noopener">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/jjriggsequipment/" target="_blank" class="social-icon" rel="noopener">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+
+        <a href="https://g.page/r/CSFOuA8qocozEAE/review" target="_blank" class="google-review" rel="noopener">
+            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/review-button-jjriggs.png" 
+                 alt="Leave us a review on Google">
+        </a>
+    </div>
+</div>
+[/ux_html]
+
+[/col_inner]
+[col_inner span="6" span__sm="12" padding__sm="0px -20px 0px 0px" margin__sm="0px -20px 0px 0px"]
+
+[ux_html]
+
+<div class="map-fullwidth-wrapper">
+    <div class="map-container-wrapper">
+        <div id="jjriggs-map" class="custom-map-container"></div>
+        <div class="gradient-overlay"></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+
+<style>
+    .map-fullwidth-wrapper {
+        max-width: 1200px; /* Adjust this value to control width */
+        margin: 0 auto;
+    }
+    .map-container-wrapper {
+        position: relative;
+        height: 600px;
+        margin-bottom: -1px;
+    }
+    .custom-map-container {
+        height: 600px;
+        opacity: 0.8;
+        filter: grayscale(100%);
+        transition: all 0.3s ease;
+    }
+    .custom-map-container:hover {
+        opacity: 1;
+        filter: grayscale(0%);
+    }
+    .gradient-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 150px;
+        background: linear-gradient(to bottom, 
+            rgba(36, 36, 36, 0) 0%,
+            rgba(36, 36, 36, 0.8) 70%,
+            rgba(36, 36, 36, 1) 100%);
+        pointer-events: none;
+        z-index: 1000;
+    }
+    @media screen and (max-width: 768px) {
+        .map-container-wrapper {
+            height: 350px !important;
+        }
+        .custom-map-container {
+            height: 350px !important;
+        }
+        .gradient-overlay {
+            height: 100px;
+        }
+    }
+    .leaflet-popup-content-wrapper {
+        background: rgba(51, 51, 51, 0.95);
+        color: white;
+        border-radius: 4px;
+    }
+    .leaflet-popup-content {
+        margin: 10px 15px;
+        min-width: 140px;
+    }
+    .leaflet-popup-tip {
+        background: rgba(51, 51, 51, 0.95);
+    }
+    .popup-logo {
+        width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    .directions-link {
+        color: white !important;
+        text-decoration: underline !important;
+        font-size: 14px;
+        display: inline-block;
+        margin-top: 5px;
+    }
+</style>
+
+<script>
+jQuery(document).ready(function($) {
+    const map = L.map('jjriggs-map', {
+        zoomControl: false
+    }).setView([48.464410, -117.884290], 15);
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+    
+    L.control.zoom({
+        position: 'topright'
+    }).addTo(map);
+
+    const redIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    
+    const marker = L.marker([48.464410, -117.884290], {icon: redIcon}).addTo(map);
+    
+    marker.bindPopup(`
+        <div style="text-align: center; font-family: Arial, sans-serif;">
+            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" 
+                 alt="JJ Riggs Equipment" 
+                 class="popup-logo">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=48.464410,-117.884290" 
+               class="directions-link"
+               target="_blank">
+               Get Directions
+            </a>
+        </div>
+    `, {
+        closeButton: false
+    }).openPopup();
+
+    $(window).on('resize', function() {
+        map.invalidateSize();
+    });
+});
+</script>
+[/ux_html]
+
+[/col_inner]
+
+[/row_inner]
+[gap]
+
+[ux_text text_align="left"]
+
+
+[/ux_text]
+
+[/col]
+
+[/row]
+
+[/section]

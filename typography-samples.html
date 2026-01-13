@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Samples - JJ Riggs Equipment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Oswald:wght@500;600;700&family=Roboto+Slab:wght@600;700&family=Source+Sans+Pro:wght@400;600&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .samples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .sample-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .sample-header {
+            background: #c41230;
+            color: white;
+            padding: 20px 25px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sample-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .sample-header span {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .sample-content {
+            padding: 30px;
+        }
+
+        .sample-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .sample-content h1 {
+            font-size: 32px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .sample-content h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        .sample-content p {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .sample-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sample-content li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .sample-cta {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #c41230;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Option 1: Montserrat + Open Sans */
+        .option-1 h1, .option-1 h2, .option-1 .sample-badge, .option-1 .sample-cta {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .option-1 p, .option-1 li {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        /* Option 2: Roboto Slab + Source Sans Pro */
+        .option-2 h1, .option-2 h2 {
+            font-family: 'Roboto Slab', serif;
+        }
+        .option-2 p, .option-2 li, .option-2 .sample-badge, .option-2 .sample-cta {
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        /* Option 3: Oswald + Lato */
+        .option-3 h1, .option-3 h2 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .option-3 h1 {
+            font-size: 28px;
+        }
+        .option-3 h2 {
+            font-size: 18px;
+        }
+        .option-3 p, .option-3 li, .option-3 .sample-badge, .option-3 .sample-cta {
+            font-family: 'Lato', sans-serif;
+        }
+
+        /* Option 4: Inter + Inter */
+        .option-4 h1, .option-4 h2, .option-4 p, .option-4 li, .option-4 .sample-badge, .option-4 .sample-cta {
+            font-family: 'Inter', sans-serif;
+        }
+        .option-4 h1 {
+            font-weight: 700;
+        }
+        .option-4 h2 {
+            font-weight: 600;
+        }
+
+        /* Option 5: Poppins + Poppins */
+        .option-5 h1, .option-5 h2, .option-5 p, .option-5 li, .option-5 .sample-badge, .option-5 .sample-cta {
+            font-family: 'Poppins', sans-serif;
+        }
+        .option-5 h1 {
+            font-weight: 700;
+        }
+        .option-5 h2 {
+            font-weight: 600;
+        }
+        .option-5 p, .option-5 li {
+            font-weight: 400;
+        }
+
+        /* Option 6: Playfair Display + Lato (Premium Feel) */
+        .option-6 h1, .option-6 h2 {
+            font-family: 'Playfair Display', serif;
+        }
+        .option-6 p, .option-6 li, .option-6 .sample-badge, .option-6 .sample-cta {
+            font-family: 'Lato', sans-serif;
+        }
+
+        .recommendation {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #2ecc71;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sample-card {
+            position: relative;
+        }
+
+        @media (max-width: 860px) {
+            .samples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .divider {
+            height: 1px;
+            background: #eee;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Typography Comparison</h1>
+            <p>Compare font options for JJ Riggs Equipment website</p>
+        </div>
+
+        <div class="samples-grid">
+            <!-- Option 1: Montserrat + Open Sans -->
+            <div class="sample-card option-1">
+                <span class="recommendation">Recommended</span>
+                <div class="sample-header">
+                    <h2>Option 1: Modern Professional</h2>
+                    <span>Montserrat + Open Sans</span>
+                </div>
+                <div class="sample-content">
+                    <span class="sample-badge">Authorized Dealer</span>
+                    <h1>Quality Tractors & Mowers in Colville, WA</h1>
+                    <p>At JJ Riggs Equipment, we're proud to serve Northeast Washington with top-quality TYM tractors and Bad Boy mowers. Our family-owned dealership has been helping local farmers and property owners since 2019.</p>
+                    <h2>Why Choose Us?</h2>
+                    <ul>
+                        <li>Factory-trained service technicians</li>
+                        <li>Competitive financing options available</li>
+                        <li>Full parts inventory in stock</li>
+                    </ul>
+                    <a href="#" class="sample-cta">Get a Free Quote</a>
+                </div>
+            </div>
+
+            <!-- Option 2: Roboto Slab + Source Sans Pro -->
+            <div class="sample-card option-2">
+                <div class="sample-header">
+                    <h2>Option 2: Classic & Trustworthy</h2>
+                    <span>Roboto Slab + Source Sans Pro</span>
+                </div>
+                <div class="sample-content">
+                    <span class="sample-badge">Authorized Dealer</span>
+                    <h1>Quality Tractors & Mowers in Colville, WA</h1>
+                    <p>At JJ Riggs Equipment, we're proud to serve Northeast Washington with top-quality TYM tractors and Bad Boy mowers. Our family-owned dealership has been helping local farmers and property owners since 2019.</p>
+                    <h2>Why Choose Us?</h2>
+                    <ul>
+                        <li>Factory-trained service technicians</li>
+                        <li>Competitive financing options available</li>
+                        <li>Full parts inventory in stock</li>
+                    </ul>
+                    <a href="#" class="sample-cta">Get a Free Quote</a>
+                </div>
+            </div>
+
+            <!-- Option 3: Oswald + Lato -->
+            <div class="sample-card option-3">
+                <div class="sample-header">
+                    <h2>Option 3: Bold & Industrial</h2>
+                    <span>Oswald + Lato</span>
+                </div>
+                <div class="sample-content">
+                    <span class="sample-badge">Authorized Dealer</span>
+                    <h1>Quality Tractors & Mowers in Colville, WA</h1>
+                    <p>At JJ Riggs Equipment, we're proud to serve Northeast Washington with top-quality TYM tractors and Bad Boy mowers. Our family-owned dealership has been helping local farmers and property owners since 2019.</p>
+                    <h2>Why Choose Us?</h2>
+                    <ul>
+                        <li>Factory-trained service technicians</li>
+                        <li>Competitive financing options available</li>
+                        <li>Full parts inventory in stock</li>
+                    </ul>
+                    <a href="#" class="sample-cta">Get a Free Quote</a>
+                </div>
+            </div>
+
+            <!-- Option 4: Inter -->
+            <div class="sample-card option-4">
+                <div class="sample-header">
+                    <h2>Option 4: Clean & Modern</h2>
+                    <span>Inter (Single Font Family)</span>
+                </div>
+                <div class="sample-content">
+                    <span class="sample-badge">Authorized Dealer</span>
+                    <h1>Quality Tractors & Mowers in Colville, WA</h1>
+                    <p>At JJ Riggs Equipment, we're proud to serve Northeast Washington with top-quality TYM tractors and Bad Boy mowers. Our family-owned dealership has been helping local farmers and property owners since 2019.</p>
+                    <h2>Why Choose Us?</h2>
+                    <ul>
+                        <li>Factory-trained service technicians</li>
+                        <li>Competitive financing options available</li>
+                        <li>Full parts inventory in stock</li>
+                    </ul>
+                    <a href="#" class="sample-cta">Get a Free Quote</a>
+                </div>
+            </div>
+
+            <!-- Option 5: Poppins -->
+            <div class="sample-card option-5">
+                <div class="sample-header">
+                    <h2>Option 5: Friendly & Approachable</h2>
+                    <span>Poppins (Single Font Family)</span>
+                </div>
+                <div class="sample-content">
+                    <span class="sample-badge">Authorized Dealer</span>
+                    <h1>Quality Tractors & Mowers in Colville, WA</h1>
+                    <p>At JJ Riggs Equipment, we're proud to serve Northeast Washington with top-quality TYM tractors and Bad Boy mowers. Our family-owned dealership has been helping local farmers and property owners since 2019.</p>
+                    <h2>Why Choose Us?</h2>
+                    <ul>
+                        <li>Factory-trained service technicians</li>
+                        <li>Competitive financing options available</li>
+                        <li>Full parts inventory in stock</li>
+                    </ul>
+                    <a href="#" class="sample-cta">Get a Free Quote</a>
+                </div>
+            </div>
+
+            <!-- Option 6: Playfair Display + Lato -->
+            <div class="sample-card option-6">
+                <div class="sample-header">
+                    <h2>Option 6: Premium & Elegant</h2>
+                    <span>Playfair Display + Lato</span>
+                </div>
+                <div class="sample-content">
+                    <span class="sample-badge">Authorized Dealer</span>
+                    <h1>Quality Tractors & Mowers in Colville, WA</h1>
+                    <p>At JJ Riggs Equipment, we're proud to serve Northeast Washington with top-quality TYM tractors and Bad Boy mowers. Our family-owned dealership has been helping local farmers and property owners since 2019.</p>
+                    <h2>Why Choose Us?</h2>
+                    <ul>
+                        <li>Factory-trained service technicians</li>
+                        <li>Competitive financing options available</li>
+                        <li>Full parts inventory in stock</li>
+                    </ul>
+                    <a href="#" class="sample-cta">Get a Free Quote</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

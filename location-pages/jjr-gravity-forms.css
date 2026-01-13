@@ -1,0 +1,178 @@
+/*
+============================================
+JJ RIGGS - GRAVITY FORMS STYLING
+============================================
+Add to: Flatsome > Advanced > Custom CSS
+============================================
+*/
+
+/* Form Container */
+.jjr-form .gform_wrapper {
+    font-family: 'ind', -apple-system, sans-serif;
+}
+
+/* Labels */
+.jjr-form .gform_wrapper .gfield_label {
+    font-family: 'rbold', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+/* Required asterisk */
+.jjr-form .gform_wrapper .gfield_required {
+    color: #b61b22;
+}
+
+/* Input fields */
+.jjr-form .gform_wrapper input[type="text"],
+.jjr-form .gform_wrapper input[type="email"],
+.jjr-form .gform_wrapper input[type="tel"],
+.jjr-form .gform_wrapper input[type="number"],
+.jjr-form .gform_wrapper textarea,
+.jjr-form .gform_wrapper select {
+    font-family: 'ind', sans-serif;
+    font-size: 16px;
+    padding: 16px 20px;
+    border: 2px solid #e5e5e5;
+    border-radius: 0;
+    background: #fff;
+    color: #1a1a1a;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+.jjr-form .gform_wrapper input:focus,
+.jjr-form .gform_wrapper textarea:focus,
+.jjr-form .gform_wrapper select:focus {
+    outline: none;
+    border-color: #b61b22;
+}
+
+/* Placeholder text */
+.jjr-form .gform_wrapper input::placeholder,
+.jjr-form .gform_wrapper textarea::placeholder {
+    color: #999;
+}
+
+/* Submit button */
+.jjr-form .gform_wrapper input[type="submit"],
+.jjr-form .gform_wrapper button[type="submit"],
+.jjr-form .gform_wrapper .gform_button {
+    font-family: 'rbold', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #b61b22;
+    color: #fff;
+    border: 2px solid #b61b22;
+    padding: 18px 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    width: auto;
+}
+
+.jjr-form .gform_wrapper input[type="submit"]:hover,
+.jjr-form .gform_wrapper button[type="submit"]:hover,
+.jjr-form .gform_wrapper .gform_button:hover {
+    background: #8f151b;
+    border-color: #8f151b;
+}
+
+/* Validation errors */
+.jjr-form .gform_wrapper .gfield_error input,
+.jjr-form .gform_wrapper .gfield_error textarea {
+    border-color: #b61b22;
+}
+
+.jjr-form .gform_wrapper .validation_message {
+    font-family: 'ind', sans-serif;
+    font-size: 13px;
+    color: #b61b22;
+    margin-top: 8px;
+}
+
+/* Confirmation message */
+.jjr-form .gform_wrapper .gform_confirmation_message {
+    font-family: 'ind', sans-serif;
+    font-size: 18px;
+    color: #1a1a1a;
+    padding: 30px;
+    background: #f5f5f5;
+    border-left: 4px solid #b61b22;
+}
+
+/* Field descriptions */
+.jjr-form .gform_wrapper .gfield_description {
+    font-family: 'ind', sans-serif;
+    font-size: 13px;
+    color: #666;
+    margin-top: 8px;
+}
+
+/* Checkbox and radio styling */
+.jjr-form .gform_wrapper .gfield_checkbox label,
+.jjr-form .gform_wrapper .gfield_radio label {
+    font-family: 'ind', sans-serif;
+    font-size: 15px;
+    color: #1a1a1a;
+}
+
+/* Progress bar (multi-step forms) */
+.jjr-form .gform_wrapper .gf_progressbar {
+    background: #e5e5e5;
+    border-radius: 0;
+}
+
+.jjr-form .gform_wrapper .gf_progressbar_percentage {
+    background: #b61b22;
+    border-radius: 0;
+}
+
+/*
+============================================
+DARK THEME VARIANT (for dark backgrounds)
+============================================
+Add class "jjr-form-dark" to form container
+*/
+
+.jjr-form-dark .gform_wrapper .gfield_label {
+    color: #fff;
+}
+
+.jjr-form-dark .gform_wrapper input[type="text"],
+.jjr-form-dark .gform_wrapper input[type="email"],
+.jjr-form-dark .gform_wrapper input[type="tel"],
+.jjr-form-dark .gform_wrapper textarea,
+.jjr-form-dark .gform_wrapper select {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+}
+
+.jjr-form-dark .gform_wrapper input:focus,
+.jjr-form-dark .gform_wrapper textarea:focus {
+    border-color: #fff;
+    background: rgba(255,255,255,0.15);
+}
+
+.jjr-form-dark .gform_wrapper input::placeholder,
+.jjr-form-dark .gform_wrapper textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.jjr-form-dark .gform_wrapper input[type="submit"],
+.jjr-form-dark .gform_wrapper .gform_button {
+    background: #fff;
+    color: #b61b22;
+    border-color: #fff;
+}
+
+.jjr-form-dark .gform_wrapper input[type="submit"]:hover,
+.jjr-form-dark .gform_wrapper .gform_button:hover {
+    background: transparent;
+    color: #fff;
+}

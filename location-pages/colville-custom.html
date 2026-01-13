@@ -1,0 +1,922 @@
+<!--
+JJ RIGGS EQUIPMENT - COLVILLE LOCATION PAGE
+Custom design - paste entire contents into a single [ux_html] block
+or use as standalone HTML
+
+Design: Industrial meets local. Bold. Confident. Trustworthy.
+-->
+
+<style>
+/* ============================================
+   RESET & BASE
+   ============================================ */
+.jjr-page * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.jjr-page {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.jjr-page img {
+    max-width: 100%;
+    height: auto;
+}
+
+.jjr-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============================================
+   HERO - FULL IMPACT
+   ============================================ */
+.jjr-hero {
+    min-height: 85vh;
+    background: linear-gradient(165deg, #1a1a1a 60%, #c41230 60%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.jjr-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://jjriggsequipment.com/wp-content/uploads/2024/10/IMG_4255.jpg') center/cover;
+    opacity: 0.15;
+    mix-blend-mode: luminosity;
+}
+
+.jjr-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 80px 0;
+}
+
+.jjr-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.jjr-hero-eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c41230;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.jjr-hero-eyebrow::before {
+    content: '';
+    width: 40px;
+    height: 2px;
+    background: #c41230;
+}
+
+.jjr-hero h1 {
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+}
+
+.jjr-hero h1 span {
+    color: #c41230;
+}
+
+.jjr-hero-text {
+    font-size: 18px;
+    color: rgba(255,255,255,0.75);
+    max-width: 480px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+}
+
+.jjr-hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.jjr-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 32px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.jjr-btn-primary {
+    background: #c41230;
+    color: #fff;
+}
+
+.jjr-btn-primary:hover {
+    background: #a30f28;
+    transform: translateY(-2px);
+}
+
+.jjr-btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+.jjr-btn-outline:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,0.1);
+}
+
+/* Hero Stats */
+.jjr-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.jjr-stat {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 30px;
+    position: relative;
+}
+
+.jjr-stat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #c41230;
+}
+
+.jjr-stat-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.jjr-stat-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.6);
+}
+
+/* ============================================
+   INTRO SECTION
+   ============================================ */
+.jjr-intro {
+    padding: 100px 0;
+    background: #fff;
+}
+
+.jjr-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 60px;
+}
+
+.jjr-intro-divider {
+    background: #e5e5e5;
+}
+
+.jjr-intro-block h2 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #c41230;
+    margin-bottom: 20px;
+}
+
+.jjr-intro-block p {
+    font-size: 17px;
+    color: #444;
+    line-height: 1.8;
+}
+
+/* ============================================
+   WHY US - INDUSTRIAL GRID
+   ============================================ */
+.jjr-why {
+    padding: 100px 0;
+    background: #f5f5f5;
+}
+
+.jjr-section-header {
+    margin-bottom: 60px;
+}
+
+.jjr-section-tag {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #c41230;
+    margin-bottom: 16px;
+}
+
+.jjr-section-title {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -1px;
+}
+
+.jjr-why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+}
+
+.jjr-why-item {
+    background: #fff;
+    padding: 40px 30px;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.jjr-why-item:nth-child(4n) {
+    border-right: none;
+}
+
+.jjr-why-item:hover {
+    background: #1a1a1a;
+}
+
+.jjr-why-item:hover .jjr-why-num,
+.jjr-why-item:hover .jjr-why-title,
+.jjr-why-item:hover .jjr-why-text {
+    color: #fff;
+}
+
+.jjr-why-item:hover .jjr-why-num {
+    color: #c41230;
+}
+
+.jjr-why-num {
+    font-size: 64px;
+    font-weight: 800;
+    color: #f0f0f0;
+    line-height: 1;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.jjr-why-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+
+.jjr-why-text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+/* ============================================
+   PRODUCTS - BOLD SECTIONS
+   ============================================ */
+.jjr-products {
+    background: #1a1a1a;
+}
+
+.jjr-product-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 500px;
+}
+
+.jjr-product-row:nth-child(even) .jjr-product-image {
+    order: 2;
+}
+
+.jjr-product-image {
+    background: #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+    color: #333;
+    position: relative;
+    overflow: hidden;
+}
+
+.jjr-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.jjr-product-content {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.jjr-product-tag {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #c41230;
+    margin-bottom: 16px;
+}
+
+.jjr-product-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.jjr-product-text {
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.jjr-product-specs {
+    display: flex;
+    gap: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.jjr-spec-item strong {
+    display: block;
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.jjr-spec-item span {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.5);
+}
+
+/* ============================================
+   SERVICE AREA
+   ============================================ */
+.jjr-areas {
+    padding: 100px 0;
+    background: #fff;
+}
+
+.jjr-areas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.jjr-area-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: #f5f5f5;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.jjr-area-tag:hover {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+.jjr-area-tag.active {
+    background: #c41230;
+    color: #fff;
+}
+
+/* ============================================
+   CTA - FULL WIDTH IMPACT
+   ============================================ */
+.jjr-cta {
+    background: #c41230;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.jjr-cta::before {
+    content: 'JJ';
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 400px;
+    font-weight: 900;
+    color: rgba(0,0,0,0.1);
+    line-height: 1;
+}
+
+.jjr-cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.jjr-cta h3 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.jjr-cta p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+}
+
+.jjr-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    color: #c41230;
+    padding: 22px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.jjr-cta-btn:hover {
+    background: #1a1a1a;
+    color: #fff;
+    transform: scale(1.02);
+}
+
+.jjr-cta-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* ============================================
+   FOOTER CONTACT
+   ============================================ */
+.jjr-footer {
+    background: #0a0a0a;
+    padding: 80px 0;
+}
+
+.jjr-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    gap: 60px;
+}
+
+.jjr-footer-brand h4 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 16px;
+}
+
+.jjr-footer-brand p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.jjr-footer-social {
+    display: flex;
+    gap: 12px;
+}
+
+.jjr-footer-social a {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.jjr-footer-social a:hover {
+    background: #c41230;
+}
+
+.jjr-footer-col h5 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #c41230;
+    margin-bottom: 20px;
+}
+
+.jjr-footer-col p,
+.jjr-footer-col a {
+    display: block;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color 0.2s ease;
+}
+
+.jjr-footer-col a:hover {
+    color: #fff;
+}
+
+.jjr-footer-bottom {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.jjr-footer-bottom p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .jjr-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .jjr-why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .jjr-product-row {
+        grid-template-columns: 1fr;
+    }
+
+    .jjr-product-row:nth-child(even) .jjr-product-image {
+        order: 0;
+    }
+
+    .jjr-product-image {
+        min-height: 300px;
+    }
+
+    .jjr-footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .jjr-hero {
+        min-height: auto;
+        background: linear-gradient(180deg, #1a1a1a 80%, #c41230 80%);
+    }
+
+    .jjr-hero h1 {
+        font-size: 36px;
+        letter-spacing: -1px;
+    }
+
+    .jjr-hero-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .jjr-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .jjr-intro-divider {
+        display: none;
+    }
+
+    .jjr-why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .jjr-why-item {
+        border-right: none;
+    }
+
+    .jjr-cta-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .jjr-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .jjr-footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+}
+</style>
+
+<div class="jjr-page">
+
+    <!-- HERO -->
+    <section class="jjr-hero">
+        <div class="jjr-container jjr-hero-content">
+            <div class="jjr-hero-grid">
+                <div>
+                    <div class="jjr-hero-eyebrow">Colville, Washington</div>
+                    <h1>Your Local<br>Tractor <span>&</span><br>Mower Dealer</h1>
+                    <p class="jjr-hero-text">Family-owned since 2019. The only authorized TYM and Bad Boy dealer in northeastern Washington. Real service, real people, real equipment.</p>
+                    <div class="jjr-hero-actions">
+                        <a href="/tractors/" class="jjr-btn jjr-btn-primary">View Inventory</a>
+                        <a href="tel:509-738-2985" class="jjr-btn jjr-btn-outline">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            509-738-2985
+                        </a>
+                    </div>
+                </div>
+                <div class="jjr-hero-stats">
+                    <div class="jjr-stat">
+                        <div class="jjr-stat-number">5+</div>
+                        <div class="jjr-stat-label">Years Serving Stevens County</div>
+                    </div>
+                    <div class="jjr-stat">
+                        <div class="jjr-stat-number">25-100</div>
+                        <div class="jjr-stat-label">HP Range Available</div>
+                    </div>
+                    <div class="jjr-stat">
+                        <div class="jjr-stat-number">2</div>
+                        <div class="jjr-stat-label">Premium Brands</div>
+                    </div>
+                    <div class="jjr-stat">
+                        <div class="jjr-stat-number">1</div>
+                        <div class="jjr-stat-label">Family-Owned Dealer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="jjr-intro">
+        <div class="jjr-container">
+            <div class="jjr-intro-grid">
+                <div class="jjr-intro-block">
+                    <h2>Who We Are</h2>
+                    <p>At JJ Riggs Equipment, we're not a corporate mega-dealer. We're your neighbors—a family-owned business that opened in 2019 because we saw a need for honest, knowledgeable equipment sales and service in Stevens County.</p>
+                </div>
+                <div class="jjr-intro-divider"></div>
+                <div class="jjr-intro-block">
+                    <h2>What We Do</h2>
+                    <p>We sell and service TYM tractors and Bad Boy mowers. New equipment, used equipment, parts, repairs—whatever you need to keep your property running. Located at 685 Elm Tree Dr. in Colville.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section class="jjr-why">
+        <div class="jjr-container">
+            <div class="jjr-section-header">
+                <div class="jjr-section-tag">The Difference</div>
+                <h2 class="jjr-section-title">Why JJ Riggs</h2>
+            </div>
+            <div class="jjr-why-grid">
+                <div class="jjr-why-item">
+                    <div class="jjr-why-num">01</div>
+                    <h3 class="jjr-why-title">Exclusive Dealer</h3>
+                    <p class="jjr-why-text">The only authorized TYM tractor and Bad Boy mower dealer in northeastern Washington.</p>
+                </div>
+                <div class="jjr-why-item">
+                    <div class="jjr-why-num">02</div>
+                    <h3 class="jjr-why-title">Full Service Shop</h3>
+                    <p class="jjr-why-text">Factory-trained technicians for repairs, maintenance, and warranty work. We service what we sell.</p>
+                </div>
+                <div class="jjr-why-item">
+                    <div class="jjr-why-num">03</div>
+                    <h3 class="jjr-why-title">Parts In Stock</h3>
+                    <p class="jjr-why-text">Common parts on the shelf. If we don't have it, we'll get it fast. No waiting weeks for a fix.</p>
+                </div>
+                <div class="jjr-why-item">
+                    <div class="jjr-why-num">04</div>
+                    <h3 class="jjr-why-title">Straight Talk</h3>
+                    <p class="jjr-why-text">No pressure sales. We'll help you find what actually fits your needs and budget—nothing more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="jjr-products">
+        <div class="jjr-product-row">
+            <div class="jjr-product-image">
+                <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IMG_4255.jpg" alt="TYM Tractor">
+            </div>
+            <div class="jjr-product-content">
+                <div class="jjr-product-tag">Tractors</div>
+                <h3 class="jjr-product-title">TYM Tractors</h3>
+                <p class="jjr-product-text">Built for real work. TYM tractors handle the steep hillsides, rocky soil, and heavy snow common in Stevens County. Powerful engines, reliable 4x4, and implements that actually fit your needs.</p>
+                <div class="jjr-product-specs">
+                    <div class="jjr-spec-item">
+                        <strong>25-100+</strong>
+                        <span>Horsepower</span>
+                    </div>
+                    <div class="jjr-spec-item">
+                        <strong>4x4</strong>
+                        <span>Standard</span>
+                    </div>
+                    <div class="jjr-spec-item">
+                        <strong>New & Used</strong>
+                        <span>In Stock</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="jjr-product-row">
+            <div class="jjr-product-image">
+                <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/20230516_161845.jpg" alt="Bad Boy Mower">
+            </div>
+            <div class="jjr-product-content">
+                <div class="jjr-product-tag">Mowers</div>
+                <h3 class="jjr-product-title">Bad Boy Mowers</h3>
+                <p class="jjr-product-text">Commercial-grade durability for homeowners and pros. Heavy-duty fabricated decks, powerful engines, and a cut quality that speaks for itself. Built to last, not to break.</p>
+                <div class="jjr-product-specs">
+                    <div class="jjr-spec-item">
+                        <strong>42-72"</strong>
+                        <span>Deck Sizes</span>
+                    </div>
+                    <div class="jjr-spec-item">
+                        <strong>Zero-Turn</strong>
+                        <span>Maneuverability</span>
+                    </div>
+                    <div class="jjr-spec-item">
+                        <strong>USA</strong>
+                        <span>Built</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICE AREA -->
+    <section class="jjr-areas">
+        <div class="jjr-container">
+            <div class="jjr-section-header">
+                <div class="jjr-section-tag">Coverage</div>
+                <h2 class="jjr-section-title">Serving Stevens County</h2>
+            </div>
+            <p style="font-size: 17px; color: #555; max-width: 600px;">We're based in Colville, but we serve property owners across northeastern Washington. If you're in the area, we're your dealer.</p>
+            <div class="jjr-areas-grid">
+                <a href="/colville-tractors/" class="jjr-area-tag active">Colville</a>
+                <a href="/kettle-falls-equipment/" class="jjr-area-tag">Kettle Falls</a>
+                <a href="/chewelah-tractor-dealer/" class="jjr-area-tag">Chewelah</a>
+                <span class="jjr-area-tag">Addy</span>
+                <span class="jjr-area-tag">Gifford</span>
+                <span class="jjr-area-tag">Springdale</span>
+                <span class="jjr-area-tag">Marcus</span>
+                <span class="jjr-area-tag">Valley</span>
+                <span class="jjr-area-tag">Spokane Area</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="jjr-cta">
+        <div class="jjr-container">
+            <div class="jjr-cta-inner">
+                <div>
+                    <h3>Ready to talk equipment?</h3>
+                    <p>Stop by our Colville shop or give us a call. No pressure, just answers.</p>
+                </div>
+                <a href="tel:509-738-2985" class="jjr-cta-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    Call 509-738-2985
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="jjr-footer">
+        <div class="jjr-container">
+            <div class="jjr-footer-grid">
+                <div class="jjr-footer-brand">
+                    <h4>JJ Riggs Equipment</h4>
+                    <p>Family-owned tractor and mower dealer serving northeastern Washington since 2019. Authorized TYM and Bad Boy dealer.</p>
+                    <div class="jjr-footer-social">
+                        <a href="#" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="jjr-footer-col">
+                    <h5>Address</h5>
+                    <p>685 Elm Tree Dr<br>Colville, WA 99114</p>
+                </div>
+                <div class="jjr-footer-col">
+                    <h5>Contact</h5>
+                    <a href="tel:509-738-2985">509-738-2985</a>
+                    <a href="mailto:sales@jjriggsequipment.com">sales@jjriggsequipment.com</a>
+                </div>
+                <div class="jjr-footer-col">
+                    <h5>Hours</h5>
+                    <p>Mon–Fri: 8AM – 5PM</p>
+                    <p>Sat–Sun: Closed</p>
+                </div>
+                <div class="jjr-footer-col">
+                    <h5>Shop</h5>
+                    <a href="/tractors/">Tractors</a>
+                    <a href="/mowers/">Mowers</a>
+                    <a href="/services/">Service</a>
+                </div>
+            </div>
+            <div class="jjr-footer-bottom">
+                <p>&copy; 2025 JJ Riggs Equipment. All rights reserved.</p>
+                <p>Authorized TYM and Bad Boy Dealer</p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Schema Markup -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "JJ Riggs Equipment",
+    "description": "Authorized TYM tractor and Bad Boy mower dealer serving Colville, WA and Stevens County.",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "685 Elm Tree Dr.",
+        "addressLocality": "Colville",
+        "addressRegion": "WA",
+        "postalCode": "99114"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.464410,
+        "longitude": -117.884290
+    },
+    "telephone": "509-738-2985",
+    "url": "https://jjriggsequipment.com/colville-tractors/",
+    "openingHours": "Mo-Fr 08:00-17:00"
+}
+</script>

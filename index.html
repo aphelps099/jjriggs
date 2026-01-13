@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJ Riggs — Brand Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #888;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 60px;
+            background: #b61b22;
+            position: relative;
+        }
+
+        .hero-logo {
+            max-width: 280px;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 700;
+            color: #fff;
+            line-height: 0.95;
+            letter-spacing: -3px;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 span {
+            opacity: 0.6;
+        }
+
+        .hero-intro {
+            font-size: 18px;
+            max-width: 520px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .hero-intro strong {
+            color: #fff;
+        }
+
+        /* Billboard / Animated Feature */
+        .billboard {
+            background: #0a0a0a;
+            min-height: 700px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .billboard-inner {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* Tractor Carousel */
+        .tractor-stage {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tractor-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .tractor-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .tractor-slide img {
+            max-width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
+        }
+
+        /* Text Carousel */
+        .billboard-content {
+            position: relative;
+        }
+
+        .billboard-logo {
+            max-width: 120px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .headline-stage {
+            position: relative;
+            min-height: 200px;
+        }
+
+        .headline-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .headline-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .billboard-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #b61b22;
+            margin-bottom: 16px;
+        }
+
+        .billboard-headline {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .billboard-headline span {
+            color: #b61b22;
+        }
+
+        .billboard-sub {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Progress Dots */
+        .billboard-dots {
+            display: flex;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .billboard-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .billboard-dot.active {
+            background: #b61b22;
+            transform: scale(1.2);
+        }
+
+        .billboard-dot:hover {
+            background: #555;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            gap: 40px;
+            padding: 30px 60px;
+            border-bottom: 1px solid #1a1a1a;
+            position: sticky;
+            top: 0;
+            background: #273647;
+            z-index: 100;
+        }
+
+        .nav a {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            position: relative;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 60px;
+            border-bottom: 1px solid #1a1a1a;
+            overflow: hidden;
+        }
+
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://jjriggsequipment.com/wp-content/uploads/2024/09/jj-home-slider.jpg') center/cover;
+            filter: grayscale(100%);
+            opacity: 0.1;
+        }
+
+        .testimonials::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.85) 100%);
+        }
+
+        .testimonials-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .testimonials-stars {
+            font-size: 32px;
+            color: #b61b22;
+            letter-spacing: 6px;
+            margin-bottom: 24px;
+        }
+
+        .testimonials-headline {
+            font-size: clamp(24px, 4vw, 42px);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .testimonials-sub {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .testimonials-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .testimonials-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .testimonials-btn.primary {
+            background: #b61b22;
+            color: #fff;
+        }
+
+        .testimonials-btn.primary:hover { background: #8f151a; }
+
+        .testimonials-btn.secondary {
+            background: transparent;
+            border: 1px solid #333;
+            color: #888;
+        }
+
+        .testimonials-btn.secondary:hover {
+            border-color: #555;
+            color: #fff;
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .section-header {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #b61b22;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .section-desc {
+            margin-top: 16px;
+            font-size: 15px;
+            color: #555;
+            max-width: 400px;
+        }
+
+        /* Colors */
+        .color-row {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 40px;
+        }
+
+        .color-block {
+            flex: 1;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-block:hover { transform: translateY(-4px); }
+        .color-block:first-child { border-radius: 8px 0 0 8px; }
+        .color-block:last-child { border-radius: 0 8px 8px 0; }
+
+        .color-block .name {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .color-block .hex {
+            font-family: 'SF Mono', monospace;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .color-block.dark { color: #fff; }
+        .color-block.light { color: #171b20; }
+
+        .swatch-red { background: #b61b22; }
+        .swatch-white { background: #fffefe; }
+        .swatch-black { background: #171b20; }
+        .swatch-navy { background: #273647; }
+        .swatch-gray { background: #78828e; }
+
+        .color-note {
+            font-size: 13px;
+            color: #444;
+            font-style: italic;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .card:hover { border-color: #333; }
+
+        .card-preview {
+            background: #0a0a0a;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .card-preview img {
+            max-width: 100%;
+            max-height: 100px;
+        }
+
+        .card-preview iframe {
+            width: 100%;
+            height: 360px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .card-content {
+            padding: 24px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .card-eyebrow {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #b61b22;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #b61b22;
+            transition: background 0.2s;
+        }
+
+        .card-link:hover { background: #8f151a; }
+
+        .card-link.secondary {
+            background: transparent;
+            border: 1px solid #333;
+            color: #888;
+        }
+
+        .card-link.secondary:hover {
+            border-color: #555;
+            color: #fff;
+        }
+
+        /* Campaign Card */
+        .campaign-card .card-preview {
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+        }
+
+        .campaign-badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #b61b22;
+        }
+
+        .campaign-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .campaign-title span { color: #b61b22; }
+
+        .campaign-sub {
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* Playbook Card */
+        .playbook-card .card-preview {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .playbook-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        .playbook-sub {
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 60px;
+            text-align: center;
+            background: #273647;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
+        }
+
+        .footer span {
+            color: rgba(255,255,255,0.2);
+        }
+
+        /* Toast */
+        .copied-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #b61b22;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            z-index: 200;
+        }
+
+        .copied-toast.show { opacity: 1; }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .billboard-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .tractor-stage {
+                height: 350px;
+            }
+
+            .headline-stage {
+                min-height: 160px;
+            }
+
+            .billboard-dots {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero, .section, .nav, .footer, .billboard-inner {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .section-header {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .nav {
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials {
+                padding: 60px 30px;
+            }
+
+            .testimonials-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <header class="hero">
+        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs Equipment" class="hero-logo">
+        <h1>Brand<span>.</span></h1>
+        <p class="hero-intro">
+            <strong>Tractors for people who use them.</strong><br>
+            This is the visual system, voice, and marketing toolkit for JJ Riggs Equipment — serving Stevens County from Colville, WA.
+        </p>
+    </header>
+
+    <!-- Animated Billboard -->
+    <section class="billboard">
+        <div class="billboard-inner">
+            <div class="tractor-stage">
+                <div class="tractor-slide active" data-slide="0">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2026/01/3025-1.png" alt="TYM 3025">
+                </div>
+                <div class="tractor-slide" data-slide="1">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2026/01/t5075_features-image-shadow_optimized_v2.png" alt="TYM T5075">
+                </div>
+                <div class="tractor-slide" data-slide="2">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2026/01/4058-tym-2515_3015_3515_4215_4815_frontleft_optimized.png" alt="TYM Series">
+                </div>
+                <div class="tractor-slide" data-slide="3">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2026/01/3515-3035f25_f36_f50_1-1.png" alt="TYM 3515">
+                </div>
+                <div class="tractor-slide" data-slide="4">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2026/01/t3025_composition2_image_optimized.png" alt="TYM T3025">
+                </div>
+            </div>
+            <div class="billboard-content">
+                <img src="https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png" alt="TYM" class="billboard-logo">
+                <div class="headline-stage">
+                    <div class="headline-slide active" data-slide="0">
+                        <div class="billboard-eyebrow">Compact Power</div>
+                        <h2 class="billboard-headline">Small tractor<span>.</span><br>Big capability<span>.</span></h2>
+                        <p class="billboard-sub">24-35 HP. Perfect for hobby farms, landscaping, and property maintenance.</p>
+                    </div>
+                    <div class="headline-slide" data-slide="1">
+                        <div class="billboard-eyebrow">Utility Series</div>
+                        <h2 class="billboard-headline">Work harder<span>.</span><br>Work smarter<span>.</span></h2>
+                        <p class="billboard-sub">50-75 HP. Hay, livestock, serious acreage. Built for the long haul.</p>
+                    </div>
+                    <div class="headline-slide" data-slide="2">
+                        <div class="billboard-eyebrow">Full Lineup</div>
+                        <h2 class="billboard-headline">The right fit<span>.</span><br>Every time<span>.</span></h2>
+                        <p class="billboard-sub">From sub-compact to utility. We'll match you with exactly what you need.</p>
+                    </div>
+                    <div class="headline-slide" data-slide="3">
+                        <div class="billboard-eyebrow">6-Year Warranty</div>
+                        <h2 class="billboard-headline">We stand<br>behind it<span>.</span></h2>
+                        <p class="billboard-sub">Industry-leading warranty. Because TYM builds them to last.</p>
+                    </div>
+                    <div class="headline-slide" data-slide="4">
+                        <div class="billboard-eyebrow">Ready to Work</div>
+                        <h2 class="billboard-headline">Loader included<span>.</span><br>No games<span>.</span></h2>
+                        <p class="billboard-sub">What you see is what you get. Transparent pricing, honest service.</p>
+                    </div>
+                </div>
+                <div class="billboard-dots">
+                    <div class="billboard-dot active" data-slide="0"></div>
+                    <div class="billboard-dot" data-slide="1"></div>
+                    <div class="billboard-dot" data-slide="2"></div>
+                    <div class="billboard-dot" data-slide="3"></div>
+                    <div class="billboard-dot" data-slide="4"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="reviews">
+        <div class="testimonials-content">
+            <div class="testimonials-stars">★★★★★</div>
+            <h2 class="testimonials-headline">100% 5-Star Reviews</h2>
+            <p class="testimonials-sub">Real customers. Real reviews. See why people drive from Spokane, Republic, and beyond to buy from Andrew.</p>
+            <div class="testimonials-actions">
+                <a href="https://g.page/r/CSFOuA8qocozEAE/review" target="_blank" class="testimonials-btn primary">See Google Reviews →</a>
+                <a href="brand/social/testimonials.html" class="testimonials-btn secondary">Social Media Posts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nav -->
+    <nav class="nav">
+        <a href="#reviews">Reviews</a>
+        <a href="#identity">Identity</a>
+        <a href="#colors">Colors</a>
+        <a href="#outreach">Outreach</a>
+        <a href="#campaigns">Campaigns</a>
+        <a href="#playbooks">Playbooks</a>
+    </nav>
+
+    <!-- Identity -->
+    <section class="section" id="identity">
+        <div class="section-header">
+            <span class="section-label">01</span>
+            <div>
+                <h2 class="section-title">Identity</h2>
+                <p class="section-desc">JJ Riggs + TYM. The dealership and the brand we sell. Both logos in red/white variants.</p>
+            </div>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-preview">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/JJ-Riggs-Equipment-white-outline-logo-1024x310.png" alt="JJ Riggs Logo">
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">JJ Riggs</div>
+                    <div class="card-title">Red & White</div>
+                    <div class="card-desc">The main dealership logo. Use on dark backgrounds.</div>
+                    <a href="https://jjriggsequipment.com/wp-content/uploads/2024/09/JJ-Riggs-Equipment-white-outline-logo-1024x310.png" class="card-link" download>Download</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-preview">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs Logo White">
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">JJ Riggs</div>
+                    <div class="card-title">White Only</div>
+                    <div class="card-desc">Single color for overlays, watermarks, or limited printing.</div>
+                    <a href="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" class="card-link" download>Download</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-preview">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/tym-1.png" alt="TYM Logo Red" style="max-height: 80px;">
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">TYM Tractors</div>
+                    <div class="card-title">Red</div>
+                    <div class="card-desc">The manufacturer brand. Use on light or neutral backgrounds.</div>
+                    <a href="https://jjriggsequipment.com/wp-content/uploads/2024/09/tym-1.png" class="card-link" download>Download</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-preview">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png" alt="TYM Logo White" style="max-height: 80px;">
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">TYM Tractors</div>
+                    <div class="card-title">White</div>
+                    <div class="card-desc">For dark backgrounds, overlays, and the TYM to ROLL campaign.</div>
+                    <a href="https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png" class="card-link" download>Download</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colors -->
+    <section class="section" id="colors">
+        <div class="section-header">
+            <span class="section-label">02</span>
+            <div>
+                <h2 class="section-title">Colors</h2>
+                <p class="section-desc">Five colors. That's it. Red pops. Everything else recedes.</p>
+            </div>
+        </div>
+
+        <div class="color-row">
+            <div class="color-block swatch-red dark" onclick="copyColor('#b61b22')">
+                <span class="name">Red</span>
+                <span class="hex">#b61b22</span>
+            </div>
+            <div class="color-block swatch-white light" onclick="copyColor('#fffefe')">
+                <span class="name">White</span>
+                <span class="hex">#fffefe</span>
+            </div>
+            <div class="color-block swatch-black dark" onclick="copyColor('#171b20')">
+                <span class="name">Black</span>
+                <span class="hex">#171b20</span>
+            </div>
+            <div class="color-block swatch-navy dark" onclick="copyColor('#273647')">
+                <span class="name">Navy</span>
+                <span class="hex">#273647</span>
+            </div>
+            <div class="color-block swatch-gray dark" onclick="copyColor('#78828e')">
+                <span class="name">Gray</span>
+                <span class="hex">#78828e</span>
+            </div>
+        </div>
+
+        <p class="color-note">Click any swatch to copy. Red is the only accent — use it sparingly.</p>
+    </section>
+
+    <!-- Outreach -->
+    <section class="section" id="outreach">
+        <div class="section-header">
+            <span class="section-label">03</span>
+            <div>
+                <h2 class="section-title">Outreach</h2>
+                <p class="section-desc">Email templates designed to convert. Dark, clean, Palantir-minimal.</p>
+            </div>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-preview" style="padding: 20px;">
+                    <iframe src="brand/emails/welcome-email.html" title="Welcome Email"></iframe>
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">Email Template</div>
+                    <div class="card-title">Welcome Email</div>
+                    <div class="card-desc">Triggered when someone subscribes. Features Andrew's 5-star reviews as social proof.</div>
+                    <div class="actions">
+                        <a href="brand/emails/welcome-email.html" target="_blank" class="card-link">View Full</a>
+                        <button class="card-link secondary" onclick="copyEmailHTML()">Copy HTML</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaigns -->
+    <section class="section" id="campaigns">
+        <div class="section-header">
+            <span class="section-label">04</span>
+            <div>
+                <h2 class="section-title">Campaigns</h2>
+                <p class="section-desc">Ready-to-post social content. Carousels, ads, captions included.</p>
+            </div>
+        </div>
+
+        <div class="card-grid">
+            <div class="card campaign-card">
+                <div class="card-preview">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png" alt="TYM" style="max-height: 40px; margin-bottom: 16px; opacity: 0.9;">
+                    <span class="campaign-badge">Spring 2025</span>
+                    <div class="campaign-title"><span>TYM</span> to ROLL</div>
+                    <span class="campaign-sub">5-slide carousel + Facebook ad</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">Social Campaign</div>
+                    <div class="card-title">Spring Tractor Sales</div>
+                    <div class="card-desc">Instagram/Facebook carousel with hook, problem, solution, proof, and CTA. Ready to post.</div>
+                    <a href="brand/social/tym-to-roll-campaign.html" class="card-link">View Campaign</a>
+                </div>
+            </div>
+
+            <div class="card campaign-card">
+                <div class="card-preview">
+                    <span class="campaign-badge">Evergreen</span>
+                    <div class="campaign-title">Meet the <span>Fleet</span></div>
+                    <span class="campaign-sub">5-slide carousel</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">Social Campaign</div>
+                    <div class="card-title">TYM Lineup Showcase</div>
+                    <div class="card-desc">Introduce the full TYM tractor range — from sub-compact to utility. Perfect for brand awareness.</div>
+                    <a href="brand/social/meet-the-fleet.html" class="card-link">View Campaign</a>
+                </div>
+            </div>
+
+            <div class="card campaign-card">
+                <div class="card-preview" style="background: linear-gradient(135deg, #1a2a3a 0%, #0d1520 100%);">
+                    <span class="campaign-badge" style="background: #273647;">Fall / Winter</span>
+                    <div class="campaign-title">Winter <span>Ready</span></div>
+                    <span class="campaign-sub">5-slide carousel</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">Seasonal Campaign</div>
+                    <div class="card-title">Pre-Winter Service</div>
+                    <div class="card-desc">Drive service appointments before the first freeze. Checklist format with urgency built in.</div>
+                    <a href="brand/social/winter-ready.html" class="card-link">View Campaign</a>
+                </div>
+            </div>
+
+            <div class="card campaign-card">
+                <div class="card-preview">
+                    <span class="campaign-badge">New Year</span>
+                    <div class="campaign-title">Property <span>Goals</span></div>
+                    <span class="campaign-sub">5-slide carousel</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">Social Campaign</div>
+                    <div class="card-title">2025 Project Inspiration</div>
+                    <div class="card-desc">Inspire property owners to tackle their land goals. Aspirational messaging with practical solutions.</div>
+                    <a href="brand/social/property-goals.html" class="card-link">View Campaign</a>
+                </div>
+            </div>
+
+            <div class="card campaign-card">
+                <div class="card-preview" style="background: linear-gradient(135deg, #273647 0%, #1a2633 100%);">
+                    <span class="campaign-badge">Toolkit</span>
+                    <div class="campaign-title">Ad <span>Templates</span></div>
+                    <span class="campaign-sub">9 styles + story formats</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">Template Library</div>
+                    <div class="card-title">Screenshot & Post</div>
+                    <div class="card-desc">Ready-made ad templates for deliveries, tips, inventory, reviews, and more. Just screenshot and post.</div>
+                    <a href="brand/social/ad-templates.html" class="card-link">View Templates</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Playbooks -->
+    <section class="section" id="playbooks">
+        <div class="section-header">
+            <span class="section-label">05</span>
+            <div>
+                <h2 class="section-title">Playbooks</h2>
+                <p class="section-desc">Strategy docs you can actually use. No fluff.</p>
+            </div>
+        </div>
+
+        <div class="card-grid">
+            <div class="card playbook-card">
+                <div class="card-preview">
+                    <span class="campaign-badge">Strategy</span>
+                    <div class="playbook-title">Geofencing<br>Facebook Ads</div>
+                    <span class="playbook-sub">Location-based targeting</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">Playbook</div>
+                    <div class="card-title">Target Competitors & Events</div>
+                    <div class="card-desc">Drop pins on competitor lots, farm stores, and the county fair. Budgets, creatives, setup checklist.</div>
+                    <a href="brand/playbooks/geofencing-facebook-ads.html" class="card-link">View Playbook</a>
+                </div>
+            </div>
+
+            <div class="card playbook-card">
+                <div class="card-preview">
+                    <span class="campaign-badge">Calendar</span>
+                    <div class="playbook-title">12-Issue<br>Newsletter</div>
+                    <span class="playbook-sub">Monthly email strategy</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">Playbook</div>
+                    <div class="card-title">Year-Long Content Plan</div>
+                    <div class="card-desc">Subject lines, content ideas, and CTAs for every month. Aligned with tractor buying seasons.</div>
+                    <a href="brand/playbooks/newsletter-strategy.html" class="card-link">View Playbook</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer — Updated 2025 -->
+    <footer class="footer">
+        <p>JJ Riggs <span>•</span> Colville, WA <span>•</span> 2025</p>
+    </footer>
+
+    <!-- Toast -->
+    <div class="copied-toast" id="toast">Copied!</div>
+
+    <script>
+        // Billboard Animation
+        let currentSlide = 0;
+        const totalSlides = 5;
+        const slideInterval = 5000; // 5 seconds
+
+        function showSlide(index) {
+            // Update tractors
+            document.querySelectorAll('.tractor-slide').forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+
+            // Update headlines
+            document.querySelectorAll('.headline-slide').forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+
+            // Update dots
+            document.querySelectorAll('.billboard-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            showSlide((currentSlide + 1) % totalSlides);
+        }
+
+        // Auto-advance
+        let autoPlay = setInterval(nextSlide, slideInterval);
+
+        // Click on dots
+        document.querySelectorAll('.billboard-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                clearInterval(autoPlay);
+                showSlide(parseInt(dot.dataset.slide));
+                autoPlay = setInterval(nextSlide, slideInterval);
+            });
+        });
+
+        // Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg || 'Copied!';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1500);
+        }
+
+        function copyColor(hex) {
+            navigator.clipboard.writeText(hex).then(() => showToast(hex + ' copied'));
+        }
+
+        function copyEmailHTML() {
+            fetch('brand/emails/welcome-email.html')
+                .then(r => r.text())
+                .then(html => {
+                    navigator.clipboard.writeText(html).then(() => showToast('HTML copied'));
+                });
+        }
+    </script>
+
+</body>
+</html>
+

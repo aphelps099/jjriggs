@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM to ROLL Campaign | JJ Riggs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --darkest: #171b20;
+            --dark-navy: #273647;
+            --dark-slate: #2f353b;
+            --dark-gray: #2f2f2f;
+            --white: #fffefe;
+            --gray: #78828e;
+            --red: #b61b22;
+            --bg: #0a0a0a;
+            --card-bg: #141414;
+            --border: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: white;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header-btn {
+            font-size: 12px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--gray);
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .header-btn:hover {
+            border-color: white;
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 60px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: var(--red);
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Main */
+        .main {
+            padding: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Carousel Preview */
+        .carousel-section {
+            margin-bottom: 60px;
+        }
+
+        .carousel-container {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .carousel-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .carousel-container::-webkit-scrollbar-track {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .carousel-container::-webkit-scrollbar-thumb {
+            background: var(--gray);
+            border-radius: 3px;
+        }
+
+        /* Post Grid */
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* Post Card */
+        .post-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .post-card:hover {
+            border-color: #444;
+            transform: translateY(-2px);
+        }
+
+        /* Post Visual */
+        .post-visual {
+            aspect-ratio: 1;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .post-visual .slide-num {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.3);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .post-visual .logo {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            width: 100px;
+            opacity: 0.9;
+        }
+
+        .post-visual .wordmark {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            opacity: 0.5;
+        }
+
+        /* Visual Styles */
+        .style-hero {
+            background: linear-gradient(135deg, var(--darkest) 0%, var(--dark-navy) 100%);
+        }
+
+        .style-dark {
+            background: var(--darkest);
+        }
+
+        .style-navy {
+            background: linear-gradient(180deg, var(--dark-navy) 0%, var(--darkest) 100%);
+        }
+
+        .style-red {
+            background: var(--red);
+        }
+
+        /* Typography in visuals */
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 12px;
+        }
+
+        .style-red .eyebrow {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .headline {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .headline span {
+            color: var(--red);
+        }
+
+        .style-red .headline span {
+            color: var(--white);
+        }
+
+        .subhead {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .style-red .subhead {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .stat {
+            font-size: clamp(56px, 8vw, 80px);
+            font-weight: 300;
+            line-height: 0.9;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .stat span {
+            color: var(--red);
+        }
+
+        .pain-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .pain-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 14px 18px;
+            border-radius: 6px;
+            border-left: 3px solid var(--red);
+            font-size: 14px;
+            color: var(--white);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .feature-box {
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .feature-box .num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--red);
+            margin-bottom: 4px;
+        }
+
+        .feature-box .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 2px;
+        }
+
+        .feature-box .detail {
+            font-size: 10px;
+            color: var(--gray);
+        }
+
+        .review-box {
+            background: var(--dark-navy);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--red);
+            margin-top: 16px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .review-author {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .stars {
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .cta-box {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cta-box .cta-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .cta-box .cta-phone {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--red);
+            margin-bottom: 8px;
+        }
+
+        .cta-box .cta-address {
+            font-size: 13px;
+            color: var(--dark-gray);
+        }
+
+        /* Post Content */
+        .post-content {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .post-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 10px;
+        }
+
+        .post-caption {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.6;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: pre-wrap;
+            margin-bottom: 12px;
+        }
+
+        .post-caption:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: var(--border);
+        }
+
+        .post-caption.copied {
+            border-color: var(--red);
+            background: rgba(182, 27, 34, 0.1);
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            font-size: 10px;
+            color: var(--red);
+            background: rgba(182, 27, 34, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: rgba(182, 27, 34, 0.2);
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            font-size: 11px;
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .action-btn.primary {
+            background: var(--darkest);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: var(--dark-navy);
+        }
+
+        .action-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--gray);
+        }
+
+        .action-btn.secondary:hover {
+            border-color: white;
+            color: white;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 600px;
+            max-height: 90vh;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            color: white;
+            font-size: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .modal-visual {
+            width: 100%;
+            aspect-ratio: 1;
+        }
+
+        .modal-actions {
+            padding: 20px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--red);
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 14px 24px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 24px 40px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .header, .main, .hero {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-title">JJ Riggs Brand Guide</div>
+        <a href="../index.html" class="header-btn">← Back to Brand Guide</a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-badge">Social Media Campaign</div>
+        <h1><span>TYM</span> to ROLL</h1>
+        <p>Spring 2025 tractor sales campaign. 5-slide carousel + Facebook ad. Click any caption to copy.</p>
+    </section>
+
+    <main class="main">
+
+        <!-- Carousel Section -->
+        <section class="carousel-section">
+            <div class="section-title">Instagram / Facebook Carousel (1080×1080)</div>
+
+            <div class="post-grid">
+
+                <!-- Slide 1: Hook -->
+                <div class="post-card">
+                    <div class="post-visual style-hero" onclick="openModal(1)">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">1/5</span>
+                        <div class="eyebrow">Spring Sales Event</div>
+                        <div class="headline"><span>TYM</span> to ROLL</div>
+                        <div class="subhead">New TYM Tractors Starting at $199/mo</div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Caption</div>
+                        <div class="post-caption" onclick="copyCaption(this)">It's TYM to ROLL. 🚜
+
+Spring is here and so are the deals. New TYM tractors starting at just $199/month.
+
+Whether you're managing 5 acres or 50, we've got the right machine for your land.
+
+Swipe to see why TYM is the smart choice →
+
+#TYMTractor #TractorLife #ColvilleWA #FarmEquipment #JJRiggs</div>
+                        <div class="post-tags">
+                            <span class="tag" onclick="copyTag(this)">#TYMTractor</span>
+                            <span class="tag" onclick="copyTag(this)">#TractorLife</span>
+                            <span class="tag" onclick="copyTag(this)">#ColvilleWA</span>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn primary" onclick="openModal(1)">View Full Size</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Problem -->
+                <div class="post-card">
+                    <div class="post-visual style-dark" onclick="openModal(2)">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">2/5</span>
+                        <div class="eyebrow">The Problem</div>
+                        <div class="headline">Still renting equipment?</div>
+                        <div class="pain-list">
+                            <div class="pain-item">💸 Rental costs add up fast</div>
+                            <div class="pain-item">📅 Never available when you need it</div>
+                            <div class="pain-item">🔧 Someone else's problems become yours</div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Caption</div>
+                        <div class="post-caption" onclick="copyCaption(this)">Still renting? Let's do the math. 🧮
+
+That $300/weekend rental adds up to $3,600+ a year. In two years, you've paid for a tractor you don't own.
+
+Meanwhile:
+→ It's never available when you actually need it
+→ You're dealing with someone else's worn-out equipment
+→ No attachment flexibility
+
+There's a better way.
+
+#StopRenting #OwnYourEquipment #TractorOwnership #JJRiggs</div>
+                        <div class="post-tags">
+                            <span class="tag" onclick="copyTag(this)">#StopRenting</span>
+                            <span class="tag" onclick="copyTag(this)">#OwnYourEquipment</span>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn primary" onclick="openModal(2)">View Full Size</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Solution -->
+                <div class="post-card">
+                    <div class="post-visual style-navy" onclick="openModal(3)">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">3/5</span>
+                        <div class="eyebrow">The Solution</div>
+                        <div class="headline">Own a <span>TYM</span>.<br>Built to work.</div>
+                        <div class="feature-grid">
+                            <div class="feature-box">
+                                <div class="num">25-73</div>
+                                <div class="label">Horsepower</div>
+                                <div class="detail">Any property size</div>
+                            </div>
+                            <div class="feature-box">
+                                <div class="num">6 YR</div>
+                                <div class="label">Warranty</div>
+                                <div class="detail">Best in class</div>
+                            </div>
+                            <div class="feature-box">
+                                <div class="num">$199</div>
+                                <div class="label">Per Month</div>
+                                <div class="detail">Financing OAC</div>
+                            </div>
+                            <div class="feature-box">
+                                <div class="num">LOCAL</div>
+                                <div class="label">Service</div>
+                                <div class="detail">Colville, WA</div>
+                            </div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Caption</div>
+                        <div class="post-caption" onclick="copyCaption(this)">Meet TYM. The tractor that works as hard as you do. 💪
+
+✓ 25-73 HP range — perfect for any property
+✓ 6-year warranty — best in the industry
+✓ Starting at $199/mo — financing available
+✓ Local service & support right here in Colville
+
+Korean-built quality. American dealer support. Your land deserves better than rental equipment.
+
+#TYMTractors #QualityEquipment #6YearWarranty #ColvilleWA</div>
+                        <div class="post-tags">
+                            <span class="tag" onclick="copyTag(this)">#TYMTractors</span>
+                            <span class="tag" onclick="copyTag(this)">#6YearWarranty</span>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn primary" onclick="openModal(3)">View Full Size</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Social Proof -->
+                <div class="post-card">
+                    <div class="post-visual style-dark" onclick="openModal(4)">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">4/5</span>
+                        <div class="eyebrow">What Customers Say</div>
+                        <div class="stars">★★★★★</div>
+                        <div class="headline">Excellent</div>
+                        <div class="subhead">Based on 25+ Google Reviews</div>
+                        <div class="review-box">
+                            <p class="review-text">"Andrew has been great to work with. Honest and straightforward. We have bought from him and used his service department multiple times."</p>
+                            <p class="review-author">— TheRed BridgeFarm</p>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Caption</div>
+                        <div class="post-caption" onclick="copyCaption(this)">Don't take our word for it. ⭐⭐⭐⭐⭐
+
+"Andrew has been great to work with. Honest and straightforward. We have bought from him and used his service department multiple times."
+— TheRed BridgeFarm (Google Review)
+
+25+ five-star reviews. Real customers. Real results.
+
+When you buy from JJ Riggs, you're not just getting a tractor — you're getting a partner who stands behind every machine.
+
+#CustomerReviews #5Stars #TrustedDealer #JJRiggs</div>
+                        <div class="post-tags">
+                            <span class="tag" onclick="copyTag(this)">#CustomerReviews</span>
+                            <span class="tag" onclick="copyTag(this)">#5Stars</span>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn primary" onclick="openModal(4)">View Full Size</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: CTA -->
+                <div class="post-card">
+                    <div class="post-visual style-red" onclick="openModal(5)">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">5/5</span>
+                        <div class="headline">Ready to roll?</div>
+                        <div class="subhead">Stop by or give us a call. No pressure, just answers.</div>
+                        <div class="cta-box">
+                            <div class="cta-label">Call or Visit</div>
+                            <div class="cta-phone">509-738-2985</div>
+                            <div class="cta-address">685 Elm Tree Dr, Colville, WA<br>Mon-Fri, 8 AM - 5 PM</div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Caption</div>
+                        <div class="post-caption" onclick="copyCaption(this)">Ready to roll? 🚜
+
+Stop by our Colville shop or give us a call. No pressure, no pushy sales tactics — just honest answers about what equipment fits your needs.
+
+📞 509-738-2985
+📍 685 Elm Tree Dr, Colville, WA
+🕐 Mon-Fri, 8 AM - 5 PM
+
+Spring inventory is here. Let's find your tractor.
+
+#JJRiggs #ColvilleWA #TractorDealer #ShopLocal #TYMtoROLL</div>
+                        <div class="post-tags">
+                            <span class="tag" onclick="copyTag(this)">#JJRiggs</span>
+                            <span class="tag" onclick="copyTag(this)">#ShopLocal</span>
+                            <span class="tag" onclick="copyTag(this)">#TYMtoROLL</span>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn primary" onclick="openModal(5)">View Full Size</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Facebook Ad Section -->
+        <section class="carousel-section">
+            <div class="section-title">Facebook Feed Ad (1200×628)</div>
+            <div class="post-grid" style="grid-template-columns: 1fr;">
+                <div class="post-card">
+                    <div class="post-visual" style="aspect-ratio: 1200/628; background: linear-gradient(135deg, var(--darkest) 0%, var(--dark-navy) 100%); flex-direction: row; padding: 40px;">
+                        <div style="flex: 1;">
+                            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" style="width: 120px; margin-bottom: 20px;">
+                            <div class="eyebrow">Spring Sales Event</div>
+                            <div class="headline" style="font-size: 48px;"><span>TYM</span> to ROLL</div>
+                            <div class="subhead">New TYM Tractors in Stock</div>
+                            <div style="display: inline-block; background: var(--red); color: white; padding: 14px 28px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 20px; font-size: 14px;">Shop Inventory</div>
+                        </div>
+                        <div style="width: 320px; background: var(--red); border-radius: 12px; padding: 32px; text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;">Starting At</div>
+                            <div style="font-size: 64px; font-weight: 800; color: white;">$199</div>
+                            <div style="font-size: 20px; color: rgba(255,255,255,0.9);">/month</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 8px;">Financing OAC</div>
+                            <div style="width: 40px; height: 2px; background: rgba(255,255,255,0.3); margin: 20px auto;"></div>
+                            <div style="text-align: left; font-size: 13px; color: rgba(255,255,255,0.9);">
+                                <div style="margin-bottom: 8px;">✓ 6-Year Warranty</div>
+                                <div style="margin-bottom: 8px;">✓ Local Service</div>
+                                <div>✓ 25-73 HP Range</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Ad Copy</div>
+                        <div class="post-caption" onclick="copyCaption(this)">🚜 TYM to ROLL — Spring Tractor Sale
+
+New TYM tractors starting at $199/mo. 6-year warranty. Local service in Colville.
+
+Stop renting. Start owning.
+
+👉 Shop our inventory or call 509-738-2985</div>
+                        <div style="font-size: 12px; color: var(--gray); margin-top: 12px;">1200 × 628px • Facebook Feed</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        JJ Riggs Equipment • Brand Guide • 2025
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-visual" id="modalVisual"></div>
+            <div class="modal-actions">
+                <a href="#" class="action-btn primary" id="modalOpenNew" target="_blank">Open in New Tab</a>
+                <button class="action-btn secondary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+        // Copy caption
+        function copyCaption(el) {
+            const text = el.innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                el.classList.add('copied');
+                showToast('Caption copied!');
+                setTimeout(() => el.classList.remove('copied'), 2000);
+            });
+        }
+
+        // Copy tag
+        function copyTag(el) {
+            const text = el.innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Tag copied: ' + text);
+            });
+        }
+
+        // Show toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Modal
+        const slideFiles = [
+            'tym-to-roll-slide-1.html',
+            'tym-to-roll-slide-2.html',
+            'tym-to-roll-slide-3.html',
+            'tym-to-roll-slide-4.html',
+            'tym-to-roll-slide-5.html'
+        ];
+
+        function openModal(slideNum) {
+            const modal = document.getElementById('modal');
+            const modalVisual = document.getElementById('modalVisual');
+            const modalOpenNew = document.getElementById('modalOpenNew');
+
+            const file = slideFiles[slideNum - 1];
+            modalVisual.innerHTML = `<iframe src="${file}" style="width: 100%; height: 100%; border: none;"></iframe>`;
+            modalOpenNew.href = file;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Close modal on backdrop click
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+    </script>
+
+</body>
+</html>

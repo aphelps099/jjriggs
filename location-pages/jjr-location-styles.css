@@ -1,0 +1,1053 @@
+/*
+============================================
+JJ RIGGS LOCATION PAGE STYLES
+============================================
+Add to: Flatsome > Advanced > Custom CSS
+============================================
+Color: #b61b22 (JJ Riggs Red)
+Font: rbold (headings), ind (body)
+============================================
+*/
+
+/* ============================================
+   BASE
+   ============================================ */
+
+/* Base page styles */
+.jjr-page {
+    font-family: 'ind', -apple-system, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+}
+
+/* Force full width and remove ALL padding for section containers */
+.ux-html:has(.jjr-hero),
+.ux-html:has(.jjr-intro),
+.ux-html:has(.jjr-why),
+.ux-html:has(.jjr-product),
+.ux-html:has(.jjr-map-section),
+.ux-html:has(.jjr-cta),
+.col:has(.jjr-hero),
+.col:has(.jjr-intro),
+.col:has(.jjr-why),
+.col:has(.jjr-product),
+.col:has(.jjr-map-section),
+.col:has(.jjr-cta),
+.col-inner:has(.jjr-hero),
+.col-inner:has(.jjr-intro),
+.col-inner:has(.jjr-why),
+.col-inner:has(.jjr-product),
+.col-inner:has(.jjr-map-section),
+.col-inner:has(.jjr-cta),
+.row:has(.jjr-hero),
+.row:has(.jjr-intro),
+.row:has(.jjr-why),
+.row:has(.jjr-product),
+.row:has(.jjr-map-section),
+.row:has(.jjr-cta),
+.row-inner:has(.jjr-hero),
+.row-inner:has(.jjr-intro),
+.row-inner:has(.jjr-why),
+.row-inner:has(.jjr-product),
+.row-inner:has(.jjr-map-section),
+.row-inner:has(.jjr-cta),
+section:has(.jjr-hero),
+section:has(.jjr-intro),
+section:has(.jjr-why),
+section:has(.jjr-product),
+section:has(.jjr-map-section),
+section:has(.jjr-cta) {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+/* Target Flatsome section wrapper */
+.section:has(.jjr-hero),
+.section:has(.jjr-intro),
+.section:has(.jjr-why),
+.section:has(.jjr-product),
+.section:has(.jjr-map-section),
+.section:has(.jjr-cta) {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Box sizing for all JJR sections */
+.jjr-hero *,
+.jjr-intro *,
+.jjr-why *,
+.jjr-product *,
+.jjr-map-section *,
+.jjr-cta * {
+    box-sizing: border-box;
+}
+
+.jjr-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.jjr-hero {
+    min-height: 700px;
+    background: #1a1a1a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Diagonal red section - softer angle */
+.jjr-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    background: #b61b22;
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+    z-index: 1;
+}
+
+/* Background image */
+.jjr-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://jjriggsequipment.com/wp-content/uploads/2024/10/IMG_4255.jpg') center/cover;
+    opacity: 0.2;
+    z-index: 2;
+}
+
+.jjr-hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 60px 0;
+    width: 100%;
+}
+
+.jjr-hero-grid {
+    display: block;
+    position: relative;
+    max-width: 550px;
+}
+
+/* TYM Logo badge */
+.jjr-hero-brand {
+    margin-bottom: 24px;
+}
+
+.jjr-hero-brand img {
+    height: 40px;
+    width: auto;
+}
+
+.jjr-hero-eyebrow {
+    font-family: 'rbold', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    /* Brushed steel effect */
+    background: linear-gradient(
+        180deg,
+        #e8e8e8 0%,
+        #d4d4d4 20%,
+        #c0c0c0 40%,
+        #b8b8b8 60%,
+        #c8c8c8 80%,
+        #d0d0d0 100%
+    );
+    border-radius: 50px;
+    padding: 10px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.jjr-hero-eyebrow::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #b61b22;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(182, 27, 34, 0.5);
+}
+
+.jjr-hero h1 {
+    font-family: 'rbold', sans-serif;
+    font-size: clamp(42px, 6vw, 72px);
+    color: #fff;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+}
+
+.jjr-hero h1 span {
+    color: #b61b22;
+}
+
+.jjr-hero-text {
+    font-family: 'ind', sans-serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.75);
+    max-width: 480px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+}
+
+.jjr-hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.jjr-btn {
+    font-family: 'rbold', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 36px;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.jjr-btn-primary {
+    background: #b61b22;
+    color: #fff;
+    border: 2px solid #b61b22;
+}
+
+.jjr-btn-primary:hover {
+    background: #8f151b;
+    border-color: #8f151b;
+    color: #fff;
+}
+
+.jjr-btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+}
+
+.jjr-btn-outline:hover {
+    background: #fff;
+    border-color: #fff;
+    color: #1a1a1a;
+}
+
+/* ============================================
+   STATS - Positioned on red area, stacked
+   ============================================ */
+.jjr-hero-stats {
+    position: absolute;
+    right: 8%;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 15;
+}
+
+.jjr-stat {
+    background: rgba(26,26,26,0.9);
+    backdrop-filter: blur(10px);
+    border-left: 3px solid #b61b22;
+    padding: 28px 24px;
+    min-width: 200px;
+}
+
+.jjr-stat-number {
+    font-family: 'rbold', sans-serif;
+    font-size: 48px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.jjr-stat-label {
+    font-family: 'ind', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.6);
+}
+
+/* ============================================
+   INTRO
+   ============================================ */
+.jjr-intro {
+    padding: 100px 0;
+    background: #fff;
+}
+
+.jjr-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 60px;
+}
+
+.jjr-intro-divider {
+    background: #e5e5e5;
+}
+
+.jjr-intro-block h2 {
+    font-family: 'rbold', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #b61b22;
+    margin-bottom: 20px;
+}
+
+.jjr-intro-block p {
+    font-family: 'ind', sans-serif;
+    font-size: 17px;
+    color: #444;
+    line-height: 1.8;
+}
+
+/* ============================================
+   WHY US - White background with aluminum border
+   ============================================ */
+.jjr-why {
+    padding: 100px 0;
+    background: #fff;
+    /* Aluminum-style top border */
+    border-top: 2px solid;
+    border-image: linear-gradient(90deg, #d8d8d8, #b8b8b8, #a8a8a8, #b8b8b8, #d8d8d8) 1;
+}
+
+.jjr-section-header {
+    margin-bottom: 60px;
+}
+
+.jjr-section-tag {
+    font-family: 'rbold', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #b61b22;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.jjr-section-title {
+    font-family: 'rbold', sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    color: #1a1a1a;
+    letter-spacing: -1px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.jjr-why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.jjr-why-item {
+    background: #fff;
+    padding: 40px 30px;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    transition: all 0.3s ease;
+}
+
+.jjr-why-item:nth-child(4n) {
+    border-right: none;
+}
+
+.jjr-why-item:hover {
+    background: #1a1a1a;
+}
+
+.jjr-why-item:hover .jjr-why-num,
+.jjr-why-item:hover .jjr-why-title,
+.jjr-why-item:hover .jjr-why-text {
+    color: #fff;
+}
+
+.jjr-why-item:hover .jjr-why-num {
+    color: #b61b22;
+}
+
+.jjr-why-num {
+    font-family: 'rbold', sans-serif;
+    font-size: 64px;
+    color: #f0f0f0;
+    line-height: 1;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.jjr-why-title {
+    font-family: 'rbold', sans-serif;
+    font-size: 18px;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+
+.jjr-why-text {
+    font-family: 'ind', sans-serif;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+/* ============================================
+   PRODUCT SECTION (TYM Only)
+   ============================================ */
+.jjr-product {
+    background: #1a1a1a;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 500px;
+}
+
+.jjr-product-image {
+    background: #2a2a2a;
+    position: relative;
+    overflow: hidden;
+}
+
+.jjr-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.jjr-product-content {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.jjr-product-tag {
+    font-family: 'rbold', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #b61b22;
+    margin-bottom: 16px;
+}
+
+.jjr-product-title {
+    font-family: 'rbold', sans-serif;
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.jjr-product-text {
+    font-family: 'ind', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.jjr-product-specs {
+    display: flex;
+    gap: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.jjr-spec-item strong {
+    font-family: 'rbold', sans-serif;
+    display: block;
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.jjr-spec-item span {
+    font-family: 'ind', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.5);
+}
+
+/* ============================================
+   SERVICE AREA - MAP SECTION
+   ============================================ */
+.jjr-map-section {
+    position: relative;
+    min-height: 500px;
+    background: #1a1a1a;
+}
+
+/* Background image with grayscale */
+.jjr-map-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://jjriggsequipment.com/wp-content/uploads/2024/10/IMG_4255.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%);
+    opacity: 0.4;
+    z-index: 1;
+}
+
+/* Gradient overlay on map */
+.jjr-map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to right,
+        rgba(26, 26, 26, 0.95) 0%,
+        rgba(26, 26, 26, 0.8) 40%,
+        rgba(26, 26, 26, 0.5) 70%,
+        rgba(26, 26, 26, 0.2) 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Content card overlay */
+.jjr-map-content {
+    position: relative;
+    z-index: 10;
+    padding: 80px 0;
+}
+
+.jjr-map-card {
+    max-width: 450px;
+}
+
+.jjr-map-card h3 {
+    font-family: 'rbold', sans-serif;
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.jjr-map-card p {
+    font-family: 'ind', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.jjr-areas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.jjr-area-tag {
+    font-family: 'ind', sans-serif;
+    display: inline-block;
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.jjr-area-tag:hover {
+    background: #fff;
+    border-color: #fff;
+    color: #1a1a1a;
+}
+
+.jjr-area-tag.active {
+    background: #b61b22;
+    border-color: #b61b22;
+    color: #fff;
+}
+
+/* ============================================
+   CTA - FINAL SECTION
+   ============================================ */
+.jjr-cta {
+    background: #b61b22;
+    padding: 70px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.jjr-cta::before {
+    content: 'JJRIGGS';
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'rbold', sans-serif;
+    font-size: 200px;
+    color: rgba(0,0,0,0.15);
+    line-height: 1;
+    pointer-events: none;
+    letter-spacing: -5px;
+}
+
+.jjr-cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.jjr-cta h3 {
+    font-family: 'rbold', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    color: #fff;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+}
+
+.jjr-cta p {
+    font-family: 'ind', sans-serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+}
+
+/* CTA Button - transparent default, white fill on hover */
+.jjr-cta-btn {
+    font-family: 'rbold', sans-serif;
+    display: inline-block;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 22px 48px;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.jjr-cta-btn:hover {
+    background: #fff !important;
+    color: #b61b22 !important;
+}
+
+/* ============================================
+   NEWSLETTER SIGNUP SECTION
+   ============================================ */
+.jjr-newsletter {
+    background: #171b20;
+    padding: 80px 0;
+}
+
+.jjr-newsletter-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.jjr-newsletter-tag {
+    font-family: 'rbold', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #b61b22;
+    margin-bottom: 12px;
+}
+
+.jjr-newsletter-title {
+    font-family: 'rbold', sans-serif;
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.jjr-newsletter-text {
+    font-family: 'ind', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+}
+
+.jjr-newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Inline form layout for newsletter */
+.jjr-newsletter-form .gform_wrapper .gform_body {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.jjr-newsletter-form .gform_wrapper .gfield {
+    flex: 1;
+    min-width: 200px;
+    margin: 0;
+}
+
+.jjr-newsletter-form .gform_wrapper .gform_footer {
+    margin-top: 0;
+    padding: 0;
+}
+
+/* Dark theme for newsletter form */
+.jjr-newsletter-form .gform_wrapper .gfield_label {
+    display: none; /* Hide labels, use placeholders */
+}
+
+.jjr-newsletter-form .gform_wrapper input[type="text"],
+.jjr-newsletter-form .gform_wrapper input[type="email"] {
+    background: #2f353b;
+    border: 2px solid #78828e;
+    border-radius: 0;
+    color: #fffefe;
+    padding: 18px 20px;
+    font-family: 'ind', sans-serif;
+    font-size: 15px;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.jjr-newsletter-form .gform_wrapper input:focus {
+    border-color: #fffefe;
+    background: #273647;
+    outline: none;
+}
+
+.jjr-newsletter-form .gform_wrapper input::placeholder {
+    color: #78828e;
+}
+
+/* Validation errors */
+.jjr-newsletter-form .gform_wrapper .gfield_error input {
+    border-color: #b61b22;
+}
+
+.jjr-newsletter-form .gform_wrapper .validation_message {
+    font-family: 'ind', sans-serif;
+    font-size: 13px;
+    color: #b61b22;
+    margin-top: 8px;
+}
+
+.jjr-newsletter-form .gform_wrapper .gform_button {
+    background: #b61b22;
+    border: 2px solid #b61b22;
+    border-radius: 0;
+    color: #fffefe;
+    padding: 18px 36px;
+    font-family: 'rbold', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.jjr-newsletter-form .gform_wrapper .gform_button:hover {
+    background: #fffefe;
+    border-color: #fffefe;
+    color: #b61b22;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .jjr-hero-stats {
+        position: static;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-top: 40px;
+    }
+
+    .jjr-stat {
+        min-width: auto;
+        flex: 1;
+        max-width: 200px;
+    }
+
+    .jjr-hero::after {
+        width: 100%;
+        height: 40%;
+        clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .jjr-why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .jjr-product {
+        grid-template-columns: 1fr;
+    }
+
+    .jjr-product-image {
+        min-height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Hero mobile */
+    .jjr-hero {
+        min-height: auto;
+        padding: 60px 0;
+    }
+
+    .jjr-hero::after {
+        height: 35%;
+        clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .jjr-hero-eyebrow {
+        font-size: 13px;
+        padding: 12px 22px;
+    }
+
+    .jjr-hero h1 {
+        font-size: 44px;
+        letter-spacing: -1px;
+    }
+
+    .jjr-hero-text {
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    .jjr-hero-stats {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .jjr-stat {
+        padding: 24px 20px;
+        max-width: 100%;
+    }
+
+    .jjr-stat-number {
+        font-size: 40px;
+    }
+
+    .jjr-stat-label {
+        font-size: 12px;
+    }
+
+    /* Intro mobile */
+    .jjr-intro {
+        padding: 70px 0;
+    }
+
+    .jjr-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .jjr-intro-divider {
+        display: none;
+    }
+
+    .jjr-intro-block h2 {
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+
+    .jjr-intro-block p {
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    /* Why Us mobile */
+    .jjr-why {
+        padding: 70px 0;
+    }
+
+    .jjr-section-tag {
+        font-size: 13px;
+    }
+
+    .jjr-section-title {
+        font-size: 36px;
+    }
+
+    .jjr-why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .jjr-why-item {
+        border-right: none !important;
+        padding: 36px 28px;
+    }
+
+    .jjr-why-num {
+        font-size: 56px;
+    }
+
+    .jjr-why-title {
+        font-size: 20px;
+        margin-bottom: 14px;
+    }
+
+    .jjr-why-text {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* Product mobile */
+    .jjr-product-content {
+        padding: 50px 30px;
+    }
+
+    .jjr-product-tag {
+        font-size: 13px;
+    }
+
+    .jjr-product-title {
+        font-size: 32px;
+    }
+
+    .jjr-product-text {
+        font-size: 17px;
+        line-height: 1.8;
+    }
+
+    .jjr-product-specs {
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+
+    .jjr-spec-item strong {
+        font-size: 26px;
+    }
+
+    .jjr-spec-item span {
+        font-size: 13px;
+    }
+
+    /* Map section mobile */
+    .jjr-map-section {
+        min-height: 500px;
+    }
+
+    .jjr-map-content {
+        padding: 60px 0;
+    }
+
+    .jjr-map-overlay {
+        background: linear-gradient(
+            to bottom,
+            rgba(26, 26, 26, 0.95) 0%,
+            rgba(26, 26, 26, 0.8) 50%,
+            rgba(26, 26, 26, 0.4) 100%
+        );
+    }
+
+    .jjr-map-card {
+        max-width: 100%;
+    }
+
+    .jjr-map-card h3 {
+        font-size: 28px;
+    }
+
+    .jjr-map-card p {
+        font-size: 17px;
+    }
+
+    .jjr-area-tag {
+        font-size: 14px;
+        padding: 14px 22px;
+    }
+
+    /* CTA mobile */
+    .jjr-cta {
+        padding: 60px 0;
+    }
+
+    .jjr-cta-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .jjr-cta::before {
+        font-size: 80px;
+        right: 50%;
+        transform: translate(50%, -50%);
+        letter-spacing: -2px;
+    }
+
+    .jjr-cta h3 {
+        font-size: 34px;
+    }
+
+    .jjr-cta p {
+        font-size: 18px;
+    }
+
+    .jjr-cta-btn {
+        font-size: 15px;
+        padding: 20px 40px;
+    }
+
+    /* Newsletter mobile */
+    .jjr-newsletter {
+        padding: 60px 0;
+    }
+
+    .jjr-newsletter-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .jjr-newsletter-title {
+        font-size: 28px;
+    }
+
+    .jjr-newsletter-text {
+        font-size: 16px;
+    }
+
+    .jjr-newsletter-form .gform_wrapper .gform_body {
+        flex-direction: column;
+    }
+
+    .jjr-newsletter-form .gform_wrapper .gfield {
+        min-width: 100%;
+    }
+}

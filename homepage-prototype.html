@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJ Riggs Equipment | TYM Tractors & Bad Boy Mowers | Colville, WA</title>
+    <meta name="description" content="Northeast Washington's authorized TYM Tractor and Bad Boy Mower dealer. Family-owned since 2019. Sales, service, parts & financing in Colville, WA.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #c41230;
+            --red-dark: #a30f28;
+            --dark: #1a1a1a;
+            --gray: #555;
+            --light: #f8f8f8;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+
+        /* ==================== TOP BAR ==================== */
+        .top-bar {
+            background: var(--dark);
+            color: white;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .top-bar-left {
+            display: flex;
+            gap: 25px;
+        }
+
+        .top-bar-left i {
+            color: var(--red);
+            margin-right: 8px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .top-bar-right a {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .top-bar-right a:hover {
+            background: var(--red);
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--red);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo-text span {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: var(--red);
+        }
+
+        .header-cta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-phone {
+            text-align: right;
+        }
+
+        .header-phone span {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .header-phone a {
+            display: block;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: var(--red);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn:hover {
+            background: var(--red-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--red);
+            color: var(--red);
+        }
+
+        .btn-outline:hover {
+            background: var(--red);
+            color: white;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--dark);
+        }
+
+        .btn-white:hover {
+            background: var(--light);
+        }
+
+        /* ==================== HERO ==================== */
+        .hero {
+            background: linear-gradient(135deg, rgba(26,26,26,0.85) 0%, rgba(26,26,26,0.7) 100%),
+                        url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1920') center/cover;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--red);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hero-stat h3 {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .hero-stat span {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* ==================== TRUST BAR ==================== */
+        .trust-bar {
+            background: white;
+            padding: 25px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .trust-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trust-item i {
+            font-size: 24px;
+            color: var(--red);
+        }
+
+        .trust-item span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .brand-logos {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .brand-logo {
+            height: 45px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .brand-logo:hover {
+            opacity: 1;
+        }
+
+        /* ==================== FEATURED EQUIPMENT ==================== */
+        .featured {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .equipment-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .equipment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .equipment-image {
+            height: 200px;
+            background: #ddd;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #bbb;
+        }
+
+        .equipment-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--red);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .equipment-badge.used {
+            background: #2ecc71;
+        }
+
+        .equipment-info {
+            padding: 20px;
+        }
+
+        .equipment-brand {
+            font-size: 12px;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .equipment-info h3 {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+
+        .equipment-specs {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .equipment-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .equipment-price span {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .view-all {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* ==================== WHY CHOOSE US ==================== */
+        .why-us {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .why-us-content h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .why-us-content > p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .why-us-list {
+            list-style: none;
+        }
+
+        .why-us-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .why-us-list i {
+            width: 30px;
+            height: 30px;
+            background: rgba(196, 18, 48, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--red);
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .why-us-list h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .why-us-list p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .why-us-image {
+            background: var(--light);
+            border-radius: 12px;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            color: #ccc;
+            position: relative;
+        }
+
+        .why-us-image::after {
+            content: 'Photo of Your Team & Shop';
+            position: absolute;
+            font-size: 16px;
+            color: #999;
+        }
+
+        /* ==================== PROMO BANNER ==================== */
+        .promo-banner {
+            background: var(--red);
+            color: white;
+            padding: 50px 0;
+        }
+
+        .promo-banner .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .promo-content h2 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .promo-content p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* ==================== SERVICES ==================== */
+        .services {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(196, 18, 48, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 32px;
+            color: var(--red);
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .service-card a {
+            color: var(--red);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .service-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==================== TESTIMONIALS ==================== */
+        .testimonials {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid var(--red);
+        }
+
+        .testimonial-stars {
+            color: #f4c430;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card p {
+            font-size: 16px;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .author-info span {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .google-rating {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
+
+        .google-rating img {
+            height: 30px;
+            margin-bottom: 10px;
+        }
+
+        .google-rating .stars {
+            font-size: 28px;
+            color: #f4c430;
+            margin-bottom: 5px;
+        }
+
+        .google-rating p {
+            font-size: 16px;
+        }
+
+        /* ==================== CTA SECTION ==================== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark) 0%, #2a2a2a 100%);
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about h3 {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            font-size: 15px;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .footer h4 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            opacity: 0.8;
+        }
+
+        .footer-contact i {
+            color: var(--red);
+            margin-top: 3px;
+        }
+
+        .footer-hours {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .footer-hours h5 {
+            color: white;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-hours p {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: background 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: var(--red);
+        }
+
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .equipment-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .header .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav {
+                gap: 20px;
+            }
+
+            .hero {
+                min-height: 500px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero-stats {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 30px;
+            }
+
+            .trust-bar .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .equipment-grid,
+            .services-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .why-us-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .promo-banner .container {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-map-marker-alt"></i> 685 Elm Tree Dr, Colville, WA 99114</span>
+                <span><i class="fas fa-clock"></i> Mon-Fri: 8am-5pm | Sat: 9am-2pm</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tractor"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>JJ Riggs Equipment</h1>
+                    <span>Family-Owned Since 2019</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="#">Home</a>
+                <a href="#">Inventory</a>
+                <a href="#">Service</a>
+                <a href="#">Parts</a>
+                <a href="#">Financing</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </nav>
+            <div class="header-cta">
+                <div class="header-phone">
+                    <span>Call Us Today</span>
+                    <a href="tel:509-738-2985">509-738-2985</a>
+                </div>
+                <a href="#" class="btn">Get a Quote</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">Authorized Dealer</span>
+                <h1>Your Trusted Tractor & Mower Dealer in Northeast Washington</h1>
+                <p>From compact tractors to zero-turn mowers, we have the equipment you need to get the job done. Family-owned service you can count on.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn">View Inventory</a>
+                    <a href="#" class="btn btn-white">Schedule Service</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <h3>50+</h3>
+                        <span>Units In Stock</span>
+                    </div>
+                    <div class="hero-stat">
+                        <h3>500+</h3>
+                        <span>Happy Customers</span>
+                    </div>
+                    <div class="hero-stat">
+                        <h3>5</h3>
+                        <span>Years Serving NE WA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-item">
+                <i class="fas fa-star"></i>
+                <span>4.9 Google Rating</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>Factory Certified Technicians</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-handshake"></i>
+                <span>Financing Available</span>
+            </div>
+            <div class="brand-logos">
+                <div style="font-weight: 700; font-size: 24px; color: #c41230; font-family: 'Montserrat', sans-serif;">TYM</div>
+                <div style="font-weight: 700; font-size: 20px; color: #1a1a1a; font-family: 'Montserrat', sans-serif;">BAD BOY</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Equipment -->
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Equipment</h2>
+                <p>Check out our latest arrivals and best-selling tractors and mowers</p>
+            </div>
+            <div class="equipment-grid">
+                <div class="equipment-card">
+                    <div class="equipment-image">
+                        <span class="equipment-badge">New</span>
+                        <i class="fas fa-tractor"></i>
+                    </div>
+                    <div class="equipment-info">
+                        <span class="equipment-brand">TYM</span>
+                        <h3>T265 Compact Tractor</h3>
+                        <p class="equipment-specs">25 HP | 4WD | Loader Ready</p>
+                        <div class="equipment-price">$18,995 <span>or $289/mo</span></div>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-image">
+                        <span class="equipment-badge">New</span>
+                        <i class="fas fa-tractor"></i>
+                    </div>
+                    <div class="equipment-info">
+                        <span class="equipment-brand">TYM</span>
+                        <h3>T474 Utility Tractor</h3>
+                        <p class="equipment-specs">48 HP | 4WD | Cab Optional</p>
+                        <div class="equipment-price">$32,500 <span>or $425/mo</span></div>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-image">
+                        <span class="equipment-badge">In Stock</span>
+                        <i class="fas fa-circle-notch"></i>
+                    </div>
+                    <div class="equipment-info">
+                        <span class="equipment-brand">Bad Boy</span>
+                        <h3>Rebel 61" Zero-Turn</h3>
+                        <p class="equipment-specs">852cc | 61" Deck | 10 MPH</p>
+                        <div class="equipment-price">$7,499 <span>or $149/mo</span></div>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-image">
+                        <span class="equipment-badge used">Used</span>
+                        <i class="fas fa-tractor"></i>
+                    </div>
+                    <div class="equipment-info">
+                        <span class="equipment-brand">TYM</span>
+                        <h3>T394 w/ Loader</h3>
+                        <p class="equipment-specs">37 HP | 4WD | 210 Hours</p>
+                        <div class="equipment-price">$24,900 <span>Save $8,000</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="#" class="btn">View All Inventory</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-us">
+        <div class="container">
+            <div class="why-us-grid">
+                <div class="why-us-content">
+                    <h2>Why Buy From JJ Riggs?</h2>
+                    <p>We're not a mega-dealer. We're your neighbors, and we treat every customer like family.</p>
+                    <ul class="why-us-list">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <h4>Family-Owned & Operated</h4>
+                                <p>You'll work directly with the owners who care about your satisfaction.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <h4>Factory-Trained Technicians</h4>
+                                <p>Our service team is certified by TYM and Bad Boy to keep your equipment running.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <h4>Parts In Stock</h4>
+                                <p>We stock common parts so you're not waiting weeks for repairs.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <h4>Competitive Financing</h4>
+                                <p>Low rates and flexible terms to fit your budget.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <h4>We Buy Used Equipment</h4>
+                                <p>Looking to trade in? We offer fair prices on quality used equipment.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="why-us-image">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Banner -->
+    <section class="promo-banner">
+        <div class="container">
+            <div class="promo-content">
+                <h2>0% Financing for 60 Months</h2>
+                <p>On all new TYM tractors. Limited time offer. Subject to credit approval.</p>
+            </div>
+            <a href="#" class="btn btn-white">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Can We Help?</h2>
+                <p>Full-service dealership with everything you need under one roof</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>New & Used Sales</h3>
+                    <p>Browse our inventory of TYM tractors and Bad Boy mowers. New arrivals weekly.</p>
+                    <a href="#">View Inventory <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3>Service & Repair</h3>
+                    <p>Factory-trained techs for maintenance, repairs, and warranty work. All brands welcome.</p>
+                    <a href="#">Schedule Service <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Parts Department</h3>
+                    <p>OEM and aftermarket parts in stock. Can't find it? We'll order it for you.</p>
+                    <a href="#">Order Parts <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+                <p>Don't just take our word for it</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Bought my TYM T474 from JJ Riggs last spring. Great experience from start to finish. No pressure sales, fair price, and they delivered it right to my property."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MJ</div>
+                        <div class="author-info">
+                            <h4>Mike Johnson</h4>
+                            <span>Chewelah, WA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Their service department is top-notch. Had an issue with my mower and they got me in same day. Hard to find that kind of service these days."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SB</div>
+                        <div class="author-info">
+                            <h4>Sarah Brooks</h4>
+                            <span>Kettle Falls, WA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Family-owned means they actually care. Helped me find the right size tractor for my 10-acre property and set up financing that worked for my budget."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DW</div>
+                        <div class="author-info">
+                            <h4>Dan Williams</h4>
+                            <span>Colville, WA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="google-rating">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p><strong>4.9 out of 5</strong> based on 47 Google Reviews</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Find Your Next Tractor or Mower?</h2>
+            <p>Stop by our Colville location or give us a call. We'd love to help you find the right equipment for your needs.</p>
+            <div class="cta-buttons">
+                <a href="tel:509-738-2985" class="btn"><i class="fas fa-phone"></i> &nbsp; Call 509-738-2985</a>
+                <a href="#" class="btn btn-outline" style="border-color: white; color: white;">Get Directions</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>JJ Riggs Equipment</h3>
+                    <p>Family-owned tractor and mower dealership serving Northeast Washington since 2019. Authorized TYM Tractor and Bad Boy Mower dealer with full service and parts departments.</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">New Inventory</a></li>
+                        <li><a href="#">Used Equipment</a></li>
+                        <li><a href="#">Service Department</a></li>
+                        <li><a href="#">Parts</a></li>
+                        <li><a href="#">Financing</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Brands</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">TYM Tractors</a></li>
+                        <li><a href="#">Bad Boy Mowers</a></li>
+                    </ul>
+                    <h4 style="margin-top: 30px;">Service Areas</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Colville</a></li>
+                        <li><a href="#">Kettle Falls</a></li>
+                        <li><a href="#">Chewelah</a></li>
+                        <li><a href="#">Spokane</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 685 Elm Tree Dr<br>Colville, WA 99114</p>
+                    <p><i class="fas fa-phone"></i> <a href="tel:509-738-2985" style="color: inherit;">509-738-2985</a></p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:info@jjriggsequipment.com" style="color: inherit;">info@jjriggsequipment.com</a></p>
+                    <div class="footer-hours">
+                        <h5>Business Hours</h5>
+                        <p>Mon - Fri: 8:00 AM - 5:00 PM</p>
+                        <p>Saturday: 9:00 AM - 2:00 PM</p>
+                        <p>Sunday: Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 JJ Riggs Equipment. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

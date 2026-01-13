@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet the Fleet — JJ Riggs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .header {
+            padding: 60px;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: #b61b22;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .header h1 span {
+            color: #b61b22;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #666;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #333;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            border-color: #555;
+            color: #fff;
+        }
+
+        .main {
+            padding: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 30px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .post-card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .post-card:hover {
+            border-color: #333;
+        }
+
+        .post-visual {
+            aspect-ratio: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .post-visual .slide-num {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.4);
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .post-visual .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            opacity: 0.9;
+        }
+
+        .style-hero { background: linear-gradient(135deg, #171b20 0%, #273647 100%); }
+        .style-dark { background: #171b20; }
+        .style-navy { background: linear-gradient(180deg, #273647 0%, #171b20 100%); }
+        .style-red { background: #b61b22; }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #b61b22;
+            margin-bottom: 12px;
+        }
+
+        .style-red .eyebrow {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .headline {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .headline span {
+            color: #b61b22;
+        }
+
+        .style-red .headline span {
+            color: #fff;
+        }
+
+        .subhead {
+            font-size: 14px;
+            color: #78828e;
+            line-height: 1.5;
+        }
+
+        .style-red .subhead {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .tractor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .tractor-item {
+            background: rgba(255,255,255,0.05);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .tractor-item .hp {
+            font-size: 28px;
+            font-weight: 800;
+            color: #b61b22;
+            margin-bottom: 4px;
+        }
+
+        .tractor-item .model {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .tractor-item .use {
+            font-size: 10px;
+            color: #666;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 14px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .cta-box {
+            background: #fff;
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cta-box .cta-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .cta-box .cta-phone {
+            font-size: 28px;
+            font-weight: 800;
+            color: #b61b22;
+            margin-bottom: 8px;
+        }
+
+        .cta-box .cta-address {
+            font-size: 13px;
+            color: #444;
+        }
+
+        .post-content {
+            padding: 24px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .post-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #b61b22;
+            margin-bottom: 12px;
+        }
+
+        .post-caption {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.7;
+            padding: 16px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: pre-wrap;
+            margin-bottom: 16px;
+        }
+
+        .post-caption:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: #333;
+        }
+
+        .post-caption.copied {
+            border-color: #b61b22;
+            background: rgba(182, 27, 34, 0.1);
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-size: 10px;
+            color: #b61b22;
+            background: rgba(182, 27, 34, 0.1);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: rgba(182, 27, 34, 0.2);
+        }
+
+        .footer {
+            padding: 40px 60px;
+            text-align: center;
+            border-top: 1px solid #1a1a1a;
+            font-size: 12px;
+            color: #444;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #b61b22;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 200;
+        }
+
+        .toast.show { opacity: 1; }
+
+        @media (max-width: 900px) {
+            .header, .main, .footer {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-badge">Evergreen Campaign</div>
+        <h1>Meet the <span>Fleet</span></h1>
+        <p>Introduce your audience to the full TYM lineup. 5-slide carousel showcasing every tractor category.</p>
+        <a href="../../index.html#campaigns" class="back-btn">← Back to Brand Guide</a>
+    </header>
+
+    <main class="main">
+
+        <div class="section-title">Instagram / Facebook Carousel (1080×1080)</div>
+
+        <div class="post-grid">
+
+            <!-- Slide 1: Hook -->
+            <div class="post-card">
+                <div class="post-visual style-hero">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">1/5</span>
+                    <div class="eyebrow">Your Local TYM Dealer</div>
+                    <div class="headline">Meet the <span>Fleet</span></div>
+                    <div class="subhead">From hobby farms to heavy work — we've got the right tractor for your land.</div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">Meet the fleet. 🚜
+
+Whether you're maintaining 5 acres or working 50, there's a TYM tractor built for your job.
+
+Swipe to see the full lineup — from compact powerhouses to utility workhorses.
+
+All backed by a 6-year warranty and local service right here in Colville.
+
+#TYMTractor #MeetTheFleet #ColvilleWA #JJRiggs #TractorDealer</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#TYMTractor</span>
+                        <span class="tag" onclick="copyTag(this)">#MeetTheFleet</span>
+                        <span class="tag" onclick="copyTag(this)">#ColvilleWA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Sub-Compact -->
+            <div class="post-card">
+                <div class="post-visual style-dark">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">2/5</span>
+                    <div class="eyebrow">Sub-Compact Series</div>
+                    <div class="headline">Small but <span>mighty</span></div>
+                    <div class="tractor-grid">
+                        <div class="tractor-item">
+                            <div class="hp">25 HP</div>
+                            <div class="model">T25</div>
+                            <div class="use">Mowing & gardens</div>
+                        </div>
+                        <div class="tractor-item">
+                            <div class="hp">35 HP</div>
+                            <div class="model">T35</div>
+                            <div class="use">Light loader work</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">Sub-Compact Series | 25-35 HP 💪
+
+Perfect for:
+→ Large lawns and estate mowing
+→ Garden prep and landscaping
+→ Light material moving
+→ Snow removal with attachments
+
+Nimble enough for tight spaces. Tough enough for real work. Starting at $199/mo.
+
+#SubCompactTractor #TYM #SmallFarm #PropertyMaintenance</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#SubCompactTractor</span>
+                        <span class="tag" onclick="copyTag(this)">#PropertyMaintenance</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Compact -->
+            <div class="post-card">
+                <div class="post-visual style-navy">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">3/5</span>
+                    <div class="eyebrow">Compact Series</div>
+                    <div class="headline">The <span>sweet spot</span></div>
+                    <div class="tractor-grid">
+                        <div class="tractor-item">
+                            <div class="hp">40 HP</div>
+                            <div class="model">T40</div>
+                            <div class="use">Hobby farms</div>
+                        </div>
+                        <div class="tractor-item">
+                            <div class="hp">50 HP</div>
+                            <div class="model">T50</div>
+                            <div class="use">Versatile workhorse</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">Compact Series | 40-50 HP 🔥
+
+The most popular choice for hobby farmers and rural property owners.
+
+Built for:
+→ Hay operations (cutting, raking, baling)
+→ Pasture management
+→ Fence line clearing
+→ Grading and earthwork
+
+Big enough to handle real tasks. Small enough to store easily.
+
+#CompactTractor #HobbyFarm #TYMTractors #RuralLife</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#CompactTractor</span>
+                        <span class="tag" onclick="copyTag(this)">#HobbyFarm</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Utility -->
+            <div class="post-card">
+                <div class="post-visual style-dark">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">4/5</span>
+                    <div class="eyebrow">Utility Series</div>
+                    <div class="headline">Built for the <span>long haul</span></div>
+                    <div class="tractor-grid">
+                        <div class="tractor-item">
+                            <div class="hp">60 HP</div>
+                            <div class="model">T60</div>
+                            <div class="use">Serious acreage</div>
+                        </div>
+                        <div class="tractor-item">
+                            <div class="hp">73 HP</div>
+                            <div class="model">T73</div>
+                            <div class="use">Commercial work</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">Utility Series | 60-73 HP 💪🔥
+
+When you need to get serious work done.
+
+These machines are built for:
+→ Large-scale hay production
+→ Livestock operations
+→ Land clearing and forestry
+→ Commercial landscaping
+
+All-day comfort. All-season reliability. 6-year warranty standard.
+
+#UtilityTractor #FarmLife #TYMPower #WorkhorseTractor</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#UtilityTractor</span>
+                        <span class="tag" onclick="copyTag(this)">#FarmLife</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: CTA -->
+            <div class="post-card">
+                <div class="post-visual style-red">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">5/5</span>
+                    <div class="headline">Find your <span>fit</span></div>
+                    <div class="subhead">Stop by and we'll match you with the right machine. No pressure.</div>
+                    <div class="cta-box">
+                        <div class="cta-label">Call or Visit</div>
+                        <div class="cta-phone">509-738-2985</div>
+                        <div class="cta-address">685 Elm Tree Dr, Colville, WA<br>Mon-Fri, 8 AM - 5 PM</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">Ready to find your fit? 🚜
+
+Stop by our Colville shop. Tell us about your land and your work — we'll show you exactly which TYM makes sense.
+
+No high-pressure sales. Just honest advice from people who actually use this equipment.
+
+📞 509-738-2985
+📍 685 Elm Tree Dr, Colville, WA
+🕐 Mon-Fri, 8 AM - 5 PM
+
+#JJRiggs #TYMDealer #ColvilleWA #ShopLocal #TractorShopping</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#JJRiggs</span>
+                        <span class="tag" onclick="copyTag(this)">#ShopLocal</span>
+                        <span class="tag" onclick="copyTag(this)">#TYMDealer</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        JJ Riggs Equipment • Brand Guide • 2025
+    </footer>
+
+    <div class="toast" id="toast">Copied!</div>
+
+    <script>
+        function copyCaption(el) {
+            const text = el.innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                el.classList.add('copied');
+                showToast('Caption copied!');
+                setTimeout(() => el.classList.remove('copied'), 2000);
+            });
+        }
+
+        function copyTag(el) {
+            const text = el.innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Tag copied: ' + text);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+
+</body>
+</html>

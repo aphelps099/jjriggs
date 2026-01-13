@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geofencing Facebook Ads Playbook - JJ Riggs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #cccccc;
+            line-height: 1.7;
+        }
+        .header {
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+            padding: 80px 40px;
+            border-bottom: 1px solid #222;
+        }
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 30px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #b61b22; }
+        .badge {
+            display: inline-block;
+            background: #b61b22;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: #78828e;
+            max-width: 600px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        .section {
+            margin-bottom: 60px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section-number {
+            font-size: 11px;
+            font-weight: 600;
+            color: #b61b22;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 30px 0 15px 0;
+        }
+        p {
+            margin-bottom: 16px;
+        }
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 24px;
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        .highlight-box {
+            background: #111111;
+            border-left: 3px solid #b61b22;
+            padding: 24px 28px;
+            margin: 30px 0;
+        }
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+        .target-card {
+            background: #111111;
+            border: 1px solid #222;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .target-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .target-radius {
+            font-size: 13px;
+            color: #b61b22;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .target-desc {
+            font-size: 14px;
+            color: #888;
+        }
+        .budget-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .budget-table th,
+        .budget-table td {
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid #222;
+        }
+        .budget-table th {
+            background: #111111;
+            color: #78828e;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .budget-table td {
+            font-size: 14px;
+        }
+        .budget-table tr:last-child td {
+            border-bottom: none;
+        }
+        .metric {
+            display: inline-block;
+            background: #1a1a1a;
+            padding: 4px 10px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #b61b22;
+            border-radius: 3px;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 16px;
+        }
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #b61b22;
+            font-weight: bold;
+        }
+        .footer {
+            background: #0a0a0a;
+            border-top: 1px solid #1a1a1a;
+            padding: 40px;
+            text-align: center;
+        }
+        .footer p {
+            color: #444;
+            font-size: 13px;
+            margin: 0;
+        }
+        .footer span { color: #b61b22; }
+        code {
+            background: #1a1a1a;
+            padding: 2px 8px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #cccccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="../../index.html" class="back-link">← Back to Brand Guide</a>
+            <div class="badge">Playbook</div>
+            <h1>Geofencing Facebook Ads</h1>
+            <p class="subtitle">A location-based advertising strategy to reach farmers, ranchers, and property owners in Stevens County and surrounding areas.</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section class="section">
+            <div class="section-number">01 — Overview</div>
+            <h2>What is Geofencing?</h2>
+            <p>Geofencing uses GPS coordinates to create virtual boundaries around physical locations. When someone enters that boundary with their phone, they become eligible to see your ads—during their visit and for up to 30 days after.</p>
+
+            <div class="highlight-box">
+                <p><strong>Why it works for JJ Riggs:</strong> Your customers are at feed stores, farm supply shops, ag events, and competitor lots. Geofencing lets you reach them exactly when they're thinking about equipment.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">02 — Target Locations</div>
+            <h2>Where to Set Fences</h2>
+            <p>Focus on locations where your ideal customers spend time. Start with these high-value targets:</p>
+
+            <h3>Tier 1: Direct Competitors</h3>
+            <div class="target-card">
+                <div class="target-name">Other Tractor Dealerships</div>
+                <div class="target-radius">Radius: 0.5 miles</div>
+                <div class="target-desc">Kubota, John Deere, Case IH dealers within 60 miles. Catch shoppers comparing options.</div>
+            </div>
+
+            <h3>Tier 2: Agriculture Retail</h3>
+            <div class="target-card">
+                <div class="target-name">Farm Supply Stores</div>
+                <div class="target-radius">Radius: 0.25 miles</div>
+                <div class="target-desc">Coastal Farm & Ranch, North 40 Outfitters, local feed stores. Regular customers with acreage.</div>
+            </div>
+            <div class="target-card">
+                <div class="target-name">Hardware & Building Supply</div>
+                <div class="target-radius">Radius: 0.25 miles</div>
+                <div class="target-desc">Home Depot, Lowe's, local lumber yards. Property owners doing projects.</div>
+            </div>
+
+            <h3>Tier 3: Events & Gathering Spots</h3>
+            <div class="target-card">
+                <div class="target-name">County Fairgrounds</div>
+                <div class="target-radius">Radius: 0.5 miles</div>
+                <div class="target-desc">Stevens County Fairgrounds during rodeos, 4-H events, livestock shows, swap meets.</div>
+            </div>
+            <div class="target-card">
+                <div class="target-name">Auction Houses</div>
+                <div class="target-radius">Radius: 0.25 miles</div>
+                <div class="target-desc">Equipment auctions, estate sales. Buyers actively looking to purchase.</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">03 — Campaign Structure</div>
+            <h2>How to Set It Up</h2>
+
+            <h3>Step 1: Create Custom Audiences</h3>
+            <p>In Facebook Ads Manager, go to <code>Audiences → Create Audience → Custom Audience</code>. For each location, you'll create a geofence using the "Location" targeting option.</p>
+
+            <h3>Step 2: Layer Demographics</h3>
+            <p>Don't just target location. Add these filters:</p>
+            <ul>
+                <li><strong>Age:</strong> 35-65 (primary buyers)</li>
+                <li><strong>Interests:</strong> Farming, Agriculture, Tractors, Rural Living, Livestock</li>
+                <li><strong>Behaviors:</strong> Farmland owners, Rural residents</li>
+            </ul>
+
+            <h3>Step 3: Set Retargeting Window</h3>
+            <p>Target users for <span class="metric">30 days</span> after they visit your geofenced locations. This gives you multiple touchpoints as they research.</p>
+
+            <div class="highlight-box">
+                <p><strong>Pro tip:</strong> Create separate ad sets for each location category (competitors, farm stores, events). This lets you tailor messaging and track which locations perform best.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">04 — Ad Creative</div>
+            <h2>What to Show Them</h2>
+
+            <h3>For Competitor Locations</h3>
+            <p>Lead with value and differentiation:</p>
+            <ul class="checklist">
+                <li>"6-Year Warranty on Every TYM Tractor"</li>
+                <li>"Local Service. Local Parts. Local People."</li>
+                <li>"Compare Before You Buy—Stop by JJ Riggs"</li>
+            </ul>
+
+            <h3>For Farm Supply Shoppers</h3>
+            <p>Lead with seasonal relevance:</p>
+            <ul class="checklist">
+                <li>"Spring Prep Starts Here—TYM Tractors from $199/mo"</li>
+                <li>"Get More Done This Season"</li>
+                <li>"Built for Stevens County Winters"</li>
+            </ul>
+
+            <h3>For Event Attendees</h3>
+            <p>Build local credibility:</p>
+            <ul class="checklist">
+                <li>"Your Neighbor's Favorite Dealer"</li>
+                <li>"25-73 HP Tractors in Stock Now"</li>
+                <li>Include Google review quotes</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <div class="section-number">05 — Budget & Timing</div>
+            <h2>Recommended Spend</h2>
+
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Campaign Type</th>
+                        <th>Daily Budget</th>
+                        <th>Monthly Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Competitor Geofencing</td>
+                        <td>$15-25/day</td>
+                        <td>$450-750</td>
+                    </tr>
+                    <tr>
+                        <td>Farm Supply Locations</td>
+                        <td>$10-15/day</td>
+                        <td>$300-450</td>
+                    </tr>
+                    <tr>
+                        <td>Events (when active)</td>
+                        <td>$20-30/day</td>
+                        <td>Varies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Recommended</strong></td>
+                        <td><strong>$45-70/day</strong></td>
+                        <td><strong>$1,350-2,100</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Seasonal Timing</h3>
+            <ul>
+                <li><strong>Peak Season (Feb-May):</strong> Increase budget 50%. Spring buying season.</li>
+                <li><strong>Summer:</strong> Maintain baseline. Focus on hay/mowing equipment.</li>
+                <li><strong>Fall (Sept-Nov):</strong> Increase budget 25%. Year-end buying, snow prep.</li>
+                <li><strong>Winter (Dec-Jan):</strong> Reduce spend. Focus on retargeting warm leads.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <div class="section-number">06 — Metrics to Track</div>
+            <h2>Measure What Matters</h2>
+
+            <p>Focus on these KPIs to evaluate campaign performance:</p>
+
+            <ul>
+                <li><strong>Reach:</strong> How many unique people saw your ads <span class="metric">Target: 5,000+/month</span></li>
+                <li><strong>Frequency:</strong> Average times each person saw your ad <span class="metric">Target: 3-5x</span></li>
+                <li><strong>CTR:</strong> Click-through rate <span class="metric">Target: 1.5%+</span></li>
+                <li><strong>Cost per Click:</strong> What you pay for each click <span class="metric">Target: Under $2</span></li>
+                <li><strong>Store Visits:</strong> If enabled, track foot traffic <span class="metric">Track trend</span></li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Attribution tip:</strong> Ask every customer who walks in: "How did you hear about us?" Track this manually to connect ad spend to sales.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">07 — Quick Start Checklist</div>
+            <h2>Launch in 1 Hour</h2>
+
+            <ul class="checklist">
+                <li>List 5-10 competitor/farm store addresses</li>
+                <li>Create a new campaign in Facebook Ads Manager</li>
+                <li>Set objective to "Traffic" or "Store Visits"</li>
+                <li>Add location targeting with 0.25-0.5 mile radius</li>
+                <li>Layer age (35-65) and agricultural interests</li>
+                <li>Upload TYM to ROLL creative (or similar)</li>
+                <li>Set daily budget at $25-50</li>
+                <li>Enable "Advantage+ Placements" for broad reach</li>
+                <li>Schedule review after 7 days</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <p>JJ Riggs <span>•</span> Geofencing Playbook <span>•</span> 2025</p>
+    </footer>
+
+</body>
+</html>

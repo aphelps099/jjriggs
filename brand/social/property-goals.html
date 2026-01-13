@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Goals — JJ Riggs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .header {
+            padding: 60px;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: #b61b22;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .header h1 span {
+            color: #b61b22;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #666;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #333;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            border-color: #555;
+            color: #fff;
+        }
+
+        .main {
+            padding: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 30px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .post-card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .post-card:hover {
+            border-color: #333;
+        }
+
+        .post-visual {
+            aspect-ratio: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .post-visual .slide-num {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.4);
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .post-visual .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            opacity: 0.9;
+        }
+
+        .style-hero { background: linear-gradient(135deg, #171b20 0%, #273647 100%); }
+        .style-dark { background: #171b20; }
+        .style-navy { background: linear-gradient(180deg, #273647 0%, #171b20 100%); }
+        .style-red { background: #b61b22; }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #b61b22;
+            margin-bottom: 12px;
+        }
+
+        .style-red .eyebrow {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .headline {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .headline span {
+            color: #b61b22;
+        }
+
+        .style-red .headline span {
+            color: #fff;
+        }
+
+        .subhead {
+            font-size: 14px;
+            color: #78828e;
+            line-height: 1.5;
+        }
+
+        .style-red .subhead {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .goals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 14px 18px;
+            border-radius: 6px;
+            border-left: 3px solid #b61b22;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .project-item {
+            background: rgba(255,255,255,0.05);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .project-item .icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .project-item .name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .project-item .time {
+            font-size: 10px;
+            color: #b61b22;
+        }
+
+        .attachment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .attachment-item {
+            background: rgba(255,255,255,0.05);
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .attachment-item .name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .attachment-item .use {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .cta-box {
+            background: #fff;
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cta-box .cta-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .cta-box .cta-phone {
+            font-size: 28px;
+            font-weight: 800;
+            color: #b61b22;
+            margin-bottom: 8px;
+        }
+
+        .cta-box .cta-address {
+            font-size: 13px;
+            color: #444;
+        }
+
+        .post-content {
+            padding: 24px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .post-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #b61b22;
+            margin-bottom: 12px;
+        }
+
+        .post-caption {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.7;
+            padding: 16px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: pre-wrap;
+            margin-bottom: 16px;
+        }
+
+        .post-caption:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: #333;
+        }
+
+        .post-caption.copied {
+            border-color: #b61b22;
+            background: rgba(182, 27, 34, 0.1);
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-size: 10px;
+            color: #b61b22;
+            background: rgba(182, 27, 34, 0.1);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: rgba(182, 27, 34, 0.2);
+        }
+
+        .footer {
+            padding: 40px 60px;
+            text-align: center;
+            border-top: 1px solid #1a1a1a;
+            font-size: 12px;
+            color: #444;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #b61b22;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 200;
+        }
+
+        .toast.show { opacity: 1; }
+
+        @media (max-width: 900px) {
+            .header, .main, .footer {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-badge">New Year Campaign</div>
+        <h1>Property <span>Goals</span></h1>
+        <p>New year, new projects. Inspire property owners to tackle their 2025 land goals with the right equipment.</p>
+        <a href="../../index.html#campaigns" class="back-btn">← Back to Brand Guide</a>
+    </header>
+
+    <main class="main">
+
+        <div class="section-title">Instagram / Facebook Carousel (1080×1080)</div>
+
+        <div class="post-grid">
+
+            <!-- Slide 1: Hook -->
+            <div class="post-card">
+                <div class="post-visual style-hero">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">1/5</span>
+                    <div class="eyebrow">New Year, New Projects</div>
+                    <div class="headline">What are your<br><span>property goals?</span></div>
+                    <div class="subhead">2025 is the year to finally tackle that project you've been putting off.</div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">What are your property goals for 2025? 🎯
+
+That fence line you've been meaning to clear?
+The pasture that needs reseeding?
+The driveway that's overdue for grading?
+
+This is the year. Swipe to see how the right equipment turns "someday" into "done."
+
+#PropertyGoals #2025Goals #LandManagement #JJRiggs</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#PropertyGoals</span>
+                        <span class="tag" onclick="copyTag(this)">#2025Goals</span>
+                        <span class="tag" onclick="copyTag(this)">#LandManagement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Common Goals -->
+            <div class="post-card">
+                <div class="post-visual style-dark">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">2/5</span>
+                    <div class="eyebrow">Sound Familiar?</div>
+                    <div class="headline">The <span>someday</span> list</div>
+                    <div class="goals-list">
+                        <div class="goal-item">🌲 Clear overgrown areas</div>
+                        <div class="goal-item">🚧 Fix the driveway</div>
+                        <div class="goal-item">🌱 Improve pastures</div>
+                        <div class="goal-item">🏗️ Build that outbuilding</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">Sound familiar? 👆
+
+We hear it all the time:
+→ "I've been meaning to clear that back section for years"
+→ "The driveway is a mess every spring"
+→ "I need to get the pastures back in shape"
+→ "I want to build a shop but can't prep the site"
+
+These aren't impossible projects. They're just waiting for the right tool.
+
+#PropertyProjects #RuralLife #LandClearing #HomesteadGoals</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#PropertyProjects</span>
+                        <span class="tag" onclick="copyTag(this)">#HomesteadGoals</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Right Equipment -->
+            <div class="post-card">
+                <div class="post-visual style-navy">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">3/5</span>
+                    <div class="eyebrow">The Right Tool</div>
+                    <div class="headline">Projects done <span>faster</span></div>
+                    <div class="project-grid">
+                        <div class="project-item">
+                            <div class="icon">🌲</div>
+                            <div class="name">Land Clearing</div>
+                            <div class="time">Days, not weeks</div>
+                        </div>
+                        <div class="project-item">
+                            <div class="icon">🛤️</div>
+                            <div class="name">Driveway Work</div>
+                            <div class="time">Hours, not days</div>
+                        </div>
+                        <div class="project-item">
+                            <div class="icon">🌾</div>
+                            <div class="name">Pasture Prep</div>
+                            <div class="time">One weekend</div>
+                        </div>
+                        <div class="project-item">
+                            <div class="icon">🏗️</div>
+                            <div class="name">Site Prep</div>
+                            <div class="time">DIY possible</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">The right equipment changes everything. ⚡
+
+What takes weeks by hand takes days with a tractor.
+What takes days takes hours.
+What seems impossible becomes a weekend project.
+
+A compact tractor with the right attachments is the difference between "someday" and "done."
+
+#TractorLife #GetItDone #PropertyManagement #RuralLiving</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#TractorLife</span>
+                        <span class="tag" onclick="copyTag(this)">#GetItDone</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Attachments -->
+            <div class="post-card">
+                <div class="post-visual style-dark">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">4/5</span>
+                    <div class="eyebrow">One Tractor, Endless Uses</div>
+                    <div class="headline">Attachments for <span>every job</span></div>
+                    <div class="attachment-grid">
+                        <div class="attachment-item">
+                            <div class="name">Box Blade</div>
+                            <div class="use">Driveways & grading</div>
+                        </div>
+                        <div class="attachment-item">
+                            <div class="name">Brush Cutter</div>
+                            <div class="use">Clearing & mowing</div>
+                        </div>
+                        <div class="attachment-item">
+                            <div class="name">Post Auger</div>
+                            <div class="use">Fence building</div>
+                        </div>
+                        <div class="attachment-item">
+                            <div class="name">Grapple</div>
+                            <div class="use">Debris & logs</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">One tractor. Endless possibilities. 🔄
+
+The magic isn't just the tractor — it's the attachments:
+
+🔹 Box blade → smooth driveways, level ground
+🔹 Brush cutter → clear overgrown areas fast
+🔹 Post hole auger → fence posts in minutes
+🔹 Grapple → move logs, debris, anything
+
+Stop renting. Start owning the tool that does it all.
+
+#TractorAttachments #VersatileEquipment #DIYProjects #PropertyOwner</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#TractorAttachments</span>
+                        <span class="tag" onclick="copyTag(this)">#DIYProjects</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: CTA -->
+            <div class="post-card">
+                <div class="post-visual style-red">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                    <span class="slide-num">5/5</span>
+                    <div class="headline">Make 2025<br><span>your year</span></div>
+                    <div class="subhead">Tell us your goals. We'll match you with the right equipment.</div>
+                    <div class="cta-box">
+                        <div class="cta-label">Start the Conversation</div>
+                        <div class="cta-phone">509-738-2985</div>
+                        <div class="cta-address">685 Elm Tree Dr, Colville, WA<br>Mon-Fri, 8 AM - 5 PM</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-label">Caption</div>
+                    <div class="post-caption" onclick="copyCaption(this)">Make 2025 the year you finally check those projects off the list. ✅
+
+Come talk to us. Tell us what you want to accomplish — we'll show you exactly what equipment makes it possible.
+
+No pressure. No upselling. Just honest advice.
+
+📞 509-738-2985
+📍 685 Elm Tree Dr, Colville, WA
+🕐 Mon-Fri, 8 AM - 5 PM
+
+#JJRiggs #ColvilleWA #NewYearNewProjects #PropertyGoals #TYMTractor</div>
+                    <div class="post-tags">
+                        <span class="tag" onclick="copyTag(this)">#JJRiggs</span>
+                        <span class="tag" onclick="copyTag(this)">#NewYearNewProjects</span>
+                        <span class="tag" onclick="copyTag(this)">#TYMTractor</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        JJ Riggs Equipment • Brand Guide • 2025
+    </footer>
+
+    <div class="toast" id="toast">Copied!</div>
+
+    <script>
+        function copyCaption(el) {
+            const text = el.innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                el.classList.add('copied');
+                showToast('Caption copied!');
+                setTimeout(() => el.classList.remove('copied'), 2000);
+            });
+        }
+
+        function copyTag(el) {
+            const text = el.innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Tag copied: ' + text);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+
+</body>
+</html>

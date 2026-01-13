@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12-Issue Newsletter Strategy - JJ Riggs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #cccccc;
+            line-height: 1.7;
+        }
+        .header {
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+            padding: 80px 40px;
+            border-bottom: 1px solid #222;
+        }
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 30px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #b61b22; }
+        .badge {
+            display: inline-block;
+            background: #b61b22;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: #78828e;
+            max-width: 600px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        .section {
+            margin-bottom: 60px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section-number {
+            font-size: 11px;
+            font-weight: 600;
+            color: #b61b22;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 30px 0 15px 0;
+        }
+        p {
+            margin-bottom: 16px;
+        }
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 24px;
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        .highlight-box {
+            background: #111111;
+            border-left: 3px solid #b61b22;
+            padding: 24px 28px;
+            margin: 30px 0;
+        }
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+        .month-card {
+            background: #111111;
+            border: 1px solid #222;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .month-header {
+            background: #1a1a1a;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .month-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .month-theme {
+            font-size: 12px;
+            color: #b61b22;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .month-content {
+            padding: 24px;
+        }
+        .month-subject {
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+        .month-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .month-bullets li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #888;
+        }
+        .month-bullets li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #b61b22;
+        }
+        .cta-tag {
+            display: inline-block;
+            background: #b61b22;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .content-card {
+            background: #111111;
+            border: 1px solid #222;
+            padding: 24px;
+        }
+        .content-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #b61b22;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .content-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .content-desc {
+            font-size: 14px;
+            color: #888;
+        }
+        .schedule-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .schedule-table th,
+        .schedule-table td {
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid #222;
+        }
+        .schedule-table th {
+            background: #111111;
+            color: #78828e;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .schedule-table td {
+            font-size: 14px;
+        }
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+        .metric {
+            display: inline-block;
+            background: #1a1a1a;
+            padding: 4px 10px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #b61b22;
+            border-radius: 3px;
+        }
+        .footer {
+            background: #0a0a0a;
+            border-top: 1px solid #1a1a1a;
+            padding: 40px;
+            text-align: center;
+        }
+        .footer p {
+            color: #444;
+            font-size: 13px;
+            margin: 0;
+        }
+        .footer span { color: #b61b22; }
+        code {
+            background: #1a1a1a;
+            padding: 2px 8px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #cccccc;
+            border-radius: 3px;
+        }
+        .q-label {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-left: 10px;
+            letter-spacing: 1px;
+        }
+        .q1 { background: #1e3a5f; color: #6b9bd1; }
+        .q2 { background: #2d4a2d; color: #7cb87c; }
+        .q3 { background: #4a3d1e; color: #c9a954; }
+        .q4 { background: #3d1e1e; color: #c96b6b; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="../../index.html" class="back-link">← Back to Brand Guide</a>
+            <div class="badge">Playbook</div>
+            <h1>12-Issue Newsletter Strategy</h1>
+            <p class="subtitle">A year-long content calendar for monthly emails that build trust, stay relevant, and drive sales—without overwhelming subscribers.</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section class="section">
+            <div class="section-number">01 — Philosophy</div>
+            <h2>The JJ Riggs Approach</h2>
+            <p>One email per month. No spam. No fluff. Every message should feel like it's coming from a neighbor who happens to sell tractors—helpful, honest, and worth reading.</p>
+
+            <div class="highlight-box">
+                <p><strong>Core promise:</strong> "Once a month, we'll send you updates on new TYM tractors, equipment arrivals, and deals worth knowing about."</p>
+            </div>
+
+            <h3>Content Pillars</h3>
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="content-label">Pillar 1</div>
+                    <div class="content-title">Inventory & Deals</div>
+                    <div class="content-desc">What's new, what's on sale, financing offers. Direct sales content.</div>
+                </div>
+                <div class="content-card">
+                    <div class="content-label">Pillar 2</div>
+                    <div class="content-title">Maintenance & Tips</div>
+                    <div class="content-desc">Seasonal equipment care, how-tos, service reminders. Build authority.</div>
+                </div>
+                <div class="content-card">
+                    <div class="content-label">Pillar 3</div>
+                    <div class="content-title">Local & Personal</div>
+                    <div class="content-desc">Customer stories, Andrew's picks, community connection. Build trust.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">02 — Q1: Winter to Spring</div>
+            <h2>January – March <span class="q-label q1">Q1</span></h2>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">January</span>
+                    <span class="month-theme">Year-End Wrap</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"2024 Wrapped + What's Coming in 2025"</div>
+                    <ul class="month-bullets">
+                        <li>Quick recap: most popular tractors sold last year</li>
+                        <li>Preview: new TYM models arriving this spring</li>
+                        <li>Reminder: winter service specials still available</li>
+                        <li>Personal note from Andrew</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Schedule Winter Service</div>
+                </div>
+            </div>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">February</span>
+                    <span class="month-theme">Pre-Season Prep</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Get Your Tractor Ready Before the Rush"</div>
+                    <ul class="month-bullets">
+                        <li>5-point spring prep checklist</li>
+                        <li>Early-bird service discount (book by Feb 28)</li>
+                        <li>Attachment spotlight: loaders and blades</li>
+                        <li>Financing pre-approval reminder</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Book Service Appointment</div>
+                </div>
+            </div>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">March</span>
+                    <span class="month-theme">Spring Launch</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"TYM to ROLL — Spring Sales Event is Here"</div>
+                    <ul class="month-bullets">
+                        <li>Campaign launch: $199/mo financing highlight</li>
+                        <li>New inventory arrivals with photos</li>
+                        <li>6-year warranty reminder</li>
+                        <li>Customer spotlight with photo</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Shop Spring Inventory</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">03 — Q2: Peak Season</div>
+            <h2>April – June <span class="q-label q2">Q2</span></h2>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">April</span>
+                    <span class="month-theme">Planting Season</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Everything You Need for Planting Season"</div>
+                    <ul class="month-bullets">
+                        <li>Implement guide: tillers, box blades, seeders</li>
+                        <li>Compact tractor spotlight (25-40 HP range)</li>
+                        <li>How-to: ground prep with a compact tractor</li>
+                        <li>April financing special</li>
+                    </ul>
+                    <div class="cta-tag">CTA: View Implements</div>
+                </div>
+            </div>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">May</span>
+                    <span class="month-theme">Hay Season Prep</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Hay Season is Coming—Are You Ready?"</div>
+                    <ul class="month-bullets">
+                        <li>Hay equipment roundup: mowers, rakes, tedders</li>
+                        <li>Mid-size tractor spotlight (45-60 HP)</li>
+                        <li>Maintenance tip: prepping for long hours</li>
+                        <li>Used equipment feature</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Call About Hay Equipment</div>
+                </div>
+            </div>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">June</span>
+                    <span class="month-theme">Mid-Year Check</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Summer Service + Customer Appreciation"</div>
+                    <ul class="month-bullets">
+                        <li>Summer service: what to check mid-season</li>
+                        <li>Customer feature: interview or profile</li>
+                        <li>Google review spotlight</li>
+                        <li>Light inventory update</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Leave a Review / Refer a Friend</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">04 — Q3: Summer Slowdown</div>
+            <h2>July – September <span class="q-label q3">Q3</span></h2>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">July</span>
+                    <span class="month-theme">Independence</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Happy 4th from JJ Riggs"</div>
+                    <ul class="month-bullets">
+                        <li>Brief holiday greeting from Andrew</li>
+                        <li>One featured tractor (great summer deal)</li>
+                        <li>Tip: keeping cool during summer operation</li>
+                        <li>Hours reminder (adjusted for holiday)</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Stop By This Week</div>
+                </div>
+            </div>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">August</span>
+                    <span class="month-theme">County Fair</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"See You at the Stevens County Fair"</div>
+                    <ul class="month-bullets">
+                        <li>Fair presence announcement (if applicable)</li>
+                        <li>Feature: tractors for 4-H / FFA families</li>
+                        <li>End-of-summer clearance preview</li>
+                        <li>Customer photo roundup from the year</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Visit Our Booth / Shop Clearance</div>
+                </div>
+            </div>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">September</span>
+                    <span class="month-theme">Fall Prep</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Fall is for Getting Things Done"</div>
+                    <ul class="month-bullets">
+                        <li>Fall project ideas: grading, brush clearing, fencing</li>
+                        <li>Year-end deals starting</li>
+                        <li>Winterization service booking opens</li>
+                        <li>Loader and backhoe spotlight</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Shop Fall Deals</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">05 — Q4: Year-End Push</div>
+            <h2>October – December <span class="q-label q4">Q4</span></h2>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">October</span>
+                    <span class="month-theme">Snow Prep</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Winter is Coming—Snow Equipment in Stock"</div>
+                    <ul class="month-bullets">
+                        <li>Snow blower and blade inventory</li>
+                        <li>Cold-weather maintenance checklist</li>
+                        <li>Year-end financing reminder (tax benefits)</li>
+                        <li>Service: winterization packages</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Shop Snow Equipment</div>
+                </div>
+            </div>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">November</span>
+                    <span class="month-theme">Gratitude</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Thankful for Our Customers"</div>
+                    <ul class="month-bullets">
+                        <li>Personal thank you from Andrew</li>
+                        <li>Customer story highlight</li>
+                        <li>Black Friday / year-end deal preview</li>
+                        <li>Holiday hours notice</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Year-End Deals</div>
+                </div>
+            </div>
+
+            <div class="month-card">
+                <div class="month-header">
+                    <span class="month-name">December</span>
+                    <span class="month-theme">Year-End Close</span>
+                </div>
+                <div class="month-content">
+                    <div class="month-subject">"Last Chance for 2025 Tax Benefits"</div>
+                    <ul class="month-bullets">
+                        <li>Section 179 tax deduction reminder</li>
+                        <li>Final inventory clearance</li>
+                        <li>New year preview: what's coming</li>
+                        <li>Holiday greeting and hours</li>
+                    </ul>
+                    <div class="cta-tag">CTA: Buy Before Dec 31</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">06 — Sending Schedule</div>
+            <h2>When to Send</h2>
+
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Send Day</td>
+                        <td>Tuesday or Wednesday <span class="metric">Mid-week performs best</span></td>
+                    </tr>
+                    <tr>
+                        <td>Send Time</td>
+                        <td>8:00 AM or 10:00 AM PST <span class="metric">Morning = higher opens</span></td>
+                    </tr>
+                    <tr>
+                        <td>Week of Month</td>
+                        <td>First or second week <span class="metric">Avoid end-of-month</span></td>
+                    </tr>
+                    <tr>
+                        <td>Frequency</td>
+                        <td>Once per month <span class="metric">Never more than 2x</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <p><strong>Consistency matters:</strong> Pick a day (like the first Tuesday of every month) and stick with it. Subscribers will come to expect it.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-number">07 — Metrics to Track</div>
+            <h2>What Success Looks Like</h2>
+
+            <ul>
+                <li><strong>Open Rate:</strong> <span class="metric">Target: 25%+</span> Industry average is ~20% for retail</li>
+                <li><strong>Click Rate:</strong> <span class="metric">Target: 3%+</span> Clicks on any link in the email</li>
+                <li><strong>Unsubscribe Rate:</strong> <span class="metric">Keep under 0.5%</span> If higher, content may not match expectations</li>
+                <li><strong>List Growth:</strong> <span class="metric">Track monthly</span> Aim for steady growth from website form</li>
+                <li><strong>Reply Rate:</strong> <span class="metric">Bonus metric</span> Personal replies indicate strong engagement</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <p>JJ Riggs <span>•</span> Newsletter Strategy <span>•</span> 2025</p>
+    </footer>
+
+</body>
+</html>

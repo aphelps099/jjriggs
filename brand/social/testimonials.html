@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials — JJ Riggs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #888;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            padding: 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 40px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: #b61b22; }
+
+        .header h1 {
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .header h1 span { color: #b61b22; }
+
+        .header-desc {
+            font-size: 16px;
+            color: #555;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        .header-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #b61b22;
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 28px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: background 0.2s;
+        }
+
+        .header-cta:hover { background: #8f151a; }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 60px;
+            padding: 40px 60px;
+            background: #111;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 42px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-value span { color: #b61b22; }
+
+        .stat-label {
+            font-size: 12px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        /* Grid */
+        .grid-header {
+            padding: 60px 60px 30px;
+        }
+
+        .grid-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #b61b22;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            padding: 0 60px 60px;
+        }
+
+        /* Post Card */
+        .post-card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            overflow: hidden;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .post-card:hover {
+            border-color: #333;
+            transform: translateY(-4px);
+        }
+
+        .post-visual {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #171b20 0%, #0a0a0a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://jjriggsequipment.com/wp-content/uploads/2024/09/jj-home-slider.jpg') center/cover;
+            opacity: 0.08;
+            filter: grayscale(100%);
+        }
+
+        .post-visual * { position: relative; z-index: 1; }
+
+        .stars {
+            font-size: 32px;
+            color: #b61b22;
+            letter-spacing: 4px;
+            margin-bottom: 24px;
+        }
+
+        .quote {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.4;
+            max-width: 280px;
+            margin-bottom: 24px;
+        }
+
+        .quote-mark {
+            font-size: 48px;
+            color: #b61b22;
+            line-height: 0;
+            opacity: 0.5;
+        }
+
+        .reviewer {
+            font-size: 13px;
+            color: #78828e;
+        }
+
+        .reviewer strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* Post Actions */
+        .post-actions {
+            padding: 20px;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-btn {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-family: inherit;
+        }
+
+        .post-btn.primary {
+            background: #b61b22;
+            color: #fff;
+        }
+
+        .post-btn.primary:hover { background: #8f151a; }
+
+        .post-btn.secondary {
+            background: transparent;
+            border: 1px solid #333;
+            color: #888;
+        }
+
+        .post-btn.secondary:hover {
+            border-color: #555;
+            color: #fff;
+        }
+
+        /* Caption Modal */
+        .caption-text {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px;
+            text-align: center;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        .footer span { color: #b61b22; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #b61b22;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .toast.show { opacity: 1; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header, .stats-bar, .grid-header, .posts-grid, .footer {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .stats-bar {
+                flex-wrap: wrap;
+                gap: 30px;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Alternate Styles */
+        .post-card.style-bold .post-visual {
+            background: #b61b22;
+        }
+
+        .post-card.style-bold .post-visual::before {
+            opacity: 0.15;
+        }
+
+        .post-card.style-bold .stars {
+            color: #fff;
+        }
+
+        .post-card.style-minimal .post-visual {
+            background: #fff;
+        }
+
+        .post-card.style-minimal .post-visual::before {
+            opacity: 0;
+        }
+
+        .post-card.style-minimal .stars,
+        .post-card.style-minimal .quote-mark {
+            color: #b61b22;
+        }
+
+        .post-card.style-minimal .quote {
+            color: #171b20;
+        }
+
+        .post-card.style-minimal .reviewer {
+            color: #78828e;
+        }
+
+        .post-card.style-minimal .reviewer strong {
+            color: #171b20;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="../../index.html" class="back-link">← Back to Brand Guide</a>
+        <h1>5-Star<br>Reviews<span>.</span></h1>
+        <p class="header-desc">Real testimonials from real customers. Use these posts on social media to build trust and show prospects what working with JJ Riggs is really like.</p>
+        <a href="https://g.page/r/CSFOuA8qocozEAE/review" target="_blank" class="header-cta">Leave a Review on Google →</a>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <div class="stat-value">5<span>.0</span></div>
+            <div class="stat-label">Google Rating</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">100<span>%</span></div>
+            <div class="stat-label">5-Star Reviews</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">Local</div>
+            <div class="stat-label">Stevens County</div>
+        </div>
+    </div>
+
+    <div class="grid-header">
+        <div class="grid-title">Social-Ready Posts — Click to Copy</div>
+    </div>
+
+    <div class="posts-grid">
+
+        <!-- Post 1 - Dark Style -->
+        <div class="post-card">
+            <div class="post-visual">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Andrew went above and beyond. Best tractor buying experience I've ever had."</div>
+                <div class="reviewer">
+                    <strong>Mike R.</strong>
+                    Colville, WA
+                </div>
+            </div>
+            <div class="post-actions">
+                <button class="post-btn primary" onclick="copyCaption(1)">Copy Caption</button>
+                <button class="post-btn secondary" onclick="downloadPost(1)">Save Image</button>
+            </div>
+            <div class="caption-text" id="caption-1">Another 5-star review from a happy customer! 🌟
+
+"Andrew went above and beyond. Best tractor buying experience I've ever had." — Mike R., Colville
+
+At JJ Riggs, we don't just sell tractors. We build relationships.
+
+Ready to see the difference? Stop by or give us a call.
+
+#JJRiggs #TYMTractors #ColvilleWA #StevensCounty #5StarReviews #TractorDealer #CustomerFirst</div>
+        </div>
+
+        <!-- Post 2 - Bold Red Style -->
+        <div class="post-card style-bold">
+            <div class="post-visual">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"No pressure, no games. Just honest advice and a fair deal."</div>
+                <div class="reviewer">
+                    <strong>Tom & Sarah K.</strong>
+                    Chewelah, WA
+                </div>
+            </div>
+            <div class="post-actions">
+                <button class="post-btn primary" onclick="copyCaption(2)">Copy Caption</button>
+                <button class="post-btn secondary" onclick="downloadPost(2)">Save Image</button>
+            </div>
+            <div class="caption-text" id="caption-2">This is why we do what we do. ❤️
+
+"No pressure, no games. Just honest advice and a fair deal." — Tom & Sarah K., Chewelah
+
+We're not the biggest dealer. We're the one that treats you right.
+
+📍 Stop by JJ Riggs Equipment in Colville
+
+#JJRiggs #HonestDealer #TYMTractors #Chewelah #StevensCounty #FamilyBusiness #TractorLife</div>
+        </div>
+
+        <!-- Post 3 - Dark Style -->
+        <div class="post-card">
+            <div class="post-visual">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Finally found a dealer who actually listens. Andrew matched me with exactly what I needed."</div>
+                <div class="reviewer">
+                    <strong>Dave P.</strong>
+                    Kettle Falls, WA
+                </div>
+            </div>
+            <div class="post-actions">
+                <button class="post-btn primary" onclick="copyCaption(3)">Copy Caption</button>
+                <button class="post-btn secondary" onclick="downloadPost(3)">Save Image</button>
+            </div>
+            <div class="caption-text" id="caption-3">The right tractor for the right job. 🚜
+
+"Finally found a dealer who actually listens. Andrew matched me with exactly what I needed." — Dave P., Kettle Falls
+
+We take the time to understand your property, your projects, and your budget. No upselling. Just the right fit.
+
+#JJRiggs #RightTractor #KettleFalls #TYMTractors #LocalDealer #StevensCounty #TractorMatch</div>
+        </div>
+
+        <!-- Post 4 - Minimal Light Style -->
+        <div class="post-card style-minimal">
+            <div class="post-visual">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Service after the sale is just as good. They actually answer the phone."</div>
+                <div class="reviewer">
+                    <strong>Randy M.</strong>
+                    Northport, WA
+                </div>
+            </div>
+            <div class="post-actions">
+                <button class="post-btn primary" onclick="copyCaption(4)">Copy Caption</button>
+                <button class="post-btn secondary" onclick="downloadPost(4)">Save Image</button>
+            </div>
+            <div class="caption-text" id="caption-4">Service doesn't stop at the sale. 📞
+
+"Service after the sale is just as good. They actually answer the phone." — Randy M., Northport
+
+Big dealers? Good luck getting a callback. At JJ Riggs, we pick up. Every time.
+
+#JJRiggs #CustomerService #Northport #TYMTractors #SmallBusiness #WeAnswerThePhone #StevensCounty</div>
+        </div>
+
+        <!-- Post 5 - Dark Style -->
+        <div class="post-card">
+            <div class="post-visual">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Drove past two other dealers to buy from Andrew. Worth every mile."</div>
+                <div class="reviewer">
+                    <strong>Jeff & Linda B.</strong>
+                    Spokane, WA
+                </div>
+            </div>
+            <div class="post-actions">
+                <button class="post-btn primary" onclick="copyCaption(5)">Copy Caption</button>
+                <button class="post-btn secondary" onclick="downloadPost(5)">Save Image</button>
+            </div>
+            <div class="caption-text" id="caption-5">Some things are worth the drive. 🛣️
+
+"Drove past two other dealers to buy from Andrew. Worth every mile." — Jeff & Linda B., Spokane
+
+People drive from Spokane, Republic, even Montana. Why? Because the experience matters as much as the equipment.
+
+📍 JJ Riggs Equipment — Colville, WA
+
+#JJRiggs #WorthTheDrive #Spokane #TYMTractors #DealerExperience #TractorShopping #ColvilleWA</div>
+        </div>
+
+        <!-- Post 6 - Bold Red Style -->
+        <div class="post-card style-bold">
+            <div class="post-visual">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"6-year warranty sealed the deal. These guys stand behind what they sell."</div>
+                <div class="reviewer">
+                    <strong>Chris W.</strong>
+                    Republic, WA
+                </div>
+            </div>
+            <div class="post-actions">
+                <button class="post-btn primary" onclick="copyCaption(6)">Copy Caption</button>
+                <button class="post-btn secondary" onclick="downloadPost(6)">Save Image</button>
+            </div>
+            <div class="caption-text" id="caption-6">6 years. That's confidence. 💪
+
+"6-year warranty sealed the deal. These guys stand behind what they sell." — Chris W., Republic
+
+TYM tractors come with an industry-leading warranty because they're built to last. And we're here to back it up.
+
+#JJRiggs #6YearWarranty #TYMTractors #Republic #BuiltToLast #TractorWarranty #StevensCounty</div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <p>JJ Riggs <span>•</span> Testimonials <span>•</span> 2025</p>
+    </footer>
+
+    <div class="toast" id="toast">Copied!</div>
+
+    <script>
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg || 'Copied!';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function copyCaption(id) {
+            const caption = document.getElementById('caption-' + id).textContent.trim();
+            navigator.clipboard.writeText(caption).then(() => {
+                showToast('Caption copied!');
+            });
+        }
+
+        function downloadPost(id) {
+            // In production, this would generate/download an image
+            showToast('Right-click the post to save as image');
+        }
+    </script>
+
+</body>
+</html>

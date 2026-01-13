@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM to ROLL - Facebook Ad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 1200px;
+            height: 628px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #171b20 0%, #273647 100%);
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+        .accent-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: #b61b22;
+        }
+        .left-content {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .logo {
+            width: 140px;
+            margin-bottom: 30px;
+        }
+        .tagline {
+            font-size: 14px;
+            font-weight: 600;
+            color: #b61b22;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        .headline {
+            font-size: 72px;
+            font-weight: 900;
+            color: #fffefe;
+            line-height: 1;
+            margin-bottom: 15px;
+            letter-spacing: -2px;
+        }
+        .headline span {
+            color: #b61b22;
+        }
+        .subhead {
+            font-size: 24px;
+            color: #78828e;
+            margin-bottom: 30px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #b61b22;
+            color: #fffefe;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 18px 40px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .right-content {
+            width: 450px;
+            background: #b61b22;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            text-align: center;
+        }
+        .price-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 80px;
+            font-weight: 900;
+            color: #fffefe;
+            line-height: 1;
+        }
+        .price-period {
+            font-size: 28px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+        .price-note {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
+            margin: 25px 0;
+        }
+        .feature-list {
+            text-align: left;
+        }
+        .feature-item {
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-item::before {
+            content: "✓";
+            font-weight: bold;
+        }
+        .bg-text {
+            position: absolute;
+            font-size: 250px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.02);
+            bottom: -60px;
+            left: 100px;
+            letter-spacing: -10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="accent-bar"></div>
+
+    <div class="left-content">
+        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+        <div class="tagline">Spring Sales Event</div>
+        <h1 class="headline"><span>TYM</span> to ROLL</h1>
+        <p class="subhead">New TYM Tractors in Stock</p>
+        <div class="cta-button">Shop Inventory</div>
+    </div>
+
+    <div class="right-content">
+        <div class="price-label">Starting At</div>
+        <div class="price">$199</div>
+        <div class="price-period">/month</div>
+        <div class="price-note">Financing OAC</div>
+
+        <div class="divider"></div>
+
+        <div class="feature-list">
+            <div class="feature-item">6-Year Warranty</div>
+            <div class="feature-item">Local Service</div>
+            <div class="feature-item">25-73 HP Range</div>
+        </div>
+    </div>
+
+    <div class="bg-text">TYM</div>
+</body>
+</html>

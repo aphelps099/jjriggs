@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM to ROLL - Slide 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 1080px;
+            height: 1080px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #171b20 0%, #273647 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .accent-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background: #b61b22;
+        }
+        .logo {
+            position: absolute;
+            top: 50px;
+            left: 60px;
+            width: 160px;
+        }
+        .slide-number {
+            position: absolute;
+            top: 60px;
+            right: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #78828e;
+            letter-spacing: 2px;
+        }
+        .main-content {
+            text-align: center;
+            z-index: 1;
+        }
+        .tagline {
+            font-size: 24px;
+            font-weight: 600;
+            color: #b61b22;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+        }
+        .headline {
+            font-size: 120px;
+            font-weight: 900;
+            color: #fffefe;
+            line-height: 1;
+            margin-bottom: 20px;
+            letter-spacing: -3px;
+        }
+        .headline span {
+            color: #b61b22;
+        }
+        .subhead {
+            font-size: 32px;
+            font-weight: 400;
+            color: #78828e;
+            margin-top: 30px;
+        }
+        .cta-hint {
+            position: absolute;
+            bottom: 60px;
+            font-size: 18px;
+            color: #78828e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cta-hint .arrow {
+            font-size: 24px;
+        }
+        .bg-text {
+            position: absolute;
+            font-size: 400px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.03);
+            bottom: -100px;
+            right: -50px;
+            letter-spacing: -20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="accent-bar"></div>
+    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+    <div class="slide-number">01 / 05</div>
+
+    <div class="main-content">
+        <div class="tagline">Spring Sales Event</div>
+        <h1 class="headline"><span>TYM</span> to<br>ROLL</h1>
+        <p class="subhead">New TYM Tractors Starting at $199/mo</p>
+    </div>
+
+    <div class="cta-hint">
+        <span>Swipe to see the lineup</span>
+        <span class="arrow">→</span>
+    </div>
+
+    <div class="bg-text">TYM</div>
+</body>
+</html>

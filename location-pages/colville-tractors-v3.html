@@ -1,0 +1,586 @@
+<!--
+SEO Location Page: Colville, WA (v3 - Refined Design)
+URL: /colville-tractors/
+
+Design approach: Clean, confident, trustworthy.
+Let the content breathe. Strong typography hierarchy.
+-->
+
+<!-- Custom styles for this page -->
+[ux_html]
+<style>
+/* ============================================
+   JJ RIGGS - LOCATION PAGE STYLES
+   ============================================ */
+
+/* Typography refinements */
+.loc-page h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.loc-page .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c41230;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.loc-page .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #1a1a1a;
+    display: inline-block;
+}
+
+.loc-page p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #444;
+}
+
+/* ============================================
+   WHY CHOOSE - FEATURE GRID
+   ============================================ */
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid #e0e0e0;
+    margin: 30px 0;
+}
+
+.why-item {
+    padding: 32px 28px;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    transition: background 0.2s ease;
+}
+
+.why-item:nth-child(2n) {
+    border-right: none;
+}
+
+.why-item:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+.why-item:hover {
+    background: #fafafa;
+}
+
+.why-item .num {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c41230;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.why-item h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.why-item p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+    .why-item {
+        border-right: none;
+    }
+    .why-item:last-child {
+        border-bottom: none;
+    }
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+.loc-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 20px;
+}
+
+.sidebar-card-header {
+    background: #1a1a1a;
+    padding: 20px 24px;
+}
+
+.sidebar-card-header h4 {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.sidebar-card-body {
+    padding: 24px;
+}
+
+.sidebar-card-body p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+    margin: 0 0 20px 0;
+}
+
+.sidebar-btn {
+    display: block;
+    width: 100%;
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-bottom: 10px;
+}
+
+.sidebar-btn:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar-btn-primary {
+    background: #c41230;
+    color: #fff;
+}
+
+.sidebar-btn-primary:hover {
+    background: #a30f28;
+    color: #fff;
+}
+
+.sidebar-btn-outline {
+    background: transparent;
+    border: 2px solid #e0e0e0;
+    color: #1a1a1a;
+}
+
+.sidebar-btn-outline:hover {
+    border-color: #1a1a1a;
+}
+
+.brand-block {
+    background: #f8f8f8;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.brand-block:last-of-type {
+    margin-bottom: 20px;
+}
+
+.brand-block strong {
+    display: block;
+    font-size: 15px;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.brand-block span {
+    font-size: 12px;
+    color: #888;
+}
+
+/* ============================================
+   SERVICE AREA TAGS
+   ============================================ */
+.area-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.area-tag {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.area-tag:hover {
+    border-color: #c41230;
+    color: #c41230;
+}
+
+/* ============================================
+   CTA FOOTER
+   ============================================ */
+.cta-footer {
+    background: #c41230;
+    padding: 60px 0;
+}
+
+.cta-footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.cta-footer h3 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.cta-footer p {
+    color: rgba(255,255,255,0.85);
+    font-size: 16px;
+    margin: 0;
+}
+
+.cta-footer-btn {
+    display: inline-block;
+    background: #fff;
+    color: #c41230;
+    padding: 18px 36px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.cta-footer-btn:hover {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .cta-footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+}
+
+/* ============================================
+   CONTACT BAR
+   ============================================ */
+.contact-bar {
+    background: #1a1a1a;
+    padding: 50px 0;
+}
+
+.contact-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.contact-block {
+    text-align: center;
+}
+
+.contact-block .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c41230;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.contact-block .value {
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.5;
+}
+
+.contact-block a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-block a:hover {
+    color: #c41230;
+}
+
+@media (max-width: 768px) {
+    .contact-bar-inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-bar-inner {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   CONTENT SECTIONS
+   ============================================ */
+.content-section {
+    margin-bottom: 40px;
+}
+
+.content-section:last-child {
+    margin-bottom: 0;
+}
+
+.divider {
+    height: 1px;
+    background: #e5e5e5;
+    margin: 40px 0;
+}
+
+</style>
+<div class="loc-page">
+[/ux_html]
+
+
+[section label="Hero" bg="INSERT_HERO_IMAGE_ID" bg_color="#1a1a1a" bg_overlay="rgba(0,0,0,0.6)" bg_pos="50% 40%" dark="true" padding="120px" padding__sm="80px"]
+[row]
+[col span="7" span__sm="12"]
+
+<span class="section-label" style="color: rgba(255,255,255,0.7);">Serving Colville Since 2019</span>
+<h1 style="color: #fff; margin-bottom: 20px;">TYM Tractors in<br>Colville, WA</h1>
+<p style="color: rgba(255,255,255,0.8); font-size: 18px; max-width: 480px; margin-bottom: 30px;">Your local authorized TYM tractor and Bad Boy mower dealer. Family-owned, full-service support for Stevens County.</p>
+
+[row_inner]
+[col_inner span="auto"]
+[button text="View Inventory" color="white" style="outline" size="larger" link="/tractors/"]
+[/col_inner]
+[col_inner span="auto"]
+[button text="509-738-2985" color="white" size="larger" link="tel:509-738-2985" icon="icon-phone"]
+[/col_inner]
+[/row_inner]
+
+[/col]
+[/row]
+[/section]
+
+
+[section label="Main Content" padding="70px" padding__sm="50px"]
+[row]
+[col span="7" span__sm="12"]
+
+<div class="content-section">
+<p>As Colville's authorized TYM tractor and Bad Boy mower dealer, we provide everything from compact utility tractors to heavy-duty 4x4 models built for the terrain and work common in Stevens County.</p>
+
+<p>Located at 685 Elm Tree Dr., our family-owned dealership has served the community since 2019 with honest pricing, expert guidance, and responsive service.</p>
+</div>
+
+<div class="divider"></div>
+
+<span class="section-title">Why JJ Riggs</span>
+
+<div class="why-grid">
+    <div class="why-item">
+        <span class="num">01</span>
+        <h4>Exclusive Dealer</h4>
+        <p>The only authorized TYM & Bad Boy dealer in northeastern Washington</p>
+    </div>
+    <div class="why-item">
+        <span class="num">02</span>
+        <h4>Full-Service Shop</h4>
+        <p>Professional repair and maintenance from experienced technicians</p>
+    </div>
+    <div class="why-item">
+        <span class="num">03</span>
+        <h4>New & Used Inventory</h4>
+        <p>Quality equipment at various price points to fit your budget</p>
+    </div>
+    <div class="why-item">
+        <span class="num">04</span>
+        <h4>Family-Owned</h4>
+        <p>Personal attention and relationships over quick sales</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="content-section">
+<span class="section-title">TYM Tractors</span>
+<p>Property owners in the Colville area deal with steep hillsides, rocky soil, heavy snow, and varied agricultural needs. TYM tractors handle these conditions with powerful engines, reliable 4x4 systems, and versatile implement compatibility. Our lineup ranges from sub-compact 25HP units for residential acreage to 100+HP tractors for farming and commercial work.</p>
+</div>
+
+<div class="content-section">
+<span class="section-title">Bad Boy Mowers</span>
+<p>Bad Boy mowers deliver commercial durability with heavy-duty fabricated decks, powerful engines, and superior cut quality. Built for homeowners, property managers, and commercial operators who need equipment that lasts.</p>
+</div>
+
+<div class="content-section">
+<span class="section-title">Used Equipment</span>
+<p>Quality pre-owned tractors offer excellent value. Our used inventory changes regularly with inspected, serviced equipment ready for work.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="content-section">
+<span class="section-title">Service Area</span>
+<p>We serve property owners throughout Stevens County and northeastern Washington.</p>
+
+<div class="area-tags">
+    <a href="/colville-tractors/" class="area-tag">Colville</a>
+    <a href="/kettle-falls-equipment/" class="area-tag">Kettle Falls</a>
+    <a href="/chewelah-tractor-dealer/" class="area-tag">Chewelah</a>
+    <span class="area-tag">Addy</span>
+    <span class="area-tag">Gifford</span>
+    <span class="area-tag">Springdale</span>
+    <span class="area-tag">Marcus</span>
+    <span class="area-tag">Valley</span>
+</div>
+</div>
+
+[/col]
+
+<!-- SIDEBAR -->
+[col span="4" span__sm="12" span_md="5" force_first="small"]
+
+[ux_html]
+<div class="loc-sidebar">
+    <div class="sidebar-card">
+        <div class="sidebar-card-header">
+            <h4>Your Local Dealer</h4>
+        </div>
+        <div class="sidebar-card-body">
+            <p>Family-owned and operated since 2019. The only authorized TYM and Bad Boy dealer in northeastern Washington.</p>
+            <a href="tel:509-738-2985" class="sidebar-btn sidebar-btn-primary">Call 509-738-2985</a>
+            <a href="https://maps.google.com/?q=685+Elm+Tree+Dr+Colville+WA" class="sidebar-btn sidebar-btn-outline">Get Directions</a>
+        </div>
+    </div>
+
+    <div class="sidebar-card">
+        <div class="sidebar-card-header">
+            <h4>Brands We Carry</h4>
+        </div>
+        <div class="sidebar-card-body">
+            <div class="brand-block">
+                <strong>TYM Tractors</strong>
+                <span>25HP – 100+HP</span>
+            </div>
+            <div class="brand-block">
+                <strong>Bad Boy Mowers</strong>
+                <span>Residential & Commercial</span>
+            </div>
+            <a href="/tractors/" class="sidebar-btn sidebar-btn-outline">Browse Tractors</a>
+            <a href="/mowers/" class="sidebar-btn sidebar-btn-outline">Browse Mowers</a>
+        </div>
+    </div>
+</div>
+[/ux_html]
+
+[/col]
+[/row]
+[/section]
+
+
+<!-- CTA FOOTER -->
+[ux_html]
+<div class="cta-footer">
+    <div class="cta-footer-inner">
+        <div>
+            <h3>Ready to find your tractor?</h3>
+            <p>Stop by our Colville location or give us a call.</p>
+        </div>
+        <a href="tel:509-738-2985" class="cta-footer-btn">Call 509-738-2985</a>
+    </div>
+</div>
+[/ux_html]
+
+
+<!-- CONTACT BAR -->
+[ux_html]
+<div class="contact-bar">
+    <div class="contact-bar-inner">
+        <div class="contact-block">
+            <span class="label">Address</span>
+            <span class="value">685 Elm Tree Dr<br>Colville, WA 99114</span>
+        </div>
+        <div class="contact-block">
+            <span class="label">Phone</span>
+            <span class="value"><a href="tel:509-738-2985">509-738-2985</a></span>
+        </div>
+        <div class="contact-block">
+            <span class="label">Email</span>
+            <span class="value"><a href="mailto:sales@jjriggsequipment.com">sales@jjriggsequipment.com</a></span>
+        </div>
+        <div class="contact-block">
+            <span class="label">Hours</span>
+            <span class="value">Mon–Fri: 8AM – 5PM</span>
+        </div>
+    </div>
+</div>
+</div><!-- end .loc-page -->
+[/ux_html]
+
+
+<!-- Schema Markup -->
+[ux_html]
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "JJ Riggs Equipment",
+    "description": "Authorized TYM tractor and Bad Boy mower dealer serving Colville, WA and Stevens County.",
+    "image": "https://jjriggsequipment.com/wp-content/uploads/2024/04/JJ-Riggs-Equipment-Logo.png",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "685 Elm Tree Dr.",
+        "addressLocality": "Colville",
+        "addressRegion": "WA",
+        "postalCode": "99114",
+        "addressCountry": "US"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.464410,
+        "longitude": -117.884290
+    },
+    "telephone": "509-738-2985",
+    "email": "sales@jjriggsequipment.com",
+    "url": "https://jjriggsequipment.com/colville-tractors/",
+    "openingHours": "Mo-Fr 08:00-17:00"
+}
+</script>
+[/ux_html]

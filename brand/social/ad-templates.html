@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJ Riggs Social Media Ad Templates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #1a1a1a;
+            padding: 40px;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #78828e;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            grid-column: 1 / -1;
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            color: #b61b22;
+            margin-top: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+
+        /* Individual Ad Card */
+        .ad-card {
+            width: 350px;
+            aspect-ratio: 1/1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        /* ===== AD STYLE 1: The Ugly Fix ===== */
+        .ad-ugly-fix {
+            background: linear-gradient(135deg, #273647 0%, #1a2633 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        .ad-ugly-fix .tag {
+            background: #b61b22;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 6px 12px;
+            display: inline-block;
+            align-self: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .ad-ugly-fix .headline {
+            font-family: 'Oswald', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 15px;
+        }
+
+        .ad-ugly-fix .subtext {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .ad-ugly-fix .logo {
+            width: 120px;
+            margin-top: auto;
+        }
+
+        /* ===== AD STYLE 2: Delivery ===== */
+        .ad-delivery {
+            background: url('https://jjriggsequipment.com/wp-content/uploads/2024/10/IMG_4255.jpg') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .ad-delivery::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .ad-delivery .content {
+            position: relative;
+            z-index: 1;
+            padding: 25px;
+        }
+
+        .ad-delivery .tag {
+            background: #b61b22;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 5px 10px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .ad-delivery .headline {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .ad-delivery .subtext {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+        }
+
+        /* ===== AD STYLE 3: Quick Tip ===== */
+        .ad-quick-tip {
+            background: #b61b22;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        .ad-quick-tip .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .ad-quick-tip .tag {
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 6px 12px;
+            display: inline-block;
+            align-self: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .ad-quick-tip .headline {
+            font-family: 'Oswald', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .ad-quick-tip .subtext {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .ad-quick-tip .logo {
+            width: 100px;
+            margin-top: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        /* ===== AD STYLE 4: Inventory ===== */
+        .ad-inventory {
+            background: #273647;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ad-inventory .image-area {
+            height: 55%;
+            background: url('https://jjriggsequipment.com/wp-content/uploads/2024/10/IMG_4255.jpg') center/cover;
+            position: relative;
+        }
+
+        .ad-inventory .price-tag {
+            position: absolute;
+            bottom: -15px;
+            right: 20px;
+            background: #b61b22;
+            color: #fff;
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 8px 20px;
+        }
+
+        .ad-inventory .content {
+            padding: 25px 20px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ad-inventory .model {
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .ad-inventory .headline {
+            font-family: 'Oswald', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .ad-inventory .specs {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            margin-bottom: auto;
+        }
+
+        .ad-inventory .cta {
+            color: #b61b22;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== AD STYLE 5: Service ===== */
+        .ad-service {
+            background: linear-gradient(135deg, #2f353b 0%, #1a1e22 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ad-service .logo {
+            width: 150px;
+            margin-bottom: 25px;
+        }
+
+        .ad-service .headline {
+            font-family: 'Oswald', sans-serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .ad-service .subtext {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .ad-service .phone {
+            background: #b61b22;
+            color: #fff;
+            font-family: 'Oswald', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 4px;
+        }
+
+        /* ===== AD STYLE 6: Review/Testimonial ===== */
+        .ad-review {
+            background: #273647;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .ad-review .stars {
+            font-size: 32px;
+            color: #ffc107;
+            margin-bottom: 15px;
+            letter-spacing: 4px;
+        }
+
+        .ad-review .quote {
+            font-size: 16px;
+            color: #fff;
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .ad-review .author {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .ad-review .badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+        }
+
+        .ad-review .google-icon {
+            font-size: 18px;
+        }
+
+        /* ===== AD STYLE 7: Bold Statement ===== */
+        .ad-bold {
+            background: #b61b22;
+            display: flex;
+            flex-direction: column;
+            padding: 35px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .ad-bold .headline {
+            font-family: 'Oswald', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .ad-bold .divider {
+            width: 60px;
+            height: 4px;
+            background: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+        }
+
+        .ad-bold .subtext {
+            color: rgba(255,255,255,0.9);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* ===== AD STYLE 8: Stats ===== */
+        .ad-stats {
+            background: #273647;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        .ad-stats .tag {
+            background: #b61b22;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 5px 10px;
+            display: inline-block;
+            align-self: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .ad-stats .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        .ad-stats .stat {
+            text-align: center;
+        }
+
+        .ad-stats .stat-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .ad-stats .stat-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .ad-stats .logo {
+            width: 100px;
+            margin-top: auto;
+            align-self: center;
+        }
+
+        /* ===== AD STYLE 9: Seasonal ===== */
+        .ad-seasonal {
+            background: linear-gradient(135deg, #273647 0%, #1a2633 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-seasonal::after {
+            content: '';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.05;
+            right: -30px;
+            bottom: -30px;
+        }
+
+        .ad-seasonal .tag {
+            background: #b61b22;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 5px 10px;
+            display: inline-block;
+            align-self: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .ad-seasonal .headline {
+            font-family: 'Oswald', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .ad-seasonal .subtext {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .ad-seasonal .cta {
+            background: #b61b22;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 25px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* Carousel Container */
+        .carousel-section {
+            max-width: 1200px;
+            margin: 60px auto 0;
+        }
+
+        .carousel-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            color: #b61b22;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+        }
+
+        .carousel .ad-card {
+            flex-shrink: 0;
+            scroll-snap-align: start;
+        }
+
+        /* Story Format */
+        .story-card {
+            width: 270px;
+            height: 480px;
+            border-radius: 12px;
+        }
+
+        .story-card.ad-service {
+            padding: 40px 25px;
+        }
+
+        .story-card .headline {
+            font-size: 28px;
+        }
+
+        .story-card.ad-bold .headline {
+            font-size: 36px;
+        }
+
+        .instructions {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .instructions h2 {
+            font-family: 'Oswald', sans-serif;
+            color: #b61b22;
+            margin-bottom: 15px;
+        }
+
+        .instructions p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            color: rgba(255,255,255,0.7);
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #78828e;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ad-card {
+                width: 100%;
+                max-width: 350px;
+                margin: 0 auto;
+            }
+
+            body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="../../index.html" class="back-link">&larr; Back to Brand Guide</a>
+
+    <h1>JJ Riggs Equipment</h1>
+    <p class="subtitle">Social Media Ad Templates - Screenshot or Customize</p>
+
+    <div class="grid">
+
+        <h2 class="section-title">Square Posts (1:1) - Facebook & Instagram Feed</h2>
+
+        <!-- Ad 1: Ugly Fix -->
+        <div class="ad-card ad-ugly-fix">
+            <div class="tag">In The Shop</div>
+            <div class="headline">She Came In<br>Limping.</div>
+            <div class="subtext">Hydraulic issue on this T474. Owner thought it was done for. Back in the field by Friday.</div>
+            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+        </div>
+
+        <!-- Ad 2: Delivery -->
+        <div class="ad-card ad-delivery">
+            <div class="content">
+                <div class="tag">Just Delivered</div>
+                <div class="headline">Another TYM Going<br>to Work in Stevens County</div>
+                <div class="subtext">Thanks for trusting us, Johnson family!</div>
+            </div>
+        </div>
+
+        <!-- Ad 3: Quick Tip -->
+        <div class="ad-card ad-quick-tip">
+            <div class="icon">&#x1F527;</div>
+            <div class="tag">Quick Tip</div>
+            <div class="headline">Don't Forget This Grease Fitting</div>
+            <div class="subtext">Right under the bucket curl. 30 seconds now saves you $500 later.</div>
+            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+        </div>
+
+        <!-- Ad 4: Inventory -->
+        <div class="ad-card ad-inventory">
+            <div class="image-area">
+                <div class="price-tag">$24,900</div>
+            </div>
+            <div class="content">
+                <div class="model">TYM T474</div>
+                <div class="headline">Just Hit The Lot</div>
+                <div class="specs">47 HP - 4x4 - Loader Included</div>
+                <div class="cta">Come Drive It &rarr;</div>
+            </div>
+        </div>
+
+        <!-- Ad 5: Service -->
+        <div class="ad-card ad-service">
+            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+            <div class="headline">Ready to Talk<br>Tractors?</div>
+            <div class="subtext">No pressure. Just answers.</div>
+            <div class="phone">509-738-2985</div>
+        </div>
+
+        <!-- Ad 6: Review -->
+        <div class="ad-card ad-review">
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote">"Andrew has been great to work with. Honest and straightforward. We've bought from him multiple times."</div>
+            <div class="author">- TheRed BridgeFarm</div>
+            <div class="badge">
+                <span class="google-icon">G</span>
+                <span>25+ Five-Star Reviews</span>
+            </div>
+        </div>
+
+        <!-- Ad 7: Bold Statement -->
+        <div class="ad-card ad-bold">
+            <div class="headline">We Service<br>What We Sell.</div>
+            <div class="divider"></div>
+            <div class="subtext">Factory-trained techs. Parts in stock.<br>No 6-week wait.</div>
+        </div>
+
+        <!-- Ad 8: Stats -->
+        <div class="ad-card ad-stats">
+            <div class="tag">Why JJ Riggs</div>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Years Serving<br>Stevens County</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Five-Star<br>Google Reviews</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">25-100</div>
+                    <div class="stat-label">Horsepower<br>Range</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Authorized TYM<br>Dealer in NE WA</div>
+                </div>
+            </div>
+            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+        </div>
+
+        <!-- Ad 9: Seasonal -->
+        <div class="ad-card ad-seasonal">
+            <div class="tag">Winter Ready</div>
+            <div class="headline">Snow's Coming.<br>Is Your Tractor?</div>
+            <div class="subtext">Get your equipment serviced before the first storm. Don't wait until you're stuck.</div>
+            <div class="cta">Schedule Service</div>
+        </div>
+
+    </div>
+
+    <!-- Story/Carousel Format -->
+    <div class="carousel-section">
+        <h2 class="carousel-title">Stories Format (9:16) - Instagram & Facebook Stories</h2>
+        <div class="carousel">
+
+            <div class="ad-card story-card ad-bold">
+                <div class="headline">Real Service.<br>Real People.<br>Real Equipment.</div>
+                <div class="divider"></div>
+                <div class="subtext">Family-owned since 2019.<br>Colville, WA</div>
+            </div>
+
+            <div class="ad-card story-card ad-service">
+                <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                <div class="headline">Your Local TYM Dealer</div>
+                <div class="subtext">The only authorized dealer in northeastern Washington.</div>
+                <div class="phone">509-738-2985</div>
+            </div>
+
+            <div class="ad-card story-card ad-quick-tip">
+                <div class="icon">&#x1F4A1;</div>
+                <div class="tag">Pro Tip</div>
+                <div class="headline">Check Your Loader Pins</div>
+                <div class="subtext">Seeing a lot of dry joints this season. 2 minutes of grease now prevents a $500 repair later.</div>
+                <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+            </div>
+
+            <div class="ad-card story-card ad-seasonal">
+                <div class="tag">New Arrival</div>
+                <div class="headline">3 TYM T254s<br>Just Landed</div>
+                <div class="subtext">Best value for 5-10 acre properties. Compact, powerful, built to last.</div>
+                <div class="cta">View Inventory</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions">
+        <h2>How to Use These Templates</h2>
+        <p><strong>Option 1: Screenshot</strong> - Just screenshot any template you like and post directly to Facebook/Instagram.</p>
+        <p><strong>Option 2: Customize</strong> - Edit the text in the HTML, save, and screenshot your customized version.</p>
+        <p><strong>Swap in your own photos:</strong> Replace the image URLs with photos from your phone or website.</p>
+        <ul>
+            <li><strong>Square posts (1:1)</strong> - Best for Facebook and Instagram feeds</li>
+            <li><strong>Story format (9:16)</strong> - Best for Instagram/Facebook Stories and Reels covers</li>
+            <li>Keep the captions real and conversational - match the "2-minute document" strategy</li>
+            <li>Always add a real caption when posting - these graphics are the visual, your caption is the conversation</li>
+        </ul>
+    </div>
+
+</body>
+</html>
