@@ -18,6 +18,71 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Grid Pattern Overlay */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .grid-pattern-dense {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Corner Accents */
+        .corner-accent {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            z-index: 2;
+        }
+
+        .corner-accent.top-left {
+            top: 0;
+            left: 0;
+            border-top: 2px solid rgba(182, 27, 34, 0.5);
+            border-left: 2px solid rgba(182, 27, 34, 0.5);
+        }
+
+        .corner-accent.top-right {
+            top: 0;
+            right: 0;
+            border-top: 2px solid rgba(182, 27, 34, 0.5);
+            border-right: 2px solid rgba(182, 27, 34, 0.5);
+        }
+
+        .corner-accent.bottom-left {
+            bottom: 0;
+            left: 0;
+            border-bottom: 2px solid rgba(182, 27, 34, 0.5);
+            border-left: 2px solid rgba(182, 27, 34, 0.5);
+        }
+
+        .corner-accent.bottom-right {
+            bottom: 0;
+            right: 0;
+            border-bottom: 2px solid rgba(182, 27, 34, 0.5);
+            border-right: 2px solid rgba(182, 27, 34, 0.5);
+        }
+
         /* Hero */
         .hero {
             min-height: 70vh;
@@ -27,11 +92,29 @@
             padding: 80px 60px;
             background: #b61b22;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .hero-logo {
             max-width: 280px;
             margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
         }
 
         .hero h1 {
@@ -41,6 +124,8 @@
             line-height: 0.95;
             letter-spacing: -3px;
             margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
         }
 
         .hero h1 span {
@@ -52,6 +137,8 @@
             max-width: 520px;
             line-height: 1.7;
             color: rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 1;
         }
 
         .hero-intro strong {
@@ -78,6 +165,8 @@
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
+            position: relative;
+            z-index: 2;
         }
 
         /* Tractor Carousel */
@@ -326,6 +415,27 @@
         .section {
             padding: 100px 60px;
             border-bottom: 1px solid #1a1a1a;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .section > * {
+            position: relative;
+            z-index: 1;
         }
 
         .section-header {
@@ -657,6 +767,11 @@
 
     <!-- Animated Billboard -->
     <section class="billboard">
+        <div class="grid-pattern"></div>
+        <div class="corner-accent top-left"></div>
+        <div class="corner-accent top-right"></div>
+        <div class="corner-accent bottom-left"></div>
+        <div class="corner-accent bottom-right"></div>
         <div class="billboard-inner">
             <div class="tractor-stage">
                 <div class="tractor-slide active" data-slide="0">
