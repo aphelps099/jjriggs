@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJ Riggs - Trophy vs. Tool | Facebook Ad Mockup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #b61b22;
+            --red-dark: #8f151a;
+            --white: #fffefe;
+            --black: #171b20;
+            --navy: #273647;
+            --gray: #78828e;
+            --darkest: #0a0a0a;
+            --fb-dark: #18191a;
+            --fb-card: #242526;
+            --fb-border: #3e4042;
+            --fb-text: #e4e6eb;
+            --fb-secondary: #b0b3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--fb-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        /* Facebook Post Container */
+        .fb-post {
+            background: var(--fb-card);
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* Post Header */
+        .fb-header {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 16px;
+            gap: 10px;
+        }
+
+        .fb-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--white);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .fb-meta {
+            flex: 1;
+        }
+
+        .fb-page-name {
+            color: var(--fb-text);
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 1.2;
+        }
+
+        .fb-sponsored {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--fb-secondary);
+            font-size: 13px;
+            margin-top: 2px;
+        }
+
+        .fb-sponsored::before {
+            content: "Sponsored · ";
+        }
+
+        .fb-more {
+            color: var(--fb-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        /* Post Copy */
+        .fb-copy {
+            padding: 0 16px 12px;
+            color: var(--fb-text);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .fb-copy .hook {
+            font-weight: 600;
+        }
+
+        .fb-copy .see-more {
+            color: var(--fb-secondary);
+            cursor: pointer;
+        }
+
+        .fb-copy .see-more:hover {
+            text-decoration: underline;
+        }
+
+        /* Carousel Container */
+        .carousel-container {
+            position: relative;
+            background: var(--darkest);
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--black) 0%, var(--navy) 100%);
+        }
+
+        /* Slide Variations */
+        .carousel-slide.slide-hook {
+            background: linear-gradient(135deg, var(--darkest) 0%, var(--black) 100%);
+        }
+
+        .carousel-slide.slide-cta {
+            background: var(--red);
+        }
+
+        .carousel-slide.slide-trophy {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .carousel-slide.slide-tool {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--black) 100%);
+        }
+
+        .carousel-slide.slide-compare {
+            background: var(--darkest);
+            padding: 30px;
+        }
+
+        /* Accent Bar */
+        .accent-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--red);
+        }
+
+        .slide-trophy .accent-bar {
+            background: linear-gradient(90deg, #444 0%, #666 100%);
+        }
+
+        .slide-cta .accent-bar {
+            background: var(--white);
+        }
+
+        /* Typography */
+        .slide-overline {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 16px;
+        }
+
+        .slide-trophy .slide-overline {
+            color: #888;
+        }
+
+        .slide-cta .slide-overline {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .slide-headline {
+            font-size: clamp(28px, 8vw, 42px);
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .slide-headline .highlight {
+            color: var(--red);
+        }
+
+        .slide-trophy .slide-headline .highlight {
+            color: #888;
+            text-decoration: line-through;
+            text-decoration-thickness: 3px;
+        }
+
+        .slide-cta .slide-headline .highlight {
+            color: var(--white);
+            text-decoration: underline;
+            text-decoration-thickness: 4px;
+        }
+
+        .slide-subhead {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.5;
+            max-width: 320px;
+        }
+
+        .slide-trophy .slide-subhead {
+            color: #666;
+        }
+
+        .slide-cta .slide-subhead {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* VS Badge */
+        .vs-badge {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--red);
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(182, 27, 34, 0.4);
+        }
+
+        /* Comparison Grid */
+        .comparison-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .comparison-header-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .comparison-header {
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .comparison-header.them {
+            background: rgba(255,255,255,0.05);
+            color: #666;
+        }
+
+        .comparison-header.us {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .comparison-cell {
+            padding: 14px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .comparison-cell.them {
+            background: rgba(255,255,255,0.03);
+            color: #555;
+            border: 1px solid #333;
+        }
+
+        .comparison-cell.us {
+            background: rgba(182, 27, 34, 0.15);
+            color: var(--white);
+            border: 1px solid rgba(182, 27, 34, 0.3);
+        }
+
+        /* Trophy Icon */
+        .icon-trophy {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 24px;
+            opacity: 0.4;
+        }
+
+        .icon-trophy svg {
+            width: 100%;
+            height: 100%;
+            fill: #555;
+        }
+
+        /* Tool Icon */
+        .icon-tool {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 24px;
+        }
+
+        .icon-tool svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--red);
+        }
+
+        /* List Items */
+        .slide-list {
+            list-style: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .slide-list li {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slide-list li::before {
+            content: "×";
+            color: #555;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .slide-tool .slide-list li::before {
+            content: "✓";
+            color: var(--red);
+        }
+
+        .slide-tool .slide-list li {
+            color: var(--white);
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--black) 0%, var(--navy) 50%, var(--black) 100%);
+            z-index: 0;
+        }
+
+        .image-placeholder::before {
+            content: attr(data-placeholder);
+            color: var(--gray);
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+            border: 2px dashed var(--fb-border);
+            border-radius: 8px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        /* Navigation Arrows */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .carousel-nav:hover {
+            background: var(--white);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--black);
+        }
+
+        .carousel-prev {
+            left: 12px;
+        }
+
+        .carousel-next {
+            right: 12px;
+        }
+
+        .carousel-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Dots */
+        .carousel-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--white);
+            transform: scale(1.2);
+        }
+
+        .carousel-dot:hover:not(.active) {
+            background: rgba(255,255,255,0.7);
+        }
+
+        /* Slide Counter */
+        .slide-counter {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.6);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+            z-index: 10;
+        }
+
+        /* Facebook CTA Bar */
+        .fb-cta-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--fb-card);
+            border-top: 1px solid var(--fb-border);
+        }
+
+        .fb-cta-text {
+            flex: 1;
+        }
+
+        .fb-cta-headline {
+            color: var(--fb-text);
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .fb-cta-domain {
+            color: var(--fb-secondary);
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .fb-cta-button {
+            background: var(--fb-border);
+            color: var(--fb-text);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .fb-cta-button:hover {
+            background: #4e4f50;
+        }
+
+        /* Facebook Reactions */
+        .fb-reactions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-top: 1px solid var(--fb-border);
+        }
+
+        .fb-reaction-counts {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--fb-secondary);
+            font-size: 14px;
+        }
+
+        .fb-reaction-icons {
+            display: flex;
+        }
+
+        .fb-reaction-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin-right: -4px;
+            border: 2px solid var(--fb-card);
+        }
+
+        .fb-actions {
+            display: flex;
+            gap: 4px;
+            padding: 4px 16px 12px;
+        }
+
+        .fb-action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: var(--fb-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .fb-action:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .fb-action svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Tagline */
+        .tagline {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slide-cta .tagline {
+            color: var(--white);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Brand Badge */
+        .brand-badge {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            background: rgba(0,0,0,0.5);
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            body {
+                padding: 0;
+            }
+
+            .fb-post {
+                border-radius: 0;
+            }
+
+            .carousel-slide {
+                padding: 30px;
+            }
+
+            .slide-headline {
+                font-size: 28px;
+            }
+
+            .comparison-cell {
+                font-size: 11px;
+                padding: 10px 8px;
+            }
+
+            .comparison-header {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fb-post">
+        <!-- Post Header -->
+        <div class="fb-header">
+            <div class="fb-avatar">JJR</div>
+            <div class="fb-meta">
+                <div class="fb-page-name">JJ Riggs Equipment</div>
+                <div class="fb-sponsored">
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1" fill="none"/>
+                        <circle cx="8" cy="8" r="3"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="fb-more">···</div>
+        </div>
+
+        <!-- Post Copy -->
+        <div class="fb-copy">
+            <span class="hook">There are two ways to look at equipment.</span> Some folks treat attachments like family heirlooms. We treat them like what they are: TOOLS. Built to work. Built to pay for themselves.
+            <br><br>
+            Which one are you?
+            <br><br>
+            JJ Riggs Equipment — Spokane, WA
+            <span class="see-more">... See more</span>
+        </div>
+
+        <!-- Carousel -->
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <!-- Slide 1: Hook -->
+                <div class="carousel-slide slide-hook">
+                    <div class="accent-bar"></div>
+                    <div class="slide-content">
+                        <div class="slide-overline">Two Ways to Look at Equipment</div>
+                        <div class="slide-headline">Trophy <span class="highlight">vs.</span> Tool</div>
+                        <div class="slide-subhead">One sits in the barn. One pays the bills. Which one do you need?</div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Trophy (negative) -->
+                <div class="carousel-slide slide-trophy">
+                    <div class="accent-bar"></div>
+                    <div class="slide-content">
+                        <div class="icon-trophy">
+                            <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H8v2h8v-2h-3v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+                        </div>
+                        <div class="slide-overline">The "Trophy" Mentality</div>
+                        <div class="slide-headline">The <span class="highlight">"Heirloom"</span></div>
+                        <ul class="slide-list">
+                            <li>6-8 week wait times</li>
+                            <li>Premium "boutique" prices</li>
+                            <li>Waiting for the "perfect" custom build</li>
+                            <li>More about bragging rights</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Tool (positive) -->
+                <div class="carousel-slide slide-tool">
+                    <div class="accent-bar"></div>
+                    <div class="slide-content">
+                        <div class="icon-tool">
+                            <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+                        </div>
+                        <div class="slide-overline">The Tool Mentality</div>
+                        <div class="slide-headline">The <span class="highlight">Workhorse</span></div>
+                        <ul class="slide-list">
+                            <li>On the lot TODAY</li>
+                            <li>Severe-Duty rated</li>
+                            <li>Pays for itself this season</li>
+                            <li>Multiple brands & price points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Slide 4: VS Transition -->
+                <div class="carousel-slide">
+                    <div class="accent-bar"></div>
+                    <div class="slide-content">
+                        <div class="vs-badge">VS</div>
+                        <div class="slide-headline">Collector or <span class="highlight">Operator?</span></div>
+                        <div class="slide-subhead">We know which one pays the mortgage. And we stock equipment for operators.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Comparison Grid -->
+                <div class="carousel-slide slide-compare">
+                    <div class="accent-bar"></div>
+                    <div class="slide-content">
+                        <div class="comparison-container">
+                            <div class="comparison-header-row">
+                                <div class="comparison-header them">The "Heirloom"</div>
+                                <div class="comparison-header us">The Workhorse</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell them">6-8 Week Wait</div>
+                                <div class="comparison-cell us">On Lot Today</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell them">Boutique Markup</div>
+                                <div class="comparison-cell us">Competitive Pricing</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell them">One Manufacturer</div>
+                                <div class="comparison-cell us">Multiple Brands</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell them">Custom Fabrication</div>
+                                <div class="comparison-cell us">Severe-Duty Rated</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell them">"Passed Down"</div>
+                                <div class="comparison-cell us">Pays for Itself</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 6: Product -->
+                <div class="carousel-slide">
+                    <div class="image-placeholder" data-placeholder="[ Image: Split screen - dusty trophy in barn vs. grapple actively moving logs ]"></div>
+                    <div class="accent-bar"></div>
+                    <div class="slide-content">
+                        <div class="slide-overline">Iron Craft & Braber</div>
+                        <div class="slide-headline">Built to <span class="highlight">Work.</span></div>
+                        <div class="slide-subhead">Tennessee steel. Commercial grade. Ready to earn its keep starting today.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 7: CTA -->
+                <div class="carousel-slide slide-cta">
+                    <div class="accent-bar"></div>
+                    <div class="slide-content">
+                        <div class="slide-overline">JJ Riggs Equipment</div>
+                        <div class="slide-headline">Stop Waiting. <span class="highlight">Start Working.</span></div>
+                        <div class="slide-subhead">Equipment that earns. On the lot NOW. No wait. No nonsense.</div>
+                        <div class="tagline">Maximum ROI. Zero Nonsense.</div>
+                    </div>
+                    <div class="brand-badge">Spokane, WA</div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <button class="carousel-nav carousel-prev" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z"/></svg>
+            </button>
+            <button class="carousel-nav carousel-next" aria-label="Next slide">
+                <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12l-4.58 4.59z"/></svg>
+            </button>
+
+            <!-- Dots -->
+            <div class="carousel-dots"></div>
+
+            <!-- Counter -->
+            <div class="slide-counter">1 / 7</div>
+        </div>
+
+        <!-- CTA Bar -->
+        <div class="fb-cta-bar">
+            <div class="fb-cta-text">
+                <div class="fb-cta-domain">jjriggsequipment.com</div>
+                <div class="fb-cta-headline">Tools That Work. Ready Now.</div>
+            </div>
+            <button class="fb-cta-button">Shop Now</button>
+        </div>
+
+        <!-- Reactions -->
+        <div class="fb-reactions">
+            <div class="fb-reaction-counts">
+                <div class="fb-reaction-icons">
+                    <img class="fb-reaction-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%231877f2'/%3E%3Cpath d='M8 4.5c-2 0-3.5 1.5-3.5 3.5 0 2.5 3.5 4.5 3.5 4.5s3.5-2 3.5-4.5c0-2-1.5-3.5-3.5-3.5z' fill='white'/%3E%3C/svg%3E" alt="Like">
+                    <img class="fb-reaction-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23ed5168'/%3E%3Cpath d='M8 5c-1.5 0-2.7 1.2-2.7 2.7 0 1.9 2.7 3.5 2.7 3.5s2.7-1.6 2.7-3.5C10.7 6.2 9.5 5 8 5z' fill='white'/%3E%3C/svg%3E" alt="Love">
+                    <img class="fb-reaction-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23f7b928'/%3E%3Ccircle cx='5.5' cy='6' r='1' fill='%23000'/%3E%3Ccircle cx='10.5' cy='6' r='1' fill='%23000'/%3E%3Cpath d='M4.5 9.5q3.5 3 7 0' stroke='%23000' fill='none' stroke-width='1'/%3E%3C/svg%3E" alt="Haha">
+                </div>
+                389
+            </div>
+            <div class="fb-reaction-counts">52 comments · 28 shares</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="fb-actions">
+            <button class="fb-action">
+                <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                Like
+            </button>
+            <button class="fb-action">
+                <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                Comment
+            </button>
+            <button class="fb-action">
+                <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+                Share
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Carousel functionality
+        const track = document.querySelector('.carousel-track');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        const dotsContainer = document.querySelector('.carousel-dots');
+        const counter = document.querySelector('.slide-counter');
+
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+
+        // Create dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('carousel-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+
+            // Update counter
+            counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
+
+            // Update button states
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === totalSlides - 1;
+        }
+
+        function goToSlide(index) {
+            currentIndex = Math.max(0, Math.min(index, totalSlides - 1));
+            updateCarousel();
+        }
+
+        function nextSlide() {
+            if (currentIndex < totalSlides - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        }
+
+        // Button events
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Initialize
+        updateCarousel();
+    </script>
+</body>
+</html>
