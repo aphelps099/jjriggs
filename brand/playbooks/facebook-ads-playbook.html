@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Ads Playbook - TYM to ROLL | JJ Riggs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --darkest: #171b20;
+            --dark-navy: #273647;
+            --red: #b61b22;
+            --white: #fffefe;
+            --gray: #78828e;
+            --bg: #0a0a0a;
+            --card-bg: #111111;
+            --border: #222;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: #cccccc;
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+            padding: 80px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 30px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--red); }
+
+        .badge {
+            display: inline-block;
+            background: var(--red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        h1 span { color: var(--red); }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-number {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--red);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 30px 0 15px 0;
+        }
+
+        p { margin-bottom: 16px; }
+
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 24px;
+        }
+
+        li { margin-bottom: 12px; }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 3px solid var(--red);
+            padding: 24px 28px;
+            margin: 30px 0;
+        }
+
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        /* Carousel Grid */
+        .carousel-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 1100px) {
+            .carousel-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .carousel-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Ad Card */
+        .ad-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .ad-card:hover {
+            border-color: #444;
+            transform: translateY(-2px);
+        }
+
+        .ad-visual {
+            aspect-ratio: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .ad-visual .slide-num {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            background: rgba(0,0,0,0.4);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .ad-visual .logo {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 60px;
+            opacity: 0.9;
+        }
+
+        .ad-visual .wordmark {
+            position: absolute;
+            bottom: 10px;
+            left: 12px;
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            opacity: 0.4;
+        }
+
+        .style-hero { background: linear-gradient(135deg, var(--darkest) 0%, var(--dark-navy) 100%); }
+        .style-dark { background: var(--darkest); }
+        .style-navy { background: linear-gradient(180deg, var(--dark-navy) 0%, var(--darkest) 100%); }
+        .style-red { background: var(--red); }
+
+        .ad-eyebrow {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 6px;
+        }
+
+        .style-red .ad-eyebrow { color: rgba(255,255,255,0.7); }
+
+        .ad-headline {
+            font-size: clamp(14px, 2vw, 20px);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .ad-headline span { color: var(--red); }
+        .style-red .ad-headline span { color: var(--white); }
+
+        .ad-subhead {
+            font-size: 9px;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .style-red .ad-subhead { color: rgba(255,255,255,0.85); }
+
+        .ad-info {
+            padding: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .ad-info-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .ad-info-desc {
+            font-size: 10px;
+            color: var(--gray);
+        }
+
+        /* Pain List Mini */
+        .pain-list-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .pain-item-mini {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 8px;
+            border-radius: 4px;
+            border-left: 2px solid var(--red);
+            font-size: 8px;
+            color: var(--white);
+        }
+
+        /* Feature Grid Mini */
+        .feature-grid-mini {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .feature-box-mini {
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .feature-box-mini .num {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--red);
+        }
+
+        .feature-box-mini .label {
+            font-size: 7px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        /* Stars */
+        .stars-mini {
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        /* CTA Box Mini */
+        .cta-box-mini {
+            background: var(--white);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .cta-box-mini .cta-phone {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--red);
+        }
+
+        .cta-box-mini .cta-address {
+            font-size: 8px;
+            color: #333;
+        }
+
+        /* Large Ad Preview */
+        .ad-preview-large {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+
+        .ad-preview-visual {
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .ad-preview-left {
+            flex: 1;
+        }
+
+        .ad-preview-right {
+            width: 280px;
+            background: var(--red);
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .ad-preview-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 12px;
+        }
+
+        .ad-preview-headline {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .ad-preview-headline span { color: var(--red); }
+
+        .ad-preview-subhead {
+            font-size: 15px;
+            color: var(--gray);
+        }
+
+        .ad-preview-btn {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .ad-preview-price-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .ad-preview-price {
+            font-size: 56px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .ad-preview-price-sub {
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .ad-preview-features {
+            text-align: left;
+            font-size: 12px;
+            color: rgba(255,255,255,0.9);
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ad-preview-features div {
+            margin-bottom: 8px;
+        }
+
+        .ad-preview-info {
+            padding: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .ad-preview-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .ad-preview-info p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        /* Geofencing Ad */
+        .geofence-ad {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 900px) {
+            .geofence-ad {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .geofence-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .geofence-visual {
+            padding: 32px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            position: relative;
+        }
+
+        .geofence-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(182, 27, 34, 0.2);
+            color: var(--red);
+            font-size: 9px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .geofence-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .geofence-headline {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .geofence-subhead {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .geofence-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .geofence-tag {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .geofence-content {
+            padding: 24px;
+        }
+
+        .geofence-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .geofence-desc {
+            font-size: 13px;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        /* Budget Table */
+        .budget-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .budget-table th,
+        .budget-table td {
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .budget-table th {
+            background: var(--card-bg);
+            color: var(--gray);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .budget-table td {
+            font-size: 14px;
+        }
+
+        .budget-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .metric {
+            display: inline-block;
+            background: #1a1a1a;
+            padding: 4px 10px;
+            font-family: monospace;
+            font-size: 13px;
+            color: var(--red);
+            border-radius: 3px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 16px;
+        }
+
+        .checklist li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-weight: bold;
+        }
+
+        .footer {
+            background: var(--bg);
+            border-top: 1px solid #1a1a1a;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #444;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .footer span { color: var(--red); }
+
+        code {
+            background: #1a1a1a;
+            padding: 2px 8px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #cccccc;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .header, .container {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            h1 { font-size: 36px; }
+
+            .ad-preview-visual {
+                flex-direction: column;
+            }
+
+            .ad-preview-right {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="../../index.html" class="back-link">&larr; Back to Brand Guide</a>
+            <div class="badge">Playbook</div>
+            <h1><span>TYM</span> to ROLL Facebook Ads</h1>
+            <p class="subtitle">A complete carousel ad series for Facebook and Instagram, plus geofencing ad templates for location-based targeting.</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Section 1: Overview -->
+        <section class="section">
+            <div class="section-number">01 — Overview</div>
+            <h2>Carousel Ad Strategy</h2>
+            <p>The "TYM to ROLL" carousel is designed using a proven 5-slide storytelling framework: <strong>Hook &rarr; Problem &rarr; Solution &rarr; Proof &rarr; CTA</strong>. Each slide builds on the last, guiding prospects from awareness to action.</p>
+
+            <div class="highlight-box">
+                <p><strong>Why carousels work:</strong> Facebook carousel ads see 72% higher click-through rates than single-image ads. The swipe interaction keeps users engaged longer, and the multi-frame format lets you tell a complete story.</p>
+            </div>
+
+            <h3>Campaign Objectives</h3>
+            <ul>
+                <li><strong>Primary:</strong> Drive website traffic to inventory pages</li>
+                <li><strong>Secondary:</strong> Generate phone calls and lot visits</li>
+                <li><strong>Tertiary:</strong> Build brand awareness in Stevens County</li>
+            </ul>
+        </section>
+
+        <!-- Section 2: Carousel Breakdown -->
+        <section class="section">
+            <div class="section-number">02 — Carousel Series</div>
+            <h2>5-Slide Breakdown</h2>
+            <p>Each slide serves a specific purpose in the customer journey. Here's the complete series:</p>
+
+            <div class="carousel-grid">
+                <!-- Slide 1: Hook -->
+                <div class="ad-card">
+                    <div class="ad-visual style-hero">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">1/5</span>
+                        <div class="ad-eyebrow">Spring Sales Event</div>
+                        <div class="ad-headline"><span>TYM</span> to ROLL</div>
+                        <div class="ad-subhead">New TYM Tractors Starting at $199/mo</div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 1: The Hook</div>
+                        <div class="ad-info-desc">Grab attention with the campaign name and lead offer. Sets the tone.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Problem -->
+                <div class="ad-card">
+                    <div class="ad-visual style-dark">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">2/5</span>
+                        <div class="ad-eyebrow">The Problem</div>
+                        <div class="ad-headline">Still renting?</div>
+                        <div class="pain-list-mini">
+                            <div class="pain-item-mini">Rental costs add up</div>
+                            <div class="pain-item-mini">Never available</div>
+                            <div class="pain-item-mini">Someone else's problems</div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 2: The Problem</div>
+                        <div class="ad-info-desc">Agitate the pain points. Make them feel the cost of not acting.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Solution -->
+                <div class="ad-card">
+                    <div class="ad-visual style-navy">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">3/5</span>
+                        <div class="ad-eyebrow">The Solution</div>
+                        <div class="ad-headline">Own a <span>TYM</span></div>
+                        <div class="feature-grid-mini">
+                            <div class="feature-box-mini">
+                                <div class="num">25-73</div>
+                                <div class="label">HP Range</div>
+                            </div>
+                            <div class="feature-box-mini">
+                                <div class="num">6 YR</div>
+                                <div class="label">Warranty</div>
+                            </div>
+                            <div class="feature-box-mini">
+                                <div class="num">$199</div>
+                                <div class="label">/Month</div>
+                            </div>
+                            <div class="feature-box-mini">
+                                <div class="num">LOCAL</div>
+                                <div class="label">Service</div>
+                            </div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 3: The Solution</div>
+                        <div class="ad-info-desc">Present TYM as the answer. Lead with value props and specs.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Social Proof -->
+                <div class="ad-card">
+                    <div class="ad-visual style-dark">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">4/5</span>
+                        <div class="ad-eyebrow">What Customers Say</div>
+                        <div class="stars-mini">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <div class="ad-headline">Excellent</div>
+                        <div class="ad-subhead">25+ five-star Google reviews. Honest service from Andrew.</div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 4: Social Proof</div>
+                        <div class="ad-info-desc">Build trust with reviews. Real people, real results.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: CTA -->
+                <div class="ad-card">
+                    <div class="ad-visual style-red">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" class="logo">
+                        <span class="slide-num">5/5</span>
+                        <div class="ad-headline">Ready to roll?</div>
+                        <div class="ad-subhead">No pressure. Just answers.</div>
+                        <div class="cta-box-mini">
+                            <div class="cta-phone">509-738-2985</div>
+                            <div class="cta-address">685 Elm Tree Dr, Colville</div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 5: Call to Action</div>
+                        <div class="ad-info-desc">Close with contact info. Make it easy to take the next step.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong>Pro tip:</strong> Download the full-resolution slides from the <a href="../social/tym-to-roll-campaign.html" style="color: var(--red);">TYM to ROLL Campaign page</a>. Each slide is 1080&times;1080px, optimized for Instagram and Facebook.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: Facebook Feed Ad -->
+        <section class="section">
+            <div class="section-number">03 — Facebook Feed Ad</div>
+            <h2>Single-Image Ad (1200&times;628)</h2>
+            <p>For feed placement and link clicks, use this horizontal format. Designed to drive traffic to the inventory page.</p>
+
+            <div class="ad-preview-large">
+                <div class="ad-preview-visual" style="background: linear-gradient(135deg, var(--darkest) 0%, var(--dark-navy) 100%);">
+                    <div class="ad-preview-left">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs" style="width: 120px; margin-bottom: 20px;">
+                        <div class="ad-preview-eyebrow">Spring Sales Event</div>
+                        <div class="ad-preview-headline"><span>TYM</span> to ROLL</div>
+                        <div class="ad-preview-subhead">New TYM Tractors in Stock</div>
+                        <div class="ad-preview-btn">Shop Inventory</div>
+                    </div>
+                    <div class="ad-preview-right">
+                        <div class="ad-preview-price-label">Starting At</div>
+                        <div class="ad-preview-price">$199</div>
+                        <div class="ad-preview-price-sub">/month</div>
+                        <div class="ad-preview-features">
+                            <div>&#10003; 6-Year Warranty</div>
+                            <div>&#10003; Local Service</div>
+                            <div>&#10003; 25-73 HP Range</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ad-preview-info">
+                    <h4>Ad Specifications</h4>
+                    <p>1200 &times; 628px &bull; Facebook Feed placement &bull; Objective: Traffic or Conversions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Geofencing Ads -->
+        <section class="section">
+            <div class="section-number">04 — Geofencing Ad Samples</div>
+            <h2>Location-Based Targeting</h2>
+            <p>These ads are designed for geofencing campaigns&mdash;targeting users who visit competitor lots, farm stores, and agricultural events. Use with the <a href="geofencing-facebook-ads.html" style="color: var(--red);">Geofencing Playbook</a>.</p>
+
+            <div class="geofence-ad">
+                <!-- Competitor Geofence -->
+                <div class="geofence-card">
+                    <div class="geofence-visual">
+                        <div class="geofence-badge">GEOFENCE AD</div>
+                        <div class="geofence-icon">&#128205;</div>
+                        <div class="geofence-headline">Shopping for a tractor?</div>
+                        <div class="geofence-subhead">Before you decide, see what TYM offers. 6-year warranty included.</div>
+                        <div class="geofence-features">
+                            <span class="geofence-tag">6-Year Warranty</span>
+                            <span class="geofence-tag">From $199/mo</span>
+                            <span class="geofence-tag">Local Service</span>
+                        </div>
+                    </div>
+                    <div class="geofence-content">
+                        <div class="geofence-title">Competitor Targeting</div>
+                        <div class="geofence-desc">Show this ad to users visiting Kubota, John Deere, or Case IH dealers. The "shopping" language meets them in the consideration phase.</div>
+                    </div>
+                </div>
+
+                <!-- Farm Store Geofence -->
+                <div class="geofence-card">
+                    <div class="geofence-visual" style="background: linear-gradient(135deg, #1a2a1a 0%, #0d0d0d 100%);">
+                        <div class="geofence-badge">GEOFENCE AD</div>
+                        <div class="geofence-icon">&#127793;</div>
+                        <div class="geofence-headline">Got land to manage?</div>
+                        <div class="geofence-subhead">TYM tractors handle hay, snow, fencing, and more. See them in Colville.</div>
+                        <div class="geofence-features">
+                            <span class="geofence-tag">25-73 HP</span>
+                            <span class="geofence-tag">Loader Included</span>
+                            <span class="geofence-tag">Test Drive</span>
+                        </div>
+                    </div>
+                    <div class="geofence-content">
+                        <div class="geofence-title">Farm Store Targeting</div>
+                        <div class="geofence-desc">Show to users at Coastal Farm & Ranch, North 40 Outfitters, or local feed stores. Appeal to the "property owner" mindset.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Ad Copy for Geofencing</h3>
+            <div class="highlight-box">
+                <p><strong>For Competitor Locations:</strong></p>
+                <p style="font-style: italic; color: #fff;">"Still comparing? TYM tractors come with a 6-year warranty&mdash;best in class. See why owners switch to TYM. Visit JJ Riggs in Colville."</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>For Farm Supply Stores:</strong></p>
+                <p style="font-style: italic; color: #fff;">"Your land deserves better than rental equipment. TYM tractors from $199/mo. Stop by JJ Riggs&mdash;local service, no pressure."</p>
+            </div>
+        </section>
+
+        <!-- Section 5: Campaign Setup -->
+        <section class="section">
+            <div class="section-number">05 — Campaign Setup</div>
+            <h2>Facebook Ads Manager</h2>
+
+            <h3>Audience Targeting</h3>
+            <ul>
+                <li><strong>Age:</strong> 35-65</li>
+                <li><strong>Location:</strong> Stevens County + 50-mile radius</li>
+                <li><strong>Interests:</strong> Farming, Tractors, Rural Living, Agriculture, Livestock, Land Management</li>
+                <li><strong>Behaviors:</strong> Farmland owners, Rural area residents</li>
+            </ul>
+
+            <h3>Campaign Settings</h3>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Setting</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Objective</td>
+                        <td>Traffic or Conversions</td>
+                    </tr>
+                    <tr>
+                        <td>Placements</td>
+                        <td>Facebook Feed, Instagram Feed, Stories</td>
+                    </tr>
+                    <tr>
+                        <td>Budget</td>
+                        <td>$25-50/day for carousel, $15-25/day for geofencing</td>
+                    </tr>
+                    <tr>
+                        <td>Duration</td>
+                        <td>Run continuously, increase during spring (Feb-May)</td>
+                    </tr>
+                    <tr>
+                        <td>Bid Strategy</td>
+                        <td>Lowest cost (automatic)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 6: Metrics -->
+        <section class="section">
+            <div class="section-number">06 — Metrics to Track</div>
+            <h2>Measure What Matters</h2>
+
+            <ul>
+                <li><strong>CTR (Click-Through Rate):</strong> <span class="metric">Target: 1.5%+</span> for carousel, <span class="metric">2%+</span> for geofencing</li>
+                <li><strong>CPC (Cost Per Click):</strong> <span class="metric">Target: Under $2.00</span></li>
+                <li><strong>Reach:</strong> <span class="metric">Target: 10,000+/month</span></li>
+                <li><strong>Frequency:</strong> <span class="metric">Target: 3-5x per user</span></li>
+                <li><strong>Landing Page Views:</strong> Track actual website visits vs. clicks</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Manual tracking:</strong> Ask every customer: "How did you hear about us?" Track answers in a spreadsheet to connect ad spend to actual sales.</p>
+            </div>
+        </section>
+
+        <!-- Section 7: Quick Start -->
+        <section class="section">
+            <div class="section-number">07 — Quick Start Checklist</div>
+            <h2>Launch in 30 Minutes</h2>
+
+            <ul class="checklist">
+                <li>Download carousel slides from TYM to ROLL campaign page</li>
+                <li>Create new campaign in Facebook Ads Manager</li>
+                <li>Set objective to "Traffic" with website destination</li>
+                <li>Define audience: 35-65, Stevens County +50mi, farming interests</li>
+                <li>Upload 5 carousel slides in order</li>
+                <li>Add headlines and descriptions for each slide</li>
+                <li>Set link to jjriggsequipment.com/tym-tractors</li>
+                <li>Set daily budget at $30-50</li>
+                <li>Enable "Advantage+ Placements"</li>
+                <li>Publish and monitor after 48 hours</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <p>JJ Riggs <span>&bull;</span> Facebook Ads Playbook <span>&bull;</span> 2026</p>
+    </footer>
+
+</body>
+</html>
