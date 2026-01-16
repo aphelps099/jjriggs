@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM to ROLL - Spring Sales Event | JJ Riggs Equipment</title>
+    <meta name="description" content="New TYM tractors starting at $199/mo. 6-year warranty included. Visit JJ Riggs Equipment in Colville, WA.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CAMPAIGN CONFIGURATION
+           Change these CSS custom properties to adapt
+           this template for different campaigns
+           ============================================ */
+        :root {
+            /* Brand Colors - Don't change */
+            --red: #b61b22;
+            --red-dark: #8f151a;
+            --darkest: #0a0a0a;
+            --dark: #111111;
+            --dark-navy: #273647;
+            --white: #fffefe;
+            --gray: #78828e;
+            --border: #222;
+
+            /* Campaign Accent - Change for seasonal */
+            --accent: var(--red);
+            --accent-dark: var(--red-dark);
+        }
+
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darkest);
+            color: #ccc;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            min-height: 90vh;
+            background: linear-gradient(165deg, var(--dark) 55%, var(--accent) 55%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            padding: 80px 0;
+            width: 100%;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 72px);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-text {
+            font-size: 18px;
+            color: rgba(255,255,255,0.75);
+            max-width: 500px;
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 32px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Hero Offer Box */
+        .hero-offer {
+            background: var(--white);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-offer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        .offer-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .offer-price {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .offer-price-sub {
+            font-size: 24px;
+            color: var(--darkest);
+        }
+
+        .offer-features {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5e5;
+            text-align: left;
+        }
+
+        .offer-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: var(--darkest);
+        }
+
+        .offer-feature svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           PROBLEM SECTION
+           ============================================ */
+        .problem {
+            padding: 100px 0;
+            background: var(--dark);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .pain-card {
+            background: var(--darkest);
+            border: 1px solid var(--border);
+            padding: 32px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .pain-card:hover {
+            border-color: #333;
+            transform: translateY(-4px);
+        }
+
+        .pain-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .pain-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .pain-text {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           SOLUTION SECTION
+           ============================================ */
+        .solution {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--darkest) 0%, var(--dark-navy) 100%);
+        }
+
+        .solution-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .solution-header .section-title {
+            margin-bottom: 20px;
+        }
+
+        .solution-header p {
+            font-size: 18px;
+            color: var(--gray);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .feature-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-box:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .feature-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .feature-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* Product Image */
+        .solution-product {
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .solution-product img {
+            max-width: 600px;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5));
+        }
+
+        /* ============================================
+           SOCIAL PROOF SECTION
+           ============================================ */
+        .proof {
+            padding: 100px 0;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .proof::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://jjriggsequipment.com/wp-content/uploads/2024/09/jj-home-slider.jpg') center/cover;
+            filter: grayscale(100%);
+            opacity: 0.08;
+        }
+
+        .proof-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .proof-content .section-label {
+            margin-bottom: 16px;
+        }
+
+        .proof-content .section-title {
+            margin-bottom: 24px;
+        }
+
+        .proof-content p {
+            font-size: 17px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 32px;
+        }
+
+        .stars {
+            font-size: 32px;
+            color: #f5a623;
+            letter-spacing: 4px;
+            margin-bottom: 16px;
+        }
+
+        .review-card {
+            background: var(--darkest);
+            border: 1px solid var(--border);
+            padding: 32px;
+        }
+
+        .review-text {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .review-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .review-author span {
+            color: var(--accent);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+        }
+
+        /* ============================================
+           CTA SECTION
+           ============================================ */
+        .cta {
+            background: var(--accent);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: 'JJ';
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 400px;
+            font-weight: 900;
+            color: rgba(0,0,0,0.1);
+            line-height: 1;
+        }
+
+        .cta-inner {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .cta-contact {
+            background: var(--white);
+            padding: 32px 40px;
+            text-align: center;
+        }
+
+        .cta-phone {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .cta-phone:hover {
+            color: var(--accent-dark);
+        }
+
+        .cta-address {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--darkest);
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand img {
+            height: 40px;
+            opacity: 0.8;
+        }
+
+        .footer-info {
+            text-align: right;
+        }
+
+        .footer-info p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+
+        .footer-info a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .footer-info a:hover {
+            color: var(--accent);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-offer {
+                max-width: 400px;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .proof-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                background: linear-gradient(180deg, var(--dark) 70%, var(--accent) 70%);
+            }
+
+            .hero h1 {
+                font-size: 36px;
+                letter-spacing: -1px;
+            }
+
+            .pain-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .footer-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         HERO SECTION
+         Campaign: TYM to ROLL - Spring Sales
+         Customize: headline, eyebrow, offer price
+         ============================================ -->
+    <section class="hero">
+        <div class="container hero-inner">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-eyebrow">Spring Sales Event</div>
+                    <h1><span>TYM</span> to ROLL</h1>
+                    <p class="hero-text">New TYM tractors are in stock and ready to work. The only authorized dealer in northeastern Washington. Family-owned, straight-talk service.</p>
+                    <div class="hero-actions">
+                        <a href="https://jjriggsequipment.com/tractors/" class="btn btn-primary">View Inventory</a>
+                        <a href="tel:509-738-2985" class="btn btn-outline">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            Call Now
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-offer">
+                    <div class="offer-label">New TYM Tractors Starting At</div>
+                    <div class="offer-price">$199<span class="offer-price-sub">/mo</span></div>
+                    <div class="offer-features">
+                        <div class="offer-feature">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            6-Year Warranty Included
+                        </div>
+                        <div class="offer-feature">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Local Service &amp; Parts
+                        </div>
+                        <div class="offer-feature">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            25-73 HP Range Available
+                        </div>
+                        <div class="offer-feature">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Financing Options
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PROBLEM SECTION
+         Purpose: Agitate pain points
+         ============================================ -->
+    <section class="problem">
+        <div class="container">
+            <div class="problem-grid">
+                <div>
+                    <div class="section-label">The Problem</div>
+                    <h2 class="section-title">Still renting equipment?</h2>
+                </div>
+                <div class="pain-grid">
+                    <div class="pain-card">
+                        <div class="pain-icon">💸</div>
+                        <h3 class="pain-title">Rental Costs Add Up</h3>
+                        <p class="pain-text">$200-400 per weekend, every time. In two years, you've paid for a tractor you don't own.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">📅</div>
+                        <h3 class="pain-title">Never Available</h3>
+                        <p class="pain-text">Need it Saturday? So does everyone else. Your project waits while the calendar fills up.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">🔧</div>
+                        <h3 class="pain-title">Someone Else's Problems</h3>
+                        <p class="pain-text">Worn tires, loose buckets, mystery warning lights. You inherit every renter's abuse.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">⏰</div>
+                        <h3 class="pain-title">Time Pressure</h3>
+                        <p class="pain-text">Rush to return it by 5pm. No time to finish the job right when you're watching the clock.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SOLUTION SECTION
+         Purpose: Present TYM as the answer
+         ============================================ -->
+    <section class="solution">
+        <div class="container">
+            <div class="solution-header">
+                <div class="section-label">The Solution</div>
+                <h2 class="section-title">Own a TYM. Work on your schedule.</h2>
+                <p>TYM tractors are built for real work on real properties. Korean engineering, industry-leading warranty, and priced for working families.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-number">25-73</div>
+                    <div class="feature-label">HP Range</div>
+                    <div class="feature-desc">From hobby farm to serious acreage</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-number">6</div>
+                    <div class="feature-label">Year Warranty</div>
+                    <div class="feature-desc">Best-in-class coverage included</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-number">$199</div>
+                    <div class="feature-label">/Month</div>
+                    <div class="feature-desc">Less than weekend rentals</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-number">LOCAL</div>
+                    <div class="feature-label">Service</div>
+                    <div class="feature-desc">Parts and repairs in Colville</div>
+                </div>
+            </div>
+
+            <div class="solution-product">
+                <img src="https://jjriggsequipment.com/wp-content/uploads/2026/01/t3025_composition2_image_optimized.png" alt="TYM Tractor">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SOCIAL PROOF SECTION
+         Purpose: Build trust with reviews
+         ============================================ -->
+    <section class="proof">
+        <div class="container proof-inner">
+            <div class="proof-grid">
+                <div class="proof-content">
+                    <div class="section-label">Why People Choose Us</div>
+                    <h2 class="section-title">100% Five-Star Reviews</h2>
+                    <p>Real customers. Real reviews. People drive from Spokane, Republic, and beyond to buy from Andrew. Here's why.</p>
+                    <a href="https://g.page/r/CSFOuA8qocozEAE/review" target="_blank" class="btn btn-primary">See Google Reviews</a>
+                </div>
+                <div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"Andrew went above and beyond. No pressure, just honest answers. Drove 2 hours and it was worth every mile. This is how buying equipment should be."</p>
+                        <div class="review-author">— Verified Google Review <span>| Stevens County</span></div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-number">25+</div>
+                            <div class="stat-label">5-Star Reviews</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Years in Business</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">Family Owned</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         CTA SECTION
+         Purpose: Drive action
+         ============================================ -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-inner">
+                <div>
+                    <h2>Ready to roll?</h2>
+                    <p>No pressure. Just answers. Stop by or give us a call.</p>
+                </div>
+                <div class="cta-contact">
+                    <a href="tel:509-738-2985" class="cta-phone">509-738-2985</a>
+                    <div class="cta-address">685 Elm Tree Dr, Colville, WA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs Equipment">
+                </div>
+                <div class="footer-info">
+                    <p><a href="https://jjriggsequipment.com">jjriggsequipment.com</a></p>
+                    <p>Mon-Fri 8AM-5PM &bull; Colville, WA</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
