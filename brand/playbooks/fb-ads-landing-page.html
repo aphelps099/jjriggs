@@ -629,6 +629,80 @@
         }
 
         /* ============================================
+           EMAIL SIGNUP SECTION
+           ============================================ */
+        .email-signup {
+            padding: 80px 0;
+            background: var(--darkest);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .email-signup-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .email-signup .section-title {
+            margin-bottom: 12px;
+        }
+
+        .email-signup-text {
+            font-size: 17px;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 18px 24px;
+            font-size: 16px;
+            font-family: inherit;
+            background: var(--dark);
+            border: 1px solid var(--border);
+            color: var(--white);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .email-input::placeholder {
+            color: var(--gray);
+        }
+
+        .email-input:focus {
+            border-color: var(--accent);
+        }
+
+        .email-form .btn {
+            white-space: nowrap;
+        }
+
+        .email-privacy {
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .email-form {
+                flex-direction: column;
+            }
+
+            .email-form .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ============================================
            CTA SECTION
            ============================================ */
         .cta {
@@ -985,6 +1059,25 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         EMAIL SIGNUP SECTION
+         Purpose: Capture leads for newsletter
+         ============================================ -->
+    <section class="email-signup">
+        <div class="container">
+            <div class="email-signup-inner">
+                <div class="section-label">Stay in the Loop</div>
+                <h2 class="section-title">Get Special Offers in Your Inbox</h2>
+                <p class="email-signup-text">Be the first to know about seasonal deals, new inventory arrivals, and exclusive discounts. No spam — just good deals.</p>
+                <form class="email-form" action="#" method="POST">
+                    <input type="email" name="email" class="email-input" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Sign Me Up</button>
+                </form>
+                <p class="email-privacy">We respect your privacy. Unsubscribe anytime.</p>
             </div>
         </div>
     </section>
