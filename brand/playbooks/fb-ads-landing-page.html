@@ -275,51 +275,174 @@
             line-height: 1.1;
         }
 
-        .pain-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
-        .pain-card {
-            background: var(--darkest);
-            border: 1px solid var(--border);
-            padding: 32px;
+        /* Video Thumbnail Placeholder */
+        .video-thumbnail {
             position: relative;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .pain-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
+        .video-thumbnail:hover {
+            border-color: var(--accent);
+        }
+
+        .video-thumbnail:hover .video-play {
+            transform: translate(-50%, -50%) scale(1.1);
             background: var(--accent);
         }
 
-        .pain-card:hover {
-            border-color: #333;
-            transform: translateY(-4px);
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://jjriggsequipment.com/wp-content/uploads/2024/10/IMG_4255.jpg') center/cover;
+            opacity: 0.3;
+            filter: grayscale(50%);
         }
 
-        .pain-icon {
-            font-size: 32px;
+        .video-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(182, 27, 34, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+
+        .video-play svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+            margin-left: 4px;
+        }
+
+        .video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+            padding: 60px 40px 40px;
+            z-index: 2;
+        }
+
+        .video-duration {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 4px;
+            z-index: 3;
+        }
+
+        .video-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 6px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             margin-bottom: 16px;
         }
 
-        .pain-title {
-            font-size: 18px;
+        .video-title {
+            font-size: 24px;
             font-weight: 700;
-            color: var(--white);
-            margin-bottom: 8px;
+            color: white;
+            margin-bottom: 12px;
+            line-height: 1.2;
         }
 
-        .pain-text {
-            font-size: 14px;
-            color: var(--gray);
+        .video-desc {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
             line-height: 1.6;
+            max-width: 500px;
+        }
+
+        /* Script Notes Box */
+        .script-notes {
+            background: var(--darkest);
+            border: 2px dashed var(--border);
+            padding: 32px;
+            margin-top: 24px;
+        }
+
+        .script-notes-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .script-notes-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(182, 27, 34, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .script-notes-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .script-notes-subtitle {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .talking-points {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .talking-points li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .talking-points li:last-child {
+            border-bottom: none;
+        }
+
+        .talking-points li::before {
+            content: '▸';
+            color: var(--accent);
+            font-size: 12px;
+            margin-top: 2px;
         }
 
         /* ============================================
@@ -649,8 +772,20 @@
                 letter-spacing: -1px;
             }
 
-            .pain-grid {
-                grid-template-columns: 1fr;
+            .video-thumbnail {
+                aspect-ratio: 4/3;
+            }
+
+            .video-title {
+                font-size: 18px;
+            }
+
+            .video-overlay {
+                padding: 40px 24px 24px;
+            }
+
+            .script-notes {
+                padding: 24px;
             }
 
             .features-grid {
@@ -728,37 +863,49 @@
 
     <!-- ============================================
          PROBLEM SECTION
-         Purpose: Agitate pain points
+         Purpose: Video from Andrew addressing pain points
          ============================================ -->
     <section class="problem">
         <div class="container">
-            <div class="problem-grid">
-                <div>
-                    <div class="section-label">The Problem</div>
-                    <h2 class="section-title">Still renting equipment?</h2>
+            <div style="margin-bottom: 40px;">
+                <div class="section-label">The Problem</div>
+                <h2 class="section-title">Still renting equipment?</h2>
+            </div>
+
+            <!-- Video Thumbnail Placeholder -->
+            <div class="video-thumbnail">
+                <div class="video-bg"></div>
+                <div class="video-duration">~60 sec</div>
+                <div class="video-play">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
                 </div>
-                <div class="pain-grid">
-                    <div class="pain-card">
-                        <div class="pain-icon">💸</div>
-                        <h3 class="pain-title">Rental Costs Add Up</h3>
-                        <p class="pain-text">$200-400 per weekend, every time. In two years, you've paid for a tractor you don't own.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">📅</div>
-                        <h3 class="pain-title">Never Available</h3>
-                        <p class="pain-text">Need it Saturday? So does everyone else. Your project waits while the calendar fills up.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">🔧</div>
-                        <h3 class="pain-title">Someone Else's Problems</h3>
-                        <p class="pain-text">Worn tires, loose buckets, mystery warning lights. You inherit every renter's abuse.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">⏰</div>
-                        <h3 class="pain-title">Time Pressure</h3>
-                        <p class="pain-text">Rush to return it by 5pm. No time to finish the job right when you're watching the clock.</p>
+                <div class="video-overlay">
+                    <div class="video-badge">Video Placeholder</div>
+                    <h3 class="video-title">"Why I started selling tractors instead of renting them"</h3>
+                    <p class="video-desc">Andrew talks directly to camera about the real cost of renting equipment — and why owning makes more sense for property owners in Stevens County.</p>
+                </div>
+            </div>
+
+            <!-- Script Notes for Andrew -->
+            <div class="script-notes">
+                <div class="script-notes-header">
+                    <div class="script-notes-icon">🎬</div>
+                    <div>
+                        <div class="script-notes-title">Video Script Notes</div>
+                        <div class="script-notes-subtitle">Talking points for Andrew — film on iPhone, keep it real</div>
                     </div>
                 </div>
+                <ul class="talking-points">
+                    <li><strong>Open with the hook:</strong> "If you're renting a tractor every few weeks, let me show you why that's costing you more than you think."</li>
+                    <li><strong>The math problem:</strong> Share real numbers — rental costs ($200-400/weekend) add up fast. In 2 years, you've paid for a tractor you don't own.</li>
+                    <li><strong>The availability frustration:</strong> "How many times have you needed equipment on Saturday and it's already booked?"</li>
+                    <li><strong>The condition issue:</strong> Rentals get abused. You inherit everyone else's problems — worn tires, loose buckets, warning lights.</li>
+                    <li><strong>The time pressure:</strong> "You're watching the clock instead of finishing the job right."</li>
+                    <li><strong>The pivot:</strong> "That's why I sell tractors. At $199/mo, you own it. It's yours. Work on your schedule."</li>
+                    <li><strong>Close with CTA:</strong> "Come see me in Colville. No pressure — just answers."</li>
+                </ul>
             </div>
         </div>
     </section>
