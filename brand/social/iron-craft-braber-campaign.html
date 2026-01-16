@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Craft & Braber Campaign | JJ Riggs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --darkest: #171b20;
+            --dark-navy: #273647;
+            --dark-slate: #2f353b;
+            --dark-gray: #2f2f2f;
+            --white: #fffefe;
+            --gray: #78828e;
+            --red: #b61b22;
+            --bg: #0a0a0a;
+            --card-bg: #141414;
+            --border: #2a2a2a;
+            --fb-dark: #18191a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: white;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header-btn {
+            font-size: 12px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--gray);
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .header-btn:hover {
+            border-color: white;
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 60px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: var(--red);
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Strategy Box */
+        .strategy-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 800px;
+            margin: 40px auto 0;
+            text-align: left;
+        }
+
+        .strategy-box h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .strategy-box p {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .strategy-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .strategy-box strong {
+            color: var(--white);
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .strategy-item {
+            background: rgba(182, 27, 34, 0.1);
+            border: 1px solid rgba(182, 27, 34, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .strategy-item .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .strategy-item .value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        /* Main */
+        .main {
+            padding: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Carousel Section */
+        .carousel-section {
+            margin-bottom: 60px;
+        }
+
+        /* Post Grid */
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* Post Card */
+        .post-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .post-card:hover {
+            border-color: #444;
+            transform: translateY(-2px);
+        }
+
+        /* Post Visual - iframe container */
+        .post-visual {
+            background: var(--fb-dark);
+            position: relative;
+        }
+
+        .post-visual iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+
+        /* Post Content */
+        .post-content {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .post-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 8px;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .post-desc {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .post-caption {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.6;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: pre-wrap;
+            margin-bottom: 12px;
+        }
+
+        .post-caption:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: var(--border);
+        }
+
+        .post-caption.copied {
+            border-color: var(--red);
+            background: rgba(182, 27, 34, 0.1);
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            font-size: 10px;
+            color: var(--red);
+            background: rgba(182, 27, 34, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: rgba(182, 27, 34, 0.2);
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            font-size: 11px;
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .action-btn.primary {
+            background: var(--darkest);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: var(--dark-navy);
+        }
+
+        .action-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--gray);
+        }
+
+        .action-btn.secondary:hover {
+            border-color: white;
+            color: white;
+        }
+
+        /* Tone Badge */
+        .tone-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .tone-badge.professional {
+            background: rgba(39, 54, 71, 0.5);
+            color: #7fa3c9;
+        }
+
+        .tone-badge.edgy {
+            background: rgba(182, 27, 34, 0.2);
+            color: #e85960;
+        }
+
+        .tone-badge.competitive {
+            background: rgba(120, 130, 142, 0.2);
+            color: #a8b2bc;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--red);
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 14px 24px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 24px 40px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .header, .main, .hero {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+            .post-visual iframe {
+                height: 500px;
+            }
+            .strategy-box {
+                margin: 30px 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-title">JJ Riggs Brand Guide</div>
+        <a href="../../index.html" class="header-btn">&larr; Back to Brand Guide</a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-badge">Competitive Response Campaign</div>
+        <h1>Iron Craft <span>&</span> Braber</h1>
+        <p>Facebook carousel ads countering competitor "heirloom" positioning. Three concepts, each with a different strategic angle.</p>
+
+        <div class="strategy-box">
+            <h3>Strategic Context</h3>
+            <p>
+                These ads respond to a competitor's campaign that positioned custom-welded attachments as "family heirlooms" worth premium prices and long wait times. <strong>Our counter-positioning doesn't attack quality</strong> (no credible evidence of issues). Instead, we reframe the conversation around practical value.
+            </p>
+            <p>
+                <strong>Key messages:</strong> On-lot availability (no 6-8 week wait), ROI focus ("tools that pay for themselves"), Severe-Duty industrial ratings, Tennessee steel manufacturing, and multiple brand options vs. one manufacturer.
+            </p>
+            <div class="strategy-grid">
+                <div class="strategy-item">
+                    <div class="label">Wait Time</div>
+                    <div class="value">Today vs. 6-8 Weeks</div>
+                </div>
+                <div class="strategy-item">
+                    <div class="label">Positioning</div>
+                    <div class="value">Workhorse vs. Heirloom</div>
+                </div>
+                <div class="strategy-item">
+                    <div class="label">Brands</div>
+                    <div class="value">Iron Craft + Braber</div>
+                </div>
+                <div class="strategy-item">
+                    <div class="label">Angle</div>
+                    <div class="value">ROI, Not Sentiment</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main">
+
+        <!-- Carousel Section -->
+        <section class="carousel-section">
+            <div class="section-title">Facebook Carousel Ads (Interactive Mockups)</div>
+
+            <div class="post-grid">
+
+                <!-- Concept 1: Save the Sentimentality -->
+                <div class="post-card">
+                    <div class="post-visual">
+                        <iframe src="jjriggs-carousel-sentimentality.html" title="Save the Sentimentality"></iframe>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Concept 1</div>
+                        <span class="tone-badge professional">Professional</span>
+                        <div class="post-title">Save the Sentimentality</div>
+                        <div class="post-desc">Direct, confident dismissal of the "heirloom" pitch. Checkmark format for quick scanning. Features Severe-Duty ratings, Tennessee steel, and zero wait time.</div>
+                        <div class="post-caption" onclick="copyCaption(this)">"Built to be passed down"? We'd rather build you something that pays for itself THIS season. Iron Craft. Severe-Duty rated. Tennessee steel. On the lot TODAY.
+
+Stop waiting. Start working.
+
+JJ Riggs Equipment &mdash; Spokane, WA
+
+#IronCraft #BraberEquipment #TractorAttachments #Grapples #Buckets #SevereDuty #SpokaneWA</div>
+                        <div class="post-tags">
+                            <span class="tag" onclick="copyTag(this)">#IronCraft</span>
+                            <span class="tag" onclick="copyTag(this)">#BraberEquipment</span>
+                            <span class="tag" onclick="copyTag(this)">#SevereDuty</span>
+                        </div>
+                        <div class="post-actions">
+                            <a href="jjriggs-carousel-sentimentality.html" target="_blank" class="action-btn primary">View Full Size</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concept 2: Trophy vs. Tool -->
+                <div class="post-card">
+                    <div class="post-visual">
+                        <iframe src="jjriggs-carousel-trophy-vs-tool.html" title="Trophy vs. Tool"></iframe>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Concept 2</div>
+                        <span class="tone-badge edgy">Edgy</span>
+                        <div class="post-title">Trophy vs. Tool</div>
+                        <div class="post-desc">Aggressive, philosophical framing. Positions the choice as identity: collector vs. operator. Includes comparison grid contrasting "The Heirloom" against "The Workhorse."</div>
+                        <div class="post-caption" onclick="copyCaption(this)">There are two ways to look at equipment. Some folks treat attachments like family heirlooms. We treat them like what they are: TOOLS. Built to work. Built to pay for themselves.
+
+Which one are you?
+
+JJ Riggs Equipment &mdash; Spokane, WA
+
+#TrophyVsTool #EquipmentThatWorks #MaximumROI #IronCraft #Braber #SkidSteerAttachments</div>
+                        <div class="post-tags">
+                            <span class="tag" onclick="copyTag(this)">#TrophyVsTool</span>
+                            <span class="tag" onclick="copyTag(this)">#MaximumROI</span>
+                            <span class="tag" onclick="copyTag(this)">#EquipmentThatWorks</span>
+                        </div>
+                        <div class="post-actions">
+                            <a href="jjriggs-carousel-trophy-vs-tool.html" target="_blank" class="action-btn primary">View Full Size</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concept 3: Iron, Not Egos -->
+                <div class="post-card">
+                    <div class="post-visual">
+                        <iframe src="jjriggs-carousel-iron-not-egos.html" title="Iron, Not Egos"></iframe>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-label">Concept 3</div>
+                        <span class="tone-badge competitive">Brand-Forward</span>
+                        <div class="post-title">Iron, Not Egos</div>
+                        <div class="post-desc">Brand-forward, leads with Iron Craft credibility. Features split-screen wait time visual (calendar flipping vs. loading trailer today). Showcases both Iron Craft and Braber brands.</div>
+                        <div class="post-caption" onclick="copyCaption(this)">Some folks want to sell you a "family heirloom." We'll sell you Iron Craft. Tennessee steel. Severe-Duty rated. On the lot TODAY. Don't pay for nostalgia&mdash;pay for performance.
+
+JJ Riggs Equipment &mdash; Spokane, WA
+
+#IronNotEgos #IronCraft #TennesseeSteel #Braber #ReadyToWork #NoWaitTime</div>
+                        <div class="post-tags">
+                            <span class="tag" onclick="copyTag(this)">#IronNotEgos</span>
+                            <span class="tag" onclick="copyTag(this)">#TennesseeSteel</span>
+                            <span class="tag" onclick="copyTag(this)">#ReadyToWork</span>
+                        </div>
+                        <div class="post-actions">
+                            <a href="jjriggs-carousel-iron-not-egos.html" target="_blank" class="action-btn primary">View Full Size</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        JJ Riggs Equipment &bull; Brand Guide &bull; 2025
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+        // Copy caption
+        function copyCaption(el) {
+            const text = el.innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                el.classList.add('copied');
+                showToast('Caption copied!');
+                setTimeout(() => el.classList.remove('copied'), 2000);
+            });
+        }
+
+        // Copy tag
+        function copyTag(el) {
+            const text = el.innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Tag copied: ' + text);
+            });
+        }
+
+        // Show toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+    </script>
+
+</body>
+</html>
