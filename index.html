@@ -636,6 +636,103 @@
             color: #555;
         }
 
+        /* Mini Card Grid - Compact Layout */
+        .mini-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .mini-card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .mini-card:hover {
+            border-color: #333;
+            transform: translateY(-2px);
+        }
+
+        .mini-card-visual {
+            padding: 24px 20px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+        }
+
+        .mini-card-badge {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #b61b22;
+        }
+
+        .mini-card-badge.green { color: #2d8a4e; }
+        .mini-card-badge.blue { color: #4a90d9; }
+
+        .mini-card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .mini-card-title span { color: #b61b22; }
+        .mini-card-title .green { color: #2d8a4e; }
+
+        .mini-card-sub {
+            font-size: 11px;
+            color: #555;
+        }
+
+        .mini-card-info {
+            padding: 14px 16px;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .mini-card-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+        }
+
+        .mini-card-arrow {
+            font-size: 14px;
+            color: #444;
+            transition: color 0.2s;
+        }
+
+        .mini-card:hover .mini-card-arrow {
+            color: #b61b22;
+        }
+
+        .mini-card-logos {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .mini-card-logos img {
+            height: 20px;
+            filter: brightness(0) invert(1);
+            opacity: 0.7;
+        }
+
         /* Actions */
         .actions {
             display: flex;
@@ -967,91 +1064,106 @@
             </div>
         </div>
 
-        <div class="card-grid">
-            <div class="card campaign-card">
-                <div class="card-preview">
-                    <img src="https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png" alt="TYM" style="max-height: 40px; margin-bottom: 16px; opacity: 0.9;">
-                    <span class="campaign-badge">Spring 2025</span>
-                    <div class="campaign-title"><span>TYM</span> to ROLL</div>
-                    <span class="campaign-sub">5-slide carousel + Facebook ad</span>
+        <div class="mini-grid">
+            <!-- TYM to ROLL -->
+            <a href="brand/social/tym-to-roll-campaign.html" class="mini-card">
+                <div class="mini-card-visual">
+                    <img src="https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png" alt="TYM" style="height: 28px; margin-bottom: 4px; opacity: 0.9;">
+                    <span class="mini-card-badge">Spring 2025</span>
+                    <div class="mini-card-title"><span>TYM</span> to ROLL</div>
+                    <span class="mini-card-sub">5-slide carousel + FB ad</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Social Campaign</div>
-                    <div class="card-title">Spring Tractor Sales</div>
-                    <div class="card-desc">Instagram/Facebook carousel with hook, problem, solution, proof, and CTA. Ready to post.</div>
-                    <a href="brand/social/tym-to-roll-campaign.html" class="card-link">View Campaign</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Social Campaign</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="card campaign-card">
-                <div class="card-preview">
-                    <span class="campaign-badge">Evergreen</span>
-                    <div class="campaign-title">Meet the <span>Fleet</span></div>
-                    <span class="campaign-sub">5-slide carousel</span>
+            <!-- Meet the Fleet -->
+            <a href="brand/social/meet-the-fleet.html" class="mini-card">
+                <div class="mini-card-visual">
+                    <span class="mini-card-badge">Evergreen</span>
+                    <div class="mini-card-title">Meet the <span>Fleet</span></div>
+                    <span class="mini-card-sub">5-slide carousel</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Social Campaign</div>
-                    <div class="card-title">TYM Lineup Showcase</div>
-                    <div class="card-desc">Introduce the full TYM tractor range — from sub-compact to utility. Perfect for brand awareness.</div>
-                    <a href="brand/social/meet-the-fleet.html" class="card-link">View Campaign</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">TYM Lineup</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="card campaign-card">
-                <div class="card-preview" style="background: linear-gradient(135deg, #1a2a3a 0%, #0d1520 100%);">
-                    <span class="campaign-badge" style="background: #273647;">Fall / Winter</span>
-                    <div class="campaign-title">Winter <span>Ready</span></div>
-                    <span class="campaign-sub">5-slide carousel</span>
+            <!-- Winter Ready -->
+            <a href="brand/social/winter-ready.html" class="mini-card">
+                <div class="mini-card-visual" style="background: linear-gradient(135deg, #1a2a3a 0%, #0d1520 100%);">
+                    <span class="mini-card-badge blue">Fall / Winter</span>
+                    <div class="mini-card-title">Winter <span>Ready</span></div>
+                    <span class="mini-card-sub">5-slide carousel</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Seasonal Campaign</div>
-                    <div class="card-title">Pre-Winter Service</div>
-                    <div class="card-desc">Drive service appointments before the first freeze. Checklist format with urgency built in.</div>
-                    <a href="brand/social/winter-ready.html" class="card-link">View Campaign</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Seasonal</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="card campaign-card">
-                <div class="card-preview">
-                    <span class="campaign-badge">New Year</span>
-                    <div class="campaign-title">Property <span>Goals</span></div>
-                    <span class="campaign-sub">5-slide carousel</span>
+            <!-- Property Goals -->
+            <a href="brand/social/property-goals.html" class="mini-card">
+                <div class="mini-card-visual">
+                    <span class="mini-card-badge">New Year</span>
+                    <div class="mini-card-title">Property <span>Goals</span></div>
+                    <span class="mini-card-sub">5-slide carousel</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Social Campaign</div>
-                    <div class="card-title">2025 Project Inspiration</div>
-                    <div class="card-desc">Inspire property owners to tackle their land goals. Aspirational messaging with practical solutions.</div>
-                    <a href="brand/social/property-goals.html" class="card-link">View Campaign</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">2025 Inspiration</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="card campaign-card">
-                <div class="card-preview" style="background: linear-gradient(135deg, #273647 0%, #1a2633 100%);">
-                    <span class="campaign-badge">Toolkit</span>
-                    <div class="campaign-title">Ad <span>Templates</span></div>
-                    <span class="campaign-sub">9 styles + story formats</span>
+            <!-- Ad Templates -->
+            <a href="brand/social/ad-templates.html" class="mini-card">
+                <div class="mini-card-visual" style="background: linear-gradient(135deg, #273647 0%, #1a2633 100%);">
+                    <span class="mini-card-badge">Toolkit</span>
+                    <div class="mini-card-title">Ad <span>Templates</span></div>
+                    <span class="mini-card-sub">9 styles + stories</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Template Library</div>
-                    <div class="card-title">Screenshot & Post</div>
-                    <div class="card-desc">Ready-made ad templates for deliveries, tips, inventory, reviews, and more. Just screenshot and post.</div>
-                    <a href="brand/social/ad-templates.html" class="card-link">View Templates</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Screenshot & Post</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="card campaign-card">
-                <div class="card-preview" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);">
-                    <span class="campaign-badge">Competitive Response</span>
-                    <div class="campaign-title">Iron Craft <span>&</span> Braber</div>
-                    <span class="campaign-sub">3 Facebook carousel concepts</span>
+            <!-- Iron Craft & Braber - Competitive -->
+            <a href="brand/social/iron-craft-braber-campaign.html" class="mini-card">
+                <div class="mini-card-visual" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);">
+                    <div class="mini-card-logos">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg" alt="Iron Craft">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/braber-equipment-logo-png.png" alt="Braber">
+                    </div>
+                    <span class="mini-card-badge">Competitive</span>
+                    <div class="mini-card-title">Trophy vs <span>Tool</span></div>
+                    <span class="mini-card-sub">3 FB carousel concepts</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">FB Ads Campaign</div>
-                    <div class="card-title">Counter-Positioning Ads</div>
-                    <div class="card-desc">Facebook carousel ads responding to competitor "heirloom" positioning. Three angles: direct dismissal, philosophical contrast, brand credibility.</div>
-                    <a href="brand/social/iron-craft-braber-campaign.html" class="card-link">View Campaign</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Implements Ads</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
+
+            <!-- NEW: Implements Ads - Value Focused -->
+            <a href="brand/playbooks/implements-ads-playbook.html" class="mini-card">
+                <div class="mini-card-visual" style="background: linear-gradient(135deg, #171b20 0%, #1a2818 100%);">
+                    <div class="mini-card-logos">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg" alt="Iron Craft">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/braber-equipment-logo-png.png" alt="Braber">
+                    </div>
+                    <span class="mini-card-badge green">Value-Focused</span>
+                    <div class="mini-card-title">Works Hard. <span class="green">Priced Right.</span></div>
+                    <span class="mini-card-sub">5-slide carousel + FB ads</span>
+                </div>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Implements Ads</span>
+                    <span class="mini-card-arrow">&rarr;</span>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -1065,62 +1177,58 @@
             </div>
         </div>
 
-        <div class="card-grid">
-            <div class="card playbook-card">
-                <div class="card-preview">
-                    <span class="campaign-badge">Strategy</span>
-                    <div class="playbook-title">Geofencing<br>Facebook Ads</div>
-                    <span class="playbook-sub">Location-based targeting</span>
+        <div class="mini-grid">
+            <!-- Geofencing -->
+            <a href="brand/playbooks/geofencing-facebook-ads.html" class="mini-card">
+                <div class="mini-card-visual">
+                    <span class="mini-card-badge">Strategy</span>
+                    <div class="mini-card-title">Geofencing<br>FB Ads</div>
+                    <span class="mini-card-sub">Location-based targeting</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Playbook</div>
-                    <div class="card-title">Target Competitors & Events</div>
-                    <div class="card-desc">Drop pins on competitor lots, farm stores, and the county fair. Budgets, creatives, setup checklist.</div>
-                    <a href="brand/playbooks/geofencing-facebook-ads.html" class="card-link">View Playbook</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Playbook</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="card playbook-card">
-                <div class="card-preview">
-                    <span class="campaign-badge">Calendar</span>
-                    <div class="playbook-title">12-Issue<br>Newsletter</div>
-                    <span class="playbook-sub">Monthly email strategy</span>
+            <!-- Newsletter Strategy -->
+            <a href="brand/playbooks/newsletter-strategy.html" class="mini-card">
+                <div class="mini-card-visual">
+                    <span class="mini-card-badge">Calendar</span>
+                    <div class="mini-card-title">12-Issue<br>Newsletter</div>
+                    <span class="mini-card-sub">Monthly email strategy</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Playbook</div>
-                    <div class="card-title">Year-Long Content Plan</div>
-                    <div class="card-desc">Subject lines, content ideas, and CTAs for every month. Aligned with tractor buying seasons.</div>
-                    <a href="brand/playbooks/newsletter-strategy.html" class="card-link">View Playbook</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Playbook</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="card playbook-card">
-                <div class="card-preview" style="background: linear-gradient(135deg, #273647 0%, #171b20 100%);">
-                    <span class="campaign-badge">Ads</span>
-                    <div class="playbook-title"><span style="color: #b61b22;">TYM</span> to ROLL<br>Facebook Ads</div>
-                    <span class="playbook-sub">Carousel + Geofencing</span>
+            <!-- TYM to ROLL FB Ads -->
+            <a href="brand/playbooks/facebook-ads-playbook.html" class="mini-card">
+                <div class="mini-card-visual" style="background: linear-gradient(135deg, #273647 0%, #171b20 100%);">
+                    <span class="mini-card-badge">Ads</span>
+                    <div class="mini-card-title"><span>TYM</span> to ROLL<br>FB Ads</div>
+                    <span class="mini-card-sub">Carousel + Geofencing</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Playbook</div>
-                    <div class="card-title">Carousel Ad Series</div>
-                    <div class="card-desc">5-slide carousel mockups, Facebook feed ads, and geofencing templates. Complete ad strategy.</div>
-                    <a href="brand/playbooks/facebook-ads-playbook.html" class="card-link">View Playbook</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Playbook</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="card playbook-card">
-                <div class="card-preview" style="background: linear-gradient(135deg, #b61b22 0%, #8f151a 100%);">
-                    <span class="campaign-badge">Template</span>
-                    <div class="playbook-title">FB Ads<br>Landing Page</div>
-                    <span class="playbook-sub">Campaign-ready template</span>
+            <!-- FB Ads Landing Page -->
+            <a href="brand/playbooks/fb-ads-landing-page.html" class="mini-card">
+                <div class="mini-card-visual" style="background: linear-gradient(135deg, #b61b22 0%, #8f151a 100%);">
+                    <span class="mini-card-badge" style="color: rgba(255,255,255,0.7);">Template</span>
+                    <div class="mini-card-title">FB Ads<br>Landing Page</div>
+                    <span class="mini-card-sub" style="color: rgba(255,255,255,0.6);">Campaign-ready</span>
                 </div>
-                <div class="card-content">
-                    <div class="card-eyebrow">Landing Page</div>
-                    <div class="card-title">Flexible Ad Destination</div>
-                    <div class="card-desc">Campaign-specific landing page template. Hook → Problem → Solution → Proof → CTA structure.</div>
-                    <a href="brand/playbooks/fb-ads-landing-page.html" class="card-link">View Template</a>
+                <div class="mini-card-info">
+                    <span class="mini-card-label">Landing Page</span>
+                    <span class="mini-card-arrow">&rarr;</span>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
 
