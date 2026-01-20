@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implements Ads Playbook - Value & Availability | JJ Riggs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --darkest: #171b20;
+            --dark-navy: #273647;
+            --red: #b61b22;
+            --white: #fffefe;
+            --gray: #78828e;
+            --bg: #0a0a0a;
+            --card-bg: #111111;
+            --border: #222;
+            --green: #2d8a4e;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: #cccccc;
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+            padding: 80px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 30px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--red); }
+
+        .badge {
+            display: inline-block;
+            background: var(--green);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        h1 span { color: var(--green); }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-number {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 30px 0 15px 0;
+        }
+
+        p { margin-bottom: 16px; }
+
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 24px;
+        }
+
+        li { margin-bottom: 12px; }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 3px solid var(--green);
+            padding: 24px 28px;
+            margin: 30px 0;
+        }
+
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        .highlight-box.contrast {
+            border-left-color: var(--red);
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; }
+        }
+
+        .comparison-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-card.old {
+            opacity: 0.7;
+        }
+
+        .comparison-header {
+            padding: 16px 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .comparison-card.old .comparison-header {
+            background: rgba(182, 27, 34, 0.1);
+            color: var(--red);
+        }
+
+        .comparison-card.new .comparison-header {
+            background: rgba(45, 138, 78, 0.15);
+            color: var(--green);
+        }
+
+        .comparison-content {
+            padding: 20px;
+        }
+
+        .comparison-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .comparison-desc {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Carousel Grid */
+        .carousel-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 1100px) {
+            .carousel-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 700px) {
+            .carousel-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Ad Card */
+        .ad-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .ad-card:hover {
+            border-color: #444;
+            transform: translateY(-2px);
+        }
+
+        .ad-visual {
+            aspect-ratio: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .ad-visual .slide-num {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            background: rgba(0,0,0,0.4);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .ad-visual .logo {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            height: 28px;
+            max-width: 80px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .ad-visual .logo-braber {
+            position: absolute;
+            top: 12px;
+            right: 50px;
+            height: 24px;
+            max-width: 60px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .ad-visual .wordmark {
+            position: absolute;
+            bottom: 10px;
+            left: 12px;
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            opacity: 0.4;
+        }
+
+        .style-hero { background: linear-gradient(135deg, var(--darkest) 0%, #1a2818 100%); }
+        .style-dark { background: var(--darkest); }
+        .style-value { background: linear-gradient(180deg, #1a2a1a 0%, var(--darkest) 100%); }
+        .style-green { background: var(--green); }
+        .style-urgency { background: linear-gradient(135deg, #1a1a1a 0%, #2a1a1a 100%); }
+
+        .ad-eyebrow {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 6px;
+        }
+
+        .style-green .ad-eyebrow { color: rgba(255,255,255,0.7); }
+        .style-urgency .ad-eyebrow { color: var(--red); }
+
+        .ad-headline {
+            font-size: clamp(14px, 2vw, 20px);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .ad-headline span { color: var(--green); }
+        .ad-headline .red { color: var(--red); }
+        .style-green .ad-headline span { color: var(--white); }
+
+        .ad-subhead {
+            font-size: 9px;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .style-green .ad-subhead { color: rgba(255,255,255,0.85); }
+
+        .ad-info {
+            padding: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .ad-info-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .ad-info-desc {
+            font-size: 10px;
+            color: var(--gray);
+        }
+
+        /* Value Props Mini */
+        .value-list-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .value-item-mini {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(45, 138, 78, 0.1);
+            padding: 6px 8px;
+            border-radius: 4px;
+            border-left: 2px solid var(--green);
+            font-size: 8px;
+            color: var(--white);
+        }
+
+        /* Feature Grid Mini */
+        .feature-grid-mini {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .feature-box-mini {
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .feature-box-mini .num {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .feature-box-mini .label {
+            font-size: 7px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        /* CTA Box Mini */
+        .cta-box-mini {
+            background: var(--white);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .cta-box-mini .cta-phone {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .cta-box-mini .cta-address {
+            font-size: 8px;
+            color: #333;
+        }
+
+        /* Urgency Badge */
+        .urgency-badge {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* Large Ad Preview */
+        .ad-preview-large {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+
+        .ad-preview-visual {
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .ad-preview-left {
+            flex: 1;
+        }
+
+        .ad-preview-right {
+            width: 280px;
+            background: var(--green);
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .ad-preview-logos {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .ad-preview-logos img {
+            height: 36px;
+            filter: brightness(0) invert(1);
+        }
+
+        .ad-preview-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 12px;
+        }
+
+        .ad-preview-headline {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .ad-preview-headline span { color: var(--green); }
+
+        .ad-preview-subhead {
+            font-size: 15px;
+            color: var(--gray);
+        }
+
+        .ad-preview-btn {
+            display: inline-block;
+            background: var(--green);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .ad-preview-value-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .ad-preview-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .ad-preview-value-sub {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .ad-preview-features {
+            text-align: left;
+            font-size: 12px;
+            color: rgba(255,255,255,0.9);
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ad-preview-features div {
+            margin-bottom: 8px;
+        }
+
+        .ad-preview-info {
+            padding: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .ad-preview-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .ad-preview-info p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        /* Messaging Box */
+        .messaging-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 30px 0;
+        }
+
+        .messaging-primary {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+
+        .messaging-primary span { color: var(--green); }
+
+        .messaging-secondary {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--red);
+            margin-bottom: 20px;
+        }
+
+        .messaging-context {
+            font-size: 14px;
+            color: var(--gray);
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            margin-bottom: 0;
+        }
+
+        /* Copy Examples */
+        .copy-examples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .copy-examples { grid-template-columns: 1fr; }
+        }
+
+        .copy-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .copy-card-header {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .copy-card-text {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        /* Budget Table */
+        .budget-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .budget-table th,
+        .budget-table td {
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .budget-table th {
+            background: var(--card-bg);
+            color: var(--gray);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .budget-table td {
+            font-size: 14px;
+        }
+
+        .budget-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 16px;
+        }
+
+        .checklist li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        .footer {
+            background: var(--bg);
+            border-top: 1px solid #1a1a1a;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #444;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .footer span { color: var(--green); }
+
+        @media (max-width: 768px) {
+            .header, .container {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            h1 { font-size: 36px; }
+
+            .ad-preview-visual {
+                flex-direction: column;
+            }
+
+            .ad-preview-right {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="../../index.html" class="back-link">&larr; Back to Brand Guide</a>
+            <div class="badge">Implements Playbook</div>
+            <h1>Works Hard. <span>Priced Right.</span></h1>
+            <p class="subtitle">A value-focused implements campaign for Iron Craft and Braber attachments. No aggressive competitor attacks&mdash;just honest value and immediate availability.</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Section 1: Campaign Positioning -->
+        <section class="section">
+            <div class="section-number">01 &mdash; Campaign Positioning</div>
+            <h2>The Core Message</h2>
+
+            <div class="messaging-box">
+                <div class="messaging-primary">"You need an implement that <span>works as hard as you do</span> without breaking the bank."</div>
+                <div class="messaging-secondary">"And you need it TODAY."</div>
+                <p class="messaging-context">This campaign speaks to the practical farmer/rancher who needs equipment that delivers value and is available NOW. No waiting lists, no premium pricing for "heirloom" status&mdash;just quality tools ready to work.</p>
+            </div>
+
+            <h3>How This Differs from the Competitive Campaign</h3>
+            <div class="comparison-grid">
+                <div class="comparison-card old">
+                    <div class="comparison-header">Previous: "Trophy vs. Tool"</div>
+                    <div class="comparison-content">
+                        <div class="comparison-title">Aggressive Competitive Response</div>
+                        <div class="comparison-desc">Directly challenges competitor's "heirloom" positioning. Frames choice as identity (collector vs. operator). Edgy, confrontational tone targeting competitor customers.</div>
+                    </div>
+                </div>
+                <div class="comparison-card new">
+                    <div class="comparison-header">New: "Works Hard. Priced Right."</div>
+                    <div class="comparison-content">
+                        <div class="comparison-title">Value & Availability Focus</div>
+                        <div class="comparison-desc">Leads with YOUR value proposition&mdash;not attacks. Speaks to busy operators who need solutions now. Positive, confident, practical tone that builds trust.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong>Why this approach:</strong> Not everyone responds to competitive positioning. Many customers simply want to know: "Can you help me? Do you have what I need? Can I get it today?" This campaign answers those questions directly.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Carousel Series -->
+        <section class="section">
+            <div class="section-number">02 &mdash; Carousel Series</div>
+            <h2>5-Slide Facebook Carousel</h2>
+            <p>A value-first carousel that builds from hook to urgency to CTA. Uses the proven storytelling framework adapted for implements.</p>
+
+            <div class="carousel-grid">
+                <!-- Slide 1: Hook -->
+                <div class="ad-card">
+                    <div class="ad-visual style-hero">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg" alt="Iron Craft" class="logo">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/braber-equipment-logo-png.png" alt="Braber" class="logo-braber">
+                        <span class="slide-num">1/5</span>
+                        <div class="ad-eyebrow">Implements That Work</div>
+                        <div class="ad-headline">Works as hard as <span>you do</span></div>
+                        <div class="ad-subhead">Without breaking the bank</div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 1: The Hook</div>
+                        <div class="ad-info-desc">Lead with the value proposition. Respect the customer's work ethic.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: The Problem/Need -->
+                <div class="ad-card">
+                    <div class="ad-visual style-dark">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg" alt="Iron Craft" class="logo">
+                        <span class="slide-num">2/5</span>
+                        <div class="ad-eyebrow">The Reality</div>
+                        <div class="ad-headline">You don't need a trophy</div>
+                        <div class="value-list-mini">
+                            <div class="value-item-mini">You need a grapple that grabs</div>
+                            <div class="value-item-mini">A bucket that digs</div>
+                            <div class="value-item-mini">A blade that levels</div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 2: The Reality</div>
+                        <div class="ad-info-desc">Acknowledge what they actually need. Keep it practical.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Value Props -->
+                <div class="ad-card">
+                    <div class="ad-visual style-value">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg" alt="Iron Craft" class="logo">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/braber-equipment-logo-png.png" alt="Braber" class="logo-braber">
+                        <span class="slide-num">3/5</span>
+                        <div class="ad-eyebrow">Built to Last</div>
+                        <div class="ad-headline"><span>Severe-Duty</span> Rated</div>
+                        <div class="feature-grid-mini">
+                            <div class="feature-box-mini">
+                                <div class="num">USA</div>
+                                <div class="label">Steel</div>
+                            </div>
+                            <div class="feature-box-mini">
+                                <div class="num">PRO</div>
+                                <div class="label">Grade</div>
+                            </div>
+                            <div class="feature-box-mini">
+                                <div class="num">2</div>
+                                <div class="label">Brands</div>
+                            </div>
+                            <div class="feature-box-mini">
+                                <div class="num">FAIR</div>
+                                <div class="label">Prices</div>
+                            </div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 3: Value Props</div>
+                        <div class="ad-info-desc">Showcase quality without premium positioning. Fair prices, not cheap.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Urgency -->
+                <div class="ad-card">
+                    <div class="ad-visual style-urgency">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg" alt="Iron Craft" class="logo">
+                        <span class="slide-num">4/5</span>
+                        <div class="urgency-badge">NOW</div>
+                        <div class="ad-headline">And you need it <span class="red">TODAY</span></div>
+                        <div class="ad-subhead">On the lot. Ready to load. No waiting lists.</div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 4: Urgency</div>
+                        <div class="ad-info-desc">Hit the availability angle hard. This is a key differentiator.</div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: CTA -->
+                <div class="ad-card">
+                    <div class="ad-visual style-green">
+                        <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg" alt="Iron Craft" class="logo" style="filter: brightness(0) invert(1);">
+                        <span class="slide-num">5/5</span>
+                        <div class="ad-headline">Stop by today</div>
+                        <div class="ad-subhead">See what's on the lot. No pressure.</div>
+                        <div class="cta-box-mini">
+                            <div class="cta-phone">509-738-2985</div>
+                            <div class="cta-address">685 Elm Tree Dr, Colville</div>
+                        </div>
+                        <div class="wordmark">JJRIGGSEQUIPMENT.COM</div>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-info-title">Slide 5: CTA</div>
+                        <div class="ad-info-desc">Low-pressure invitation. Make it easy to take action.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Single Image Ad -->
+        <section class="section">
+            <div class="section-number">03 &mdash; Facebook Feed Ad</div>
+            <h2>Single-Image Ad (1200&times;628)</h2>
+            <p>For feed placement and link clicks. Drives traffic to the implements inventory page.</p>
+
+            <div class="ad-preview-large">
+                <div class="ad-preview-visual" style="background: linear-gradient(135deg, var(--darkest) 0%, #1a2818 100%);">
+                    <div class="ad-preview-left">
+                        <div class="ad-preview-logos">
+                            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg" alt="Iron Craft">
+                            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/10/braber-equipment-logo-png.png" alt="Braber">
+                        </div>
+                        <div class="ad-preview-eyebrow">Implements in Stock</div>
+                        <div class="ad-preview-headline">Works Hard. <span>Priced Right.</span></div>
+                        <div class="ad-preview-subhead">Buckets, grapples, blades & more&mdash;on the lot today.</div>
+                        <div class="ad-preview-btn">See Inventory</div>
+                    </div>
+                    <div class="ad-preview-right">
+                        <div class="ad-preview-value-label">Availability</div>
+                        <div class="ad-preview-value">IN STOCK</div>
+                        <div class="ad-preview-value-sub">Ready to load</div>
+                        <div class="ad-preview-features">
+                            <div>&#10003; Severe-Duty Rated</div>
+                            <div>&#10003; Iron Craft & Braber</div>
+                            <div>&#10003; No Wait Time</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ad-preview-info">
+                    <h4>Ad Specifications</h4>
+                    <p>1200 &times; 628px &bull; Facebook Feed placement &bull; Objective: Traffic</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Ad Copy Examples -->
+        <section class="section">
+            <div class="section-number">04 &mdash; Ad Copy</div>
+            <h2>Facebook Ad Copy Examples</h2>
+            <p>Ready-to-use captions for different placements. Focus on value and availability, not competition.</p>
+
+            <div class="copy-examples">
+                <div class="copy-card">
+                    <div class="copy-card-header">Primary Caption</div>
+                    <div class="copy-card-text">
+                        "You need an implement that works as hard as you do&mdash;without breaking the bank.<br><br>
+                        And you need it TODAY.<br><br>
+                        Iron Craft & Braber attachments. Severe-Duty rated. On the lot now.<br><br>
+                        Stop by JJ Riggs in Colville. See what's in stock."
+                    </div>
+                </div>
+                <div class="copy-card">
+                    <div class="copy-card-header">Short Caption (Stories)</div>
+                    <div class="copy-card-text">
+                        "Implements that work as hard as you do. In stock today.<br><br>
+                        JJ Riggs &bull; Colville"
+                    </div>
+                </div>
+                <div class="copy-card">
+                    <div class="copy-card-header">Value Focus</div>
+                    <div class="copy-card-text">
+                        "Quality doesn't have to cost a fortune.<br><br>
+                        Iron Craft & Braber implements. Severe-Duty rated. Fair prices. Ready to work today.<br><br>
+                        Come see what we've got on the lot."
+                    </div>
+                </div>
+                <div class="copy-card">
+                    <div class="copy-card-header">Urgency Focus</div>
+                    <div class="copy-card-text">
+                        "No waiting lists. No 6-8 week delays.<br><br>
+                        The implement you need is on our lot RIGHT NOW. Buckets, grapples, blades, post hole diggers&mdash;ready to load today.<br><br>
+                        JJ Riggs Equipment &bull; Colville"
+                    </div>
+                </div>
+            </div>
+
+            <h3>Suggested Hashtags</h3>
+            <div class="highlight-box">
+                <p>#IronCraft #BraberEquipment #TractorAttachments #Grapples #Buckets #SevereDuty #InStockNow #ColvilleWA #SpokaneWA #FarmEquipment #RanchLife #ImplementsInStock</p>
+            </div>
+        </section>
+
+        <!-- Section 5: Audience & Settings -->
+        <section class="section">
+            <div class="section-number">05 &mdash; Campaign Setup</div>
+            <h2>Facebook Ads Manager Settings</h2>
+
+            <h3>Audience Targeting</h3>
+            <ul>
+                <li><strong>Age:</strong> 30-65</li>
+                <li><strong>Location:</strong> Stevens County + 75-mile radius (includes Spokane)</li>
+                <li><strong>Interests:</strong> Tractors, Farm Equipment, Agriculture, Livestock, Landscaping, Land Management, Rural Living</li>
+                <li><strong>Behaviors:</strong> Farmland owners, Rural area residents, Small business owners</li>
+            </ul>
+
+            <h3>Campaign Settings</h3>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Setting</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Objective</td>
+                        <td>Traffic (to implements page)</td>
+                    </tr>
+                    <tr>
+                        <td>Placements</td>
+                        <td>Facebook Feed, Instagram Feed, Stories</td>
+                    </tr>
+                    <tr>
+                        <td>Budget</td>
+                        <td>$20-40/day</td>
+                    </tr>
+                    <tr>
+                        <td>Duration</td>
+                        <td>Continuous, boost in spring/fall</td>
+                    </tr>
+                    <tr>
+                        <td>Bid Strategy</td>
+                        <td>Lowest cost (automatic)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 6: When to Use Each Campaign -->
+        <section class="section">
+            <div class="section-number">06 &mdash; Campaign Selection Guide</div>
+            <h2>When to Use Which Campaign</h2>
+
+            <div class="highlight-box">
+                <p><strong>Use "Works Hard. Priced Right." (this campaign) when:</strong></p>
+                <ul style="margin-bottom: 0;">
+                    <li>Running general implements awareness campaigns</li>
+                    <li>Targeting NEW customers who aren't comparing competitors</li>
+                    <li>Emphasizing inventory availability</li>
+                    <li>Building positive brand sentiment</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box contrast">
+                <p><strong>Use "Trophy vs. Tool" competitive campaign when:</strong></p>
+                <ul style="margin-bottom: 0;">
+                    <li>Running geofencing ads near competitor locations</li>
+                    <li>Targeting customers actively comparing custom-welded options</li>
+                    <li>Responding to competitor ads in the market</li>
+                    <li>Retargeting users who've visited competitor sites</li>
+                </ul>
+            </div>
+
+            <p>Both campaigns can run simultaneously to different audiences. The value-focused campaign builds your brand; the competitive campaign captures comparison shoppers.</p>
+        </section>
+
+        <!-- Section 7: Quick Start -->
+        <section class="section">
+            <div class="section-number">07 &mdash; Quick Start</div>
+            <h2>Launch Checklist</h2>
+
+            <ul class="checklist">
+                <li>Download carousel slide images (or screenshot from this page)</li>
+                <li>Create new campaign in Facebook Ads Manager</li>
+                <li>Set objective to "Traffic" with implements page destination</li>
+                <li>Define audience: 30-65, Stevens County +75mi, farming interests</li>
+                <li>Upload 5 carousel slides in order</li>
+                <li>Add copy from Section 04 examples</li>
+                <li>Set link to jjriggsequipment.com/implements</li>
+                <li>Set daily budget at $25-40</li>
+                <li>Enable "Advantage+ Placements"</li>
+                <li>Publish and monitor after 48 hours</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <p>JJ Riggs <span>&bull;</span> Implements Ads Playbook <span>&bull;</span> 2026</p>
+    </footer>
+
+</body>
+</html>
