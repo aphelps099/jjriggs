@@ -221,7 +221,11 @@
         <section class="section">
             <div class="section-number">01 — Overview</div>
             <h2>What is Geofencing?</h2>
-            <p>Facebook doesn&rsquo;t offer true device-level geofencing like programmatic platforms. What it <strong>does</strong> offer is <strong>radius-based location targeting</strong> &mdash; you drop a pin on the map and set a 1&ndash;50 mile radius. Facebook then serves ads to people who <strong>live in, recently visited, or are currently traveling through</strong> that area.</p>
+            <p>Meta doesn&rsquo;t offer true device-level geofencing like programmatic platforms (GroundTruth, Radar, etc.). What it <strong>does</strong> offer is <strong>radius-based location targeting</strong> &mdash; you drop a pin on the map and set a <strong>1&ndash;50 mile radius</strong> (1 mile minimum). As of 2026, Meta only offers one location behavior option: <strong>&ldquo;Living in or recently in this location.&rdquo;</strong> The old separate options for &ldquo;People traveling in&rdquo; and &ldquo;People living in&rdquo; were removed in late 2023.</p>
+
+            <div class="highlight-box">
+                <p><strong>2026 alert &mdash; Location Expansion toggle:</strong> Meta now enables a &ldquo;Reach more people likely to respond&rdquo; toggle <strong>by default</strong>. This expands your audience to people who&rsquo;ve shown <em>interest</em> in the area &mdash; not just people physically there. <strong>Turn this OFF</strong> for conquest/geofencing ad sets where geographic precision matters.</p>
+            </div>
 
             <div class="highlight-box">
                 <p><strong>Why it works for JJ Riggs:</strong> Your customers are at feed stores, farm supply shops, ag events, and competitor lots. Radius targeting lets you reach them exactly when they&rsquo;re thinking about equipment. See the <a href="facebook-ads-strategy.html" style="color: #b61b22;">Facebook Ads Strategy</a> for the full campaign plan.</p>
@@ -236,19 +240,19 @@
             <h3>Tier 1: Direct Competitors</h3>
             <div class="target-card">
                 <div class="target-name">Other Tractor Dealerships</div>
-                <div class="target-radius">Radius: 5 miles (Facebook minimum for pin-based targeting)</div>
-                <div class="target-desc">Kubota, John Deere, Kioti, Case IH dealers within 100 miles. Catch shoppers comparing options. Use &ldquo;People recently in this location&rdquo; setting.</div>
+                <div class="target-radius">Radius: 1 mile (Meta&rsquo;s minimum for pin-based targeting)</div>
+                <div class="target-desc">Kubota, John Deere, Kioti, Case IH dealers within 100 miles. Catch shoppers comparing options. Use &ldquo;Living in or recently in this location&rdquo; (the only option available in 2026). <strong>Disable Location Expansion</strong> for tighter precision.</div>
             </div>
 
             <h3>Tier 2: Agriculture Retail</h3>
             <div class="target-card">
                 <div class="target-name">Farm Supply Stores</div>
-                <div class="target-radius">Radius: 3&ndash;5 miles</div>
+                <div class="target-radius">Radius: 1&ndash;3 miles</div>
                 <div class="target-desc">Tractor Supply Co, Coastal Farm &amp; Ranch, North 40 Outfitters, local feed stores. Regular customers with acreage.</div>
             </div>
             <div class="target-card">
                 <div class="target-name">Agricultural Co-ops &amp; Auction Yards</div>
-                <div class="target-radius">Radius: 3&ndash;5 miles</div>
+                <div class="target-radius">Radius: 1&ndash;3 miles</div>
                 <div class="target-desc">Stevens County ag co-ops, livestock auction yards, NE Washington Fair (Colville fairgrounds &mdash; seasonal).</div>
             </div>
 
@@ -256,7 +260,7 @@
             <div class="target-card">
                 <div class="target-name">Rural NE Washington</div>
                 <div class="target-radius">Radius: 25&ndash;40 miles around Colville</div>
-                <div class="target-desc">Broad coverage layered with interest targeting: Farming, Tractors, Landscaping, Rural Property, Livestock. Use &ldquo;People living in this location&rdquo; setting.</div>
+                <div class="target-desc">Broad coverage layered with interest suggestions: Agriculture, Tractors, Landscaping, Rural Property, Livestock. OK to leave Advantage+ and Location Expansion on for this tier.</div>
             </div>
         </section>
 
@@ -264,22 +268,30 @@
             <div class="section-number">03 — Campaign Structure</div>
             <h2>How to Set It Up</h2>
 
-            <h3>Step 1: Create Custom Audiences</h3>
-            <p>In Facebook Ads Manager, go to <code>Audiences → Create Audience → Custom Audience</code>. For each location, you'll create a geofence using the "Location" targeting option.</p>
+            <h3>Step 1: Create Campaign &amp; Ad Sets</h3>
+            <p>In Meta Ads Manager, create a new campaign with the <strong>Traffic</strong> objective. Create separate ad sets for each location tier (competitors, farm supply, broad). In each ad set, use the <strong>drop pin</strong> or <strong>address search</strong> to add locations with your desired radius (1 mi minimum).</p>
 
-            <h3>Step 2: Layer Demographics</h3>
-            <p>Don't just target location. Add these filters:</p>
+            <h3>Step 2: Configure Location Settings</h3>
+            <p>Critical settings for 2026:</p>
             <ul>
-                <li><strong>Age:</strong> 25-65+ (primary buyers)</li>
-                <li><strong>Interests:</strong> Farming, Agriculture, Tractors, Rural Living, Livestock</li>
-                <li><strong>Behaviors:</strong> Farmland owners, Rural residents</li>
+                <li><strong>Location type:</strong> &ldquo;Living in or recently in&rdquo; (the only option &mdash; the old &ldquo;Traveling in&rdquo; and &ldquo;Living in&rdquo; options were removed)</li>
+                <li><strong>Location Expansion:</strong> Turn OFF for Tier 1 &amp; 2 (conquest). Leave on for Tier 3 (broad).</li>
+                <li><strong>Advantage+ Audience:</strong> Disable for conquest ad sets (your targeting inputs become suggestions, not constraints, when this is on)</li>
             </ul>
 
-            <h3>Step 3: Set Retargeting Window</h3>
-            <p>Target users for <span class="metric">30 days</span> after they visit your geofenced locations. This gives you multiple touchpoints as they research.</p>
+            <h3>Step 3: Layer Demographics &amp; Interests</h3>
+            <p>Add these as <em>suggestions</em> (Meta&rsquo;s AI may expand beyond them):</p>
+            <ul>
+                <li><strong>Age:</strong> 25-65+ (primary buyers)</li>
+                <li><strong>Interests:</strong> Agriculture, Tractors, Landscaping, Rural Living, Livestock</li>
+                <li><strong>Exclusions:</strong> Upload a Custom Audience of existing customers/page followers to exclude (detailed targeting exclusions were removed in March 2025 &mdash; use Custom Audience exclusions instead)</li>
+            </ul>
+
+            <h3>Step 4: Set Retargeting Window</h3>
+            <p>Build a Custom Audience of website visitors and video viewers for <span class="metric">30 days</span> to retarget warm leads. This requires Meta Pixel + Conversions API (CAPI) &mdash; Pixel alone misses 50%+ of conversions in 2026.</p>
 
             <div class="highlight-box">
-                <p><strong>Pro tip:</strong> Create separate ad sets for each location category (competitors, farm stores, events). This lets you tailor messaging and track which locations perform best.</p>
+                <p><strong>Pro tip:</strong> Create separate ad sets for each location category (competitors, farm stores, broad rural). This lets you tailor messaging, set different budgets, and track which location tiers perform best.</p>
             </div>
         </section>
 
@@ -382,13 +394,16 @@
 
             <ul class="checklist">
                 <li>List 5-10 competitor/farm store addresses</li>
-                <li>Create a new campaign in Facebook Ads Manager</li>
-                <li>Set objective to "Traffic" or "Store Visits"</li>
-                <li>Add location targeting with 3&ndash;5 mile radius pins (or 25&ndash;40 mi for broad)</li>
-                <li>Layer age (25-65+) and agricultural interests</li>
+                <li>Create a new campaign in Meta Ads Manager (Traffic objective)</li>
+                <li>Drop pins on competitor addresses with 1 mi radius</li>
+                <li>Turn OFF &ldquo;Location Expansion&rdquo; toggle on conquest ad sets</li>
+                <li>Turn OFF Advantage+ Audience on conquest ad sets</li>
+                <li>Layer age (25-65+) and agricultural interest suggestions</li>
+                <li>Exclude existing customers via Custom Audience (not detailed targeting &mdash; that&rsquo;s gone)</li>
                 <li>Upload TYM to ROLL creative (or similar)</li>
                 <li>Set daily budget at $25-50</li>
-                <li>Enable "Advantage+ Placements" for broad reach</li>
+                <li>Enable &ldquo;Advantage+ Placements&rdquo; for broad reach</li>
+                <li>Verify Meta Pixel + Conversions API are both active</li>
                 <li>Schedule review after 7 days</li>
             </ul>
         </section>

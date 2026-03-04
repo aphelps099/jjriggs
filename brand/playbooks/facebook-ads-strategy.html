@@ -835,24 +835,28 @@ No-regen engines. 6-year warranty. Real support from a real person.</div>
                         <div class="t-row"><span class="t-label">Objective</span><span class="t-val">Traffic</span></div>
                         <div class="t-row"><span class="t-label">Age</span><span class="t-val">25–65+</span></div>
                         <div class="t-row"><span class="t-label">Placements</span><span class="t-val">Feed, IG Feed, Marketplace</span></div>
-                        <div class="t-row"><span class="t-label">Exclude</span><span class="t-val">Page followers (retarget separately)</span></div>
+                        <div class="t-row"><span class="t-label">Location type</span><span class="t-val">"Living in or recently in"</span></div>
+                        <div class="t-row"><span class="t-label">Location expansion</span><span class="t-val">Turn OFF (precision matters)</span></div>
+                        <div class="t-row"><span class="t-label">Advantage+</span><span class="t-val">Disable for conquest sets</span></div>
+                        <div class="t-row"><span class="t-label">Exclude</span><span class="t-val">Custom audience: page followers</span></div>
 
-                        <h3 style="margin-top: 24px;">Location Pins</h3>
-                        <div class="t-row"><span class="t-label">Competitor dealers</span><span class="t-val">5 mi radius</span></div>
-                        <div class="t-row"><span class="t-label">Farm supply / co-ops</span><span class="t-val">3–5 mi radius</span></div>
+                        <h3 style="margin-top: 24px;">Location Pins (1 mi minimum)</h3>
+                        <div class="t-row"><span class="t-label">Competitor dealers</span><span class="t-val">1 mi radius pin</span></div>
+                        <div class="t-row"><span class="t-label">Farm supply / co-ops</span><span class="t-val">1–3 mi radius pin</span></div>
                         <div class="t-row"><span class="t-label">Broad rural</span><span class="t-val">25–40 mi radius</span></div>
 
                         <div class="tag-list">
-                            <span class="tag">Farming</span>
+                            <span class="tag">Agriculture</span>
                             <span class="tag">Tractors</span>
                             <span class="tag">Landscaping</span>
                             <span class="tag">Livestock</span>
                             <span class="tag">Rural Property</span>
                         </div>
+                        <p style="font-size: 11px; color: #555; margin-top: 10px;">Note: Meta consolidated many granular interests in Jan 2026. Use Advantage+ audience suggestions as a starting point, then let Meta's AI optimize. Interests are now <em>suggestions</em>, not hard constraints.</p>
                     </div>
 
                     <div class="callout" style="margin-top: 20px;">
-                        <p><strong>How "geofencing" works on Facebook:</strong> Not true device-level geofencing — it's radius-based. Drop a pin, set a radius (1–50 mi). Facebook targets people who live in, recently visited, or are traveling through that area.</p>
+                        <p><strong>How "geofencing" works on Meta (2026):</strong> Not true device-level geofencing — it's radius-based. Drop a pin, set a radius (1 mi min, 50 mi max). Meta now only offers one location option: <strong>"Living in or recently in."</strong> The old "People traveling in" and "People living in" options were removed. Also: <strong>disable the "Location Expansion" toggle</strong> — it's ON by default and will broaden your audience to people who've shown <em>interest</em> in the area, not just people physically there.</p>
                     </div>
 
                     <div class="callout green">
@@ -956,16 +960,15 @@ Swipe to find your fit →</div>
                         <div class="t-row"><span class="t-label">Location</span><span class="t-val">40–60 mi around Colville</span></div>
                         <div class="t-row"><span class="t-label">Age</span><span class="t-val">30–65+</span></div>
                         <div class="t-row"><span class="t-label">Placements</span><span class="t-val">Feed, IG Feed, Marketplace</span></div>
-                        <div class="t-row"><span class="t-label">Behaviors</span><span class="t-val">Rural residents</span></div>
+                        <div class="t-row"><span class="t-label">Advantage+</span><span class="t-val">OK to leave on (broad reach)</span></div>
 
                         <div class="tag-list">
                             <span class="tag">Tractors</span>
-                            <span class="tag">Farming</span>
-                            <span class="tag">Compact Tractors</span>
-                            <span class="tag">Kubota</span>
-                            <span class="tag">John Deere</span>
+                            <span class="tag">Agriculture</span>
                             <span class="tag">Landscaping</span>
+                            <span class="tag">Rural Living</span>
                         </div>
+                        <p style="font-size: 11px; color: #555; margin-top: 10px;">Interest inputs are treated as <em>suggestions</em> by Meta's Advantage+ AI. The algorithm learns from conversions — creative quality matters more than audience micro-targeting in 2026.</p>
                     </div>
 
                     <div class="callout green" style="margin-top: 20px;">
@@ -1080,7 +1083,7 @@ Come see the lineup at JJ Riggs Equipment in Colville.</div>
                         <div class="launch-wk">W1</div>
                         <div class="launch-info">
                             <div class="l-title">Setup</div>
-                            <div class="l-desc">Install Meta Pixel. Film video b-roll. Take product photos. Build campaigns in draft.</div>
+                            <div class="l-desc">Install Meta Pixel + Conversions API. Film video b-roll. Take product photos. Build campaigns in draft.</div>
                         </div>
                     </div>
                     <div class="launch-step">
@@ -1164,10 +1167,12 @@ Come see the lineup at JJ Riggs Equipment in Colville.</div>
                     <h3>Setup Checklist</h3>
                     <ul class="check-list">
                         <li>Meta Pixel installed on jjriggsequipment.com</li>
-                        <li>Events: PageView, ViewContent, Contact</li>
+                        <li>Conversions API (CAPI) set up — Pixel alone misses 50%+ of conversions in 2026 due to iOS/ad blockers</li>
+                        <li>Events: PageView, ViewContent, Contact (with event deduplication between Pixel &amp; CAPI)</li>
                         <li>UTM params on all ad links</li>
                         <li>GA4 connected to verify traffic</li>
                         <li>Phone tracking (CallRail ~$45/mo)</li>
+                        <li>Disable "Location Expansion" toggle on geofencing ad sets</li>
                     </ul>
 
                     <h3 style="margin-top: 20px;">Naming Convention</h3>
