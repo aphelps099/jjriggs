@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Ads Strategy — Q2 2026 | JJ Riggs Equipment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --darkest: #171b20;
+            --dark-navy: #273647;
+            --red: #b61b22;
+            --white: #fffefe;
+            --gray: #78828e;
+            --bg: #0a0a0a;
+            --card-bg: #111111;
+            --border: #222;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: #cccccc;
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+            padding: 80px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 30px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--red); }
+
+        .badge {
+            display: inline-block;
+            background: var(--red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .badge-q2 {
+            background: #1a6b3c;
+            margin-left: 8px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        h1 span { color: var(--red); }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+        }
+
+        .meta-row {
+            display: flex;
+            gap: 32px;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .meta-row strong { color: #888; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-number {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--red);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 24px 0 12px 0;
+        }
+
+        p { margin-bottom: 16px; }
+
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 24px;
+        }
+
+        li { margin-bottom: 12px; }
+
+        a { color: var(--red); }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 3px solid var(--red);
+            padding: 24px 28px;
+            margin: 30px 0;
+        }
+
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        .highlight-box.green {
+            border-left-color: #1a6b3c;
+        }
+
+        /* Campaign Overview Cards */
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 900px) {
+            .campaign-grid { grid-template-columns: 1fr; }
+        }
+
+        .campaign-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .campaign-card:hover { border-color: #444; }
+
+        .campaign-card-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .campaign-card-num {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--red);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .campaign-card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .campaign-card-sub {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .campaign-card-body {
+            padding: 20px 24px;
+        }
+
+        .campaign-card-body .tag {
+            display: inline-block;
+            background: rgba(182, 27, 34, 0.15);
+            color: var(--red);
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 2px 4px 2px 0;
+        }
+
+        /* Budget Table */
+        .budget-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .budget-table th,
+        .budget-table td {
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .budget-table th {
+            background: var(--card-bg);
+            color: var(--gray);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .budget-table td {
+            font-size: 14px;
+        }
+
+        .budget-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Ad Copy Card */
+        .ad-copy-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .ad-copy-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ad-copy-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ad-copy-format {
+            font-size: 11px;
+            color: #555;
+        }
+
+        .ad-copy-body {
+            padding: 24px;
+        }
+
+        .ad-copy-body blockquote {
+            font-size: 15px;
+            color: #ddd;
+            line-height: 1.8;
+            font-style: italic;
+            border: none;
+            margin: 0 0 16px 0;
+            padding: 0;
+        }
+
+        .ad-copy-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            padding: 16px 24px;
+            border-top: 1px solid var(--border);
+            background: rgba(0,0,0,0.3);
+        }
+
+        .ad-copy-meta-item {
+            font-size: 12px;
+        }
+
+        .ad-copy-meta-item .label {
+            color: #555;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .ad-copy-meta-item .value {
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        /* Carousel Cards */
+        .carousel-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 1100px) {
+            .carousel-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 700px) {
+            .carousel-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .carousel-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .carousel-card:hover {
+            border-color: #444;
+            transform: translateY(-2px);
+        }
+
+        .carousel-visual {
+            aspect-ratio: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--darkest) 0%, var(--dark-navy) 100%);
+        }
+
+        .carousel-visual .slide-num {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            background: rgba(0,0,0,0.4);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .carousel-eyebrow {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 6px;
+        }
+
+        .carousel-headline {
+            font-size: clamp(14px, 2vw, 18px);
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .carousel-sub {
+            font-size: 9px;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .carousel-info {
+            padding: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .carousel-info-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .carousel-info-desc {
+            font-size: 10px;
+            color: var(--gray);
+        }
+
+        /* Video Script */
+        .script-block {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .script-timecode {
+            padding: 12px 20px;
+            background: rgba(182, 27, 34, 0.1);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--red);
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .script-timecode .tc-label {
+            color: #555;
+            font-weight: 400;
+        }
+
+        .script-body {
+            padding: 20px;
+        }
+
+        .script-visual {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .script-vo {
+            font-size: 15px;
+            color: #ddd;
+            line-height: 1.7;
+        }
+
+        .script-text-overlay {
+            display: inline-block;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        /* Naming Convention */
+        .naming-example {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 13px;
+            color: #ccc;
+            line-height: 2;
+        }
+
+        .naming-example .pattern {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        .naming-example .example {
+            color: #888;
+        }
+
+        /* Retargeting Funnel */
+        .funnel-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        @media (max-width: 768px) {
+            .funnel-grid { grid-template-columns: 1fr; }
+        }
+
+        .funnel-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .funnel-audience {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .funnel-window {
+            font-size: 11px;
+            color: var(--red);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .funnel-ad {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .funnel-goal {
+            font-size: 12px;
+            color: #555;
+            font-style: italic;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 16px;
+        }
+
+        .checklist li::before {
+            content: "\2610";
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Timeline */
+        .timeline {
+            margin: 30px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 0;
+        }
+
+        .timeline-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--red);
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+
+        .timeline-line {
+            width: 2px;
+            flex: 1;
+            background: var(--border);
+        }
+
+        .timeline-content {
+            padding-bottom: 32px;
+        }
+
+        .timeline-week {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--red);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        /* Metric Pill */
+        .metric {
+            display: inline-block;
+            background: #1a1a1a;
+            padding: 4px 10px;
+            font-family: monospace;
+            font-size: 13px;
+            color: var(--red);
+            border-radius: 3px;
+        }
+
+        /* Cross-link cards */
+        .crosslink-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        @media (max-width: 900px) {
+            .crosslink-grid { grid-template-columns: 1fr; }
+        }
+
+        .crosslink-card {
+            display: block;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-decoration: none;
+            transition: border-color 0.2s;
+        }
+
+        .crosslink-card:hover { border-color: var(--red); }
+
+        .crosslink-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .crosslink-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .crosslink-desc {
+            font-size: 12px;
+            color: #666;
+        }
+
+        code {
+            background: #1a1a1a;
+            padding: 2px 8px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #cccccc;
+            border-radius: 3px;
+        }
+
+        .footer {
+            background: var(--bg);
+            border-top: 1px solid #1a1a1a;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #444;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .footer span { color: var(--red); }
+
+        /* Geofence Structure */
+        .structure-tree {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 13px;
+            color: #ccc;
+            line-height: 2;
+            margin: 20px 0;
+            white-space: pre-line;
+        }
+
+        .structure-tree .campaign-name { color: var(--red); font-weight: 600; }
+        .structure-tree .adset-name { color: #fff; }
+        .structure-tree .ad-name { color: #888; }
+
+        /* Video tips list */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .tips-grid { grid-template-columns: 1fr; }
+        }
+
+        .tip-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .tip-num {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--red);
+            margin-bottom: 6px;
+        }
+
+        .tip-text {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .header, .container {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+            h1 { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="../../index.html" class="back-link">&larr; Back to Brand Guide</a>
+            <div>
+                <span class="badge">Strategy</span>
+                <span class="badge badge-q2">Q2 2026</span>
+            </div>
+            <h1>Facebook Ads <span>Strategy</span></h1>
+            <p class="subtitle">A 3-campaign paid media plan for Meta &mdash; geofencing conquest, TYM carousel, and TYM video &mdash; with retargeting, tracking, and a 5-week launch sequence.</p>
+            <div class="meta-row">
+                <span><strong>Prepared for:</strong> Andrew (Owner)</span>
+                <span><strong>Business:</strong> JJ Riggs Equipment</span>
+                <span><strong>Date:</strong> March 2026</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Section 1: Business Snapshot & Campaign Overview -->
+        <section class="section">
+            <div class="section-number">01 &mdash; Campaign Overview</div>
+            <h2>Three Campaigns, One Strategy</h2>
+            <p>This strategy coordinates three campaigns across Meta (Facebook + Instagram) to move prospects from awareness to showroom visit. Each campaign serves a different stage of the buyer&rsquo;s journey.</p>
+
+            <div class="campaign-grid">
+                <div class="campaign-card">
+                    <div class="campaign-card-header">
+                        <div class="campaign-card-num">Campaign 1</div>
+                        <div class="campaign-card-title">Geofencing &mdash; Conquest</div>
+                        <div class="campaign-card-sub">Awareness / Traffic</div>
+                    </div>
+                    <div class="campaign-card-body">
+                        <span class="tag">Single Image + CTA</span>
+                        <span class="tag">Competitor Lots</span>
+                        <span class="tag">Ag Hubs</span>
+                        <p style="margin: 12px 0 0; font-size: 13px; color: #888;">Reach people near competitor locations &amp; farm supply stores with conquest messaging.</p>
+                    </div>
+                </div>
+                <div class="campaign-card">
+                    <div class="campaign-card-header">
+                        <div class="campaign-card-num">Campaign 2</div>
+                        <div class="campaign-card-title">TYM Carousel</div>
+                        <div class="campaign-card-sub">Consideration / Traffic</div>
+                    </div>
+                    <div class="campaign-card-body">
+                        <span class="tag">Carousel (5 Cards)</span>
+                        <span class="tag">60 mi Radius</span>
+                        <span class="tag">Product Range</span>
+                        <p style="margin: 12px 0 0; font-size: 13px; color: #888;">Showcase the full TYM lineup from sub-compact to utility. Primary lead driver.</p>
+                    </div>
+                </div>
+                <div class="campaign-card">
+                    <div class="campaign-card-header">
+                        <div class="campaign-card-num">Campaign 3</div>
+                        <div class="campaign-card-title">TYM Video</div>
+                        <div class="campaign-card-sub">Awareness / Engagement</div>
+                    </div>
+                    <div class="campaign-card-body">
+                        <span class="tag">Video (45&ndash;60 sec)</span>
+                        <span class="tag">15-sec Cutdown</span>
+                        <span class="tag">Lookalike</span>
+                        <p style="margin: 12px 0 0; font-size: 13px; color: #888;">Authentic video positioning TYM as the machine for NE Washington life.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Budget Allocation</h3>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Campaign</th>
+                        <th>% of Total</th>
+                        <th>At $1,000/mo</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Geofencing Conquest</td>
+                        <td>30%</td>
+                        <td>$300</td>
+                        <td>Continuous, lower daily spend</td>
+                    </tr>
+                    <tr>
+                        <td>TYM Carousel</td>
+                        <td>40%</td>
+                        <td>$400</td>
+                        <td>Primary lead driver</td>
+                    </tr>
+                    <tr>
+                        <td>TYM Video</td>
+                        <td>30%</td>
+                        <td>$300</td>
+                        <td>Top-of-funnel awareness</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 13px; color: #666;">Suggested starting total: $750&ndash;$1,500/month. Adjust based on results after 30 days.</p>
+
+            <h3>Naming Convention</h3>
+            <div class="naming-example">
+                <div class="pattern">META_[Objective]_[Audience]_[Creative]_[Date]</div>
+                <div class="example">META_Traffic_Geofence-Competitors_ConquestAd_Mar26</div>
+                <div class="example">META_Traffic_Farmers60mi_TYM-Carousel_Mar26</div>
+                <div class="example">META_Awareness_BroadLocal_TYM-Video_Mar26</div>
+            </div>
+        </section>
+
+        <!-- Section 2: Geofencing Conquest -->
+        <section class="section">
+            <div class="section-number">02 &mdash; Geofencing Conquest</div>
+            <h2>Location-Based Conquest Ads</h2>
+
+            <div class="highlight-box">
+                <p><strong>How &ldquo;geofencing&rdquo; actually works on Facebook:</strong> Meta doesn&rsquo;t offer true device-level geofencing. What it offers is <strong>radius-based location targeting</strong> &mdash; you drop a pin on the map and set a 1&ndash;50 mile radius. Facebook then serves ads to people who <strong>live in, recently visited, or are traveling through</strong> that area.</p>
+            </div>
+
+            <h3>Target Locations</h3>
+
+            <h4>Tier 1 &mdash; Competitor Dealerships (5-mile radius pins)</h4>
+            <p>Other tractor/equipment dealers within 100 miles &mdash; John Deere, Kubota, Kioti dealers in Spokane, Republic, Chewelah, and Kettle Falls. Plus any mower/outdoor power equipment dealers nearby.</p>
+
+            <h4>Tier 2 &mdash; Agricultural Hubs (3&ndash;5 mile radius pins)</h4>
+            <p>Farm supply stores (Tractor Supply Co, local feed stores), agricultural co-ops in Stevens County, livestock auction yards, NE Washington Fair / Colville fairgrounds (seasonal).</p>
+
+            <h4>Tier 3 &mdash; Broad Rural Coverage (25&ndash;40 mile radius)</h4>
+            <p>Wide radius around Colville, WA. Layer with interest targeting: Farming, Tractors, Landscaping, Rural Property, Livestock.</p>
+
+            <h3>Ad Set Structure</h3>
+            <div class="structure-tree"><span class="campaign-name">Campaign: META_Traffic_Geofence-Conquest_Mar26</span>
+<span class="adset-name">&boxvr;&mdash; Ad Set 1: Competitor Dealer Locations (5 mi radius pins)</span>
+    <span class="ad-name">&boxvr;&mdash; Ad A: &ldquo;Before You Sign&rdquo; angle</span>
+    <span class="ad-name">&boxur;&mdash; Ad B: &ldquo;Why Drive to Spokane?&rdquo; angle</span>
+<span class="adset-name">&boxvr;&mdash; Ad Set 2: Farm Supply &amp; Ag Hubs (3-5 mi radius pins)</span>
+    <span class="ad-name">&boxvr;&mdash; Ad A: &ldquo;Picking Up Feed?&rdquo; angle</span>
+    <span class="ad-name">&boxur;&mdash; Ad B: Seasonal equipment angle</span>
+<span class="adset-name">&boxur;&mdash; Ad Set 3: Broad Rural 40mi (interest layered)</span>
+    <span class="ad-name">&boxvr;&mdash; Ad A: Brand awareness</span>
+    <span class="ad-name">&boxur;&mdash; Ad B: Specific offer/model</span></div>
+
+            <h3>Ad Copy &mdash; Three Variations</h3>
+
+            <!-- Ad A -->
+            <div class="ad-copy-card">
+                <div class="ad-copy-header">
+                    <span class="ad-copy-label">Ad A &mdash; &ldquo;Before You Sign&rdquo;</span>
+                    <span class="ad-copy-format">Single Image + CTA &bull; Competitor Locations</span>
+                </div>
+                <div class="ad-copy-body">
+                    <blockquote>Shopping for a tractor today? Before you sign anything &mdash; come see what TYM offers.<br><br>6-year bumper-to-bumper warranty. No DPF filter headaches. And a dealer in Colville who actually picks up the phone.<br><br>Stop by JJ Riggs Equipment or call Andrew at 509-738-2985.</blockquote>
+                </div>
+                <div class="ad-copy-meta">
+                    <div class="ad-copy-meta-item">
+                        <div class="label">Headline</div>
+                        <div class="value">TYM Tractors Starting Under $15K</div>
+                    </div>
+                    <div class="ad-copy-meta-item">
+                        <div class="label">Description</div>
+                        <div class="value">Colville&rsquo;s authorized TYM dealer. Sub-compact to utility &mdash; 22 to 130 HP.</div>
+                    </div>
+                    <div class="ad-copy-meta-item">
+                        <div class="label">CTA Button</div>
+                        <div class="value">Get Directions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad B -->
+            <div class="ad-copy-card">
+                <div class="ad-copy-header">
+                    <span class="ad-copy-label">Ad B &mdash; &ldquo;Why Drive to Spokane?&rdquo;</span>
+                    <span class="ad-copy-format">Single Image + CTA &bull; Distance Angle</span>
+                </div>
+                <div class="ad-copy-body">
+                    <blockquote>Why drive to Spokane for a tractor when your local dealer has better warranties, better prices, and knows your name?<br><br>JJ Riggs Equipment in Colville carries the full TYM tractor lineup &mdash; sub-compact to utility. Plus Bad Boy Mowers and Old Hickory Sheds.<br><br>Andrew and the crew are here Mon&ndash;Fri, 8&ndash;5. Come see the difference.</blockquote>
+                </div>
+                <div class="ad-copy-meta">
+                    <div class="ad-copy-meta-item">
+                        <div class="label">Headline</div>
+                        <div class="value">Your Local Equipment Dealer in Colville</div>
+                    </div>
+                    <div class="ad-copy-meta-item">
+                        <div class="label">Description</div>
+                        <div class="value">TYM Tractors | Bad Boy Mowers | Old Hickory Sheds</div>
+                    </div>
+                    <div class="ad-copy-meta-item">
+                        <div class="label">CTA Button</div>
+                        <div class="value">Learn More</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad C -->
+            <div class="ad-copy-card">
+                <div class="ad-copy-header">
+                    <span class="ad-copy-label">Ad C &mdash; &ldquo;Picking Up Feed?&rdquo;</span>
+                    <span class="ad-copy-format">Single Image + CTA &bull; Farm Supply / Co-op Locations</span>
+                </div>
+                <div class="ad-copy-body">
+                    <blockquote>Picking up feed? While you&rsquo;re out &mdash; JJ Riggs Equipment is right here in Colville with TYM tractors ready to work.<br><br>From 25 HP sub-compacts for your acreage to 130 HP utility tractors for serious operations &mdash; we&rsquo;ve got your next machine.<br><br>No-regen engines. 6-year warranty. Real support from a real person.</blockquote>
+                </div>
+                <div class="ad-copy-meta">
+                    <div class="ad-copy-meta-item">
+                        <div class="label">Headline</div>
+                        <div class="value">TYM Tractors at JJ Riggs Equipment</div>
+                    </div>
+                    <div class="ad-copy-meta-item">
+                        <div class="label">Description</div>
+                        <div class="value">Stop in at 685 Elm Tree Dr, Colville. Mon&ndash;Fri 8&ndash;5.</div>
+                    </div>
+                    <div class="ad-copy-meta-item">
+                        <div class="label">CTA Button</div>
+                        <div class="value">Get Directions</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Targeting Settings</h3>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Setting</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Location Type</td>
+                        <td>&ldquo;People recently in this location&rdquo; (conquest) or &ldquo;People living in this location&rdquo; (broad)</td>
+                    </tr>
+                    <tr>
+                        <td>Radius</td>
+                        <td>1&ndash;5 miles for specific pins; 25&ndash;40 miles for broad</td>
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td>25&ndash;65+</td>
+                    </tr>
+                    <tr>
+                        <td>Interests (layer on broad)</td>
+                        <td>Farming, Tractors, Landscaping, Property Management, Rural Living, Livestock</td>
+                    </tr>
+                    <tr>
+                        <td>Placements</td>
+                        <td>Facebook Feed, Instagram Feed, Facebook Marketplace</td>
+                    </tr>
+                    <tr>
+                        <td>Exclusions</td>
+                        <td>Exclude people who already follow JJ Riggs page (retarget separately)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box green">
+                <p><strong>See also:</strong> The <a href="geofencing-facebook-ads.html">Geofencing Playbook</a> has additional tactical details on location categories, setup steps, and seasonal budget timing.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: TYM Carousel -->
+        <section class="section">
+            <div class="section-number">03 &mdash; TYM Carousel</div>
+            <h2>&ldquo;A TYM for Every Job&rdquo;</h2>
+            <p>Each card showcases a different tractor category, moving from smallest to largest. This educates the buyer on the full range while qualifying them by use case.</p>
+
+            <div class="carousel-grid">
+                <!-- Card 1 -->
+                <div class="carousel-card">
+                    <div class="carousel-visual">
+                        <span class="slide-num">1/5</span>
+                        <div class="carousel-eyebrow">JJ Riggs Equipment</div>
+                        <div class="carousel-headline">A TYM Tractor for Every Job</div>
+                        <div class="carousel-sub">From weekend acreage to full-scale farming. See the lineup &rarr;</div>
+                    </div>
+                    <div class="carousel-info">
+                        <div class="carousel-info-title">Card 1: Hook / Brand</div>
+                        <div class="carousel-info-desc">Hero shot of TYM lineup or fleet photo in front of the shop.</div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="carousel-card">
+                    <div class="carousel-visual" style="background: linear-gradient(180deg, var(--dark-navy) 0%, var(--darkest) 100%);">
+                        <span class="slide-num">2/5</span>
+                        <div class="carousel-eyebrow">Sub-Compact</div>
+                        <div class="carousel-headline">Up to 25 HP</div>
+                        <div class="carousel-sub">Perfect for acreage, landscaping &amp; property maintenance. No-regen engine. Starting under $15K.</div>
+                    </div>
+                    <div class="carousel-info">
+                        <div class="carousel-info-title">Card 2: Sub-Compact</div>
+                        <div class="carousel-info-desc">T25 with loader on a residential property or hobby farm.</div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="carousel-card">
+                    <div class="carousel-visual" style="background: var(--darkest);">
+                        <span class="slide-num">3/5</span>
+                        <div class="carousel-eyebrow">Compact</div>
+                        <div class="carousel-headline">24 to 58 HP</div>
+                        <div class="carousel-sub">Small farms, livestock operations &amp; serious ground work. The workhorse of the lineup.</div>
+                    </div>
+                    <div class="carousel-info">
+                        <div class="carousel-info-title">Card 3: Compact</div>
+                        <div class="carousel-info-desc">T474 or T574 working with a bush hog or box blade.</div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="carousel-card">
+                    <div class="carousel-visual" style="background: linear-gradient(135deg, var(--darkest) 0%, #1a1a2a 100%);">
+                        <span class="slide-num">4/5</span>
+                        <div class="carousel-eyebrow">Utility</div>
+                        <div class="carousel-headline">111+ HP</div>
+                        <div class="carousel-sub">Commercial-grade power for large operations. TYM&rsquo;s flagship T130 &mdash; available now.</div>
+                    </div>
+                    <div class="carousel-info">
+                        <div class="carousel-info-title">Card 4: Utility</div>
+                        <div class="carousel-info-desc">T130 or large utility tractor in a field.</div>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="carousel-card">
+                    <div class="carousel-visual" style="background: var(--red);">
+                        <span class="slide-num">5/5</span>
+                        <div class="carousel-headline">Come See Them in Colville</div>
+                        <div class="carousel-sub" style="color: rgba(255,255,255,0.8);">685 Elm Tree Dr. Call Andrew at 509-738-2985. Mon&ndash;Fri, 8&ndash;5.</div>
+                    </div>
+                    <div class="carousel-info">
+                        <div class="carousel-info-title">Card 5: CTA / Dealer</div>
+                        <div class="carousel-info-desc">Photo of Andrew / the JJ Riggs team. Authenticity wins.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Primary Text (Above Carousel)</h3>
+
+            <div class="ad-copy-card">
+                <div class="ad-copy-header">
+                    <span class="ad-copy-label">Option A &mdash; Feature-Led</span>
+                </div>
+                <div class="ad-copy-body">
+                    <blockquote>TYM Tractors &mdash; 22 to 130 HP, all with a 6-year bumper-to-bumper warranty and no-regen engines.<br><br>Whether you need a sub-compact for your acreage or a utility tractor for your operation, JJ Riggs Equipment in Colville has the right machine.<br><br>Swipe to see the full lineup &rarr;</blockquote>
+                </div>
+            </div>
+
+            <div class="ad-copy-card">
+                <div class="ad-copy-header">
+                    <span class="ad-copy-label">Option B &mdash; Problem-Led</span>
+                </div>
+                <div class="ad-copy-body">
+                    <blockquote>Tired of waiting weeks for parts? Sick of warranty runaround from big-box dealers?<br><br>JJ Riggs Equipment is your local TYM dealer in Colville, WA. Real support. Real availability. Tractors from 22 HP to 130 HP.<br><br>Swipe to find your fit &rarr;</blockquote>
+                </div>
+            </div>
+
+            <h3>Carousel Targeting</h3>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Setting</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Location</td>
+                        <td>40&ndash;60 mile radius around Colville, WA</td>
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td>30&ndash;65+</td>
+                    </tr>
+                    <tr>
+                        <td>Interests</td>
+                        <td>Tractors, Farming, Compact Tractors, Landscaping, Kubota, John Deere, Rural Property</td>
+                    </tr>
+                    <tr>
+                        <td>Behaviors</td>
+                        <td>Rural residents, Likely to move (new property owners)</td>
+                    </tr>
+                    <tr>
+                        <td>Placements</td>
+                        <td>Facebook Feed, Instagram Feed, Facebook Marketplace</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box green">
+                <p><strong>See also:</strong> The <a href="facebook-ads-playbook.html">TYM to ROLL Playbook</a> has a separate carousel concept using the Hook &rarr; Problem &rarr; Solution &rarr; Proof &rarr; CTA storytelling framework. Both carousels can run as A/B tests or to different audiences.</p>
+            </div>
+        </section>
+
+        <!-- Section 4: TYM Video -->
+        <section class="section">
+            <div class="section-number">04 &mdash; TYM Video Ad</div>
+            <h2>&ldquo;Built for Out Here&rdquo;</h2>
+            <p>Position TYM tractors as the right machine for NE Washington life, and JJ Riggs as the local expert who stands behind them. <strong>Tone:</strong> Authentic, rugged, local pride. NOT slick corporate &mdash; &ldquo;neighbor who knows equipment&rdquo; energy.</p>
+
+            <h3>Full Video Script (45&ndash;60 sec)</h3>
+
+            <div class="script-block">
+                <div class="script-timecode">
+                    <span>HOOK</span>
+                    <span class="tc-label">0&ndash;3 sec</span>
+                </div>
+                <div class="script-body">
+                    <div class="script-visual">[Open on a TYM tractor firing up at dawn. Engine sound. Breath of cold NE Washington morning air.]</div>
+                    <div class="script-text-overlay">&ldquo;Built for out here.&rdquo;</div>
+                </div>
+            </div>
+
+            <div class="script-block">
+                <div class="script-timecode">
+                    <span>THE LAND</span>
+                    <span class="tc-label">3&ndash;10 sec</span>
+                </div>
+                <div class="script-body">
+                    <div class="script-visual">[Wide shots of NE Washington landscape &mdash; rolling hills, timber, fenced acreage, snow-dusted mountains. A TYM tractor moves through the frame.]</div>
+                    <div class="script-vo"><strong>Andrew:</strong> &ldquo;Out here, your equipment has to work as hard as you do.&rdquo;</div>
+                </div>
+            </div>
+
+            <div class="script-block">
+                <div class="script-timecode">
+                    <span>THE PROBLEM</span>
+                    <span class="tc-label">10&ndash;18 sec</span>
+                </div>
+                <div class="script-body">
+                    <div class="script-visual">[Quick cuts: stuck equipment, &ldquo;check engine&rdquo; light, someone on hold with a distant dealer, parts box that took 3 weeks to arrive.]</div>
+                    <div class="script-vo"><strong>Andrew:</strong> &ldquo;I got tired of seeing folks pay too much for machines that spend half the year in the shop. That&rsquo;s why I carry TYM.&rdquo;</div>
+                </div>
+            </div>
+
+            <div class="script-block">
+                <div class="script-timecode">
+                    <span>THE SOLUTION &mdash; TYM</span>
+                    <span class="tc-label">18&ndash;35 sec</span>
+                </div>
+                <div class="script-body">
+                    <div class="script-visual">[Showcase footage: TYM sub-compact moving dirt with a loader. Compact tractor pulling a bush hog through brush. Utility tractor doing real work. Close-ups of clean engine bay &mdash; no DPF filter.]</div>
+                    <div class="script-vo"><strong>Andrew:</strong> &ldquo;No regen. No DPF headaches. 6-year bumper-to-bumper warranty &mdash; the best in the business. And if something does go wrong? You&rsquo;re calling me, not some 1-800 number.&rdquo;</div>
+                </div>
+            </div>
+
+            <div class="script-block">
+                <div class="script-timecode">
+                    <span>THE DEALER &mdash; JJ RIGGS</span>
+                    <span class="tc-label">35&ndash;50 sec</span>
+                </div>
+                <div class="script-body">
+                    <div class="script-visual">[Andrew walking through the lot. Shaking hands with a customer. Helping someone hook up an implement. The JJ Riggs shop in the background.]</div>
+                    <div class="script-vo"><strong>Andrew:</strong> &ldquo;I&rsquo;m Andrew, this is JJ Riggs Equipment in Colville. Come see the lineup, bring your questions &mdash; I&rsquo;ll give you straight answers.&rdquo;</div>
+                </div>
+            </div>
+
+            <div class="script-block">
+                <div class="script-timecode">
+                    <span>CTA</span>
+                    <span class="tc-label">50&ndash;60 sec</span>
+                </div>
+                <div class="script-body">
+                    <div class="script-visual">[Final shot: TYM tractor on a beautiful NE WA property. Logo. Contact info.]</div>
+                    <div class="script-text-overlay">JJ Riggs Equipment &bull; 685 Elm Tree Dr, Colville &bull; 509-738-2985</div>
+                    <div class="script-vo" style="margin-top: 12px;"><strong>Andrew (final line):</strong> &ldquo;Come see us.&rdquo;</div>
+                </div>
+            </div>
+
+            <h3>15-Second Cutdown (Stories / Reels)</h3>
+            <div class="highlight-box">
+                <p><em>[TYM tractor firing up &rarr; quick montage of tractor working &rarr; Andrew on camera:]</em></p>
+                <p><strong>&ldquo;No regen. 6-year warranty. Come see the TYM lineup at JJ Riggs in Colville.&rdquo;</strong></p>
+                <p style="color: #666; font-size: 13px;">[End card with contact info]</p>
+            </div>
+
+            <h3>Video Feed Ad Copy</h3>
+            <div class="ad-copy-card">
+                <div class="ad-copy-header">
+                    <span class="ad-copy-label">Feed Post</span>
+                    <span class="ad-copy-format">Video (45&ndash;60 sec)</span>
+                </div>
+                <div class="ad-copy-body">
+                    <blockquote>No DPF. No regen. No headaches.<br><br>TYM tractors come with a 6-year bumper-to-bumper warranty and an engine that just runs. From 22 HP sub-compacts to the 130 HP T130 &mdash; see why NE Washington is switching to TYM.<br><br>Come see the lineup at JJ Riggs Equipment in Colville.</blockquote>
+                </div>
+                <div class="ad-copy-meta">
+                    <div class="ad-copy-meta-item">
+                        <div class="label">Headline</div>
+                        <div class="value">TYM Tractors &mdash; Built for Out Here</div>
+                    </div>
+                    <div class="ad-copy-meta-item">
+                        <div class="label">CTA Button</div>
+                        <div class="value">Learn More</div>
+                    </div>
+                    <div class="ad-copy-meta-item">
+                        <div class="label">Placements</div>
+                        <div class="value">Feed, Stories, Reels</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Video Production Tips for Andrew</h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-num">01</div>
+                    <div class="tip-text"><strong>Use your phone.</strong> Authentic &gt; polished. iPhone in landscape mode, steady hand or cheap tripod.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-num">02</div>
+                    <div class="tip-text"><strong>Film early morning or late afternoon</strong> for the best light on your property/lot.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-num">03</div>
+                    <div class="tip-text"><strong>Get b-roll first:</strong> Film 10&ndash;15 short clips of tractors working, the shop, the landscape. 5&ndash;10 seconds each.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-num">04</div>
+                    <div class="tip-text"><strong>Record audio separately</strong> if it&rsquo;s windy &mdash; or do voiceover indoors later.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-num">05</div>
+                    <div class="tip-text"><strong>Captions are mandatory</strong> &mdash; 85% of Facebook video is watched on mute.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-num">06</div>
+                    <div class="tip-text"><strong>Use CapCut (free app)</strong> to edit on your phone with auto-captions.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-num">07</div>
+                    <div class="tip-text"><strong>The &ldquo;stuck on hold&rdquo; scene</strong> can be staged simply &mdash; someone holding a phone looking frustrated. Customers will relate instantly.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Retargeting Strategy -->
+        <section class="section">
+            <div class="section-number">05 &mdash; Retargeting</div>
+            <h2>Retargeting Funnel</h2>
+            <p>Once the three campaigns are running, build retargeting audiences to move warm prospects toward a showroom visit.</p>
+
+            <div class="funnel-grid">
+                <div class="funnel-card">
+                    <div class="funnel-audience">Video Viewers (25%+)</div>
+                    <div class="funnel-window">30-day window</div>
+                    <div class="funnel-ad">Carousel ad showing specific models</div>
+                    <div class="funnel-goal">Goal: Move to consideration</div>
+                </div>
+                <div class="funnel-card">
+                    <div class="funnel-audience">Website Visitors</div>
+                    <div class="funnel-window">30-day window</div>
+                    <div class="funnel-ad">&ldquo;Come back&rdquo; ad with seasonal offer or event</div>
+                    <div class="funnel-goal">Goal: Drive showroom visit</div>
+                </div>
+                <div class="funnel-card">
+                    <div class="funnel-audience">Page / Post Engagers</div>
+                    <div class="funnel-window">60-day window</div>
+                    <div class="funnel-ad">Testimonial or customer story ad</div>
+                    <div class="funnel-goal">Goal: Build trust</div>
+                </div>
+                <div class="funnel-card">
+                    <div class="funnel-audience">Carousel Clickers (No Conversion)</div>
+                    <div class="funnel-window">14-day window</div>
+                    <div class="funnel-ad">Specific model they clicked + financing info</div>
+                    <div class="funnel-goal">Goal: Close the deal</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Tracking & Measurement -->
+        <section class="section">
+            <div class="section-number">06 &mdash; Tracking &amp; Measurement</div>
+            <h2>Setup &amp; KPIs</h2>
+
+            <h3>Setup Checklist</h3>
+            <ul class="checklist">
+                <li>Meta Pixel installed on jjriggsequipment.com</li>
+                <li>Key events configured: PageView, ViewContent (tractor pages), Contact (phone click or form submit)</li>
+                <li>UTM parameters on all ad links: <code>?utm_source=facebook&amp;utm_medium=paid&amp;utm_campaign=[campaign-name]</code></li>
+                <li>Google Analytics 4 connected to verify traffic</li>
+                <li>Phone call tracking (consider CallRail or similar for ~$45/mo)</li>
+            </ul>
+
+            <h3>KPIs to Watch Weekly</h3>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Target Range</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPM (cost per 1,000 impressions)</td>
+                        <td><span class="metric">$8&ndash;$20</span> (rural audiences are cheaper)</td>
+                    </tr>
+                    <tr>
+                        <td>CTR (click-through rate)</td>
+                        <td><span class="metric">1.5%+</span> for feed ads</td>
+                    </tr>
+                    <tr>
+                        <td>CPC (cost per click)</td>
+                        <td><span class="metric">Under $2.00</span></td>
+                    </tr>
+                    <tr>
+                        <td>Video view rate (ThruPlay)</td>
+                        <td><span class="metric">15%+</span></td>
+                    </tr>
+                    <tr>
+                        <td>Link clicks to website</td>
+                        <td>Track weekly trend</td>
+                    </tr>
+                    <tr>
+                        <td>Phone calls / directions clicks</td>
+                        <td>Primary conversion signal</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <p><strong>Attribution tip:</strong> Ask every customer who walks in: &ldquo;How did you hear about us?&rdquo; Track this manually to connect ad spend to actual sales. This is the most reliable signal for a local dealer.</p>
+            </div>
+        </section>
+
+        <!-- Section 7: Launch Sequence -->
+        <section class="section">
+            <div class="section-number">07 &mdash; Launch Sequence</div>
+            <h2>5-Week Rollout</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-week">Week 1 &mdash; Setup</div>
+                        <div class="timeline-title">Foundation</div>
+                        <div class="timeline-desc">Install Meta Pixel. Film video b-roll. Take product photos for carousel. Set up ad account and build all campaigns in draft.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-week">Week 2 &mdash; Launch Phase 1</div>
+                        <div class="timeline-title">Geofencing + Carousel Go Live</div>
+                        <div class="timeline-desc">Launch geofencing campaign (Ad Set 1: competitors first). Launch carousel campaign. Monitor daily.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-week">Week 3 &mdash; Launch Phase 2</div>
+                        <div class="timeline-title">Video Campaign Goes Live</div>
+                        <div class="timeline-desc">Launch video campaign. All three campaigns now running. Monitor daily.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-week">Week 4 &mdash; Optimize</div>
+                        <div class="timeline-title">Review &amp; Scale</div>
+                        <div class="timeline-desc">Review performance across all campaigns. Kill underperformers. Scale winners by 20%. Build retargeting audiences from collected data.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line" style="background: transparent;"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-week">Week 5+ &mdash; Expand</div>
+                        <div class="timeline-title">Retargeting &amp; Refresh</div>
+                        <div class="timeline-desc">Launch retargeting campaigns. Refresh creative monthly. Test new angles. Review and adjust strategy based on performance data.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Related Playbooks -->
+        <section class="section">
+            <div class="section-number">08 &mdash; Related Playbooks</div>
+            <h2>Cross-References</h2>
+            <p>This strategy connects to several existing playbooks in the brand guide.</p>
+
+            <div class="crosslink-grid">
+                <a href="geofencing-facebook-ads.html" class="crosslink-card">
+                    <div class="crosslink-label">Playbook</div>
+                    <div class="crosslink-title">Geofencing FB Ads</div>
+                    <div class="crosslink-desc">Tactical setup guide for location-based targeting, including step-by-step campaign structure and seasonal budget timing.</div>
+                </a>
+                <a href="facebook-ads-playbook.html" class="crosslink-card">
+                    <div class="crosslink-label">Playbook</div>
+                    <div class="crosslink-title">TYM to ROLL FB Ads</div>
+                    <div class="crosslink-desc">The original carousel concept using Hook &rarr; Problem &rarr; Solution &rarr; Proof &rarr; CTA storytelling framework, plus geofencing ad samples.</div>
+                </a>
+                <a href="fb-ads-landing-page.html" class="crosslink-card">
+                    <div class="crosslink-label">Landing Page</div>
+                    <div class="crosslink-title">FB Ads Landing Page</div>
+                    <div class="crosslink-desc">Campaign-ready landing page with quote form for Facebook ad traffic.</div>
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <p>JJ Riggs <span>&bull;</span> Facebook Ads Strategy <span>&bull;</span> Q2 2026</p>
+    </footer>
+
+</body>
+</html>
