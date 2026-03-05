@@ -700,23 +700,25 @@ async function render() {
     }
 
     if (activeOverlays.has('noise')) {
-        const imageData = ctx.getImageData(0, 0, w, h);
-        const d = imageData.data;
-        for (let i = 0; i < d.length; i += 8) {
-            const noise = (Math.random() - 0.5) * 60;
-            d[i] += noise;
-            d[i + 1] += noise;
-            d[i + 2] += noise;
-        }
-        ctx.putImageData(imageData, 0, 0);
+        try {
+            const imageData = ctx.getImageData(0, 0, w, h);
+            const d = imageData.data;
+            for (let i = 0; i < d.length; i += 8) {
+                const noise = (Math.random() - 0.5) * 60;
+                d[i] += noise;
+                d[i + 1] += noise;
+                d[i + 2] += noise;
+            }
+            ctx.putImageData(imageData, 0, 0);
+        } catch (e) { /* tainted canvas */ }
     }
 
     if (activeOverlays.has('halftone')) {
-        drawHalftone(w, h);
+        try { drawHalftone(w, h); } catch (e) { /* tainted canvas */ }
     }
 
     if (activeOverlays.has('rgb')) {
-        applyRGBSplit(w, h);
+        try { applyRGBSplit(w, h); } catch (e) { /* tainted canvas */ }
     }
 
     // Draw meme text
@@ -765,27 +767,38 @@ async function applyFry(w, h) {
 
 function applyFilters(w, h, sat, con, jpeg) {
     return new Promise(resolve => {
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = w;
-        tempCanvas.height = h;
-        const tCtx = tempCanvas.getContext('2d');
-        tCtx.filter = `saturate(${sat}%) contrast(${con}%)`;
-        tCtx.drawImage(canvas, 0, 0);
+        try {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = w;
+            tempCanvas.height = h;
+            const tCtx = tempCanvas.getContext('2d');
+            tCtx.filter = `saturate(${sat}%) contrast(${con}%)`;
+            tCtx.drawImage(canvas, 0, 0);
 
-        if (jpeg < 100) {
-            const jpegUrl = tempCanvas.toDataURL('image/jpeg', jpeg / 100);
-            const jpegImg = new Image();
-            jpegImg.onload = () => {
-                ctx.drawImage(jpegImg, 0, 0, w, h);
-                resolve();
-            };
-            jpegImg.onerror = () => {
+            if (jpeg < 100) {
+                try {
+                    const jpegUrl = tempCanvas.toDataURL('image/jpeg', jpeg / 100);
+                    const jpegImg = new Image();
+                    jpegImg.onload = () => {
+                        ctx.drawImage(jpegImg, 0, 0, w, h);
+                        resolve();
+                    };
+                    jpegImg.onerror = () => {
+                        ctx.drawImage(tempCanvas, 0, 0);
+                        resolve();
+                    };
+                    jpegImg.src = jpegUrl;
+                } catch (e) {
+                    // Canvas tainted — JPEG crunch unavailable, use CSS-filtered version
+                    ctx.drawImage(tempCanvas, 0, 0);
+                    resolve();
+                }
+            } else {
                 ctx.drawImage(tempCanvas, 0, 0);
                 resolve();
-            };
-            jpegImg.src = jpegUrl;
-        } else {
-            ctx.drawImage(tempCanvas, 0, 0);
+            }
+        } catch (e) {
+            // Filters unavailable on tainted canvas
             resolve();
         }
     });
@@ -926,7 +939,7 @@ function drawEmojiRain(w, h) {
     ctx.textAlign = 'center';
     ctx.globalAlpha = 0.7;
     // Seed a consistent set of random positions
-    const seed = (topText + bottomText).length;
+    const seed = (document.getElementById('topText').value + document.getElementById('bottomText').value).length;
     for (let i = 0; i < 15; i++) {
         const pseudoRand = ((seed * 17 + i * 31) % 100) / 100;
         const pseudoRand2 = ((seed * 13 + i * 47) % 100) / 100;
@@ -1049,7 +1062,8 @@ async function downloadMeme() {
         link.click();
         document.body.removeChild(link);
     } catch (e) {
-        alert('Download failed — try using an uploaded image instead of a URL image, or right-click the canvas and "Save Image As".');
+        // Canvas tainted by cross-origin images — offer right-click workaround
+        alert('Download blocked by browser security (cross-origin image). Right-click the canvas and choose "Save Image As", or upload your own photo to enable direct download.');
     }
 }
 
