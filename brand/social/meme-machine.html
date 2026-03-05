@@ -487,8 +487,9 @@
 
         <!-- BOTTOM BAR -->
         <div class="bottom-bar">
+            <button class="btn btn-red" onclick="render()" style="width:100%">👁 Preview</button>
             <div class="btn-row">
-                <button class="btn btn-red" onclick="randomize()">🎲 Randomize</button>
+                <button class="btn btn-dark" onclick="randomize()">🎲 Randomize</button>
                 <button class="btn btn-dark" onclick="downloadMeme()">⬇ Download PNG</button>
             </div>
         </div>
@@ -641,7 +642,10 @@ function getBaseImage() {
     return loadedImages[selectedImageIdx] || null;
 }
 
-function render() {
+let renderGeneration = 0;
+
+async function render() {
+    const gen = ++renderGeneration;
     const fmt = FORMATS[currentFormat];
     const w = fmt.w;
     const h = fmt.h;
@@ -670,8 +674,9 @@ function render() {
         ctx.drawImage(img, dx, dy, dw, dh);
     }
 
-    // Apply deep fry filter
-    applyFry(w, h);
+    // Apply deep fry filter (async — waits for JPEG crunch)
+    await applyFry(w, h);
+    if (gen !== renderGeneration) return; // Stale render, abort
 
     // Apply overlays
     if (activeOverlays.has('redtint')) {
@@ -727,52 +732,63 @@ function render() {
     }
 }
 
-function applyFry(w, h) {
-    if (currentFry === 'none') return;
+async function applyFry(w, h) {
+    const sat = parseInt(document.getElementById('saturation').value);
+    const con = parseInt(document.getElementById('contrast').value);
+    const jpeg = parseInt(document.getElementById('jpegQuality').value);
 
-    const levels = {
-        light:   { sat: 180, con: 140, jpeg: 60 },
-        medium:  { sat: 280, con: 200, jpeg: 30 },
-        deep:    { sat: 400, con: 300, jpeg: 12 },
-        nuclear: { sat: 500, con: 400, jpeg: 3 },
-    };
+    if (currentFry !== 'none') {
+        const levels = {
+            light:   { sat: 180, con: 140, jpeg: 60 },
+            medium:  { sat: 280, con: 200, jpeg: 30 },
+            deep:    { sat: 400, con: 300, jpeg: 12 },
+            nuclear: { sat: 500, con: 400, jpeg: 3 },
+        };
+        const level = levels[currentFry];
+        if (level) {
+            document.getElementById('saturation').value = level.sat;
+            document.getElementById('satVal').textContent = level.sat + '%';
+            document.getElementById('contrast').value = level.con;
+            document.getElementById('conVal').textContent = level.con + '%';
+            document.getElementById('jpegQuality').value = level.jpeg;
+            document.getElementById('jpegVal').textContent = level.jpeg + '%';
+            await applyFilters(w, h, level.sat, level.con, level.jpeg);
+            return;
+        }
+    }
 
-    const level = levels[currentFry];
-    if (!level) return;
-
-    // Update sliders to match
-    document.getElementById('saturation').value = level.sat;
-    document.getElementById('satVal').textContent = level.sat + '%';
-    document.getElementById('contrast').value = level.con;
-    document.getElementById('conVal').textContent = level.con + '%';
-    document.getElementById('jpegQuality').value = level.jpeg;
-    document.getElementById('jpegVal').textContent = level.jpeg + '%';
-
-    applyFilters(w, h, level.sat, level.con, level.jpeg);
+    // Manual slider mode — apply if any slider is not at default
+    if (sat !== 100 || con !== 100 || jpeg !== 100) {
+        await applyFilters(w, h, sat, con, jpeg);
+    }
 }
 
 function applyFilters(w, h, sat, con, jpeg) {
-    // Apply saturation & contrast via a temp canvas with CSS filter
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = w;
-    tempCanvas.height = h;
-    const tCtx = tempCanvas.getContext('2d');
-    tCtx.filter = `saturate(${sat}%) contrast(${con}%)`;
-    tCtx.drawImage(canvas, 0, 0);
+    return new Promise(resolve => {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = w;
+        tempCanvas.height = h;
+        const tCtx = tempCanvas.getContext('2d');
+        tCtx.filter = `saturate(${sat}%) contrast(${con}%)`;
+        tCtx.drawImage(canvas, 0, 0);
 
-    // JPEG crunch: export to jpeg at low quality and re-import
-    if (jpeg < 100) {
-        const jpegUrl = tempCanvas.toDataURL('image/jpeg', jpeg / 100);
-        const jpegImg = new Image();
-        jpegImg.onload = () => {
-            ctx.drawImage(jpegImg, 0, 0, w, h);
-        };
-        jpegImg.src = jpegUrl;
-        // Synchronous fallback: just draw the filtered version
-        ctx.drawImage(tempCanvas, 0, 0);
-    } else {
-        ctx.drawImage(tempCanvas, 0, 0);
-    }
+        if (jpeg < 100) {
+            const jpegUrl = tempCanvas.toDataURL('image/jpeg', jpeg / 100);
+            const jpegImg = new Image();
+            jpegImg.onload = () => {
+                ctx.drawImage(jpegImg, 0, 0, w, h);
+                resolve();
+            };
+            jpegImg.onerror = () => {
+                ctx.drawImage(tempCanvas, 0, 0);
+                resolve();
+            };
+            jpegImg.src = jpegUrl;
+        } else {
+            ctx.drawImage(tempCanvas, 0, 0);
+            resolve();
+        }
+    });
 }
 
 function drawHalftone(w, h) {
@@ -1020,24 +1036,21 @@ function randomize() {
     render();
 }
 
-function downloadMeme() {
-    // Re-render at full quality first
-    render();
+async function downloadMeme() {
+    // Re-render at full quality first and wait for it to complete
+    await render();
 
-    setTimeout(() => {
-        try {
-            const link = document.createElement('a');
-            const fmt = currentFormat;
-            link.download = `jjriggs-meme-${fmt}-${Date.now()}.png`;
-            link.href = canvas.toDataURL('image/png');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        } catch (e) {
-            // Canvas tainted — use jpeg fallback from a re-render
-            alert('Download failed — try using an uploaded image instead of a URL image, or right-click the canvas and "Save Image As".');
-        }
-    }, 100);
+    try {
+        const link = document.createElement('a');
+        const fmt = currentFormat;
+        link.download = `jjriggs-meme-${fmt}-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (e) {
+        alert('Download failed — try using an uploaded image instead of a URL image, or right-click the canvas and "Save Image As".');
+    }
 }
 
 // ----- INIT -----
