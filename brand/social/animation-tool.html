@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJ Riggs — Ad Animation Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --red: #b61b22;
+            --black: #0a0a0a;
+            --navy: #273647;
+            --silver: #c0c0c0;
+            --dark-bg: #111;
+            --panel-bg: #141414;
+            --border: #2a2a2a;
+            --text: #ccc;
+            --text-dim: #666;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ===== CONTROLS PANEL ===== */
+        .panel {
+            width: 340px;
+            min-width: 340px;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-header img {
+            height: 24px;
+        }
+
+        .panel-header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.05em;
+        }
+
+        .panel-header span {
+            font-size: 10px;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .section {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s;
+        }
+
+        .section-header:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .section-header h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .section-header .arrow {
+            font-size: 10px;
+            color: var(--text-dim);
+            transition: transform 0.2s;
+        }
+
+        .section.collapsed .arrow {
+            transform: rotate(-90deg);
+        }
+
+        .section.collapsed .section-body {
+            display: none;
+        }
+
+        .section-body {
+            padding: 0 20px 16px;
+        }
+
+        /* Form Controls */
+        label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+            margin-top: 10px;
+        }
+
+        label:first-child {
+            margin-top: 0;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--red);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 50px;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .toggle-group {
+            display: flex;
+            gap: 0;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: #1a1a1a;
+            color: var(--text-dim);
+            border: none;
+            cursor: pointer;
+            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .toggle-btn.active {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .toggle-btn:not(:last-child) {
+            border-right: 1px solid var(--border);
+        }
+
+        /* Scene List */
+        .scene-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+        }
+
+        .scene-item input[type="checkbox"] {
+            accent-color: var(--red);
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+
+        .scene-item .scene-name {
+            flex: 1;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .scene-item .scene-dur {
+            width: 50px;
+            text-align: right;
+        }
+
+        /* BG Color Picker */
+        .bg-swatches {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .bg-swatch {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.15s;
+        }
+
+        .bg-swatch.active {
+            border-color: #fff;
+        }
+
+        .bg-swatch.black { background: #0a0a0a; border-color: #333; }
+        .bg-swatch.black.active { border-color: #fff; }
+        .bg-swatch.red { background: #b61b22; }
+        .bg-swatch.silver { background: #c0c0c0; }
+
+        /* Playback Controls */
+        .playback-bar {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .playback-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .btn-play {
+            flex: 1;
+            background: var(--red);
+            color: #fff;
+        }
+
+        .btn-play:hover { background: #d4222a; }
+        .btn-play:disabled { opacity: 0.5; cursor: default; }
+
+        .btn-secondary {
+            background: #222;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover { background: #2a2a2a; color: #fff; }
+
+        .btn-export {
+            width: 100%;
+            background: #222;
+            color: var(--text);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-export:hover { border-color: var(--red); color: #fff; }
+
+        .btn-export.recording {
+            border-color: var(--red);
+            color: #fff;
+        }
+
+        .btn-export .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(182, 27, 34, 0.3);
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        .btn-export span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .scene-indicator {
+            font-size: 10px;
+            color: var(--text-dim);
+            text-align: center;
+        }
+
+        /* ===== CANVAS VIEWPORT ===== */
+        .viewport {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #080808;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .viewport canvas {
+            box-shadow: 0 0 60px rgba(0,0,0,0.8);
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .format-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 10px;
+            color: var(--text-dim);
+            background: rgba(20,20,20,0.8);
+            padding: 4px 10px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        /* Custom image URL list */
+        .img-url-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .img-url-row {
+            display: flex;
+            gap: 4px;
+        }
+
+        .img-url-row input {
+            flex: 1;
+        }
+
+        .img-url-row button {
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .thumb-row {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .thumb-row img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            background: #1a1a1a;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 1000;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .loading-overlay .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--red);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <div>Loading assets...</div>
+</div>
+
+<div class="app">
+    <!-- CONTROLS PANEL -->
+    <div class="panel">
+        <div class="panel-header">
+            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs">
+            <div>
+                <h1>AD ANIMATION BUILDER</h1>
+                <span>Facebook Reels &amp; HD</span>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <!-- FORMAT -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Format</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" onclick="setFormat('reels', this)">9:16 Reels</button>
+                        <button class="toggle-btn" onclick="setFormat('hd', this)">16:9 HD</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCENES -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Scenes</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body" id="sceneList"></div>
+            </div>
+
+            <!-- SCENE 2: BIG NUMBER -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Big Number (Scene 2)</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label>Main Number</label>
+                    <input type="text" id="bigNumber" value="$0" oninput="updateSceneText()">
+                    <label>Subtitle</label>
+                    <input type="text" id="bigNumberSub" value="DOWN" oninput="updateSceneText()">
+                </div>
+            </div>
+
+            <!-- SCENE 3: SALES MESSAGE -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Sales Message (Scene 3)</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label>Line 1</label>
+                    <input type="text" id="salesLine1" value="NO PAYMENTS" oninput="updateSceneText()">
+                    <label>Line 2</label>
+                    <input type="text" id="salesLine2" value="FOR 90 DAYS" oninput="updateSceneText()">
+                    <label>Line 3</label>
+                    <input type="text" id="salesLine3" value="ON SELECT MODELS" oninput="updateSceneText()">
+                    <label>Background</label>
+                    <div class="bg-swatches">
+                        <div class="bg-swatch black active" onclick="setSalesBg('black', this)" title="Black"></div>
+                        <div class="bg-swatch red" onclick="setSalesBg('red', this)" title="Red"></div>
+                        <div class="bg-swatch silver" onclick="setSalesBg('silver', this)" title="Silver"></div>
+                    </div>
+                    <label>Animation Style</label>
+                    <select id="salesAnim" onchange="updateSceneText()">
+                        <option value="snap">Snap</option>
+                        <option value="fade">Fade</option>
+                        <option value="pulse">Pulse</option>
+                        <option value="slam">Slam</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- SCENE 5: SPLIT IMPACT -->
+            <div class="section collapsed">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Split Impact (Scene 5)</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label>Headline</label>
+                    <input type="text" id="splitHeadline" value="BUILT TO WORK" oninput="updateSceneText()">
+                    <label>Subtext</label>
+                    <input type="text" id="splitSubtext" value="AS HARD AS YOU DO" oninput="updateSceneText()">
+                </div>
+            </div>
+
+            <!-- SCENE 6: COUNTDOWN -->
+            <div class="section collapsed">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Countdown (Scene 6)</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label>Reveal Text</label>
+                    <input type="text" id="countdownReveal" value="SALE STARTS NOW" oninput="updateSceneText()">
+                </div>
+            </div>
+
+            <!-- SCENE 7: ZAG -->
+            <div class="section collapsed">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Brand ZAG (Scene 7)</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label>Statement (bold / contrarian)</label>
+                    <textarea id="zagText" rows="2" oninput="updateSceneText()">OTHER DEALERS SELL TRACTORS. WE BUILD PARTNERSHIPS.</textarea>
+                    <label>Highlight Words (comma separated)</label>
+                    <input type="text" id="zagHighlight" value="SELL,BUILD" oninput="updateSceneText()">
+                </div>
+            </div>
+
+            <!-- SCENE 8: CTA -->
+            <div class="section collapsed">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Call to Action (Scene 8)</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label>CTA Text</label>
+                    <input type="text" id="ctaText" value="SHOP NOW" oninput="updateSceneText()">
+                    <label>URL / Phone</label>
+                    <input type="text" id="ctaUrl" value="JJRiggsEquipment.com" oninput="updateSceneText()">
+                    <label>Tagline</label>
+                    <input type="text" id="ctaTagline" value="Your Local TYM Dealer" oninput="updateSceneText()">
+                </div>
+            </div>
+
+            <!-- TRACTOR IMAGES -->
+            <div class="section collapsed">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Tractor Images</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <div class="thumb-row" id="tractorThumbs"></div>
+                    <label>Add Custom Image URL</label>
+                    <div class="img-url-row">
+                        <input type="text" id="customImgUrl" placeholder="https://...">
+                        <button onclick="addCustomImage()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAYBACK -->
+        <div class="playback-bar">
+            <div class="scene-indicator" id="sceneIndicator">Ready</div>
+            <div class="playback-btns">
+                <button class="btn btn-play" id="btnPlay" onclick="togglePlay()">▶ Play</button>
+                <button class="btn btn-secondary" onclick="restartPlay()">↺</button>
+            </div>
+            <button class="btn btn-export" id="btnExport" onclick="exportVideo()">
+                <div class="progress-fill" id="exportProgress"></div>
+                <span id="exportLabel">⬇ Download .webm</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- CANVAS VIEWPORT -->
+    <div class="viewport">
+        <canvas id="canvas"></canvas>
+        <div class="format-badge" id="formatBadge">1080 × 1920 · 9:16</div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// JJ RIGGS AD ANIMATION BUILDER
+// Canvas-based scene system with WebM video export
+// ============================================================
+
+// ----- CONFIGURATION -----
+const BRAND = {
+    red: '#b61b22',
+    black: '#0a0a0a',
+    navy: '#273647',
+    silver: '#c0c0c0',
+    white: '#ffffff',
+    gray: '#888888',
+    darkGray: '#333333',
+};
+
+const FORMATS = {
+    reels: { w: 1080, h: 1920, label: '1080 × 1920 · 9:16' },
+    hd:    { w: 1920, h: 1080, label: '1920 × 1080 · 16:9' },
+};
+
+let currentFormat = 'reels';
+let salesBgColor = 'black';
+
+// ----- IMAGES -----
+const IMAGE_URLS = {
+    logo: 'https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png',
+    logoStd: 'https://jjriggsequipment.com/wp-content/uploads/2024/09/JJ-Riggs-Equipment-white-outline-logo-1024x310.png',
+    tymLogo: 'https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png',
+    tractors: [
+        'https://jjriggsequipment.com/wp-content/uploads/2026/01/3025-1.png',
+        'https://jjriggsequipment.com/wp-content/uploads/2026/01/t5075_features-image-shadow_optimized_v2.png',
+        'https://jjriggsequipment.com/wp-content/uploads/2026/01/4058-tym-2515_3015_3515_4215_4815_frontleft_optimized.png',
+        'https://jjriggsequipment.com/wp-content/uploads/2026/01/t3025_composition2_image_optimized.png',
+    ],
+};
+
+const images = {};
+let tractorImages = [];
+
+async function loadImages() {
+    const load = (key, url) => new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => { images[key] = img; resolve(); };
+        img.onerror = () => { images[key] = null; resolve(); };
+        img.src = url;
+    });
+
+    const loadTractor = (url, idx) => new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => { tractorImages[idx] = img; resolve(); };
+        img.onerror = () => { tractorImages[idx] = null; resolve(); };
+        img.src = url;
+    });
+
+    await Promise.all([
+        load('logo', IMAGE_URLS.logo),
+        load('logoStd', IMAGE_URLS.logoStd),
+        load('tymLogo', IMAGE_URLS.tymLogo),
+        ...IMAGE_URLS.tractors.map((url, i) => loadTractor(url, i)),
+    ]);
+
+    renderTractorThumbs();
+}
+
+function renderTractorThumbs() {
+    const el = document.getElementById('tractorThumbs');
+    el.innerHTML = '';
+    const allUrls = [...IMAGE_URLS.tractors];
+    tractorImages.forEach((img, i) => {
+        if (!img) return;
+        const thumb = document.createElement('img');
+        thumb.src = img.src;
+        thumb.alt = 'Tractor ' + (i + 1);
+        el.appendChild(thumb);
+    });
+}
+
+function addCustomImage() {
+    const input = document.getElementById('customImgUrl');
+    const url = input.value.trim();
+    if (!url) return;
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+        tractorImages.push(img);
+        renderTractorThumbs();
+    };
+    img.src = url;
+    input.value = '';
+}
+
+// ----- EASING FUNCTIONS -----
+function easeOutExpo(t) {
+    return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
+}
+
+function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function easeOutBack(t) {
+    const c1 = 1.70158;
+    const c3 = c1 + 1;
+    return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+}
+
+function spring(t) {
+    return 1 - Math.cos(t * Math.PI * 2.5) * Math.exp(-6 * t);
+}
+
+function clamp(v, min, max) {
+    return Math.max(min, Math.min(max, v));
+}
+
+// ----- CANVAS SETUP -----
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+    const fmt = FORMATS[currentFormat];
+    canvas.width = fmt.w;
+    canvas.height = fmt.h;
+    document.getElementById('formatBadge').textContent = fmt.label;
+    // Scale canvas display for viewport fitting
+    const viewport = document.querySelector('.viewport');
+    const maxW = viewport.clientWidth * 0.85;
+    const maxH = viewport.clientHeight * 0.9;
+    const scale = Math.min(maxW / fmt.w, maxH / fmt.h);
+    canvas.style.width = (fmt.w * scale) + 'px';
+    canvas.style.height = (fmt.h * scale) + 'px';
+}
+
+// ----- SCENE DEFINITIONS -----
+const SCENE_DEFS = [
+    { id: 'logo',      name: 'Logo Intro',       dur: 2.0,  enabled: true },
+    { id: 'bignum',    name: 'Big Number SLAM',   dur: 2.5,  enabled: true },
+    { id: 'sales',     name: 'Sales Message',     dur: 3.0,  enabled: true },
+    { id: 'tractors',  name: 'Tractor Parade',    dur: 3.0,  enabled: true },
+    { id: 'split',     name: 'Split Impact',      dur: 2.0,  enabled: true },
+    { id: 'countdown', name: 'Countdown Reveal',  dur: 2.5,  enabled: true },
+    { id: 'zag',       name: 'Brand ZAG',         dur: 2.5,  enabled: true },
+    { id: 'cta',       name: 'Call to Action',     dur: 2.5,  enabled: true },
+];
+
+function buildSceneList() {
+    const el = document.getElementById('sceneList');
+    el.innerHTML = '';
+    SCENE_DEFS.forEach((s, i) => {
+        const item = document.createElement('div');
+        item.className = 'scene-item';
+        item.innerHTML = `
+            <input type="checkbox" ${s.enabled ? 'checked' : ''} onchange="SCENE_DEFS[${i}].enabled=this.checked">
+            <span class="scene-name">${i + 1}. ${s.name}</span>
+            <input type="number" class="scene-dur" value="${s.dur}" min="0.5" max="8" step="0.5"
+                   onchange="SCENE_DEFS[${i}].dur=parseFloat(this.value)" style="width:50px">
+            <span style="font-size:10px;color:var(--text-dim)">s</span>
+        `;
+        el.appendChild(item);
+    });
+}
+
+function getActiveScenes() {
+    return SCENE_DEFS.filter(s => s.enabled);
+}
+
+// ----- SCENE DRAW FUNCTIONS -----
+// Each receives (ctx, progress 0→1, canvas width, canvas height)
+
+function drawGrain(ctx, w, h, opacity) {
+    const imageData = ctx.getImageData(0, 0, w, h);
+    const d = imageData.data;
+    for (let i = 0; i < d.length; i += 16) {
+        const noise = (Math.random() - 0.5) * opacity * 255;
+        d[i] += noise;
+        d[i + 1] += noise;
+        d[i + 2] += noise;
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
+function drawScene_logo(ctx, p, w, h) {
+    // Black BG
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, w, h);
+
+    // Subtle red glow
+    const glow = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w * 0.6);
+    glow.addColorStop(0, 'rgba(182, 27, 34, 0.08)');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, w, h);
+
+    // Logo scale in
+    const logo = images.logo;
+    if (logo) {
+        const scaleP = easeOutExpo(clamp(p / 0.6, 0, 1));
+        const logoW = w * 0.6;
+        const logoH = logoW * (logo.naturalHeight / logo.naturalWidth);
+        const s = scaleP;
+        ctx.save();
+        ctx.globalAlpha = clamp(p / 0.3, 0, 1);
+        ctx.translate(w/2, h/2 - logoH * 0.2);
+        ctx.scale(s, s);
+        ctx.drawImage(logo, -logoW/2, -logoH/2, logoW, logoH);
+        ctx.restore();
+    }
+
+    // Red underline wipe
+    const lineP = clamp((p - 0.4) / 0.3, 0, 1);
+    if (lineP > 0) {
+        const lineW = w * 0.4 * easeOutExpo(lineP);
+        ctx.fillStyle = BRAND.red;
+        ctx.fillRect(w/2 - lineW/2, h/2 + 60, lineW, 4);
+    }
+
+    // Tagline fade in
+    const tagP = clamp((p - 0.65) / 0.35, 0, 1);
+    if (tagP > 0) {
+        ctx.globalAlpha = easeInOutCubic(tagP);
+        ctx.fillStyle = BRAND.gray;
+        ctx.font = `${Math.round(w * 0.022)}px 'Inter', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('YOUR LOCAL TYM DEALER', w/2, h/2 + 110);
+        ctx.globalAlpha = 1;
+    }
+}
+
+function drawScene_bignum(ctx, p, w, h) {
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, w, h);
+
+    const numText = document.getElementById('bigNumber').value || '$0';
+    const subText = document.getElementById('bigNumberSub').value || 'DOWN';
+
+    // Screen shake
+    const shakeP = clamp(p / 0.15, 0, 1);
+    const shakeAmt = (1 - shakeP) * 20;
+    const sx = Math.sin(p * 80) * shakeAmt;
+    const sy = Math.cos(p * 60) * shakeAmt;
+
+    ctx.save();
+    ctx.translate(sx, sy);
+
+    // Number slams in from above
+    const numP = spring(clamp(p / 0.4, 0, 1));
+    const fontSize = w * 0.55;
+    const yStart = -fontSize;
+    const yEnd = h * 0.45;
+    const yPos = yStart + (yEnd - yStart) * numP;
+
+    ctx.font = `800 ${Math.round(fontSize)}px 'Oswald', sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = BRAND.white;
+    ctx.globalAlpha = clamp(p / 0.1, 0, 1);
+    ctx.fillText(numText, w/2, yPos);
+
+    // Red accent line pulses
+    const lineP = clamp((p - 0.3) / 0.2, 0, 1);
+    if (lineP > 0) {
+        const pulse = 1 + Math.sin(p * 12) * 0.1;
+        const lw = w * 0.3 * easeOutExpo(lineP) * pulse;
+        ctx.fillStyle = BRAND.red;
+        ctx.fillRect(w/2 - lw/2, yPos + 20, lw, 6);
+    }
+
+    // Subtitle
+    const subP = clamp((p - 0.45) / 0.2, 0, 1);
+    if (subP > 0) {
+        ctx.globalAlpha = easeInOutCubic(subP);
+        ctx.font = `700 ${Math.round(w * 0.1)}px 'Oswald', sans-serif`;
+        ctx.fillStyle = BRAND.white;
+        ctx.fillText(subText, w/2, yPos + 80 + w * 0.05);
+    }
+
+    ctx.restore();
+    ctx.globalAlpha = 1;
+}
+
+function drawScene_sales(ctx, p, w, h) {
+    // Background
+    const bgColors = {
+        black: BRAND.black,
+        red: BRAND.red,
+        silver: BRAND.silver,
+    };
+    ctx.fillStyle = bgColors[salesBgColor] || BRAND.black;
+    ctx.fillRect(0, 0, w, h);
+
+    const textColor = salesBgColor === 'silver' ? BRAND.black : BRAND.white;
+    const lines = [
+        document.getElementById('salesLine1').value || 'NO PAYMENTS',
+        document.getElementById('salesLine2').value || 'FOR 90 DAYS',
+        document.getElementById('salesLine3').value || 'ON SELECT MODELS',
+    ];
+
+    const animStyle = document.getElementById('salesAnim').value;
+    const fontSize = w * 0.12;
+    const lineHeight = fontSize * 1.3;
+    const startY = h/2 - (lines.length * lineHeight) / 2 + lineHeight / 2;
+
+    ctx.textAlign = 'center';
+    ctx.font = `700 ${Math.round(fontSize)}px 'Oswald', sans-serif`;
+
+    lines.forEach((line, i) => {
+        const lineStart = i * 0.2;
+        const lineP = clamp((p - lineStart) / 0.15, 0, 1);
+        const y = startY + i * lineHeight;
+
+        ctx.save();
+
+        if (animStyle === 'snap') {
+            ctx.globalAlpha = lineP >= 0.5 ? 1 : 0;
+            ctx.fillStyle = textColor;
+            ctx.fillText(line, w/2, y);
+        } else if (animStyle === 'fade') {
+            ctx.globalAlpha = easeInOutCubic(lineP);
+            ctx.fillStyle = textColor;
+            ctx.fillText(line, w/2, y);
+        } else if (animStyle === 'pulse') {
+            ctx.globalAlpha = lineP >= 0.3 ? 1 : 0;
+            if (ctx.globalAlpha > 0) {
+                const pulse = 1 + Math.sin((p - lineStart) * 10) * 0.03;
+                ctx.translate(w/2, y);
+                ctx.scale(pulse, pulse);
+                ctx.fillStyle = textColor;
+                ctx.fillText(line, 0, 0);
+            }
+        } else if (animStyle === 'slam') {
+            const slamP = easeOutBack(lineP);
+            const scale = 0.3 + 0.7 * slamP;
+            ctx.globalAlpha = clamp(lineP / 0.3, 0, 1);
+            ctx.translate(w/2, y);
+            ctx.scale(scale, scale);
+            ctx.fillStyle = textColor;
+            ctx.fillText(line, 0, 0);
+        }
+
+        ctx.restore();
+    });
+
+    // Corner accents
+    if (p > 0.6) {
+        const ap = easeOutExpo(clamp((p - 0.6) / 0.2, 0, 1));
+        const accentColor = salesBgColor === 'red' ? BRAND.white : BRAND.red;
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 4;
+        const cs = w * 0.08 * ap;
+        // Top-left
+        ctx.beginPath(); ctx.moveTo(40, 40 + cs); ctx.lineTo(40, 40); ctx.lineTo(40 + cs, 40); ctx.stroke();
+        // Bottom-right
+        ctx.beginPath(); ctx.moveTo(w - 40, h - 40 - cs); ctx.lineTo(w - 40, h - 40); ctx.lineTo(w - 40 - cs, h - 40); ctx.stroke();
+    }
+
+    ctx.globalAlpha = 1;
+}
+
+function drawScene_tractors(ctx, p, w, h) {
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, w, h);
+
+    const validTractors = tractorImages.filter(Boolean);
+    if (validTractors.length === 0) {
+        ctx.fillStyle = BRAND.gray;
+        ctx.font = `${Math.round(w * 0.04)}px 'Inter', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('No tractor images loaded', w/2, h/2);
+        return;
+    }
+
+    // Red gradient strip at top and bottom
+    const stripH = h * 0.04;
+    ctx.fillStyle = BRAND.red;
+    ctx.fillRect(0, 0, w, stripH);
+    ctx.fillRect(0, h - stripH, w, stripH);
+
+    // Two rows of tractors scrolling in opposite directions
+    const imgSize = Math.min(w * 0.4, h * 0.25);
+    const row1Y = h * 0.25 - imgSize / 2;
+    const row2Y = h * 0.7 - imgSize / 2;
+    const speed1 = w * 2;
+    const speed2 = w * 1.6;
+
+    // Row 1: left to right
+    const totalW1 = validTractors.length * (imgSize + 40);
+    for (let rep = -1; rep <= Math.ceil(w / totalW1) + 1; rep++) {
+        validTractors.forEach((img, i) => {
+            const x = rep * totalW1 + i * (imgSize + 40) - (p * speed1) % totalW1;
+            ctx.globalAlpha = 0.9;
+            ctx.drawImage(img, x, row1Y, imgSize, imgSize * (img.naturalHeight / img.naturalWidth));
+        });
+    }
+
+    // Row 2: right to left
+    const totalW2 = validTractors.length * (imgSize + 40);
+    for (let rep = -1; rep <= Math.ceil(w / totalW2) + 1; rep++) {
+        validTractors.forEach((img, i) => {
+            const x = w - (rep * totalW2 + i * (imgSize + 40)) + (p * speed2) % totalW2 - imgSize;
+            ctx.globalAlpha = 0.9;
+            ctx.drawImage(img, x, row2Y, imgSize, imgSize * (img.naturalHeight / img.naturalWidth));
+        });
+    }
+
+    ctx.globalAlpha = 1;
+
+    // TYM Logo overlay
+    const tymLogo = images.tymLogo;
+    if (tymLogo) {
+        const fadeIn = easeInOutCubic(clamp(p / 0.3, 0, 1));
+        ctx.globalAlpha = fadeIn * 0.7;
+        const tw = w * 0.2;
+        const th = tw * (tymLogo.naturalHeight / tymLogo.naturalWidth);
+        ctx.drawImage(tymLogo, w/2 - tw/2, h/2 - th/2, tw, th);
+        ctx.globalAlpha = 1;
+    }
+}
+
+function drawScene_split(ctx, p, w, h) {
+    const headline = document.getElementById('splitHeadline').value || 'BUILT TO WORK';
+    const subtext = document.getElementById('splitSubtext').value || 'AS HARD AS YOU DO';
+
+    // Diagonal split wipe
+    const wipeP = easeOutExpo(clamp(p / 0.4, 0, 1));
+    const diagOffset = w * 0.15;
+
+    // Bottom half: dark with tractor image
+    ctx.fillStyle = BRAND.navy;
+    ctx.fillRect(0, 0, w, h);
+
+    const tractorImg = tractorImages.find(Boolean);
+    if (tractorImg) {
+        const imgAspect = tractorImg.naturalWidth / tractorImg.naturalHeight;
+        let iw = w * 0.9;
+        let ih = iw / imgAspect;
+        if (ih < h * 0.5) { ih = h * 0.5; iw = ih * imgAspect; }
+        const fadeP = easeInOutCubic(clamp((p - 0.2) / 0.4, 0, 1));
+        ctx.globalAlpha = fadeP * 0.4;
+        ctx.drawImage(tractorImg, w/2 - iw/2, h * 0.5 - ih * 0.3, iw, ih);
+        ctx.globalAlpha = 1;
+    }
+
+    // Top half: red
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(w, 0);
+    ctx.lineTo(w, h * 0.5 * wipeP - diagOffset);
+    ctx.lineTo(0, h * 0.5 * wipeP + diagOffset);
+    ctx.closePath();
+    ctx.clip();
+    ctx.fillStyle = BRAND.red;
+    ctx.fillRect(0, 0, w, h);
+
+    // Text slams in from left
+    const textP = easeOutExpo(clamp((p - 0.2) / 0.3, 0, 1));
+    const xOffset = -w * 0.5 * (1 - textP);
+    ctx.fillStyle = BRAND.white;
+    ctx.font = `800 ${Math.round(w * 0.12)}px 'Oswald', sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.fillText(headline, w * 0.08 + xOffset, h * 0.2);
+    ctx.font = `600 ${Math.round(w * 0.06)}px 'Oswald', sans-serif`;
+    ctx.globalAlpha = clamp((p - 0.4) / 0.2, 0, 1);
+    ctx.fillText(subtext, w * 0.08 + xOffset * 0.5, h * 0.2 + w * 0.1);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+
+    // Diagonal line accent
+    ctx.strokeStyle = BRAND.white;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.5 * wipeP + diagOffset);
+    ctx.lineTo(w, h * 0.5 * wipeP - diagOffset);
+    ctx.stroke();
+}
+
+function drawScene_countdown(ctx, p, w, h) {
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, w, h);
+
+    const revealText = document.getElementById('countdownReveal').value || 'SALE STARTS NOW';
+    const numbers = [3, 2, 1];
+    const numDuration = 0.2; // each number takes 20% of total time
+    const revealStart = numDuration * numbers.length;
+
+    // Draw countdown numbers
+    for (let i = 0; i < numbers.length; i++) {
+        const start = i * numDuration;
+        const end = start + numDuration;
+        if (p >= start && p < end) {
+            const localP = (p - start) / numDuration;
+            const scale = 0.5 + easeOutExpo(localP) * 2;
+            const fade = localP < 0.7 ? 1 : 1 - (localP - 0.7) / 0.3;
+
+            ctx.save();
+            ctx.globalAlpha = fade;
+            ctx.translate(w/2, h/2);
+            ctx.scale(scale, scale);
+            ctx.font = `800 ${Math.round(w * 0.4)}px 'Oswald', sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = BRAND.red;
+            ctx.fillText(numbers[i], 0, 0);
+            ctx.restore();
+        }
+    }
+
+    // Flash effect
+    if (p >= revealStart && p < revealStart + 0.05) {
+        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        ctx.fillRect(0, 0, w, h);
+    }
+
+    // Reveal text
+    if (p >= revealStart + 0.05) {
+        const rp = (p - revealStart - 0.05) / (1 - revealStart - 0.05);
+        const scaleP = easeOutBack(clamp(rp / 0.5, 0, 1));
+
+        ctx.save();
+        ctx.translate(w/2, h/2);
+        ctx.scale(scaleP, scaleP);
+        ctx.font = `800 ${Math.round(w * 0.12)}px 'Oswald', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = BRAND.white;
+        ctx.fillText(revealText, 0, 0);
+        ctx.restore();
+
+        // Red burst lines
+        if (rp < 0.5) {
+            const burstP = rp / 0.5;
+            ctx.strokeStyle = BRAND.red;
+            ctx.lineWidth = 3;
+            ctx.globalAlpha = 1 - burstP;
+            for (let a = 0; a < 12; a++) {
+                const angle = (a / 12) * Math.PI * 2;
+                const r1 = w * 0.15 + burstP * w * 0.2;
+                const r2 = r1 + w * 0.1;
+                ctx.beginPath();
+                ctx.moveTo(w/2 + Math.cos(angle) * r1, h/2 + Math.sin(angle) * r1);
+                ctx.lineTo(w/2 + Math.cos(angle) * r2, h/2 + Math.sin(angle) * r2);
+                ctx.stroke();
+            }
+            ctx.globalAlpha = 1;
+        }
+    }
+}
+
+function drawScene_zag(ctx, p, w, h) {
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, w, h);
+
+    // Grid pattern
+    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+    ctx.lineWidth = 1;
+    const gridSize = w * 0.06;
+    for (let x = 0; x < w; x += gridSize) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+    }
+    for (let y = 0; y < h; y += gridSize) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+    }
+
+    const text = (document.getElementById('zagText').value || 'OTHER DEALERS SELL TRACTORS. WE BUILD PARTNERSHIPS.').toUpperCase();
+    const highlights = (document.getElementById('zagHighlight').value || 'SELL,BUILD').toUpperCase().split(',').map(s => s.trim());
+    const words = text.split(/\s+/);
+
+    const fontSize = w * 0.08;
+    ctx.font = `800 ${Math.round(fontSize)}px 'Oswald', sans-serif`;
+    ctx.textAlign = 'center';
+
+    // Word-by-word stagger reveal
+    const maxWidth = w * 0.85;
+    // Break words into lines
+    const linesArr = [];
+    let currentLine = '';
+    words.forEach(word => {
+        const test = currentLine ? currentLine + ' ' + word : word;
+        if (ctx.measureText(test).width > maxWidth && currentLine) {
+            linesArr.push(currentLine);
+            currentLine = word;
+        } else {
+            currentLine = test;
+        }
+    });
+    if (currentLine) linesArr.push(currentLine);
+
+    const lineHeight = fontSize * 1.3;
+    const totalH = linesArr.length * lineHeight;
+    const startY = h/2 - totalH/2 + lineHeight/2;
+
+    let wordIdx = 0;
+    linesArr.forEach((line, lineIdx) => {
+        const lineWords = line.split(/\s+/);
+        // Measure to center the line
+        const lineWidth = ctx.measureText(line).width;
+        let xCursor = w/2 - lineWidth/2;
+
+        lineWords.forEach((word) => {
+            const delay = wordIdx * 0.06;
+            const wp = clamp((p - delay) / 0.12, 0, 1);
+            const isHighlight = highlights.some(h => word.includes(h));
+
+            ctx.save();
+            ctx.globalAlpha = easeOutExpo(wp);
+            const yOff = (1 - wp) * 30;
+
+            ctx.fillStyle = isHighlight ? BRAND.red : BRAND.white;
+            ctx.textAlign = 'left';
+            ctx.fillText(word, xCursor, startY + lineIdx * lineHeight + yOff);
+
+            // Highlight underline
+            if (isHighlight && wp > 0.8) {
+                const ulP = clamp((wp - 0.8) / 0.2, 0, 1);
+                const ww = ctx.measureText(word).width;
+                ctx.fillStyle = BRAND.red;
+                ctx.globalAlpha = 0.5;
+                ctx.fillRect(xCursor, startY + lineIdx * lineHeight + 8, ww * ulP, 3);
+            }
+
+            xCursor += ctx.measureText(word + ' ').width;
+            ctx.restore();
+            wordIdx++;
+        });
+    });
+
+    // Corner brackets
+    const bp = easeOutExpo(clamp((p - 0.5) / 0.3, 0, 1));
+    if (bp > 0) {
+        ctx.strokeStyle = BRAND.red;
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = bp * 0.6;
+        const cs = w * 0.06;
+        const margin = w * 0.06;
+        ctx.beginPath(); ctx.moveTo(margin, margin + cs); ctx.lineTo(margin, margin); ctx.lineTo(margin + cs, margin); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(w - margin, margin + cs); ctx.lineTo(w - margin, margin); ctx.lineTo(w - margin - cs, margin); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(margin, h - margin - cs); ctx.lineTo(margin, h - margin); ctx.lineTo(margin + cs, h - margin); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(w - margin, h - margin - cs); ctx.lineTo(w - margin, h - margin); ctx.lineTo(w - margin - cs, h - margin); ctx.stroke();
+        ctx.globalAlpha = 1;
+    }
+}
+
+function drawScene_cta(ctx, p, w, h) {
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, w, h);
+
+    const ctaText = document.getElementById('ctaText').value || 'SHOP NOW';
+    const ctaUrl = document.getElementById('ctaUrl').value || 'JJRiggsEquipment.com';
+    const ctaTagline = document.getElementById('ctaTagline').value || 'Your Local TYM Dealer';
+
+    const centerY = h * 0.45;
+
+    // Logo fade in + float up
+    const logo = images.logo;
+    if (logo) {
+        const lp = easeInOutCubic(clamp(p / 0.4, 0, 1));
+        const logoW = w * 0.45;
+        const logoH = logoW * (logo.naturalHeight / logo.naturalWidth);
+        ctx.globalAlpha = lp;
+        const yDrift = 20 * (1 - lp);
+        ctx.drawImage(logo, w/2 - logoW/2, centerY - logoH - 30 + yDrift, logoW, logoH);
+    }
+
+    // CTA button shape with pulse
+    const btnP = easeOutExpo(clamp((p - 0.3) / 0.3, 0, 1));
+    if (btnP > 0) {
+        const pulse = 1 + Math.sin(p * 8) * 0.02;
+        const btnW = w * 0.55;
+        const btnH = h * 0.06;
+        const btnX = w/2 - btnW/2;
+        const btnY = centerY + 20;
+
+        ctx.save();
+        ctx.translate(w/2, btnY + btnH/2);
+        ctx.scale(btnP * pulse, btnP * pulse);
+        ctx.translate(-w/2, -(btnY + btnH/2));
+
+        // Button background
+        ctx.fillStyle = BRAND.red;
+        ctx.beginPath();
+        const r = 6;
+        ctx.moveTo(btnX + r, btnY);
+        ctx.lineTo(btnX + btnW - r, btnY);
+        ctx.quadraticCurveTo(btnX + btnW, btnY, btnX + btnW, btnY + r);
+        ctx.lineTo(btnX + btnW, btnY + btnH - r);
+        ctx.quadraticCurveTo(btnX + btnW, btnY + btnH, btnX + btnW - r, btnY + btnH);
+        ctx.lineTo(btnX + r, btnY + btnH);
+        ctx.quadraticCurveTo(btnX, btnY + btnH, btnX, btnY + btnH - r);
+        ctx.lineTo(btnX, btnY + r);
+        ctx.quadraticCurveTo(btnX, btnY, btnX + r, btnY);
+        ctx.closePath();
+        ctx.fill();
+
+        // CTA text
+        ctx.fillStyle = BRAND.white;
+        ctx.font = `700 ${Math.round(w * 0.055)}px 'Oswald', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(ctaText, w/2, btnY + btnH/2);
+
+        ctx.restore();
+    }
+
+    // URL
+    const urlP = easeInOutCubic(clamp((p - 0.5) / 0.25, 0, 1));
+    if (urlP > 0) {
+        ctx.globalAlpha = urlP;
+        ctx.fillStyle = BRAND.white;
+        ctx.font = `600 ${Math.round(w * 0.04)}px 'Inter', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(ctaUrl, w/2, centerY + h * 0.12);
+    }
+
+    // Tagline
+    const tagP = easeInOutCubic(clamp((p - 0.6) / 0.25, 0, 1));
+    if (tagP > 0) {
+        ctx.globalAlpha = tagP;
+        ctx.fillStyle = BRAND.gray;
+        ctx.font = `400 ${Math.round(w * 0.028)}px 'Inter', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(ctaTagline, w/2, centerY + h * 0.17);
+    }
+
+    // Bottom red line
+    const lineP = easeOutExpo(clamp((p - 0.7) / 0.2, 0, 1));
+    if (lineP > 0) {
+        ctx.fillStyle = BRAND.red;
+        const lw = w * 0.3 * lineP;
+        ctx.fillRect(w/2 - lw/2, h - 80, lw, 3);
+    }
+
+    ctx.globalAlpha = 1;
+}
+
+const SCENE_RENDERERS = {
+    logo: drawScene_logo,
+    bignum: drawScene_bignum,
+    sales: drawScene_sales,
+    tractors: drawScene_tractors,
+    split: drawScene_split,
+    countdown: drawScene_countdown,
+    zag: drawScene_zag,
+    cta: drawScene_cta,
+};
+
+// ----- PLAYBACK ENGINE -----
+let isPlaying = false;
+let currentSceneIdx = 0;
+let sceneStartTime = 0;
+let rafId = null;
+
+function getEnabledScenes() {
+    return SCENE_DEFS.filter(s => s.enabled);
+}
+
+function updateIndicator(sceneName, sceneNum, total) {
+    document.getElementById('sceneIndicator').textContent =
+        `Scene ${sceneNum}/${total}: ${sceneName}`;
+}
+
+function startPlay() {
+    const scenes = getEnabledScenes();
+    if (scenes.length === 0) return;
+
+    isPlaying = true;
+    currentSceneIdx = 0;
+    sceneStartTime = performance.now();
+    document.getElementById('btnPlay').textContent = '⏸ Pause';
+    updateIndicator(scenes[0].name, 1, scenes.length);
+    tick();
+}
+
+function pausePlay() {
+    isPlaying = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    document.getElementById('btnPlay').textContent = '▶ Play';
+}
+
+function togglePlay() {
+    if (isPlaying) pausePlay();
+    else startPlay();
+}
+
+function restartPlay() {
+    pausePlay();
+    currentSceneIdx = 0;
+    sceneStartTime = 0;
+    const fmt = FORMATS[currentFormat];
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, fmt.w, fmt.h);
+    document.getElementById('sceneIndicator').textContent = 'Ready';
+}
+
+function tick() {
+    if (!isPlaying) return;
+
+    const scenes = getEnabledScenes();
+    if (currentSceneIdx >= scenes.length) {
+        // Loop or stop
+        if (isRecording) {
+            stopRecording();
+        }
+        pausePlay();
+        document.getElementById('sceneIndicator').textContent = 'Done — Click Play to restart';
+        return;
+    }
+
+    const scene = scenes[currentSceneIdx];
+    const now = performance.now();
+    const elapsed = (now - sceneStartTime) / 1000;
+    const progress = clamp(elapsed / scene.dur, 0, 1);
+
+    const fmt = FORMATS[currentFormat];
+    const renderer = SCENE_RENDERERS[scene.id];
+    if (renderer) {
+        ctx.save();
+        renderer(ctx, progress, fmt.w, fmt.h);
+        ctx.restore();
+    }
+
+    if (progress >= 1) {
+        currentSceneIdx++;
+        sceneStartTime = now;
+        if (currentSceneIdx < scenes.length) {
+            updateIndicator(scenes[currentSceneIdx].name, currentSceneIdx + 1, scenes.length);
+        }
+    }
+
+    // Update export progress if recording
+    if (isRecording) {
+        const totalDur = scenes.reduce((sum, s) => sum + s.dur, 0);
+        let elapsed2 = 0;
+        for (let i = 0; i < currentSceneIdx; i++) elapsed2 += scenes[i].dur;
+        elapsed2 += progress * scene.dur;
+        const pct = (elapsed2 / totalDur) * 100;
+        document.getElementById('exportProgress').style.width = pct + '%';
+    }
+
+    rafId = requestAnimationFrame(tick);
+}
+
+// ----- VIDEO EXPORT -----
+let isRecording = false;
+let mediaRecorder = null;
+let recordedChunks = [];
+
+function exportVideo() {
+    if (isRecording) return;
+
+    const scenes = getEnabledScenes();
+    if (scenes.length === 0) return;
+
+    isRecording = true;
+    recordedChunks = [];
+
+    const stream = canvas.captureStream(30);
+    mediaRecorder = new MediaRecorder(stream, {
+        mimeType: 'video/webm;codecs=vp9',
+        videoBitsPerSecond: 8000000, // 8 Mbps for quality
+    });
+
+    mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) recordedChunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const fmt = currentFormat === 'reels' ? '9x16' : '16x9';
+        a.download = `jjriggs-ad-${fmt}-${Date.now()}.webm`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        isRecording = false;
+        document.getElementById('btnExport').classList.remove('recording');
+        document.getElementById('exportLabel').textContent = '⬇ Download .webm';
+        document.getElementById('exportProgress').style.width = '0%';
+    };
+
+    document.getElementById('btnExport').classList.add('recording');
+    document.getElementById('exportLabel').textContent = '● Recording...';
+
+    mediaRecorder.start();
+
+    // Start playback from beginning
+    currentSceneIdx = 0;
+    sceneStartTime = performance.now();
+    isPlaying = true;
+    document.getElementById('btnPlay').textContent = '⏸ Pause';
+    updateIndicator(scenes[0].name, 1, scenes.length);
+    tick();
+}
+
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+    }
+}
+
+// ----- UI HELPERS -----
+function toggleSection(header) {
+    header.parentElement.classList.toggle('collapsed');
+}
+
+function setFormat(fmt, btn) {
+    currentFormat = fmt;
+    document.querySelectorAll('.toggle-group .toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    resizeCanvas();
+    // Redraw current frame
+    if (!isPlaying) {
+        const f = FORMATS[currentFormat];
+        ctx.fillStyle = BRAND.black;
+        ctx.fillRect(0, 0, f.w, f.h);
+    }
+}
+
+function setSalesBg(color, el) {
+    salesBgColor = color;
+    document.querySelectorAll('.bg-swatches .bg-swatch').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+}
+
+function updateSceneText() {
+    // Text updates are read directly from DOM during render - no action needed
+}
+
+// ----- INIT -----
+window.addEventListener('resize', resizeCanvas);
+
+async function init() {
+    buildSceneList();
+    resizeCanvas();
+
+    // Show black canvas
+    const fmt = FORMATS[currentFormat];
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, fmt.w, fmt.h);
+
+    // Load images
+    await loadImages();
+
+    // Hide loading overlay
+    document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+init();
+</script>
+</body>
+</html>
