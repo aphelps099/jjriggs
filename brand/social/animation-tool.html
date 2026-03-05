@@ -792,7 +792,13 @@ async function loadImages() {
         const img = new Image();
         img.crossOrigin = 'anonymous';
         img.onload = () => { images[key] = img; resolve(); };
-        img.onerror = () => { images[key] = null; resolve(); };
+        img.onerror = () => {
+            // CORS failed — retry without crossOrigin (taints canvas but still renders)
+            const fallback = new Image();
+            fallback.onload = () => { images[key] = fallback; resolve(); };
+            fallback.onerror = () => { images[key] = null; resolve(); };
+            fallback.src = url;
+        };
         img.src = url;
     });
 
@@ -800,7 +806,12 @@ async function loadImages() {
         const img = new Image();
         img.crossOrigin = 'anonymous';
         img.onload = () => { tractorImages[idx] = img; resolve(); };
-        img.onerror = () => { tractorImages[idx] = null; resolve(); };
+        img.onerror = () => {
+            const fallback = new Image();
+            fallback.onload = () => { tractorImages[idx] = fallback; resolve(); };
+            fallback.onerror = () => { tractorImages[idx] = null; resolve(); };
+            fallback.src = url;
+        };
         img.src = url;
     });
 
@@ -993,15 +1004,19 @@ function drawScene_logo(ctx, p, w, h) {
         ctx.restore();
     }
 
+    // Aspect-aware spacing
+    const isLandscape = w > h;
+    const unit = Math.min(w, h); // base unit for proportional sizing
+    const logoY = h * (isLandscape ? 0.35 : 0.38);
+
     // Phase 3: Logo SLAM with screen shake (15-60%)
     const logoP = clamp((p - 0.15) / 0.45, 0, 1);
     const logo = selectedLogos.includes('jjriggs') ? getActiveLogo('jjriggs') : null;
-    const logoY = h * 0.38;
     if (logo && logoP > 0) {
         const scaleP = easeOutBack(logoP);
-        const logoW = w * 0.6;
+        const logoW = w * (isLandscape ? 0.35 : 0.6);
         const logoH = logoW * (logo.naturalHeight / logo.naturalWidth);
-        const scale = 0.2 + scaleP * 0.8; // Scale from tiny to full
+        const scale = 0.2 + scaleP * 0.8;
 
         // Screen shake (decays over first 50% of logo animation)
         const shakeDecay = Math.max(0, 1 - logoP * 2);
@@ -1014,19 +1029,16 @@ function drawScene_logo(ctx, p, w, h) {
         ctx.scale(scale, scale);
         ctx.drawImage(logo, -logoW/2, -logoH/2, logoW, logoH);
         ctx.restore();
-    } else if (!logo && logoP > 0) {
-        // No JJ Riggs selected — just show partner logos centered
     }
 
     // Phase 4: Red accent bars (40-70%)
+    const barOffset = unit * 0.05;
     const lineP = clamp((p - 0.4) / 0.3, 0, 1);
     if (lineP > 0) {
         const lineW = w * 0.4 * easeOutExpo(lineP);
         ctx.fillStyle = BRAND.red;
-        // Bottom bar (under logo, left-to-right)
-        ctx.fillRect(w/2 - lineW/2, logoY + 70, lineW, 4);
-        // Top bar (right-to-left mirror)
-        ctx.fillRect(w/2 - lineW/2, logoY - 80, lineW, 4);
+        ctx.fillRect(w/2 - lineW/2, logoY + barOffset, lineW, 4);
+        ctx.fillRect(w/2 - lineW/2, logoY - barOffset * 1.2, lineW, 4);
     }
 
     // Phase 5: Partner logos (50-80%)
@@ -1034,14 +1046,14 @@ function drawScene_logo(ctx, p, w, h) {
     if (partnerP > 0) {
         ctx.save();
         ctx.globalAlpha = easeInOutCubic(partnerP);
-        const partnerY = logoY + 120;
+        const partnerY = logoY + unit * 0.08;
         const partnerLogos = [];
         if (selectedLogos.includes('tym')) { const tl = getActiveLogo('tym'); if (tl) partnerLogos.push(tl); }
         if (selectedLogos.includes('badboy')) { const bl = getActiveLogo('badboy'); if (bl) partnerLogos.push(bl); }
 
         if (partnerLogos.length > 0) {
-            const totalGap = partnerLogos.length > 1 ? w * 0.15 : 0;
-            const pLogoW = w * 0.18;
+            const pLogoW = w * (isLandscape ? 0.12 : 0.18);
+            const totalGap = partnerLogos.length > 1 ? w * 0.08 : 0;
             const startX = w/2 - (partnerLogos.length * pLogoW + totalGap) / 2;
             partnerLogos.forEach((pLogo, i) => {
                 const pLogoH = pLogoW * (pLogo.naturalHeight / pLogo.naturalWidth);
@@ -1057,9 +1069,9 @@ function drawScene_logo(ctx, p, w, h) {
     if (tagP > 0) {
         ctx.globalAlpha = easeInOutCubic(tagP);
         ctx.fillStyle = BRAND.gray;
-        ctx.font = `${Math.round(w * 0.022)}px 'Inter', sans-serif`;
+        ctx.font = `${Math.round(unit * 0.028)}px 'Inter', sans-serif`;
         ctx.textAlign = 'center';
-        ctx.fillText('COLVILLE, WA', w/2, h * 0.62);
+        ctx.fillText('COLVILLE, WA', w/2, logoY + unit * 0.14);
         ctx.globalAlpha = 1;
     }
 
@@ -1516,11 +1528,13 @@ function drawScene_cta(ctx, p, w, h) {
     const ctaUrl = document.getElementById('ctaUrl').value || 'JJRiggsEquipment.com';
     const ctaTagline = document.getElementById('ctaTagline').value || 'Your Local TYM Dealer';
 
-    const centerY = h * 0.45;
+    const isLandscape = w > h;
+    const unit = Math.min(w, h);
+    const centerY = h * (isLandscape ? 0.42 : 0.45);
 
     // Logo fade in + float up (respects logo selection)
     const lp = easeInOutCubic(clamp(p / 0.4, 0, 1));
-    const yDrift = 20 * (1 - lp);
+    const yDrift = unit * 0.02 * (1 - lp);
     const ctaLogos = [];
     if (selectedLogos.includes('jjriggs')) { const l = getActiveLogo('jjriggs'); if (l) ctaLogos.push(l); }
     if (selectedLogos.includes('tym')) { const l = getActiveLogo('tym'); if (l) ctaLogos.push(l); }
@@ -1530,13 +1544,15 @@ function drawScene_cta(ctx, p, w, h) {
     if (ctaLogos.length > 0) {
         ctx.save();
         ctx.globalAlpha = lp;
-        const logoW = ctaLogos.length > 1 ? w * 0.28 : w * 0.45;
-        const gap = w * 0.04;
+        const logoW = ctaLogos.length > 1
+            ? w * (isLandscape ? 0.18 : 0.28)
+            : w * (isLandscape ? 0.3 : 0.45);
+        const gap = w * 0.03;
         const totalW = ctaLogos.length * logoW + (ctaLogos.length - 1) * gap;
         let startX = w/2 - totalW/2;
         ctaLogos.forEach((cLogo) => {
             const cLogoH = logoW * (cLogo.naturalHeight / cLogo.naturalWidth);
-            ctx.drawImage(cLogo, startX, centerY - cLogoH - 30 + yDrift, logoW, cLogoH);
+            ctx.drawImage(cLogo, startX, centerY - cLogoH - unit * 0.03 + yDrift, logoW, cLogoH);
             startX += logoW + gap;
         });
         ctx.restore();
@@ -1546,10 +1562,10 @@ function drawScene_cta(ctx, p, w, h) {
     const btnP = easeOutExpo(clamp((p - 0.3) / 0.3, 0, 1));
     if (btnP > 0) {
         const pulse = 1 + Math.sin(p * 8) * 0.02;
-        const btnW = w * 0.55;
-        const btnH = h * 0.06;
+        const btnW = w * (isLandscape ? 0.35 : 0.55);
+        const btnH = unit * 0.06;
         const btnX = w/2 - btnW/2;
-        const btnY = centerY + 20;
+        const btnY = centerY + unit * 0.02;
 
         ctx.save();
         ctx.translate(w/2, btnY + btnH/2);
@@ -1574,7 +1590,7 @@ function drawScene_cta(ctx, p, w, h) {
 
         // CTA text
         ctx.fillStyle = BRAND.white;
-        ctx.font = `700 ${Math.round(w * 0.055)}px 'Oswald', sans-serif`;
+        ctx.font = `700 ${Math.round(unit * 0.055)}px 'Oswald', sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(ctaText, w/2, btnY + btnH/2);
@@ -1587,9 +1603,9 @@ function drawScene_cta(ctx, p, w, h) {
     if (urlP > 0) {
         ctx.globalAlpha = urlP;
         ctx.fillStyle = BRAND.white;
-        ctx.font = `600 ${Math.round(w * 0.04)}px 'Inter', sans-serif`;
+        ctx.font = `600 ${Math.round(unit * 0.04)}px 'Inter', sans-serif`;
         ctx.textAlign = 'center';
-        ctx.fillText(ctaUrl, w/2, centerY + h * 0.12);
+        ctx.fillText(ctaUrl, w/2, centerY + unit * 0.12);
     }
 
     // Tagline
@@ -1597,9 +1613,9 @@ function drawScene_cta(ctx, p, w, h) {
     if (tagP > 0) {
         ctx.globalAlpha = tagP;
         ctx.fillStyle = BRAND.gray;
-        ctx.font = `400 ${Math.round(w * 0.028)}px 'Inter', sans-serif`;
+        ctx.font = `400 ${Math.round(unit * 0.028)}px 'Inter', sans-serif`;
         ctx.textAlign = 'center';
-        ctx.fillText(ctaTagline, w/2, centerY + h * 0.17);
+        ctx.fillText(ctaTagline, w/2, centerY + unit * 0.17);
     }
 
     // Bottom red line
