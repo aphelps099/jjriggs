@@ -244,6 +244,58 @@
         .bg-swatch.red { background: #b61b22; }
         .bg-swatch.silver { background: #c0c0c0; }
 
+        /* Logo Chips */
+        .logo-chips {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .logo-chip {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: border-color 0.15s;
+        }
+
+        .logo-chip:hover {
+            border-color: #444;
+        }
+
+        .logo-chip.active {
+            border-color: var(--red);
+            background: rgba(182, 27, 34, 0.1);
+        }
+
+        .logo-chip input[type="checkbox"] {
+            accent-color: var(--red);
+        }
+
+        /* Flipbook Controls */
+        .flip-speed-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flip-speed-row input[type="range"] {
+            flex: 1;
+            accent-color: var(--red);
+        }
+
+        .flip-speed-label {
+            font-size: 11px;
+            color: var(--text-dim);
+            min-width: 42px;
+            text-align: right;
+        }
+
         /* Playback Controls */
         .playback-bar {
             padding: 16px 20px;
@@ -461,6 +513,22 @@
                 </div>
             </div>
 
+            <!-- LOGO SELECTION -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Brand Logos</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label style="margin-bottom:6px;display:block;font-size:11px;color:var(--text-dim)">Show in Intro &amp; CTA scenes</label>
+                    <div class="logo-chips">
+                        <label class="logo-chip active"><input type="checkbox" value="jjriggs" checked onchange="updateLogoSelection()"> JJ Riggs</label>
+                        <label class="logo-chip"><input type="checkbox" value="tym" onchange="updateLogoSelection()"> TYM</label>
+                        <label class="logo-chip"><input type="checkbox" value="badboy" onchange="updateLogoSelection()"> Bad Boy</label>
+                    </div>
+                </div>
+            </div>
+
             <!-- SCENES -->
             <div class="section">
                 <div class="section-header" onclick="toggleSection(this)">
@@ -536,6 +604,28 @@
                 <div class="section-body">
                     <label>Reveal Text</label>
                     <input type="text" id="countdownReveal" value="SALE STARTS NOW" oninput="updateSceneText()">
+                </div>
+            </div>
+
+            <!-- SCENE: IMAGE FLIPBOOK -->
+            <div class="section collapsed">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Image Flipbook</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label>Flash Speed</label>
+                    <div class="flip-speed-row">
+                        <input type="range" id="flipSpeed" min="80" max="300" value="150" step="10"
+                               oninput="document.getElementById('flipSpeedLabel').textContent=this.value+'ms'">
+                        <span class="flip-speed-label" id="flipSpeedLabel">150ms</span>
+                    </div>
+                    <label>Hold Text</label>
+                    <input type="text" id="flipText" value="THE FLEET" oninput="updateSceneText()">
+                    <label style="display:flex;align-items:center;gap:6px;margin-top:6px">
+                        <input type="checkbox" id="flipLogoFlash" checked style="accent-color:var(--red)">
+                        Logo flash between images
+                    </label>
                 </div>
             </div>
 
@@ -631,6 +721,8 @@ const FORMATS = {
 
 let currentFormat = 'reels';
 let salesBgColor = 'black';
+let selectedLogos = ['jjriggs']; // 'jjriggs', 'tym', 'badboy'
+let introParticles = [];
 
 // ----- IMAGES -----
 const IMAGE_URLS = {
@@ -671,6 +763,26 @@ async function loadImages() {
         load('tymLogo', IMAGE_URLS.tymLogo),
         ...IMAGE_URLS.tractors.map((url, i) => loadTractor(url, i)),
     ]);
+
+    // Generate Bad Boy text logo on an offscreen canvas
+    await document.fonts.ready;
+    const bbCanvas = document.createElement('canvas');
+    bbCanvas.width = 400;
+    bbCanvas.height = 120;
+    const bbCtx = bbCanvas.getContext('2d');
+    bbCtx.fillStyle = 'transparent';
+    bbCtx.clearRect(0, 0, 400, 120);
+    bbCtx.fillStyle = '#ffffff';
+    bbCtx.font = "700 72px 'Oswald', sans-serif";
+    bbCtx.textAlign = 'center';
+    bbCtx.textBaseline = 'top';
+    bbCtx.fillText('BAD BOY', 200, 5);
+    bbCtx.font = "600 28px 'Oswald', sans-serif";
+    bbCtx.fillStyle = '#cccccc';
+    bbCtx.fillText('MOWERS', 200, 80);
+    const bbImg = new Image();
+    bbImg.src = bbCanvas.toDataURL();
+    images.badBoyLogo = bbImg;
 
     renderTractorThumbs();
 }
@@ -752,6 +864,7 @@ const SCENE_DEFS = [
     { id: 'split',     name: 'Split Impact',      dur: 2.0,  enabled: true },
     { id: 'countdown', name: 'Countdown Reveal',  dur: 2.5,  enabled: true },
     { id: 'zag',       name: 'Brand ZAG',         dur: 2.5,  enabled: true },
+    { id: 'flipbook',  name: 'Image Flipbook',    dur: 2.5,  enabled: true },
     { id: 'cta',       name: 'Call to Action',     dur: 2.5,  enabled: true },
 ];
 
@@ -796,45 +909,141 @@ function drawScene_logo(ctx, p, w, h) {
     ctx.fillStyle = BRAND.black;
     ctx.fillRect(0, 0, w, h);
 
-    // Subtle red glow
-    const glow = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w * 0.6);
-    glow.addColorStop(0, 'rgba(182, 27, 34, 0.08)');
+    // Phase 1: Pulsing red glow background (throughout)
+    const glowRadius = w * (0.4 + 0.2 * Math.sin(p * Math.PI * 3));
+    const glow = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, glowRadius);
+    glow.addColorStop(0, `rgba(182, 27, 34, ${0.06 + 0.06 * Math.sin(p * Math.PI * 3)})`);
     glow.addColorStop(1, 'transparent');
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, w, h);
 
-    // Logo scale in
-    const logo = images.logo;
-    if (logo) {
-        const scaleP = easeOutExpo(clamp(p / 0.6, 0, 1));
-        const logoW = w * 0.6;
-        const logoH = logoW * (logo.naturalHeight / logo.naturalWidth);
-        const s = scaleP;
+    // Phase 1: Red flash (0-15%)
+    const flashP = clamp(p / 0.15, 0, 1);
+    if (flashP < 1) {
+        ctx.fillStyle = BRAND.red;
+        ctx.globalAlpha = 1 - flashP;
+        ctx.fillRect(0, 0, w, h);
+        ctx.globalAlpha = 1;
+    }
+
+    // Phase 2: Diagonal slash lines (5-25%)
+    const slashP = clamp((p - 0.05) / 0.2, 0, 1);
+    if (slashP > 0 && slashP < 1) {
         ctx.save();
-        ctx.globalAlpha = clamp(p / 0.3, 0, 1);
-        ctx.translate(w/2, h/2 - logoH * 0.2);
-        ctx.scale(s, s);
-        ctx.drawImage(logo, -logoW/2, -logoH/2, logoW, logoH);
+        ctx.strokeStyle = BRAND.red;
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = (1 - slashP) * 0.7;
+        const extend = easeOutExpo(slashP);
+        // Top-left to center
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(w/2 * extend, h/2 * extend); ctx.stroke();
+        // Top-right to center
+        ctx.beginPath(); ctx.moveTo(w, 0); ctx.lineTo(w - w/2 * extend, h/2 * extend); ctx.stroke();
+        // Bottom-left to center
+        ctx.beginPath(); ctx.moveTo(0, h); ctx.lineTo(w/2 * extend, h - h/2 * extend); ctx.stroke();
+        // Bottom-right to center
+        ctx.beginPath(); ctx.moveTo(w, h); ctx.lineTo(w - w/2 * extend, h - h/2 * extend); ctx.stroke();
         ctx.restore();
     }
 
-    // Red underline wipe
+    // Phase 3: Logo SLAM with screen shake (15-60%)
+    const logoP = clamp((p - 0.15) / 0.45, 0, 1);
+    const logo = selectedLogos.includes('jjriggs') ? images.logo : null;
+    const logoY = h * 0.38;
+    if (logo && logoP > 0) {
+        const scaleP = easeOutBack(logoP);
+        const logoW = w * 0.6;
+        const logoH = logoW * (logo.naturalHeight / logo.naturalWidth);
+        const scale = 0.2 + scaleP * 0.8; // Scale from tiny to full
+
+        // Screen shake (decays over first 50% of logo animation)
+        const shakeDecay = Math.max(0, 1 - logoP * 2);
+        const shakeX = shakeDecay * (Math.random() - 0.5) * 16;
+        const shakeY = shakeDecay * (Math.random() - 0.5) * 12;
+
+        ctx.save();
+        ctx.globalAlpha = clamp(logoP / 0.15, 0, 1);
+        ctx.translate(w/2 + shakeX, logoY + shakeY);
+        ctx.scale(scale, scale);
+        ctx.drawImage(logo, -logoW/2, -logoH/2, logoW, logoH);
+        ctx.restore();
+    } else if (!logo && logoP > 0) {
+        // No JJ Riggs selected — just show partner logos centered
+    }
+
+    // Phase 4: Red accent bars (40-70%)
     const lineP = clamp((p - 0.4) / 0.3, 0, 1);
     if (lineP > 0) {
         const lineW = w * 0.4 * easeOutExpo(lineP);
         ctx.fillStyle = BRAND.red;
-        ctx.fillRect(w/2 - lineW/2, h/2 + 60, lineW, 4);
+        // Bottom bar (under logo, left-to-right)
+        ctx.fillRect(w/2 - lineW/2, logoY + 70, lineW, 4);
+        // Top bar (right-to-left mirror)
+        ctx.fillRect(w/2 - lineW/2, logoY - 80, lineW, 4);
     }
 
-    // Tagline fade in
+    // Phase 5: Partner logos (50-80%)
+    const partnerP = clamp((p - 0.5) / 0.3, 0, 1);
+    if (partnerP > 0) {
+        ctx.save();
+        ctx.globalAlpha = easeInOutCubic(partnerP);
+        const partnerY = logoY + 120;
+        const partnerLogos = [];
+        if (selectedLogos.includes('tym') && images.tymLogo) partnerLogos.push(images.tymLogo);
+        if (selectedLogos.includes('badboy') && images.badBoyLogo) partnerLogos.push(images.badBoyLogo);
+
+        if (partnerLogos.length > 0) {
+            const totalGap = partnerLogos.length > 1 ? w * 0.15 : 0;
+            const pLogoW = w * 0.18;
+            const startX = w/2 - (partnerLogos.length * pLogoW + totalGap) / 2;
+            partnerLogos.forEach((pLogo, i) => {
+                const pLogoH = pLogoW * (pLogo.naturalHeight / pLogo.naturalWidth);
+                const px = startX + i * (pLogoW + totalGap);
+                ctx.drawImage(pLogo, px, partnerY, pLogoW, pLogoH);
+            });
+        }
+        ctx.restore();
+    }
+
+    // Phase 6: Tagline + particle burst (65-100%)
     const tagP = clamp((p - 0.65) / 0.35, 0, 1);
     if (tagP > 0) {
         ctx.globalAlpha = easeInOutCubic(tagP);
         ctx.fillStyle = BRAND.gray;
         ctx.font = `${Math.round(w * 0.022)}px 'Inter', sans-serif`;
         ctx.textAlign = 'center';
-        ctx.fillText('YOUR LOCAL TYM DEALER', w/2, h/2 + 110);
+        ctx.fillText('COLVILLE, WA', w/2, h * 0.62);
         ctx.globalAlpha = 1;
+    }
+
+    // Particle burst (triggered at p=0.2, fades out)
+    if (p > 0.15 && p < 0.6) {
+        if (introParticles.length === 0) {
+            for (let i = 0; i < 10; i++) {
+                introParticles.push({
+                    x: w/2, y: logoY,
+                    vx: (Math.random() - 0.5) * w * 0.8,
+                    vy: (Math.random() - 0.5) * h * 0.5,
+                    size: 3 + Math.random() * 6,
+                    color: Math.random() > 0.5 ? BRAND.red : '#ffffff',
+                    life: 1
+                });
+            }
+        }
+        const dt = 0.016;
+        ctx.save();
+        introParticles.forEach(pt => {
+            pt.x += pt.vx * dt;
+            pt.y += pt.vy * dt;
+            pt.life -= dt * 1.5;
+            if (pt.life > 0) {
+                ctx.globalAlpha = pt.life * 0.8;
+                ctx.fillStyle = pt.color;
+                ctx.fillRect(pt.x - pt.size/2, pt.y - pt.size/2, pt.size, pt.size);
+            }
+        });
+        ctx.restore();
+    } else if (p <= 0.15) {
+        introParticles = [];
     }
 }
 
@@ -1261,15 +1470,28 @@ function drawScene_cta(ctx, p, w, h) {
 
     const centerY = h * 0.45;
 
-    // Logo fade in + float up
-    const logo = images.logo;
-    if (logo) {
-        const lp = easeInOutCubic(clamp(p / 0.4, 0, 1));
-        const logoW = w * 0.45;
-        const logoH = logoW * (logo.naturalHeight / logo.naturalWidth);
+    // Logo fade in + float up (respects logo selection)
+    const lp = easeInOutCubic(clamp(p / 0.4, 0, 1));
+    const yDrift = 20 * (1 - lp);
+    const ctaLogos = [];
+    if (selectedLogos.includes('jjriggs') && images.logo) ctaLogos.push(images.logo);
+    if (selectedLogos.includes('tym') && images.tymLogo) ctaLogos.push(images.tymLogo);
+    if (selectedLogos.includes('badboy') && images.badBoyLogo) ctaLogos.push(images.badBoyLogo);
+    if (ctaLogos.length === 0 && images.logo) ctaLogos.push(images.logo);
+
+    if (ctaLogos.length > 0) {
+        ctx.save();
         ctx.globalAlpha = lp;
-        const yDrift = 20 * (1 - lp);
-        ctx.drawImage(logo, w/2 - logoW/2, centerY - logoH - 30 + yDrift, logoW, logoH);
+        const logoW = ctaLogos.length > 1 ? w * 0.28 : w * 0.45;
+        const gap = w * 0.04;
+        const totalW = ctaLogos.length * logoW + (ctaLogos.length - 1) * gap;
+        let startX = w/2 - totalW/2;
+        ctaLogos.forEach((cLogo) => {
+            const cLogoH = logoW * (cLogo.naturalHeight / cLogo.naturalWidth);
+            ctx.drawImage(cLogo, startX, centerY - cLogoH - 30 + yDrift, logoW, cLogoH);
+            startX += logoW + gap;
+        });
+        ctx.restore();
     }
 
     // CTA button shape with pulse
@@ -1343,6 +1565,136 @@ function drawScene_cta(ctx, p, w, h) {
     ctx.globalAlpha = 1;
 }
 
+function drawScene_flipbook(ctx, p, w, h) {
+    ctx.fillStyle = BRAND.black;
+    ctx.fillRect(0, 0, w, h);
+
+    const validTractors = tractorImages.filter(Boolean);
+    if (validTractors.length === 0) {
+        ctx.fillStyle = BRAND.gray;
+        ctx.font = `${Math.round(w * 0.04)}px 'Inter', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('No images loaded', w/2, h/2);
+        return;
+    }
+
+    const flipSpeedMs = parseInt(document.getElementById('flipSpeed').value) || 150;
+    const holdText = document.getElementById('flipText').value || 'THE FLEET';
+    const logoFlash = document.getElementById('flipLogoFlash').checked;
+    const sceneDur = SCENE_DEFS.find(s => s.id === 'flipbook')?.dur || 2.5;
+    const totalMs = sceneDur * 1000;
+    const elapsedMs = p * totalMs;
+
+    // Last 20% = hold frame
+    const holdStart = 0.8;
+    const borderW = Math.round(w * 0.015);
+
+    if (p < holdStart) {
+        // Rapid image switching
+        const flipProgress = p / holdStart;
+        const cycleTime = flipSpeedMs;
+        const totalSlots = logoFlash ? validTractors.length * 2 : validTractors.length;
+        const slotIdx = Math.floor((flipProgress * holdStart * totalMs) / cycleTime) % totalSlots;
+
+        // Determine if this is a logo flash slot or image slot
+        let isLogoSlot = false;
+        let imgIdx = slotIdx;
+        if (logoFlash) {
+            // Every other slot is a logo flash
+            isLogoSlot = slotIdx % 2 === 1;
+            imgIdx = Math.floor(slotIdx / 2) % validTractors.length;
+        } else {
+            imgIdx = slotIdx % validTractors.length;
+        }
+
+        // White flash between transitions (first 15% of each slot)
+        const slotProgress = ((flipProgress * holdStart * totalMs) % cycleTime) / cycleTime;
+        if (slotProgress < 0.12) {
+            ctx.fillStyle = '#ffffff';
+            ctx.globalAlpha = (1 - slotProgress / 0.12) * 0.9;
+            ctx.fillRect(0, 0, w, h);
+            ctx.globalAlpha = 1;
+        }
+
+        if (isLogoSlot && images.logo) {
+            // Logo watermark flash
+            const logo = images.logo;
+            const lw = w * 0.5;
+            const lh = lw * (logo.naturalHeight / logo.naturalWidth);
+            ctx.globalAlpha = 0.4;
+            ctx.drawImage(logo, w/2 - lw/2, h/2 - lh/2, lw, lh);
+            ctx.globalAlpha = 1;
+        } else {
+            // Draw tractor image - fill canvas while maintaining aspect ratio
+            const img = validTractors[imgIdx % validTractors.length];
+            const imgAspect = img.naturalWidth / img.naturalHeight;
+            const canvasAspect = w / h;
+            let dw, dh, dx, dy;
+            if (imgAspect > canvasAspect) {
+                dh = h;
+                dw = h * imgAspect;
+                dx = (w - dw) / 2;
+                dy = 0;
+            } else {
+                dw = w;
+                dh = w / imgAspect;
+                dx = 0;
+                dy = (h - dh) / 2;
+            }
+            ctx.drawImage(img, dx, dy, dw, dh);
+        }
+
+        // Red border frame
+        ctx.strokeStyle = BRAND.red;
+        ctx.lineWidth = borderW;
+        ctx.strokeRect(borderW/2, borderW/2, w - borderW, h - borderW);
+
+    } else {
+        // Hold frame: last image + text overlay
+        const lastImg = validTractors[validTractors.length - 1];
+        const imgAspect = lastImg.naturalWidth / lastImg.naturalHeight;
+        const canvasAspect = w / h;
+        let dw, dh, dx, dy;
+        if (imgAspect > canvasAspect) {
+            dh = h;
+            dw = h * imgAspect;
+            dx = (w - dw) / 2;
+            dy = 0;
+        } else {
+            dw = w;
+            dh = w / imgAspect;
+            dx = 0;
+            dy = (h - dh) / 2;
+        }
+        ctx.drawImage(lastImg, dx, dy, dw, dh);
+
+        // Dark overlay for text readability
+        ctx.fillStyle = 'rgba(0,0,0,0.55)';
+        ctx.fillRect(0, 0, w, h);
+
+        // Text fade in
+        const textP = easeOutExpo(clamp((p - holdStart) / (1 - holdStart), 0, 1));
+        ctx.save();
+        ctx.globalAlpha = textP;
+        ctx.fillStyle = BRAND.white;
+        ctx.font = `700 ${Math.round(w * 0.12)}px 'Oswald', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(holdText, w/2, h/2);
+
+        // Red underline
+        const ulW = w * 0.3 * textP;
+        ctx.fillStyle = BRAND.red;
+        ctx.fillRect(w/2 - ulW/2, h/2 + w * 0.07, ulW, 4);
+        ctx.restore();
+
+        // Red border frame
+        ctx.strokeStyle = BRAND.red;
+        ctx.lineWidth = borderW;
+        ctx.strokeRect(borderW/2, borderW/2, w - borderW, h - borderW);
+    }
+}
+
 const SCENE_RENDERERS = {
     logo: drawScene_logo,
     bignum: drawScene_bignum,
@@ -1352,6 +1704,7 @@ const SCENE_RENDERERS = {
     countdown: drawScene_countdown,
     zag: drawScene_zag,
     cta: drawScene_cta,
+    flipbook: drawScene_flipbook,
 };
 
 // ----- PLAYBACK ENGINE -----
@@ -1538,6 +1891,20 @@ function setSalesBg(color, el) {
 
 function updateSceneText() {
     // Text updates are read directly from DOM during render - no action needed
+}
+
+function updateLogoSelection() {
+    selectedLogos = [];
+    document.querySelectorAll('.logo-chip input[type="checkbox"]').forEach(cb => {
+        const chip = cb.closest('.logo-chip');
+        if (cb.checked) {
+            selectedLogos.push(cb.value);
+            chip.classList.add('active');
+        } else {
+            chip.classList.remove('active');
+        }
+    });
+    if (selectedLogos.length === 0) selectedLogos = ['jjriggs'];
 }
 
 // ----- INIT -----
