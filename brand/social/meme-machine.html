@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJ Riggs — Tractor Meme Machine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --red: #b61b22;
+            --black: #0a0a0a;
+            --panel-bg: #141414;
+            --border: #2a2a2a;
+            --text: #ccc;
+            --text-dim: #666;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ===== PANEL ===== */
+        .panel {
+            width: 360px;
+            min-width: 360px;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-header img { height: 24px; }
+
+        .panel-header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.05em;
+        }
+
+        .panel-header .subtitle {
+            font-size: 10px;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .section {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .section-header:hover { background: rgba(255,255,255,0.03); }
+
+        .section-header h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .section-header .arrow {
+            font-size: 10px;
+            color: var(--text-dim);
+            transition: transform 0.2s;
+        }
+
+        .section.collapsed .arrow { transform: rotate(-90deg); }
+        .section.collapsed .section-body { display: none; }
+
+        .section-body { padding: 0 20px 16px; }
+
+        label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+            margin-top: 10px;
+        }
+
+        label:first-child { margin-top: 0; }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            outline: none;
+        }
+
+        input:focus, textarea:focus, select:focus { border-color: var(--red); }
+        textarea { resize: vertical; min-height: 40px; }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--red);
+            margin-top: 4px;
+        }
+
+        .range-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .range-row input[type="range"] { flex: 1; }
+
+        .range-val {
+            font-size: 11px;
+            color: var(--text-dim);
+            min-width: 36px;
+            text-align: right;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .btn-red {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .btn-red:hover { background: #d4222a; }
+
+        .btn-dark {
+            background: #222;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-dark:hover { border-color: var(--red); color: #fff; }
+
+        .btn-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .btn-row .btn { flex: 1; }
+
+        /* Image Picker */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .image-grid img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color 0.15s;
+        }
+
+        .image-grid img:hover { border-color: #444; }
+        .image-grid img.selected { border-color: var(--red); }
+
+        .upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: border-color 0.15s;
+        }
+
+        .upload-zone:hover { border-color: var(--red); }
+
+        .upload-zone span {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        /* Filter chips */
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .filter-chip {
+            padding: 5px 10px;
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            color: var(--text);
+            transition: all 0.15s;
+        }
+
+        .filter-chip:hover { border-color: #444; }
+        .filter-chip.active { border-color: var(--red); background: rgba(182,27,34,0.15); color: #fff; }
+
+        /* Overlay chips */
+        .overlay-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .overlay-chip {
+            padding: 5px 10px;
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            color: var(--text);
+            transition: all 0.15s;
+        }
+
+        .overlay-chip:hover { border-color: #444; }
+        .overlay-chip.active { border-color: var(--red); background: rgba(182,27,34,0.15); color: #fff; }
+
+        /* Bottom bar */
+        .bottom-bar {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* ===== CANVAS VIEWPORT ===== */
+        .viewport {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #080808;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .viewport canvas {
+            box-shadow: 0 0 60px rgba(0,0,0,0.8);
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .format-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 10px;
+            color: var(--text-dim);
+            background: rgba(20,20,20,0.8);
+            padding: 4px 10px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 1000;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--red);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Toggle group */
+        .toggle-group {
+            display: flex;
+            gap: 0;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: #1a1a1a;
+            color: var(--text-dim);
+            border: none;
+            cursor: pointer;
+            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .toggle-btn.active { background: var(--red); color: #fff; }
+        .toggle-btn:not(:last-child) { border-right: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+<div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <div>Warming up the meme engine...</div>
+</div>
+
+<div class="app">
+    <div class="panel">
+        <div class="panel-header">
+            <img src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs">
+            <div>
+                <h1>TRACTOR MEME MACHINE</h1>
+                <span class="subtitle">Unhinged Social Content</span>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <!-- FORMAT -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Format</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" onclick="setFormat('square', this)">1:1 Square</button>
+                        <button class="toggle-btn" onclick="setFormat('story', this)">9:16 Story</button>
+                        <button class="toggle-btn" onclick="setFormat('wide', this)">16:9 Wide</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IMAGE -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Base Image</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <div class="image-grid" id="imageGrid"></div>
+                    <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                        <span>+ Upload your own photo</span>
+                        <input type="hidden" id="fileInput" style="display:none">
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleUpload(event)">
+                </div>
+            </div>
+
+            <!-- TEXT -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Meme Text</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <label>Top Text</label>
+                    <input type="text" id="topText" value="WHEN THE DEALER SAYS" oninput="render()">
+                    <label>Bottom Text</label>
+                    <input type="text" id="bottomText" value="$0 DOWN FOR 90 MONTHS" oninput="render()">
+                    <label>Font Size</label>
+                    <div class="range-row">
+                        <input type="range" id="fontSize" min="40" max="160" value="80" oninput="render(); document.getElementById('fontSizeVal').textContent=this.value+'px'">
+                        <span class="range-val" id="fontSizeVal">80px</span>
+                    </div>
+                    <label style="margin-top:12px">Preset Lines</label>
+                    <div class="filter-chips" id="presetChips"></div>
+                </div>
+            </div>
+
+            <!-- FILTERS -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Deep Fry Level</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <div class="filter-chips">
+                        <div class="filter-chip active" onclick="setFryLevel('none', this)">Raw</div>
+                        <div class="filter-chip" onclick="setFryLevel('light', this)">Lightly Toasted</div>
+                        <div class="filter-chip" onclick="setFryLevel('medium', this)">Medium Fry</div>
+                        <div class="filter-chip" onclick="setFryLevel('deep', this)">Deep Fried</div>
+                        <div class="filter-chip" onclick="setFryLevel('nuclear', this)">Nuclear</div>
+                    </div>
+                    <label>Saturation</label>
+                    <div class="range-row">
+                        <input type="range" id="saturation" min="100" max="500" value="100" oninput="render(); document.getElementById('satVal').textContent=this.value+'%'">
+                        <span class="range-val" id="satVal">100%</span>
+                    </div>
+                    <label>Contrast</label>
+                    <div class="range-row">
+                        <input type="range" id="contrast" min="100" max="400" value="100" oninput="render(); document.getElementById('conVal').textContent=this.value+'%'">
+                        <span class="range-val" id="conVal">100%</span>
+                    </div>
+                    <label>JPEG Crunch</label>
+                    <div class="range-row">
+                        <input type="range" id="jpegQuality" min="1" max="100" value="100" oninput="render(); document.getElementById('jpegVal').textContent=this.value+'%'">
+                        <span class="range-val" id="jpegVal">100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OVERLAYS -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h3>Overlays</h3>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="section-body">
+                    <div class="overlay-chips">
+                        <div class="overlay-chip" onclick="toggleOverlay('emoji', this)">Emoji Rain</div>
+                        <div class="overlay-chip" onclick="toggleOverlay('brand', this)">JJ Riggs Stamp</div>
+                        <div class="overlay-chip" onclick="toggleOverlay('redtint', this)">Red Tint</div>
+                        <div class="overlay-chip" onclick="toggleOverlay('vignette', this)">Vignette</div>
+                        <div class="overlay-chip" onclick="toggleOverlay('scanlines', this)">Scan Lines</div>
+                        <div class="overlay-chip" onclick="toggleOverlay('noise', this)">Film Grain</div>
+                        <div class="overlay-chip" onclick="toggleOverlay('halftone', this)">Halftone</div>
+                        <div class="overlay-chip" onclick="toggleOverlay('rgb', this)">RGB Split</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM BAR -->
+        <div class="bottom-bar">
+            <div class="btn-row">
+                <button class="btn btn-red" onclick="randomize()">🎲 Randomize</button>
+                <button class="btn btn-dark" onclick="downloadMeme()">⬇ Download PNG</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CANVAS -->
+    <div class="viewport">
+        <canvas id="canvas"></canvas>
+        <div class="format-badge" id="formatBadge">1080 × 1080 · 1:1</div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// JJ RIGGS TRACTOR MEME MACHINE
+// ============================================================
+
+const FORMATS = {
+    square: { w: 1080, h: 1080, label: '1080 × 1080 · 1:1' },
+    story:  { w: 1080, h: 1920, label: '1080 × 1920 · 9:16' },
+    wide:   { w: 1920, h: 1080, label: '1920 × 1080 · 16:9' },
+};
+
+let currentFormat = 'square';
+let currentFry = 'none';
+let activeOverlays = new Set();
+let selectedImageIdx = 0;
+
+const STOCK_IMAGES = [
+    'https://jjriggsequipment.com/wp-content/uploads/2026/01/3025-1.png',
+    'https://jjriggsequipment.com/wp-content/uploads/2026/01/t5075_features-image-shadow_optimized_v2.png',
+    'https://jjriggsequipment.com/wp-content/uploads/2026/01/4058-tym-2515_3015_3515_4215_4815_frontleft_optimized.png',
+    'https://jjriggsequipment.com/wp-content/uploads/2026/01/t3025_composition2_image_optimized.png',
+    'https://jjriggsequipment.com/wp-content/uploads/2024/10/IMG_4255.jpg',
+    'https://jjriggsequipment.com/wp-content/uploads/2024/09/jj-home-slider.jpg',
+];
+
+const LOGO_URL = 'https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png';
+
+const PRESETS = [
+    { top: 'WHEN THE DEALER SAYS', bottom: '$0 DOWN FOR 90 MONTHS' },
+    { top: 'NOBODY:', bottom: 'MY NEIGHBOR AT 6AM ON SATURDAY' },
+    { top: 'THAT FEELING WHEN', bottom: 'THE NEW TRACTOR ARRIVES' },
+    { top: "ME: I DON'T NEED A TRACTOR", bottom: 'ALSO ME:' },
+    { top: "YOUR LAWN ISN'T", bottom: 'GOING TO MOW ITSELF' },
+    { top: 'POV:', bottom: "YOU JUST GOT 0% APR" },
+    { top: 'OTHER DEALERS:', bottom: 'JJ RIGGS:' },
+    { top: 'IRON', bottom: 'BEATS EXCUSES' },
+    { top: "SHE SAID IT'S ME OR THE TRACTOR", bottom: 'I MISS HER SOMETIMES' },
+    { top: 'REAL STEEL', bottom: 'REAL DEALS' },
+    { top: 'THEY SEE ME ROLLIN', bottom: 'ON MY TYM T3025' },
+    { top: "I'M NOT SAYING BUY A TRACTOR", bottom: "BUT BUY A TRACTOR" },
+];
+
+const EMOJIS = ['🚜', '💪', '🔥', '💯', '⚡', '🏆', '💰', '🤠'];
+
+let loadedImages = [];
+let logoImg = null;
+let uploadedImage = null;
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+// ----- IMAGE LOADING -----
+function loadImage(url) {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = () => {
+            // Retry without CORS
+            const fb = new Image();
+            fb.onload = () => resolve(fb);
+            fb.onerror = () => resolve(null);
+            fb.src = url;
+        };
+        img.src = url;
+    });
+}
+
+async function loadAllImages() {
+    const results = await Promise.all(STOCK_IMAGES.map(url => loadImage(url)));
+    loadedImages = results.filter(Boolean);
+    logoImg = await loadImage(LOGO_URL);
+
+    // Build image grid
+    const grid = document.getElementById('imageGrid');
+    loadedImages.forEach((img, i) => {
+        const thumb = document.createElement('img');
+        thumb.src = img.src;
+        thumb.className = i === 0 ? 'selected' : '';
+        thumb.onclick = () => {
+            selectedImageIdx = i;
+            uploadedImage = null;
+            grid.querySelectorAll('img').forEach(t => t.classList.remove('selected'));
+            thumb.classList.add('selected');
+            render();
+        };
+        grid.appendChild(thumb);
+    });
+
+    // Build preset chips
+    const presetEl = document.getElementById('presetChips');
+    PRESETS.forEach((p, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'filter-chip';
+        chip.textContent = p.bottom.substring(0, 20) + (p.bottom.length > 20 ? '...' : '');
+        chip.onclick = () => {
+            document.getElementById('topText').value = p.top;
+            document.getElementById('bottomText').value = p.bottom;
+            render();
+        };
+        presetEl.appendChild(chip);
+    });
+}
+
+function handleUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+            uploadedImage = img;
+            document.getElementById('imageGrid').querySelectorAll('img').forEach(t => t.classList.remove('selected'));
+            render();
+        };
+        img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+// ----- CANVAS -----
+function resizeCanvas() {
+    const fmt = FORMATS[currentFormat];
+    canvas.width = fmt.w;
+    canvas.height = fmt.h;
+    document.getElementById('formatBadge').textContent = fmt.label;
+    const viewport = document.querySelector('.viewport');
+    const maxW = viewport.clientWidth * 0.85;
+    const maxH = viewport.clientHeight * 0.9;
+    const scale = Math.min(maxW / fmt.w, maxH / fmt.h);
+    canvas.style.width = (fmt.w * scale) + 'px';
+    canvas.style.height = (fmt.h * scale) + 'px';
+}
+
+// ----- RENDERING -----
+function getBaseImage() {
+    if (uploadedImage) return uploadedImage;
+    return loadedImages[selectedImageIdx] || null;
+}
+
+function render() {
+    const fmt = FORMATS[currentFormat];
+    const w = fmt.w;
+    const h = fmt.h;
+
+    // Clear
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0, 0, w, h);
+
+    // Draw base image (cover)
+    const img = getBaseImage();
+    if (img) {
+        const imgAspect = img.naturalWidth / img.naturalHeight;
+        const canvasAspect = w / h;
+        let dw, dh, dx, dy;
+        if (imgAspect > canvasAspect) {
+            dh = h;
+            dw = h * imgAspect;
+            dx = (w - dw) / 2;
+            dy = 0;
+        } else {
+            dw = w;
+            dh = w / imgAspect;
+            dx = 0;
+            dy = (h - dh) / 2;
+        }
+        ctx.drawImage(img, dx, dy, dw, dh);
+    }
+
+    // Apply deep fry filter
+    applyFry(w, h);
+
+    // Apply overlays
+    if (activeOverlays.has('redtint')) {
+        ctx.fillStyle = 'rgba(182, 27, 34, 0.25)';
+        ctx.fillRect(0, 0, w, h);
+    }
+
+    if (activeOverlays.has('vignette')) {
+        const gradient = ctx.createRadialGradient(w/2, h/2, w * 0.25, w/2, h/2, w * 0.7);
+        gradient.addColorStop(0, 'transparent');
+        gradient.addColorStop(1, 'rgba(0,0,0,0.7)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, w, h);
+    }
+
+    if (activeOverlays.has('scanlines')) {
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        for (let y = 0; y < h; y += 4) {
+            ctx.fillRect(0, y, w, 2);
+        }
+    }
+
+    if (activeOverlays.has('noise')) {
+        const imageData = ctx.getImageData(0, 0, w, h);
+        const d = imageData.data;
+        for (let i = 0; i < d.length; i += 8) {
+            const noise = (Math.random() - 0.5) * 60;
+            d[i] += noise;
+            d[i + 1] += noise;
+            d[i + 2] += noise;
+        }
+        ctx.putImageData(imageData, 0, 0);
+    }
+
+    if (activeOverlays.has('halftone')) {
+        drawHalftone(w, h);
+    }
+
+    if (activeOverlays.has('rgb')) {
+        applyRGBSplit(w, h);
+    }
+
+    // Draw meme text
+    drawMemeText(w, h);
+
+    // Draw overlays on top of text
+    if (activeOverlays.has('emoji')) {
+        drawEmojiRain(w, h);
+    }
+
+    if (activeOverlays.has('brand')) {
+        drawBrandStamp(w, h);
+    }
+}
+
+function applyFry(w, h) {
+    if (currentFry === 'none') return;
+
+    const levels = {
+        light:   { sat: 180, con: 140, jpeg: 60 },
+        medium:  { sat: 280, con: 200, jpeg: 30 },
+        deep:    { sat: 400, con: 300, jpeg: 12 },
+        nuclear: { sat: 500, con: 400, jpeg: 3 },
+    };
+
+    const level = levels[currentFry];
+    if (!level) return;
+
+    // Update sliders to match
+    document.getElementById('saturation').value = level.sat;
+    document.getElementById('satVal').textContent = level.sat + '%';
+    document.getElementById('contrast').value = level.con;
+    document.getElementById('conVal').textContent = level.con + '%';
+    document.getElementById('jpegQuality').value = level.jpeg;
+    document.getElementById('jpegVal').textContent = level.jpeg + '%';
+
+    applyFilters(w, h, level.sat, level.con, level.jpeg);
+}
+
+function applyFilters(w, h, sat, con, jpeg) {
+    // Apply saturation & contrast via a temp canvas with CSS filter
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = w;
+    tempCanvas.height = h;
+    const tCtx = tempCanvas.getContext('2d');
+    tCtx.filter = `saturate(${sat}%) contrast(${con}%)`;
+    tCtx.drawImage(canvas, 0, 0);
+
+    // JPEG crunch: export to jpeg at low quality and re-import
+    if (jpeg < 100) {
+        const jpegUrl = tempCanvas.toDataURL('image/jpeg', jpeg / 100);
+        const jpegImg = new Image();
+        jpegImg.onload = () => {
+            ctx.drawImage(jpegImg, 0, 0, w, h);
+        };
+        jpegImg.src = jpegUrl;
+        // Synchronous fallback: just draw the filtered version
+        ctx.drawImage(tempCanvas, 0, 0);
+    } else {
+        ctx.drawImage(tempCanvas, 0, 0);
+    }
+}
+
+function drawHalftone(w, h) {
+    const dotSize = 6;
+    const spacing = 12;
+    ctx.save();
+    const imageData = ctx.getImageData(0, 0, w, h);
+    ctx.fillStyle = '#000';
+    ctx.globalAlpha = 0.15;
+    for (let y = 0; y < h; y += spacing) {
+        for (let x = 0; x < w; x += spacing) {
+            const idx = (y * w + x) * 4;
+            const brightness = (imageData.data[idx] + imageData.data[idx+1] + imageData.data[idx+2]) / 3;
+            const radius = (1 - brightness / 255) * dotSize;
+            if (radius > 0.5) {
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+    ctx.restore();
+}
+
+function applyRGBSplit(w, h) {
+    const offset = 8;
+    const imageData = ctx.getImageData(0, 0, w, h);
+    const copy = new Uint8ClampedArray(imageData.data);
+
+    for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+            const idx = (y * w + x) * 4;
+            // Shift red channel left
+            const rIdx = (y * w + Math.min(x + offset, w - 1)) * 4;
+            imageData.data[idx] = copy[rIdx];
+            // Shift blue channel right
+            const bIdx = (y * w + Math.max(x - offset, 0)) * 4;
+            imageData.data[idx + 2] = copy[bIdx + 2];
+        }
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
+function drawMemeText(w, h) {
+    const topText = document.getElementById('topText').value.toUpperCase();
+    const bottomText = document.getElementById('bottomText').value.toUpperCase();
+    const baseFontSize = parseInt(document.getElementById('fontSize').value) || 80;
+
+    // Scale font size relative to canvas
+    const scale = Math.min(w, h) / 1080;
+    const fontSize = Math.round(baseFontSize * scale);
+
+    ctx.save();
+    ctx.textAlign = 'center';
+
+    // Impact-style text rendering
+    function drawImpactText(text, x, y, maxWidth) {
+        if (!text) return;
+        ctx.font = `900 ${fontSize}px 'Oswald', Impact, sans-serif`;
+
+        // Word wrap
+        const words = text.split(' ');
+        const lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            const test = currentLine ? currentLine + ' ' + word : word;
+            if (ctx.measureText(test).width > maxWidth && currentLine) {
+                lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine = test;
+            }
+        });
+        if (currentLine) lines.push(currentLine);
+
+        const lineHeight = fontSize * 1.15;
+        lines.forEach((line, i) => {
+            const ly = y + i * lineHeight;
+            // Black outline (thick)
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = Math.max(fontSize * 0.12, 4);
+            ctx.lineJoin = 'round';
+            ctx.strokeText(line, x, ly);
+            // White fill
+            ctx.fillStyle = '#fff';
+            ctx.fillText(line, x, ly);
+        });
+
+        return lines.length * lineHeight;
+    }
+
+    const pad = h * 0.06;
+    const maxW = w * 0.9;
+
+    // Top text
+    ctx.textBaseline = 'top';
+    drawImpactText(topText, w / 2, pad, maxW);
+
+    // Bottom text
+    ctx.textBaseline = 'alphabetic';
+    // Calculate how many lines bottom text needs, position from bottom
+    ctx.font = `900 ${fontSize}px 'Oswald', Impact, sans-serif`;
+    const botWords = bottomText.split(' ');
+    const botLines = [];
+    let cl = '';
+    botWords.forEach(word => {
+        const test = cl ? cl + ' ' + word : word;
+        if (ctx.measureText(test).width > maxW && cl) {
+            botLines.push(cl);
+            cl = word;
+        } else {
+            cl = test;
+        }
+    });
+    if (cl) botLines.push(cl);
+
+    const botLineHeight = fontSize * 1.15;
+    const botStartY = h - pad - (botLines.length - 1) * botLineHeight;
+    botLines.forEach((line, i) => {
+        const ly = botStartY + i * botLineHeight;
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = Math.max(fontSize * 0.12, 4);
+        ctx.lineJoin = 'round';
+        ctx.strokeText(line, w / 2, ly);
+        ctx.fillStyle = '#fff';
+        ctx.fillText(line, w / 2, ly);
+    });
+
+    ctx.restore();
+}
+
+function drawEmojiRain(w, h) {
+    ctx.save();
+    ctx.font = `${Math.round(w * 0.06)}px serif`;
+    ctx.textAlign = 'center';
+    ctx.globalAlpha = 0.7;
+    // Seed a consistent set of random positions
+    const seed = (topText + bottomText).length;
+    for (let i = 0; i < 15; i++) {
+        const pseudoRand = ((seed * 17 + i * 31) % 100) / 100;
+        const pseudoRand2 = ((seed * 13 + i * 47) % 100) / 100;
+        const x = pseudoRand * w;
+        const y = pseudoRand2 * h;
+        const emoji = EMOJIS[i % EMOJIS.length];
+        const rot = (pseudoRand - 0.5) * 0.6;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rot);
+        ctx.fillText(emoji, 0, 0);
+        ctx.restore();
+    }
+    ctx.restore();
+}
+
+function drawBrandStamp(w, h) {
+    if (!logoImg) return;
+    ctx.save();
+    // Diagonal stamp in bottom-right
+    const stampW = w * 0.3;
+    const stampH = stampW * (logoImg.naturalHeight / logoImg.naturalWidth);
+    ctx.globalAlpha = 0.5;
+    ctx.translate(w - stampW * 0.6, h - stampH * 1.5);
+    ctx.rotate(-0.15);
+    ctx.drawImage(logoImg, 0, 0, stampW, stampH);
+    ctx.restore();
+}
+
+// ----- UI -----
+function toggleSection(header) {
+    header.parentElement.classList.toggle('collapsed');
+}
+
+function setFormat(fmt, btn) {
+    currentFormat = fmt;
+    btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    resizeCanvas();
+    render();
+}
+
+function setFryLevel(level, chip) {
+    currentFry = level;
+    chip.parentElement.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    render();
+}
+
+function toggleOverlay(name, chip) {
+    if (activeOverlays.has(name)) {
+        activeOverlays.delete(name);
+        chip.classList.remove('active');
+    } else {
+        activeOverlays.add(name);
+        chip.classList.add('active');
+    }
+    render();
+}
+
+function randomize() {
+    // Random image
+    selectedImageIdx = Math.floor(Math.random() * loadedImages.length);
+    uploadedImage = null;
+    document.getElementById('imageGrid').querySelectorAll('img').forEach((t, i) => {
+        t.classList.toggle('selected', i === selectedImageIdx);
+    });
+
+    // Random preset
+    const preset = PRESETS[Math.floor(Math.random() * PRESETS.length)];
+    document.getElementById('topText').value = preset.top;
+    document.getElementById('bottomText').value = preset.bottom;
+
+    // Random fry level
+    const fryLevels = ['none', 'light', 'medium', 'deep', 'nuclear'];
+    const fry = fryLevels[Math.floor(Math.random() * fryLevels.length)];
+    currentFry = fry;
+    document.querySelectorAll('.section:nth-child(4) .filter-chip').forEach((c, i) => {
+        c.classList.toggle('active', fryLevels[i] === fry);
+    });
+
+    // Random overlays (0-3)
+    activeOverlays.clear();
+    const overlayNames = ['emoji', 'brand', 'redtint', 'vignette', 'scanlines', 'noise', 'halftone', 'rgb'];
+    const numOverlays = Math.floor(Math.random() * 4);
+    const shuffled = overlayNames.sort(() => Math.random() - 0.5);
+    for (let i = 0; i < numOverlays; i++) {
+        activeOverlays.add(shuffled[i]);
+    }
+    document.querySelectorAll('.overlay-chip').forEach(c => {
+        const name = c.textContent.toLowerCase().replace(/\s+/g, '');
+        // Map display names to internal names
+        const nameMap = {
+            'emojirain': 'emoji', 'jjriggsstamp': 'brand', 'redtint': 'redtint',
+            'vignette': 'vignette', 'scanlines': 'scanlines', 'filmgrain': 'noise',
+            'halftone': 'halftone', 'rgbsplit': 'rgb',
+        };
+        const internal = nameMap[name] || name;
+        c.classList.toggle('active', activeOverlays.has(internal));
+    });
+
+    // Random font size
+    const fontSize = 60 + Math.floor(Math.random() * 80);
+    document.getElementById('fontSize').value = fontSize;
+    document.getElementById('fontSizeVal').textContent = fontSize + 'px';
+
+    render();
+}
+
+function downloadMeme() {
+    // Re-render at full quality first
+    render();
+
+    setTimeout(() => {
+        try {
+            const link = document.createElement('a');
+            const fmt = currentFormat;
+            link.download = `jjriggs-meme-${fmt}-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (e) {
+            // Canvas tainted — use jpeg fallback from a re-render
+            alert('Download failed — try using an uploaded image instead of a URL image, or right-click the canvas and "Save Image As".');
+        }
+    }, 100);
+}
+
+// ----- INIT -----
+window.addEventListener('resize', () => { resizeCanvas(); render(); });
+
+async function init() {
+    resizeCanvas();
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    await document.fonts.ready;
+    await loadAllImages();
+
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    render();
+}
+
+init();
+</script>
+</body>
+</html>
