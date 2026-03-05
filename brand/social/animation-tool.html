@@ -277,6 +277,36 @@
             accent-color: var(--red);
         }
 
+        /* Logo Previews */
+        .logo-preview-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .logo-preview {
+            flex: 1;
+            padding: 10px 6px 6px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .logo-preview img {
+            max-width: 100%;
+            max-height: 40px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 4px;
+        }
+
+        .logo-preview span {
+            font-size: 9px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
         /* Flipbook Controls */
         .flip-speed-row {
             display: flex;
@@ -526,6 +556,21 @@
                         <label class="logo-chip"><input type="checkbox" value="tym" onchange="updateLogoSelection()"> TYM</label>
                         <label class="logo-chip"><input type="checkbox" value="badboy" onchange="updateLogoSelection()"> Bad Boy</label>
                     </div>
+                    <label style="margin-top:12px">Logo Variant</label>
+                    <div class="toggle-group" style="margin-top:4px">
+                        <button class="toggle-btn active" onclick="setLogoVariant('white', this)">White</button>
+                        <button class="toggle-btn" onclick="setLogoVariant('red', this)">Red</button>
+                    </div>
+                    <div class="logo-preview-row" id="logoPreviewRow">
+                        <div class="logo-preview" style="background:#0a0a0a">
+                            <img id="previewJjriggs" src="https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png" alt="JJ Riggs">
+                            <span>JJ Riggs</span>
+                        </div>
+                        <div class="logo-preview" style="background:#0a0a0a">
+                            <img id="previewTym" src="https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png" alt="TYM">
+                            <span>TYM</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -722,13 +767,15 @@ const FORMATS = {
 let currentFormat = 'reels';
 let salesBgColor = 'black';
 let selectedLogos = ['jjriggs']; // 'jjriggs', 'tym', 'badboy'
+let logoVariant = 'white'; // 'white' or 'red'
 let introParticles = [];
 
 // ----- IMAGES -----
 const IMAGE_URLS = {
     logo: 'https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png',
-    logoStd: 'https://jjriggsequipment.com/wp-content/uploads/2024/09/JJ-Riggs-Equipment-white-outline-logo-1024x310.png',
+    logoRed: 'https://jjriggsequipment.com/wp-content/uploads/2024/09/JJ-Riggs-Equipment-white-outline-logo-1024x310.png',
     tymLogo: 'https://jjriggsequipment.com/wp-content/uploads/2025/12/tym1.png',
+    tymLogoRed: 'https://jjriggsequipment.com/wp-content/uploads/2024/09/tym-1.png',
     tractors: [
         'https://jjriggsequipment.com/wp-content/uploads/2026/01/3025-1.png',
         'https://jjriggsequipment.com/wp-content/uploads/2026/01/t5075_features-image-shadow_optimized_v2.png',
@@ -759,8 +806,9 @@ async function loadImages() {
 
     await Promise.all([
         load('logo', IMAGE_URLS.logo),
-        load('logoStd', IMAGE_URLS.logoStd),
+        load('logoRed', IMAGE_URLS.logoRed),
         load('tymLogo', IMAGE_URLS.tymLogo),
+        load('tymLogoRed', IMAGE_URLS.tymLogoRed),
         ...IMAGE_URLS.tractors.map((url, i) => loadTractor(url, i)),
     ]);
 
@@ -947,7 +995,7 @@ function drawScene_logo(ctx, p, w, h) {
 
     // Phase 3: Logo SLAM with screen shake (15-60%)
     const logoP = clamp((p - 0.15) / 0.45, 0, 1);
-    const logo = selectedLogos.includes('jjriggs') ? images.logo : null;
+    const logo = selectedLogos.includes('jjriggs') ? getActiveLogo('jjriggs') : null;
     const logoY = h * 0.38;
     if (logo && logoP > 0) {
         const scaleP = easeOutBack(logoP);
@@ -988,8 +1036,8 @@ function drawScene_logo(ctx, p, w, h) {
         ctx.globalAlpha = easeInOutCubic(partnerP);
         const partnerY = logoY + 120;
         const partnerLogos = [];
-        if (selectedLogos.includes('tym') && images.tymLogo) partnerLogos.push(images.tymLogo);
-        if (selectedLogos.includes('badboy') && images.badBoyLogo) partnerLogos.push(images.badBoyLogo);
+        if (selectedLogos.includes('tym')) { const tl = getActiveLogo('tym'); if (tl) partnerLogos.push(tl); }
+        if (selectedLogos.includes('badboy')) { const bl = getActiveLogo('badboy'); if (bl) partnerLogos.push(bl); }
 
         if (partnerLogos.length > 0) {
             const totalGap = partnerLogos.length > 1 ? w * 0.15 : 0;
@@ -1474,9 +1522,9 @@ function drawScene_cta(ctx, p, w, h) {
     const lp = easeInOutCubic(clamp(p / 0.4, 0, 1));
     const yDrift = 20 * (1 - lp);
     const ctaLogos = [];
-    if (selectedLogos.includes('jjriggs') && images.logo) ctaLogos.push(images.logo);
-    if (selectedLogos.includes('tym') && images.tymLogo) ctaLogos.push(images.tymLogo);
-    if (selectedLogos.includes('badboy') && images.badBoyLogo) ctaLogos.push(images.badBoyLogo);
+    if (selectedLogos.includes('jjriggs')) { const l = getActiveLogo('jjriggs'); if (l) ctaLogos.push(l); }
+    if (selectedLogos.includes('tym')) { const l = getActiveLogo('tym'); if (l) ctaLogos.push(l); }
+    if (selectedLogos.includes('badboy')) { const l = getActiveLogo('badboy'); if (l) ctaLogos.push(l); }
     if (ctaLogos.length === 0 && images.logo) ctaLogos.push(images.logo);
 
     if (ctaLogos.length > 0) {
@@ -1905,6 +1953,35 @@ function updateLogoSelection() {
         }
     });
     if (selectedLogos.length === 0) selectedLogos = ['jjriggs'];
+    updateLogoPreviews();
+}
+
+function setLogoVariant(variant, btn) {
+    logoVariant = variant;
+    const group = btn.parentElement;
+    group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    updateLogoPreviews();
+}
+
+function updateLogoPreviews() {
+    const jjPreview = document.getElementById('previewJjriggs');
+    const tymPreview = document.getElementById('previewTym');
+    if (jjPreview) {
+        jjPreview.src = logoVariant === 'red' ? IMAGE_URLS.logoRed : IMAGE_URLS.logo;
+        jjPreview.parentElement.style.background = logoVariant === 'red' ? '#1a1a1a' : '#0a0a0a';
+    }
+    if (tymPreview) {
+        tymPreview.src = logoVariant === 'red' ? IMAGE_URLS.tymLogoRed : IMAGE_URLS.tymLogo;
+        tymPreview.parentElement.style.background = logoVariant === 'red' ? '#1a1a1a' : '#0a0a0a';
+    }
+}
+
+function getActiveLogo(brand) {
+    if (brand === 'jjriggs') return logoVariant === 'red' ? images.logoRed : images.logo;
+    if (brand === 'tym') return logoVariant === 'red' ? images.tymLogoRed : images.tymLogo;
+    if (brand === 'badboy') return images.badBoyLogo;
+    return null;
 }
 
 // ----- INIT -----
