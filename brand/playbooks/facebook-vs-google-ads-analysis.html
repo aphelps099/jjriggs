@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook vs Google Ads Analysis | JJ Riggs Equipment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --red: #b61b22;
+            --bg: #0a0a0a;
+            --card-bg: #111111;
+            --border: #222;
+            --green: #2d8a4e;
+            --blue: #2563eb;
+            --amber: #d97706;
+            --purple: #7c3aed;
+            --gray: #78828e;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: #cccccc;
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+            padding: 80px 40px 60px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        h1 span { color: var(--red); }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .section:last-child { border-bottom: none; }
+
+        .section-number {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--red);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 30px 0 15px 0;
+        }
+
+        p { margin-bottom: 16px; font-size: 15px; }
+
+        strong { color: #ffffff; }
+
+        ul, ol { margin: 16px 0; padding-left: 24px; }
+        li { margin-bottom: 8px; font-size: 14px; }
+
+        .verdict-box {
+            background: linear-gradient(135deg, rgba(182, 27, 34, 0.12), rgba(182, 27, 34, 0.04));
+            border: 2px solid rgba(182, 27, 34, 0.4);
+            border-radius: 12px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .verdict-box h2 {
+            color: var(--red);
+            margin-bottom: 16px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px;
+        }
+
+        .card-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .card-label.red { color: var(--red); }
+        .card-label.blue { color: var(--blue); }
+        .card-label.green { color: var(--green); }
+        .card-label.amber { color: var(--amber); }
+
+        .card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 0 12px 0;
+        }
+
+        .card p, .card li { font-size: 14px; color: #999; }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        .compare-table th {
+            text-align: left;
+            padding: 14px 16px;
+            background: #1a1a1a;
+            color: #fff;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .compare-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #1a1a1a;
+            color: #aaa;
+        }
+
+        .compare-table .winner { color: var(--green); font-weight: 600; }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(45, 138, 78, 0.1), rgba(45, 138, 78, 0.05));
+            border: 1px solid rgba(45, 138, 78, 0.3);
+            border-radius: 8px;
+            padding: 24px 28px;
+            margin: 24px 0;
+        }
+
+        .highlight.red {
+            background: linear-gradient(135deg, rgba(182, 27, 34, 0.1), rgba(182, 27, 34, 0.05));
+            border-color: rgba(182, 27, 34, 0.3);
+        }
+
+        .highlight.blue {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05));
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        .highlight p { color: #ccc; margin-bottom: 0; }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .phase-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .phase-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1a1a1a;
+            position: absolute;
+            top: 12px;
+            right: 16px;
+        }
+
+        .phase-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .phase-card p {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #444;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 28px; }
+            .card-grid, .phase-grid { grid-template-columns: 1fr; }
+            .header { padding: 40px 20px; }
+            .container { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-inner">
+            <div class="badge">Ad Platform Analysis</div>
+            <h1>Facebook Ads vs Google Ads<br><span>for JJ Riggs Equipment</span></h1>
+            <p class="subtitle">Which platform makes more sense for a rural tractor dealership in Stevens County, WA? Here's the honest breakdown.</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- VERDICT -->
+        <div class="verdict-box">
+            <h2>The Short Answer</h2>
+            <p><strong>Facebook (Meta) ads are the better primary platform for JJ Riggs right now.</strong> Google Ads has a role, but it's secondary. Here's why: nobody is Googling "JJ Riggs" yet at scale. Your job is to create demand in a 75-mile radius, not capture existing demand. That's Facebook's entire strength.</p>
+            <p>The right move: <strong>Lead with Facebook. Layer in Google strategically.</strong> Don't choose one. Sequence them correctly.</p>
+        </div>
+
+        <!-- 01: WHAT EACH PLATFORM DOES -->
+        <div class="section">
+            <div class="section-number">01 &mdash; What Each Platform Actually Does</div>
+            <h2>Different Jobs, Different Strengths</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-label blue">Facebook / Meta Ads</div>
+                    <h4>Creates Demand</h4>
+                    <p>People aren't searching for tractors. They're scrolling. You interrupt them with something that stops the scroll &mdash; a TYM on dirt, a $199/mo price tag, a "your neighbor just bought one" testimonial.</p>
+                    <ul>
+                        <li>Builds brand awareness from zero</li>
+                        <li>Visual storytelling (equipment on real property)</li>
+                        <li>Precise geographic + interest targeting</li>
+                        <li>Geofencing competitor lots</li>
+                        <li>Retargeting warm audiences</li>
+                        <li>Cheap to test ($10-20/day to learn)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-label amber">Google Ads</div>
+                    <h4>Captures Demand</h4>
+                    <p>Someone types "tractor dealer near Colville WA" or "TYM tractors for sale." They already want what you sell. Google puts you in front of them at the exact moment of intent.</p>
+                    <ul>
+                        <li>Captures high-intent search traffic</li>
+                        <li>Works when people already know the category</li>
+                        <li>"Near me" and local searches</li>
+                        <li>Google Maps / Local Service Ads</li>
+                        <li>Higher cost-per-click in competitive keywords</li>
+                        <li>No visual storytelling &mdash; just text</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 02: WHY FACEBOOK WINS FOR JJ RIGGS -->
+        <div class="section">
+            <div class="section-number">02 &mdash; Why Facebook Wins for JJ Riggs</div>
+            <h2>Five Reasons Facebook Is the Lead Platform</h2>
+
+            <h3>1. You're Building Awareness, Not Capturing It</h3>
+            <p>JJ Riggs is the <strong>only authorized TYM dealer in NE Washington</strong>. That's a massive advantage &mdash; but only if people know it. Most property owners within 75 miles have never heard of TYM. They don't know they can get a compact tractor for $199/mo. They're not searching for it because they don't know it exists. Facebook puts this in front of them before they ever think to Google it.</p>
+
+            <h3>2. Equipment Is Visual and Emotional</h3>
+            <p>A TYM T474 on a 10-acre plot with mountains in the background tells a story no Google text ad ever could. Carousel ads showing the full lineup. Video of iron moving dirt. Before-and-after property shots. This is <strong>scroll-stopping content</strong> that makes people want something they didn't know they needed.</p>
+
+            <h3>3. The Audience Is on Facebook</h3>
+            <p>Rural Washington, ages 35-65, property owners, farmers, ranchers, hobby homesteaders. <strong>This demographic lives on Facebook.</strong> They're in local buy/sell groups. They share posts about equipment. They scroll in the evening after a day of work. This is where you meet them.</p>
+
+            <h3>4. Geofencing Is a Competitive Weapon</h3>
+            <p>You can target people who physically visited a Kubota or John Deere dealer. When they open Facebook later, they see: <strong>"Before you overpay for a Kubota, check out TYM. Same power. Half the payment."</strong> Google can't do this. This is Facebook-only territory, and it's one of the most powerful plays in the equipment space.</p>
+
+            <h3>5. Lower Cost to Test and Learn</h3>
+            <p>Google Ads for "tractor dealer" keywords in a competitive market can run $5-15+ per click. Facebook can reach 1,000 targeted property owners for $5-10. At your budget level ($85-155/day across campaigns), Facebook gives you 5-10x more reach and data than Google would.</p>
+        </div>
+
+        <!-- 03: HEAD-TO-HEAD -->
+        <div class="section">
+            <div class="section-number">03 &mdash; Head-to-Head Comparison</div>
+            <h2>Platform Comparison for JJ Riggs Specifically</h2>
+
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Facebook</th>
+                        <th>Google</th>
+                        <th>Winner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Brand awareness</strong></td>
+                        <td>Visual, scroll-stopping, builds from zero</td>
+                        <td>Only captures existing searches</td>
+                        <td class="winner">Facebook</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost per impression</strong></td>
+                        <td>$5-15 CPM (cost per 1,000 views)</td>
+                        <td>$2-8 per click, no passive views</td>
+                        <td class="winner">Facebook</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rural targeting</strong></td>
+                        <td>Interests, behaviors, geo, geofencing</td>
+                        <td>Keywords + location only</td>
+                        <td class="winner">Facebook</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Competitor conquesting</strong></td>
+                        <td>Geofence their lots, retarget visitors</td>
+                        <td>Bid on their brand names (expensive)</td>
+                        <td class="winner">Facebook</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Creative storytelling</strong></td>
+                        <td>Photos, video, carousels, reels</td>
+                        <td>Text ads, limited visuals</td>
+                        <td class="winner">Facebook</td>
+                    </tr>
+                    <tr>
+                        <td><strong>High-intent buyers</strong></td>
+                        <td>Retargeting only (lower intent cold)</td>
+                        <td>People actively searching to buy</td>
+                        <td class="winner">Google</td>
+                    </tr>
+                    <tr>
+                        <td><strong>"Near me" searches</strong></td>
+                        <td>Not applicable</td>
+                        <td>Maps, local pack, direct calls</td>
+                        <td class="winner">Google</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Service/repair leads</strong></td>
+                        <td>Less natural for urgent needs</td>
+                        <td>"Tractor repair near me" = high intent</td>
+                        <td class="winner">Google</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Retargeting</strong></td>
+                        <td>Pixel-based, video viewers, engagers</td>
+                        <td>Display network (lower quality)</td>
+                        <td class="winner">Facebook</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Budget efficiency at $100-150/day</strong></td>
+                        <td>Full funnel coverage possible</td>
+                        <td>Burns through fast on broad keywords</td>
+                        <td class="winner">Facebook</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight">
+                <p><strong>Score: Facebook 7, Google 3.</strong> Facebook wins on nearly every factor that matters for JJ Riggs at this stage: awareness, visual storytelling, rural targeting, competitor conquesting, and budget efficiency. Google wins only on high-intent search capture &mdash; which matters, but is secondary when you're still building the brand.</p>
+            </div>
+        </div>
+
+        <!-- 04: WHERE GOOGLE FITS -->
+        <div class="section">
+            <div class="section-number">04 &mdash; Where Google Ads Makes Sense</div>
+            <h2>Don't Ignore Google. Use It Strategically.</h2>
+
+            <p>Google isn't wrong for JJ Riggs &mdash; it's just not the lead platform. Here's where it earns its spot:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-label green">High Value</div>
+                    <h4>Brand Search Capture</h4>
+                    <p>As Facebook builds awareness, people will Google "JJ Riggs" or "JJ Riggs Equipment Colville." A cheap brand search campaign ($5-10/day) ensures you own those clicks &mdash; not a competitor or aggregator.</p>
+                </div>
+                <div class="card">
+                    <div class="card-label green">High Value</div>
+                    <h4>Google Business Profile</h4>
+                    <p>Free. Already working for you (4.9 stars, 47 reviews). Keep feeding it with reviews, photos, and posts. This shows up in "tractor dealer near me" searches without paying a dime.</p>
+                </div>
+                <div class="card">
+                    <div class="card-label amber">Medium Value</div>
+                    <h4>Local Service Keywords</h4>
+                    <p>"Tractor repair Colville" or "equipment service Stevens County" &mdash; these are urgent, high-intent searches. A small budget here captures people who need you right now.</p>
+                </div>
+                <div class="card">
+                    <div class="card-label amber">Medium Value</div>
+                    <h4>TYM Brand Keywords</h4>
+                    <p>"TYM tractors for sale" or "TYM dealer Washington" &mdash; low volume but high intent. People searching the brand name are serious. Cheap to own these keywords since competition is low.</p>
+                </div>
+            </div>
+
+            <div class="highlight red">
+                <p><strong>What to avoid on Google:</strong> Don't bid on broad keywords like "tractors" or "farm equipment." These are national-level battles with $10-20+ per click. You'll burn your budget in hours competing against John Deere and Kubota's corporate ad spend. Stay hyperlocal and brand-specific.</p>
+            </div>
+        </div>
+
+        <!-- 05: THE RIGHT SEQUENCE -->
+        <div class="section">
+            <div class="section-number">05 &mdash; The Right Sequence</div>
+            <h2>How to Layer Both Platforms</h2>
+
+            <div class="phase-grid">
+                <div class="phase-card">
+                    <div class="phase-number">1</div>
+                    <div class="card-label red">Now</div>
+                    <h4>Lead with Facebook</h4>
+                    <p>Run the full Facebook strategy: TYM to ROLL, geofencing, implements, seasonal campaigns, retargeting. This is your primary engine for building awareness and driving lot traffic. Allocate 80-90% of ad budget here.</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">2</div>
+                    <div class="card-label amber">Layer In</div>
+                    <h4>Add Google Brand + Local</h4>
+                    <p>Set up a small Google campaign ($10-15/day) to capture brand searches and local service keywords. Optimize your Google Business Profile. This catches the people Facebook warms up.</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">3</div>
+                    <div class="card-label green">Scale Later</div>
+                    <h4>Expand Google When Ready</h4>
+                    <p>Once JJ Riggs is a known name in the region and search volume grows, expand Google spend on category keywords. But only when the data justifies it &mdash; not before.</p>
+                </div>
+            </div>
+
+            <h3>Recommended Budget Split</h3>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>% of Budget</th>
+                        <th>Daily Spend</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Facebook / Meta</strong></td>
+                        <td class="winner">80-85%</td>
+                        <td>$85-130/day</td>
+                        <td>Awareness, consideration, retargeting, geofencing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Ads</strong></td>
+                        <td>10-15%</td>
+                        <td>$10-20/day</td>
+                        <td>Brand search, local service keywords, TYM keywords</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Business Profile</strong></td>
+                        <td>Free</td>
+                        <td>$0</td>
+                        <td>Reviews, photos, posts &mdash; organic local visibility</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 06: BOTTOM LINE -->
+        <div class="section">
+            <div class="section-number">06 &mdash; Bottom Line</div>
+            <h2>The Verdict for JJ Riggs</h2>
+
+            <div class="highlight">
+                <p><strong>Facebook is your offense. Google is your defense.</strong></p>
+            </div>
+
+            <p>Facebook creates demand where none exists. It turns property owners who've never heard of TYM into people who want one. It geofences your competitors. It builds a retargetable audience you own. It does all of this with visual content that resonates with your exact buyer demographic in rural NE Washington.</p>
+
+            <p>Google captures the demand Facebook creates. When someone sees your ad, thinks about it for a week, then Googles "JJ Riggs Colville" &mdash; Google makes sure they find you. But without Facebook running first, there's nothing to capture.</p>
+
+            <p><strong>For a family-owned equipment dealer in Stevens County building regional awareness: Facebook first, Google second. Not either/or &mdash; both, in the right order.</strong></p>
+
+            <div class="highlight blue">
+                <p><strong>Already built and ready to go:</strong> JJ Riggs already has a complete Facebook Ads master strategy, campaign playbooks, creative templates, geofencing plan, and landing pages built out. The infrastructure is there. The play is to execute it, measure results, and layer in Google as the brand grows.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>JJ Riggs Equipment &mdash; Ad Platform Analysis &mdash; 2026</p>
+    </div>
+
+</body>
+</html>
