@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Concept Generator — JJ Riggs Equipment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --red: #b61b22;
+            --red-dark: #8f151a;
+            --bg: #0a0a0a;
+            --card: #111;
+            --card-alt: #151515;
+            --border: #1e1e1e;
+            --border-hover: #333;
+            --muted: #666;
+            --dim: #444;
+            --text: #bbb;
+            --white: #fff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Header ── */
+        .hero {
+            padding: 48px 32px 40px;
+            border-bottom: 1px solid var(--border);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back { color: var(--dim); text-decoration: none; font-size: 12px; }
+        .back:hover { color: var(--red); }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--white);
+            margin: 24px 0 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 span { color: var(--red); }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 14px;
+            max-width: 640px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 3px;
+        }
+
+        .pill--red { background: rgba(182,27,34,0.15); color: var(--red); }
+        .pill--gold { background: rgba(232,166,58,0.15); color: #e8a63a; }
+        .pill--green { background: rgba(34,182,60,0.12); color: #4ade80; }
+
+        /* ── Workflow Bar ── */
+        .workflow-bar {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .workflow-bar-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .workflow-steps {
+            display: flex;
+            gap: 0;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .workflow-step:first-child { border-radius: 6px 0 0 6px; }
+        .workflow-step:last-child { border-radius: 0 6px 6px 0; }
+
+        .workflow-step .step-num {
+            width: 20px;
+            height: 20px;
+            background: var(--red);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .workflow-step.active {
+            background: rgba(182,27,34,0.1);
+            border-color: rgba(182,27,34,0.3);
+            color: var(--white);
+        }
+
+        .workflow-arrow {
+            color: var(--dim);
+            font-size: 14px;
+            padding: 0 2px;
+        }
+
+        /* ── Main Layout ── */
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 32px;
+        }
+
+        /* ── Input Panel ── */
+        .input-panel {
+            position: sticky;
+            top: 20px;
+            align-self: start;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .input-panel::-webkit-scrollbar { width: 4px; }
+        .input-panel::-webkit-scrollbar-track { background: transparent; }
+        .input-panel::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 4px; }
+
+        .panel-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .panel-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .form-hint {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: #1a1a1a;
+            color: var(--white);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .form-toggle-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .form-toggle {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .form-toggle:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+
+        .form-toggle.active {
+            background: rgba(182,27,34,0.15);
+            border-color: var(--red);
+            color: var(--white);
+        }
+
+        /* ── Presets ── */
+        .presets {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .preset-btn {
+            padding: 6px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--red);
+            color: var(--white);
+        }
+
+        /* ── Generate Button ── */
+        .generate-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: var(--red);
+            border: none;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .generate-btn:hover { background: var(--red-dark); }
+
+        .generate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ── Output Panel ── */
+        .output-panel {
+            min-width: 0;
+        }
+
+        .output-empty {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .output-empty-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(182,27,34,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .output-empty h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .output-empty p {
+            font-size: 13px;
+            color: var(--muted);
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .output-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .output-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .output-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--border-hover);
+            color: var(--white);
+        }
+
+        .copy-btn.copied {
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+
+        .output-section-body {
+            padding: 20px;
+        }
+
+        .output-text {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .output-text strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Shot list / numbered items */
+        .output-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .output-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .output-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .output-list .shot-num {
+            width: 24px;
+            height: 24px;
+            background: rgba(182,27,34,0.15);
+            color: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Guardrails */
+        .guardrails-box {
+            background: rgba(182,27,34,0.06);
+            border: 1px solid rgba(182,27,34,0.2);
+            padding: 16px 20px;
+            margin: 0 20px 20px;
+            border-radius: 4px;
+        }
+
+        .guardrails-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 8px;
+        }
+
+        .guardrails-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .guardrails-list li {
+            font-size: 12px;
+            color: var(--muted);
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guardrails-list li::before {
+            content: "✕";
+            color: var(--red);
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        /* Copy All */
+        .copy-all-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .copy-all-bar span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .copy-all-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--red);
+            border: none;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .copy-all-btn:hover { background: var(--red-dark); }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--white);
+            color: var(--bg);
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .main {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .input-panel {
+                position: static;
+                max-height: none;
+            }
+
+            .hero {
+                padding: 32px 20px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+            }
+
+            .workflow-bar {
+                padding: 16px 20px;
+            }
+
+            .workflow-steps {
+                gap: 4px;
+            }
+
+            .workflow-step {
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+
+            .workflow-arrow {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .workflow-steps {
+                flex-wrap: wrap;
+            }
+
+            .workflow-step {
+                flex: 1 1 auto;
+                border-radius: 4px !important;
+            }
+
+            .form-toggle-group {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="hero">
+        <a href="../../index.html" class="back">← Back to Brand Guide</a>
+        <h1>Ad Concept <span>Generator</span></h1>
+        <p>Enter your campaign idea and get a complete Facebook ad creative pack — video prompts, voiceover scripts, ad copy, shot lists, and text overlays — ready to drop into Higgsfield, Kling, and ElevenLabs.</p>
+        <div class="hero-badges">
+            <span class="pill pill--red">Higgsfield</span>
+            <span class="pill pill--red">Kling</span>
+            <span class="pill pill--gold">ElevenLabs</span>
+            <span class="pill pill--green">Meta Ads</span>
+        </div>
+    </header>
+
+    <!-- Workflow Bar -->
+    <div class="workflow-bar">
+        <div class="workflow-bar-label">Recommended Workflow</div>
+        <div class="workflow-steps">
+            <div class="workflow-step active">
+                <span class="step-num">1</span>
+                Generate Concept
+            </div>
+            <span class="workflow-arrow">→</span>
+            <div class="workflow-step">
+                <span class="step-num">2</span>
+                Create Visuals (Higgsfield / Kling)
+            </div>
+            <span class="workflow-arrow">→</span>
+            <div class="workflow-step">
+                <span class="step-num">3</span>
+                Generate VO (ElevenLabs)
+            </div>
+            <span class="workflow-arrow">→</span>
+            <div class="workflow-step">
+                <span class="step-num">4</span>
+                Assemble Reel &amp; Test in Meta
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main">
+
+        <!-- Input Panel -->
+        <div class="input-panel">
+
+            <!-- Quick Start Presets -->
+            <div class="panel-section">
+                <div class="panel-section-title">Quick Start Presets</div>
+                <div class="presets">
+                    <button class="preset-btn" onclick="loadPreset('warranty')">6-Year Warranty</button>
+                    <button class="preset-btn" onclick="loadPreset('spring')">Spring Work Season</button>
+                    <button class="preset-btn" onclick="loadPreset('compare')">Compare Before You Buy</button>
+                    <button class="preset-btn" onclick="loadPreset('local')">Local Dealer Trust</button>
+                </div>
+            </div>
+
+            <!-- Campaign Setup -->
+            <div class="panel-section">
+                <div class="panel-section-title">Campaign Setup</div>
+
+                <div class="form-group">
+                    <label class="form-label">Campaign Type</label>
+                    <select class="form-select" id="campaignType">
+                        <option value="">Select type…</option>
+                        <option value="awareness">Brand Awareness</option>
+                        <option value="promo">Seasonal Promotion</option>
+                        <option value="competitive">Competitive Comparison</option>
+                        <option value="testimonial">Customer Story / Testimonial</option>
+                        <option value="product">Product Spotlight</option>
+                        <option value="event">Event / Open House</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Main Product</label>
+                    <select class="form-select" id="mainProduct">
+                        <option value="">Select product…</option>
+                        <option value="TYM T25">TYM T25 (25 HP Sub-Compact)</option>
+                        <option value="TYM T39">TYM T39 (39 HP Compact)</option>
+                        <option value="TYM T47">TYM T47 (47 HP Compact)</option>
+                        <option value="TYM T57">TYM T57 (57 HP Utility)</option>
+                        <option value="TYM T75">TYM T75 (75 HP Utility)</option>
+                        <option value="TYM Lineup">Full TYM Lineup</option>
+                        <option value="Implements">Implements & Attachments</option>
+                        <option value="Iron Craft">Iron Craft Implements</option>
+                        <option value="Braber">Braber Equipment</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Main Offer</label>
+                    <span class="form-hint">e.g. "0% for 60 months," "Free loader included," "Spring pricing"</span>
+                    <input type="text" class="form-input" id="mainOffer" placeholder="What's the deal or hook?">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Season</label>
+                    <select class="form-select" id="season">
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                        <option value="Fall">Fall</option>
+                        <option value="Winter">Winter</option>
+                        <option value="Year-Round">Year-Round</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Audience & Tone -->
+            <div class="panel-section">
+                <div class="panel-section-title">Audience &amp; Tone</div>
+
+                <div class="form-group">
+                    <label class="form-label">Target Audience</label>
+                    <select class="form-select" id="audience">
+                        <option value="Rural property owners (2-20 acres) in NE Washington">Rural property owners (2-20 acres)</option>
+                        <option value="Small hobby farmers and homesteaders">Hobby farmers &amp; homesteaders</option>
+                        <option value="First-time tractor buyers doing research">First-time tractor buyers</option>
+                        <option value="Landowners comparing compact tractor brands">Brand comparison shoppers</option>
+                        <option value="People who just moved to acreage in Stevens County">New-to-acreage owners</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tone</label>
+                    <div class="form-toggle-group">
+                        <button class="form-toggle active" data-field="tone" data-value="Straight-talk, local, confident">Straight Talk</button>
+                        <button class="form-toggle" data-field="tone" data-value="Warm, neighborly, family-business">Neighborly</button>
+                        <button class="form-toggle" data-field="tone" data-value="Bold, competitive, direct comparison">Bold / Competitive</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Call to Action</label>
+                    <select class="form-select" id="cta">
+                        <option value="Stop by JJ Riggs — Colville, WA">Stop by JJ Riggs</option>
+                        <option value="Call Andrew at JJ Riggs — (509) 684-7prior">Call Andrew</option>
+                        <option value="Schedule a test drive at JJ Riggs — Colville, WA">Schedule a Test Drive</option>
+                        <option value="Get a quote at jjriggsequipment.com">Get a Quote Online</option>
+                        <option value="See the full TYM lineup at JJ Riggs — Colville, WA">See the Lineup</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Creative Details -->
+            <div class="panel-section">
+                <div class="panel-section-title">Creative Details</div>
+
+                <div class="form-group">
+                    <label class="form-label">Aspect Ratio</label>
+                    <div class="form-toggle-group">
+                        <button class="form-toggle active" data-field="aspect" data-value="9:16">9:16 Reel</button>
+                        <button class="form-toggle" data-field="aspect" data-value="1:1">1:1 Square</button>
+                        <button class="form-toggle" data-field="aspect" data-value="16:9">16:9 Wide</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Real Footage Available?</label>
+                    <div class="form-toggle-group">
+                        <button class="form-toggle" data-field="footage" data-value="Yes — have real footage of the dealership, tractors, and local area">Yes</button>
+                        <button class="form-toggle active" data-field="footage" data-value="No — generating all visuals with AI">No, AI only</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Core Concept / Idea</label>
+                    <span class="form-hint">Describe the ad in a sentence or two. What story are you telling?</span>
+                    <textarea class="form-textarea" id="coreConcept" rows="3" placeholder="e.g. Show a first-time acreage owner discovering what their TYM can actually do — clearing land, moving gravel, plowing snow — all on 5 acres."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Differentiators to Emphasize</label>
+                    <span class="form-hint">What makes JJ Riggs or TYM stand out?</span>
+                    <textarea class="form-textarea" id="differentiators" rows="2" placeholder="e.g. 6-year warranty, family-owned, local service, fair pricing"></textarea>
+                </div>
+            </div>
+
+            <!-- Generate -->
+            <button class="generate-btn" id="generateBtn" onclick="generateConcept()">
+                Generate Ad Concept Pack
+            </button>
+
+        </div>
+
+        <!-- Output Panel -->
+        <div class="output-panel" id="outputPanel">
+
+            <!-- Empty State -->
+            <div class="output-empty" id="emptyState">
+                <div class="output-empty-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b61b22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                </div>
+                <h3>Ready to Generate</h3>
+                <p>Fill in your campaign details or pick a Quick Start preset, then hit Generate to build your complete ad pack.</p>
+            </div>
+
+            <!-- Generated Output (hidden until generated) -->
+            <div id="outputContent" style="display: none;"></div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Copied!</div>
+
+    <script>
+        // ── State ──
+        let selectedTone = 'Straight-talk, local, confident';
+        let selectedAspect = '9:16';
+        let selectedFootage = 'No — generating all visuals with AI';
+
+        // ── Toggle buttons ──
+        document.querySelectorAll('.form-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const field = btn.dataset.field;
+                const value = btn.dataset.value;
+
+                btn.parentElement.querySelectorAll('.form-toggle').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                if (field === 'tone') selectedTone = value;
+                if (field === 'aspect') selectedAspect = value;
+                if (field === 'footage') selectedFootage = value;
+            });
+        });
+
+        // ── Presets ──
+        const presets = {
+            warranty: {
+                campaignType: 'awareness',
+                mainProduct: 'TYM Lineup',
+                mainOffer: '6-year warranty — longest in the industry, no dealer add-ons',
+                season: 'Year-Round',
+                audience: 'Rural property owners (2-20 acres) in NE Washington',
+                tone: 'Straight-talk, local, confident',
+                cta: 'Stop by JJ Riggs — Colville, WA',
+                aspect: '9:16',
+                footage: 'No — generating all visuals with AI',
+                coreConcept: 'Show why a 6-year warranty matters — when your tractor is a tool you depend on every day, not a toy, you need a dealer who backs it up. JJ Riggs and TYM give you the longest warranty in the compact tractor industry, standard.',
+                differentiators: '6-year powertrain warranty, no dealer markups, local service in Colville'
+            },
+            spring: {
+                campaignType: 'promo',
+                mainProduct: 'TYM T47',
+                mainOffer: 'Spring work season pricing — loader + box blade package deal',
+                season: 'Spring',
+                audience: 'Rural property owners (2-20 acres) in NE Washington',
+                tone: 'Straight-talk, local, confident',
+                cta: 'Stop by JJ Riggs — Colville, WA',
+                aspect: '9:16',
+                footage: 'No — generating all visuals with AI',
+                coreConcept: 'It\'s TYM to ROLL — spring is here and there\'s work to do. Show a property owner tackling spring cleanup: grading the driveway, moving brush, prepping garden beds. End with the tractor parked in front of a clean, ready property.',
+                differentiators: 'Spring package pricing, local delivery, real service department, not a box store'
+            },
+            compare: {
+                campaignType: 'competitive',
+                mainProduct: 'TYM Lineup',
+                mainOffer: 'More tractor for the money — compare specs, not just sticker price',
+                season: 'Year-Round',
+                audience: 'Landowners comparing compact tractor brands',
+                tone: 'Bold, competitive, direct comparison',
+                cta: 'Get a quote at jjriggsequipment.com',
+                aspect: '9:16',
+                footage: 'No — generating all visuals with AI',
+                coreConcept: 'Side-by-side comparison: what you get from a big-name dealer vs. JJ Riggs. Show the price difference, the warranty difference, the service difference. End with "Same dirt. More tractor. Better deal."',
+                differentiators: 'Better value per HP, 6-year warranty vs. 2-year competitors, local parts and service, no corporate runaround'
+            },
+            local: {
+                campaignType: 'testimonial',
+                mainProduct: 'TYM Lineup',
+                mainOffer: 'Your neighbor sells tractors — and he\'ll be here when you need him',
+                season: 'Year-Round',
+                audience: 'People who just moved to acreage in Stevens County',
+                tone: 'Warm, neighborly, family-business',
+                cta: 'Stop by JJ Riggs — Colville, WA',
+                aspect: '9:16',
+                footage: 'No — generating all visuals with AI',
+                coreConcept: 'Show what it\'s like to buy a tractor from someone who lives down the road, not a 1-800 number. Andrew at JJ Riggs knows the land, knows the weather, and knows which tractor fits your property. That\'s the difference.',
+                differentiators: 'Family-owned, Andrew is local, 100% 5-star Google reviews, real relationships not transactions'
+            }
+        };
+
+        function loadPreset(name) {
+            const p = presets[name];
+            if (!p) return;
+
+            document.getElementById('campaignType').value = p.campaignType;
+            document.getElementById('mainProduct').value = p.mainProduct;
+            document.getElementById('mainOffer').value = p.mainOffer;
+            document.getElementById('season').value = p.season;
+            document.getElementById('audience').value = p.audience;
+            document.getElementById('cta').value = p.cta;
+            document.getElementById('coreConcept').value = p.coreConcept;
+            document.getElementById('differentiators').value = p.differentiators;
+
+            // Set toggles
+            setToggle('tone', p.tone);
+            setToggle('aspect', p.aspect);
+            setToggle('footage', p.footage);
+        }
+
+        function setToggle(field, value) {
+            document.querySelectorAll(`.form-toggle[data-field="${field}"]`).forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.value === value);
+            });
+            if (field === 'tone') selectedTone = value;
+            if (field === 'aspect') selectedAspect = value;
+            if (field === 'footage') selectedFootage = value;
+        }
+
+        // ── Toast ──
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg || 'Copied!';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1500);
+        }
+
+        // ── Copy ──
+        function copyText(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const text = el.innerText || el.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = el.closest('.output-section').querySelector('.copy-btn');
+                if (btn) {
+                    btn.classList.add('copied');
+                    btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
+                    }, 2000);
+                }
+                showToast('Copied to clipboard');
+            });
+        }
+
+        function copyAll() {
+            const el = document.getElementById('outputContent');
+            if (!el) return;
+            const text = el.innerText || el.textContent;
+            navigator.clipboard.writeText(text).then(() => showToast('Full ad pack copied'));
+        }
+
+        // ── Generate ──
+        function generateConcept() {
+            const campaignType = document.getElementById('campaignType').value;
+            const mainProduct = document.getElementById('mainProduct').value;
+            const mainOffer = document.getElementById('mainOffer').value;
+            const season = document.getElementById('season').value;
+            const audience = document.getElementById('audience').value;
+            const cta = document.getElementById('cta').value;
+            const coreConcept = document.getElementById('coreConcept').value;
+            const differentiators = document.getElementById('differentiators').value;
+
+            if (!coreConcept.trim()) {
+                showToast('Add a core concept to generate');
+                return;
+            }
+
+            // Build campaign context string
+            const campaignLabels = {
+                awareness: 'Brand Awareness',
+                promo: 'Seasonal Promotion',
+                competitive: 'Competitive Comparison',
+                testimonial: 'Customer Story',
+                product: 'Product Spotlight',
+                event: 'Event / Open House'
+            };
+
+            const ctx = {
+                type: campaignLabels[campaignType] || 'General',
+                product: mainProduct || 'TYM Tractors',
+                offer: mainOffer || 'Quality tractors, fair prices, real service',
+                season,
+                audience,
+                tone: selectedTone,
+                cta,
+                aspect: selectedAspect,
+                footage: selectedFootage,
+                concept: coreConcept,
+                diff: differentiators || '6-year warranty, family-owned, local service, fair prices'
+            };
+
+            // ── Build Higgsfield Prompt ──
+            const aspectDesc = ctx.aspect === '9:16' ? 'vertical 9:16 mobile-first' : ctx.aspect === '1:1' ? 'square 1:1 social' : 'widescreen 16:9';
+            const hasFootage = ctx.footage.startsWith('Yes');
+
+            const higgsfield = `${aspectDesc} cinematic video. ${ctx.concept}
+
+Setting: Pacific Northwest rural landscape — rolling green hills, gravel driveways, timber fences, overcast sky with soft natural light. ${ctx.season === 'Winter' ? 'Light snow on the ground, breath visible in cold air.' : ctx.season === 'Fall' ? 'Golden and amber foliage, morning mist in the valley.' : ctx.season === 'Spring' ? 'Fresh green grass, wildflowers beginning to bloom, soft morning light.' : 'Warm golden-hour light, long shadows across open fields.'}
+
+Subject: Real-looking ${ctx.product} compact tractor — matte paint, visible dirt and wear marks, practical attachments mounted. Operator wearing work boots, Carhartt-style jacket, no hard hat unless operating heavy implements.
+
+Camera: Grounded angles — low dolly tracking shots, eye-level medium shots, subtle handheld movement. No drone-only footage. Mix of static wide establishing shots and closer working-detail shots.
+
+Color grade: Muted, natural tones. Slightly desaturated greens and earth tones. No orange-teal color grading. No cinematic letterboxing.
+
+Brand: JJ Riggs Equipment — Colville, WA. ${ctx.diff}.
+
+Style reference: Documentary-feel equipment footage, not a commercial. Think local news feature or farming YouTube channel, not Super Bowl ad.`;
+
+            // ── Build Kling Prompt ──
+            const kling = `${aspectDesc} realistic video generation.
+
+Scene: ${ctx.concept}
+
+Environment: Rural Pacific Northwest — Stevens County, Washington. ${ctx.season} conditions. Real terrain: gravel roads, uneven ground, timber and wire fences, modest outbuildings (metal shop, wood barn). Mountains in the far background should look like the Selkirk Range — rounded, forested, not dramatic alpine peaks.
+
+Subject: ${ctx.product} compact tractor performing real work. Tractor should look used but well-maintained — some dust, practical attachments. Operator is a regular person in work clothes, not a model.
+
+Motion: Smooth, realistic motion. Tractor moving at working speed (not fast). Dirt turning, gravel shifting, bucket lifting with natural hydraulic movement. Camera movement is slow and deliberate.
+
+Lighting: Natural ${ctx.season === 'Winter' ? 'overcast winter' : ctx.season === 'Fall' ? 'golden autumn afternoon' : ctx.season === 'Spring' ? 'soft spring morning' : 'warm summer golden-hour'} light. No studio lighting. Shadows should be soft and natural.
+
+Mood: ${ctx.tone}. Practical, grounded, real. This is a working tool, not a lifestyle product.`;
+
+            // ── Negative Prompt ──
+            const negative = `fake tractor logos, wrong brand badging, made-up tractor brands, glossy showroom environment, luxury dealership vibes, overly polished chrome, cinematic fantasy landscapes, dramatic alpine mountain peaks (wrong region), foreign-looking terrain, tropical vegetation, desert landscapes, drone-only aerial footage, extreme camera angles, lens flare, orange-teal color grading, letterbox black bars, models in clean clothes, hard hats on a compact tractor, CGI-looking particle effects, unrealistic hydraulic movement, slow-motion glamor shots, corporate voiceover tone, stock-footage feel, generic "farm life" imagery that could be anywhere, JJ Riggs logo appearing on the tractor itself (it's a TYM dealer, not a manufacturer)`;
+
+            // ── ElevenLabs Voiceover Script ──
+            const voiceover = buildVoiceover(ctx);
+
+            // ── Music Direction ──
+            const music = `Instrumental: ${ctx.tone.includes('Bold') ? 'Driving, confident acoustic rock — clean electric guitar riff with steady kick drum. Think modern Americana, not country radio.' : ctx.tone.includes('Warm') ? 'Warm fingerpicked acoustic guitar with light ambient pads. Relaxed, genuine, like a front-porch conversation. No whistling.' : 'Simple, clean acoustic guitar progression — confident but not flashy. Subtle bass and light percussion. No banjo, no fiddle, no whistling.'} Tempo: ${ctx.tone.includes('Bold') ? '100-110' : '75-90'} BPM. Build slightly toward the CTA. No lyrics. No stock "inspirational" swells. Keep it grounded — this is a local equipment ad, not a truck commercial.`;
+
+            // ── Facebook Ad Copy ──
+            const fbPrimary = buildFBPrimary(ctx);
+            const fbHeadline = buildFBHeadline(ctx);
+            const fbDescription = buildFBDescription(ctx);
+
+            // ── Shot List ──
+            const shotList = buildShotList(ctx);
+
+            // ── Text Overlays ──
+            const textOverlays = buildTextOverlays(ctx);
+
+            // ── Render Output ──
+            renderOutput({
+                higgsfield,
+                kling,
+                negative,
+                voiceover,
+                music,
+                fbPrimary,
+                fbHeadline,
+                fbDescription,
+                shotList,
+                textOverlays,
+                cta: ctx.cta,
+                ctx
+            });
+        }
+
+        // ── Voiceover Builder ──
+        function buildVoiceover(ctx) {
+            const opening = {
+                awareness: `You don't need the biggest dealer. You need the right one.`,
+                promo: `${ctx.season} is here — and there's work to do.`,
+                competitive: `Before you drive two hours to a big-name dealer… look at what you're actually getting.`,
+                testimonial: `There's a reason people drive past three other dealers to get to Colville.`,
+                product: `Meet the ${ctx.product}. Built for the work you actually do.`,
+                event: `This ${ctx.season}, come see it for yourself.`
+            };
+
+            const typeKey = document.getElementById('campaignType').value || 'awareness';
+            const open = opening[typeKey] || opening.awareness;
+
+            const middle = ctx.concept;
+
+            const diffPoints = ctx.diff.split(',').map(d => d.trim()).filter(Boolean);
+            const diffLine = diffPoints.length > 1
+                ? diffPoints.slice(0, -1).join('. ') + '. And ' + diffPoints[diffPoints.length - 1] + '.'
+                : diffPoints[0] + '.';
+
+            const close = `JJ Riggs Equipment. Colville, Washington.\n${diffLine}\n${ctx.offer}.\n${ctx.cta}.`;
+
+            return `[Voice: Male, 35-50, Pacific Northwest. Natural, unhurried. Not a radio announcer — think a knowledgeable neighbor explaining something over the tailgate. Confident but not pushy.]\n\n${open}\n\n${middle}\n\n${close}\n\n[Pacing: Conversational. Let lines breathe — no rush. ~120 words per minute. Slight pauses before key points.]`;
+        }
+
+        // ── FB Ad Copy Builders ──
+        function buildFBPrimary(ctx) {
+            const hooks = {
+                awareness: `Most tractor dealers want to sell you the most expensive thing on the lot. Andrew at JJ Riggs wants to sell you the right one.`,
+                promo: `${ctx.season} work season is here. ${ctx.offer}. That's real pricing from a real dealer — no fine print, no bait-and-switch.`,
+                competitive: `Here's what you get from the big dealer: a longer drive, a higher price, and a 2-year warranty. Here's what you get from JJ Riggs: ${ctx.diff}.`,
+                testimonial: `100% five-star Google reviews. Not because we asked for them — because people drive from Spokane, Republic, and beyond, and they're genuinely surprised by the experience.`,
+                product: `The ${ctx.product} doesn't care about looking pretty. It's built to clear your driveway, move your gravel, and handle whatever your property throws at it.`,
+                event: `Come see the ${ctx.product} in person. Andrew will walk you through it — no pressure, no script, just straight answers.`
+            };
+
+            const typeKey = document.getElementById('campaignType').value || 'awareness';
+            const hook = hooks[typeKey] || hooks.awareness;
+
+            return `${hook}\n\n${ctx.concept}\n\n${ctx.diff}.\n\n${ctx.cta} 👉`;
+        }
+
+        function buildFBHeadline(ctx) {
+            const headlines = {
+                awareness: `Your Neighbor Sells Tractors`,
+                promo: `${ctx.season} Pricing — ${ctx.product}`,
+                competitive: `Same Dirt. More Tractor. Better Deal.`,
+                testimonial: `100% Five-Star Reviews — Here's Why`,
+                product: `${ctx.product} — Small Tractor. Big Capability.`,
+                event: `See It in Person — ${ctx.product}`
+            };
+            const typeKey = document.getElementById('campaignType').value || 'awareness';
+            return headlines[typeKey] || headlines.awareness;
+        }
+
+        function buildFBDescription(ctx) {
+            return `JJ Riggs Equipment · Colville, WA · ${ctx.diff.split(',')[0].trim()} · ${ctx.offer || 'Fair prices, straight talk, local service'}`;
+        }
+
+        // ── Shot List Builder ──
+        function buildShotList(ctx) {
+            const shots = [];
+
+            shots.push({
+                time: '0:00–0:03',
+                desc: `Wide establishing shot — PNW rural landscape at ${ctx.season.toLowerCase()} time. Rolling hills, gravel road leading to a modest property. Natural light, slight atmosphere.`
+            });
+
+            shots.push({
+                time: '0:03–0:06',
+                desc: `Medium shot — ${ctx.product} enters frame, moving at working speed. Camera at eye level, slight tracking pan. Dust or debris visible from real ground contact.`
+            });
+
+            if (ctx.type === 'Competitive Comparison') {
+                shots.push({
+                    time: '0:06–0:10',
+                    desc: `Split-screen or quick cut comparison — text overlay showing JJ Riggs specs/warranty vs. competitor. Clean white text on dark background.`
+                });
+            } else {
+                shots.push({
+                    time: '0:06–0:10',
+                    desc: `Close-up detail shot — bucket scooping gravel, blade clearing a path, or loader lifting material. Show real mechanical movement with natural hydraulic sounds.`
+                });
+            }
+
+            shots.push({
+                time: '0:10–0:15',
+                desc: `Medium-wide — operator at work, camera follows the tractor through the task. Show the result: cleared path, moved pile, leveled ground. ${ctx.footage.startsWith('Yes') ? 'Mix in real footage here.' : 'Maintain realistic AI generation.'}`
+            });
+
+            shots.push({
+                time: '0:15–0:22',
+                desc: `Slow push-in on the finished result — clean property, job done. Tractor parked, operator stepping down. Sense of accomplishment. Text overlays with key selling points begin.`
+            });
+
+            shots.push({
+                time: '0:22–0:30',
+                desc: `End card — JJ Riggs branding. White text on dark: "${ctx.cta}". Colville, WA. Logo if available. ${ctx.offer ? '"' + ctx.offer + '"' : ''} Music resolves.`
+            });
+
+            return shots;
+        }
+
+        // ── Text Overlay Builder ──
+        function buildTextOverlays(ctx) {
+            const overlays = [];
+
+            overlays.push({
+                time: '0:01–0:04',
+                text: ctx.type === 'Competitive Comparison' ? 'BEFORE YOU BUY...' :
+                      ctx.type === 'Seasonal Promotion' ? `${ctx.season.toUpperCase()} IS HERE` :
+                      ctx.type === 'Customer Story' ? '100% FIVE-STAR REVIEWS' :
+                      'SMALL TRACTOR. BIG CAPABILITY.'
+            });
+
+            overlays.push({
+                time: '0:04–0:08',
+                text: ctx.product.toUpperCase()
+            });
+
+            if (ctx.offer) {
+                overlays.push({
+                    time: '0:08–0:13',
+                    text: ctx.offer.toUpperCase()
+                });
+            }
+
+            const diffs = ctx.diff.split(',').map(d => d.trim()).filter(Boolean);
+            if (diffs.length > 0) {
+                overlays.push({
+                    time: `0:${ctx.offer ? '13' : '08'}–0:18`,
+                    text: diffs[0].toUpperCase()
+                });
+            }
+
+            overlays.push({
+                time: '0:18–0:25',
+                text: 'JJ RIGGS EQUIPMENT\nCOLVILLE, WA'
+            });
+
+            overlays.push({
+                time: '0:25–0:30',
+                text: ctx.cta.toUpperCase()
+            });
+
+            return overlays;
+        }
+
+        // ── Render Output ──
+        function renderOutput(data) {
+            document.getElementById('emptyState').style.display = 'none';
+            const container = document.getElementById('outputContent');
+            container.style.display = 'block';
+
+            const copyIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+
+            let html = '';
+
+            // Copy All bar
+            html += `<div class="copy-all-bar">
+                <span>${data.ctx.type} · ${data.ctx.product} · ${data.ctx.season}</span>
+                <button class="copy-all-btn" onclick="copyAll()">${copyIcon} Copy Entire Ad Pack</button>
+            </div>`;
+
+            // Higgsfield
+            html += outputSection('Higgsfield Prompt', 'higgsfield', data.higgsfield, copyIcon);
+
+            // Kling
+            html += outputSection('Kling Prompt', 'kling', data.kling, copyIcon);
+
+            // Negative Prompt
+            html += `<div class="output-section">
+                <div class="output-section-header">
+                    <span class="output-section-title">Negative Prompt (Use in Both)</span>
+                    <button class="copy-btn" onclick="copyText('negativeText')">${copyIcon} Copy</button>
+                </div>
+                <div class="output-section-body">
+                    <div class="output-text" id="negativeText">${escapeHtml(data.negative)}</div>
+                </div>
+                <div class="guardrails-box">
+                    <div class="guardrails-title">Creative Guardrails</div>
+                    <ul class="guardrails-list">
+                        <li>Fake tractor logos or wrong brand badging</li>
+                        <li>Cinematic fantasy landscapes or dramatic alpine peaks</li>
+                        <li>Glossy showroom or luxury dealership environments</li>
+                        <li>Generic drone-only aerial footage</li>
+                        <li>Over-polished chrome or CGI effects</li>
+                        <li>Foreign-looking terrain or tropical vegetation</li>
+                    </ul>
+                </div>
+            </div>`;
+
+            // Voiceover
+            html += outputSection('ElevenLabs Voiceover Script', 'voiceover', data.voiceover, copyIcon);
+
+            // Music
+            html += outputSection('Music Direction', 'music', data.music, copyIcon);
+
+            // Shot List
+            let shotHtml = '<ul class="output-list">';
+            data.shotList.forEach((shot, i) => {
+                shotHtml += `<li><span class="shot-num">${i + 1}</span><div><strong>${shot.time}</strong><br>${escapeHtml(shot.desc)}</div></li>`;
+            });
+            shotHtml += '</ul>';
+
+            html += `<div class="output-section">
+                <div class="output-section-header">
+                    <span class="output-section-title">Shot List (30s Reel)</span>
+                    <button class="copy-btn" onclick="copyText('shotList')">${copyIcon} Copy</button>
+                </div>
+                <div class="output-section-body" id="shotList">${shotHtml}</div>
+            </div>`;
+
+            // Text Overlays
+            let overlayHtml = '<ul class="output-list">';
+            data.textOverlays.forEach((ov, i) => {
+                overlayHtml += `<li><span class="shot-num">${i + 1}</span><div><strong>${ov.time}</strong><br>${escapeHtml(ov.text)}</div></li>`;
+            });
+            overlayHtml += '</ul>';
+
+            html += `<div class="output-section">
+                <div class="output-section-header">
+                    <span class="output-section-title">Text Overlay Sequence</span>
+                    <button class="copy-btn" onclick="copyText('textOverlays')">${copyIcon} Copy</button>
+                </div>
+                <div class="output-section-body" id="textOverlays">${overlayHtml}</div>
+            </div>`;
+
+            // Facebook Ad Copy
+            html += `<div class="output-section">
+                <div class="output-section-header">
+                    <span class="output-section-title">Facebook Ad Copy</span>
+                    <button class="copy-btn" onclick="copyText('fbCopy')">${copyIcon} Copy</button>
+                </div>
+                <div class="output-section-body" id="fbCopy">
+                    <div style="margin-bottom: 16px;">
+                        <div style="font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Primary Text</div>
+                        <div class="output-text">${escapeHtml(data.fbPrimary)}</div>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <div style="font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Headline</div>
+                        <div style="font-size: 18px; font-weight: 700; color: var(--white);">${escapeHtml(data.fbHeadline)}</div>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <div style="font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Description</div>
+                        <div class="output-text">${escapeHtml(data.fbDescription)}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">CTA Button</div>
+                        <div style="display: inline-block; padding: 8px 20px; background: var(--red); color: var(--white); font-size: 13px; font-weight: 600; border-radius: 4px;">${escapeHtml(data.cta)}</div>
+                    </div>
+                </div>
+            </div>`;
+
+            container.innerHTML = html;
+
+            // Scroll to output on mobile
+            if (window.innerWidth <= 900) {
+                container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function outputSection(title, id, content, copyIcon) {
+            return `<div class="output-section">
+                <div class="output-section-header">
+                    <span class="output-section-title">${title}</span>
+                    <button class="copy-btn" onclick="copyText('${id}Text')">${copyIcon} Copy</button>
+                </div>
+                <div class="output-section-body">
+                    <div class="output-text" id="${id}Text">${escapeHtml(content)}</div>
+                </div>
+            </div>`;
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML.replace(/\n/g, '<br>');
+        }
+    </script>
+
+</body>
+</html>
