@@ -52,3 +52,11 @@ Open either `index.html` directly in a modern browser — no build step required
 ---
 
 *Built April 2026 · JJ Riggs Equipment · Colville, WA*
+
+### `ad-studio/`
+**Universal Ad Studio** — brand-agnostic slide builder with advanced features
+- Aspect ratios: 1:1 · 16:9 · 9:16 (switchable)
+- 36-font Google Fonts picker with custom font upload (TTF/OTF/WOFF)
+- 2 logo upload slots (both custom)
+- Brand AI Scanner: paste a URL, extract colors + headlines, generate ad concepts
+- All video/image BG features, 8 GSAP animation styles, ms timing controls
