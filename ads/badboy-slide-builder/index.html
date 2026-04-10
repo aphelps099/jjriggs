@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Boy Mowers — Slide Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --orange:#F36C23;--orange2:#c95010;
+  --black:#0a0a0a;--panel:#111;--panel2:#191919;
+  --border:#252525;--border2:#2e2e2e;
+  --text:#c8c8c8;--dim:#555;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);--ease-io:cubic-bezier(0.4,0,0.2,1)
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--text);font-size:12px;-webkit-font-smoothing:antialiased}
+
+/* ──────── LAYOUT ──────── */
+.app{display:grid;grid-template-columns:196px 1fr 288px;height:100vh;overflow:hidden}
+.app.rec-mode{grid-template-columns:0 1fr 0}
+.app.rec-mode .slide-list,.app.rec-mode .editor,.app.rec-mode .stage-ctrls{display:none!important}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#2e2e2e;border-radius:2px}
+
+/* ──────── SLIDE LIST ──────── */
+.slide-list{background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sl-hdr{padding:12px 14px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.sl-hdr h2{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.brand-tag{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--orange);letter-spacing:.06em}
+.sl-thumbs{flex:1;overflow-y:auto;padding:8px 8px 4px;display:flex;flex-direction:column;gap:5px}
+
+.sl-thumb{position:relative;border-radius:4px;border:2px solid var(--border2);cursor:pointer;aspect-ratio:1;background:#181818;overflow:hidden;transition:border-color .15s;flex-shrink:0}
+.sl-thumb:hover{border-color:#444}
+.sl-thumb.on{border-color:var(--orange)}
+.th-num{position:absolute;top:4px;left:5px;font-size:8px;font-weight:700;color:rgba(255,255,255,.4);z-index:3;pointer-events:none}
+.th-dur{position:absolute;bottom:4px;right:5px;font-size:8px;color:rgba(255,255,255,.3);z-index:3;pointer-events:none}
+.th-anim{position:absolute;bottom:4px;left:5px;font-size:7px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.04em;text-transform:uppercase;z-index:3;pointer-events:none}
+.th-acts{position:absolute;top:3px;right:3px;display:flex;gap:2px;opacity:0;transition:opacity .15s;z-index:4}
+.sl-thumb:hover .th-acts{opacity:1}
+.ta{width:17px;height:17px;border-radius:2px;background:rgba(0,0,0,.75);border:none;color:#bbb;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .1s}
+.ta:hover{background:rgba(0,0,0,.95);color:#fff}
+.ta.del{color:#ff5555}
+.ta.del:hover{color:#ff7777}
+.th-bg{position:absolute;inset:0}
+.th-cnt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;text-align:center}
+.th-t1{font-family:'Bebas Neue',sans-serif;font-size:14px;line-height:1;letter-spacing:.04em;text-transform:uppercase;word-break:break-word;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-shadow:0 1px 3px rgba(0,0,0,.6);max-width:100%}
+.th-t2{font-size:6px;margin-top:2px;opacity:.75;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100%}
+
+/* Logo indicators in thumbnail */
+.th-logos{position:absolute;bottom:3px;right:3px;display:flex;gap:2px;z-index:3}
+.th-lbadge{font-size:6px;font-weight:700;letter-spacing:.04em;padding:1px 3px;border-radius:1px;background:rgba(182,27,34,.7);color:#fff;text-transform:uppercase}
+
+.add-sl-btn{margin:5px 8px 8px;padding:9px;background:transparent;border:1px dashed var(--border2);border-radius:3px;color:var(--dim);font-family:'Inter',sans-serif;font-size:10px;font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0}
+.add-sl-btn:hover{border-color:var(--orange);color:var(--orange);background:rgba(182,27,34,.05)}
+
+/* ──────── STAGE ──────── */
+.stage-area{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#080808;overflow:hidden;position:relative}
+.stage-info{position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;gap:10px;pointer-events:none}
+.info-chip{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:rgba(20,20,20,.8);padding:3px 9px;border-radius:2px;border:1px solid var(--border)}
+.stage-wrap{position:relative}
+.stage{position:relative;overflow:hidden;border-radius:2px;box-shadow:0 0 80px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.04)}
+.stage-inner{position:absolute;top:0;left:0;width:1080px;height:1080px;transform-origin:top left}
+
+/* Slide anatomy */
+.slide-bg{position:absolute;inset:0;overflow:hidden}
+.s-bgcolor{position:absolute;inset:0}  /* ALWAYS rendered = PNG backdrop */
+.s-bgimg{position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform}
+/* Ken Burns */
+@keyframes kbIn{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.13) translate(-1%,-1%)}}
+@keyframes kbOut{0%{transform:scale(1.13) translate(-1%,-1%)}100%{transform:scale(1) translate(1%,.5%)}}
+@keyframes kbPan{0%{transform:scale(1.1) translate(-3%,0)}100%{transform:scale(1.1) translate(3%,0)}}
+@keyframes kbPanD{0%{transform:scale(1.1) translate(0,-2%)}100%{transform:scale(1.1) translate(0,2%)}}
+.kb-in{animation:kbIn var(--kb-dur,6s) ease-in-out forwards}
+.kb-out{animation:kbOut var(--kb-dur,6s) ease-in-out forwards}
+.kb-pan{animation:kbPan var(--kb-dur,6s) ease-in-out forwards}
+.kb-pand{animation:kbPanD var(--kb-dur,6s) ease-in-out forwards}
+.s-overlay{position:absolute;inset:0;pointer-events:none}
+.s-bar{position:absolute;left:0;right:0;height:10px}.s-bar-top{top:0}.s-bar-bottom{bottom:0}
+
+/* Slide text content */
+.slide-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px;text-align:center}
+.s-hl{font-weight:400;line-height:.92;letter-spacing:.04em;text-transform:uppercase;word-break:break-word;max-width:100%}
+.s-hl .word{display:inline-block;white-space:pre}
+.s-sub{font-weight:600;line-height:1.3;margin-top:22px;letter-spacing:.05em;text-transform:uppercase}
+.s-cta{font-family:'Bebas Neue',sans-serif;text-transform:uppercase;letter-spacing:.1em;margin-top:16px}
+
+/* Logo wrappers */
+.s-logo{position:absolute;display:flex;align-items:center;justify-content:center}
+.s-logo img{object-fit:contain;display:block}
+
+/* ──────── STAGE CONTROLS ──────── */
+.stage-ctrls{position:absolute;bottom:0;left:0;right:0;padding:10px 16px 12px;display:flex;align-items:center;gap:8px;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 100%)}
+.ctrl{padding:8px 14px;border:none;border-radius:3px;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .15s var(--ease-out)}
+.ctrl-play{background:var(--orange);color:#fff;flex:1}.ctrl-play:hover{background:var(--orange2)}
+.ctrl-play:disabled{opacity:.45;cursor:default}
+.ctrl-nav{background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.1);min-width:36px;padding:8px}.ctrl-nav:hover{background:rgba(255,255,255,.14)}
+.ctrl-rec{background:transparent;color:var(--dim);border:1px solid var(--border)}.ctrl-rec:hover{border-color:#555;color:#aaa}
+.sl-ctr{font-size:10px;color:var(--dim);white-space:nowrap;min-width:38px;text-align:center}
+.playing-dot{position:absolute;top:10px;right:14px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);opacity:0;transition:opacity .3s;pointer-events:none}
+.playing-dot.on{opacity:1}
+.rec-exit{position:fixed;top:14px;right:14px;z-index:999;display:none;padding:8px 14px;background:rgba(0,0,0,.8);border:1px solid rgba(255,255,255,.15);border-radius:3px;color:#fff;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:.06em;text-transform:uppercase}
+.app.rec-mode~.rec-exit{display:block}
+
+/* ──────── EDITOR ──────── */
+.editor{background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.ed-hdr{padding:12px 16px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.ed-hdr h2{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.ed-body{flex:1;overflow-y:auto}
+
+.esec{border-bottom:1px solid var(--border)}
+.esec-hdr{padding:9px 16px;display:flex;align-items:center}
+.esec-title{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#666;flex:1}
+.esec-body{padding:6px 16px 14px}
+
+/* Form elements */
+.f{margin-bottom:9px}.f:last-child{margin-bottom:0}
+.fl{display:block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.fi{width:100%;background:#181818;border:1px solid var(--border2);color:#fff;padding:7px 10px;border-radius:3px;font-family:'Inter',sans-serif;font-size:12px;outline:none;transition:border-color .15s}
+.fi:focus{border-color:var(--orange)}
+textarea.fi{resize:none;min-height:50px;line-height:1.4}
+select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:24px}
+
+/* Swatches */
+.swatches{display:flex;gap:5px;flex-wrap:wrap}
+.sw{width:28px;height:28px;border-radius:3px;cursor:pointer;border:2px solid transparent;transition:border-color .12s,transform .1s;position:relative;flex-shrink:0}
+.sw:hover{transform:scale(1.12)}
+.sw.on{border-color:#fff!important;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+.sw-red{background:#b61b22}.sw-orange{background:#F36C23}.sw-black{background:#0a0a0a;outline:1px solid #333}
+.sw-white{background:#fff}.sw-navy{background:#1a2740}.sw-yellow{background:#f0c000}.sw-orange{background:#F36C23}
+input[type=color]{width:28px;height:28px;border-radius:3px;cursor:pointer;border:2px solid #444;background:transparent;padding:0;vertical-align:middle}
+
+/* Buttons grid */
+.gbts{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.gb{padding:7px 5px;background:#181818;border:1px solid var(--border2);border-radius:3px;color:var(--dim);font-family:'Inter',sans-serif;font-size:9px;font-weight:700;cursor:pointer;transition:all .12s;text-transform:uppercase;letter-spacing:.05em;text-align:center}
+.gb.on{background:rgba(182,27,34,.2);border-color:var(--orange);color:#fff}
+.gb:hover:not(.on){border-color:#444;color:#aaa}
+
+/* Size row */
+.szr{display:flex;gap:3px}
+.szb{flex:1;padding:6px 3px;background:#181818;border:1px solid var(--border2);border-radius:3px;color:var(--dim);font-family:'Inter',sans-serif;font-size:9px;font-weight:700;cursor:pointer;transition:all .12s;text-transform:uppercase;text-align:center}
+.szb.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.szb:hover:not(.on){border-color:#444;color:#aaa}
+
+/* Font row */
+.fnr{display:flex;gap:3px}
+.fnb{flex:1;padding:6px 4px;background:#181818;border:1px solid var(--border2);border-radius:3px;color:var(--dim);font-size:12px;cursor:pointer;transition:all .12s;text-align:center;font-weight:700}
+.fnb.fn-bebas{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;font-size:14px}
+.fnb.fn-oswald{font-family:'Oswald',sans-serif;letter-spacing:.04em}
+.fnb.fn-inter{font-family:'Inter',sans-serif}
+.fnb.on{border-color:var(--orange);color:#fff;background:rgba(182,27,34,.15)}
+.fnb:hover:not(.on){border-color:#444;color:#aaa}
+
+/* Toggle */
+.togr{display:flex;align-items:center;justify-content:space-between;padding:2px 0}
+.tog-lbl{font-size:11px;color:var(--text)}
+.tog{width:34px;height:19px;background:#2e2e2e;border-radius:10px;cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0}
+.tog.on{background:var(--orange)}
+.tog::after{content:'';position:absolute;width:13px;height:13px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s}
+.tog.on::after{left:18px}
+
+/* Range */
+.rangr{display:flex;align-items:center;gap:8px}
+.rangr input[type=range]{flex:1;accent-color:var(--orange);cursor:pointer}
+.rng-v{font-size:11px;color:#aaa;min-width:30px;text-align:right}
+/* Timing UI */
+.dur-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.dur-ms{width:72px;background:#181818;border:1px solid var(--border2);color:#fff;padding:6px 8px;border-radius:3px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;outline:none;text-align:center;transition:border-color .15s}
+.dur-ms:focus{border-color:var(--orange)}
+.dur-unit{font-size:10px;font-weight:700;letter-spacing:.06em;color:#555;text-transform:uppercase}
+.dur-badge{font-size:10px;color:#444;font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;margin-left:auto}
+.dur-presets{display:flex;flex-direction:column;gap:5px}
+.dp-row{display:flex;align-items:center;gap:4px}
+.dp-label{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#444;min-width:38px}
+.dp-btn{padding:4px 7px;background:#181818;border:1px solid var(--border2);border-radius:3px;color:#555;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;cursor:pointer;transition:all .12s;letter-spacing:.03em;white-space:nowrap}
+.dp-btn.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.dp-btn:hover:not(.on){border-color:#555;color:#ccc}
+.dp-apply-all{width:100%;padding:6px;background:transparent;border:1px solid var(--border2);border-radius:3px;color:#555;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;cursor:pointer;transition:all .12s;text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+.dp-apply-all:hover{border-color:#555;color:#aaa}
+
+/* Upload */
+.upl{border:1px dashed var(--border2);border-radius:3px;padding:10px;text-align:center;cursor:pointer;transition:all .15s;color:var(--dim);font-size:10px;font-weight:600;position:relative;letter-spacing:.04em;text-transform:uppercase}
+.upl:hover,.upl.drag{border-color:var(--orange);background:rgba(182,27,34,.06);color:#aaa}
+.upl input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upl-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;margin-bottom:5px;display:none}
+.upl-img.show{display:block}
+
+/* Overlay opts */
+.ovr{display:flex;gap:3px}
+.ovb{flex:1;padding:5px 3px;background:#181818;border:1px solid var(--border2);border-radius:3px;color:var(--dim);font-size:8px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em;transition:all .12s;text-align:center}
+.ovb.on{border-color:var(--orange);color:#fff;background:rgba(182,27,34,.15)}
+
+/* Logo position 3×3 grid */
+.lpos-grid{display:grid;grid-template-columns:repeat(3,28px);gap:3px}
+.lpos-btn{width:28px;height:28px;background:#181818;border:1px solid var(--border2);border-radius:3px;color:#555;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.lpos-btn.on{background:rgba(182,27,34,.2);border-color:var(--orange);color:#fff}
+.lpos-btn:hover:not(.on){border-color:#444;color:#aaa}
+
+/* Logo card */
+.logo-card{background:var(--panel2);border:1px solid var(--border2);border-radius:4px;padding:12px;margin-bottom:8px}
+.logo-card:last-child{margin-bottom:0}
+.logo-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.logo-card-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888}
+.logo-preview-strip{width:100%;height:44px;border-radius:3px;background:#222;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:8px;overflow:hidden}
+.logo-preview-strip img{max-width:100%;max-height:36px;object-fit:contain}
+
+/* Anim picker row */
+.animr{display:flex;gap:3px;flex-wrap:wrap}
+.animb{padding:5px 7px;background:#181818;border:1px solid var(--border2);border-radius:3px;color:var(--dim);font-family:'Inter',sans-serif;font-size:9px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em;transition:all .12s;white-space:nowrap}
+.animb.on{background:rgba(182,27,34,.2);border-color:var(--orange);color:#fff}
+.animb:hover:not(.on){border-color:#444;color:#aaa}
+
+/* Preset chips */
+.preset-row{display:flex;gap:4px;flex-wrap:wrap;padding:8px 16px 0}
+.pchip{padding:5px 9px;border-radius:2px;font-size:9px;font-weight:700;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border2);background:#181818;color:var(--dim);transition:all .12s;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.06em}
+.pchip:hover{border-color:#555;color:#ccc}
+
+.mini-btn{flex:1;padding:5px;background:#181818;border:1px solid var(--border2);border-radius:3px;color:#666;font-size:9px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:700;letter-spacing:.04em;transition:all .12s;text-transform:uppercase}
+.mini-btn:hover{border-color:#444;color:#aaa}
+.mini-btn.danger:hover{border-color:#ff4444;color:#ff4444}
+
+/* No text banner */
+.no-text-banner{background:rgba(182,27,34,.12);border:1px solid rgba(182,27,34,.3);border-radius:3px;padding:6px 10px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c05050;text-align:center;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ═══ SLIDE LIST ═══ -->
+  <div class="slide-list">
+    <div class="sl-hdr">
+      <h2>Slides</h2>
+      <span class="brand-tag">BAD BOY</span>
+    </div>
+    <div class="sl-thumbs" id="slThumbs"></div>
+    <button class="add-sl-btn" onclick="addSlide()">+ Add Slide</button>
+  </div>
+
+  <!-- ═══ STAGE ═══ -->
+  <div class="stage-area" id="stageArea">
+    <div class="stage-info" id="stageInfo">
+      <span class="info-chip">1:1 · 1080×1080</span>
+      <span class="info-chip" id="chipInfo">—</span>
+    </div>
+    <div class="stage-wrap" id="stageWrap">
+      <div class="stage" id="stage">
+        <div class="stage-inner" id="stageInner"></div>
+      </div>
+    </div>
+    <div class="stage-ctrls" id="stageCtrls">
+      <button class="ctrl ctrl-nav" onclick="prevSlide()">◀</button>
+      <button class="ctrl ctrl-play" id="playBtn" onclick="togglePlay()">▶ Play Sequence</button>
+      <button class="ctrl ctrl-nav" onclick="nextSlide()">▶</button>
+      <span class="sl-ctr" id="slCtr">1/1</span>
+      <button class="ctrl ctrl-rec" onclick="enterRec()">⛶ Record</button>
+    </div>
+    <div class="playing-dot" id="playDot">● PLAYING</div>
+  </div>
+
+  <!-- ═══ EDITOR ═══ -->
+  <div class="editor">
+    <div class="ed-hdr">
+      <h2>Slide Editor</h2>
+    </div>
+    <div class="ed-body" id="edBody"></div>
+  </div>
+
+</div>
+
+<button class="rec-exit" id="recExit" onclick="exitRec()">✕ Exit Record Mode</button>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  CONSTANTS
+// ═══════════════════════════════════════════════════
+const CANVAS = 1080;
+
+const HL_SIZES  = { massive:148, xl:108, lg:80, md:58, sm:42 };
+const SUB_SIZES = { xl:52, lg:40, md:30, sm:22, xs:17 };
+const CTA_SIZES = { lg:48, md:36, sm:26 };
+
+// Logo max-widths at scale=1.0 (at 1080px canvas)
+const LOGO_MAX_W = 320;
+const LOGO_MAX_H = 110;
+
+// Logo position styles
+const LOGO_POS = {
+  tl: 'top:44px;left:44px',
+  tc: 'top:44px;left:50%;transform:translateX(-50%)',
+  tr: 'top:44px;right:44px',
+  ml: 'top:50%;left:44px;transform:translateY(-50%)',
+  cc: 'top:50%;left:50%;transform:translate(-50%,-50%)',
+  mr: 'top:50%;right:44px;transform:translateY(-50%)',
+  bl: 'bottom:44px;left:44px',
+  bc: 'bottom:44px;left:50%;transform:translateX(-50%)',
+  br: 'bottom:44px;right:44px'
+};
+const POS_ICONS = { tl:'↖', tc:'↑', tr:'↗', ml:'←', cc:'●', mr:'→', bl:'↙', bc:'↓', br:'↘' };
+
+// ═══════════════════════════════════════════════════
+//  GLOBAL LOGOS (shared across all slides)
+// ═══════════════════════════════════════════════════
+const gLogos = {
+  L1: {
+    name: 'Bad Boy (White)',
+    src: 'https://badboycountry.com/images/logos/bb_logo_horizontal_reverse.svg',
+    uploadedData: null
+  },
+  L2: {
+    name: 'Bad Boy (Orange)',
+    src: 'https://badboycountry.com/images/logos/bb_logo_horizontal_orange.svg',
+    uploadedData: null
+  },
+  L3: {
+    name: 'JJ Riggs',
+    src: 'https://jjriggsequipment.com/wp-content/uploads/2024/09/snow-JJ-Riggs-Equipment-white-outline-logo.png',
+    uploadedData: null
+  }
+};
+
+function logoSrc(key) {
+  return gLogos[key].uploadedData || gLogos[key].src || null;
+}
+
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+let slides = [];
+let active = 0;
+let playing = false;
+let playTimer = null;
+
+// ═══════════════════════════════════════════════════
+//  SLIDE FACTORY
+// ═══════════════════════════════════════════════════
+function mkSlide(o = {}) {
+  const def = {
+    id: Date.now() + Math.random(),
+    bg: { type:'color', color:'#b61b22', imgData:null, videoUrl:null, videoStartTime:0, videoSpeed:1.0, videoLoop:true, videoDuration:120, overlay:'none', kb:false, kbStyle:'in' },
+    hl:  { text:'ZERO DOWN', font:'bebas', size:'massive', color:'#ffffff', shadow:true },
+    sub: { text:'', font:'inter', size:'md', color:'#ffffff' },
+    cta: { text:'', size:'md', color:'#f0c000' },
+    noText: false,
+    anim: 'slam',
+    bar: 'none',
+    L1: { show:false, pos:'bl', scale:1.0, anim:'fade' },
+    L2: { show:false, pos:'br', scale:1.0, anim:'fade' },
+    L3: { show:false, pos:'bc', scale:0.8, anim:'fade' },
+    dur: 3.5
+  };
+  // Deep merge bg
+  if (o.bg)  def.bg  = Object.assign(def.bg, o.bg);
+  if (o.hl)  def.hl  = Object.assign(def.hl, o.hl);
+  if (o.sub) def.sub = Object.assign(def.sub, o.sub);
+  if (o.cta) def.cta = Object.assign(def.cta, o.cta);
+  if (o.L1)  def.L1  = Object.assign(def.L1, o.L1);
+  if (o.L2)  def.L2  = Object.assign(def.L2, o.L2);
+  if (o.L3)  def.L3  = Object.assign(def.L3, o.L3);
+  ['noText','anim','bar','dur'].forEach(k => { if (o[k] !== undefined) def[k] = o[k]; });
+  return def;
+}
+
+// ═══════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════
+function init() {
+  slides = [
+    mkSlide({ bg:{color:'#0a0a0a'}, hl:{text:'ZERO DOWN',color:'#F36C23'}, sub:{text:'On Select Bad Boy Mowers',size:'lg',color:'#ffffff'}, cta:{text:'LIMITED TIME OFFER',size:'md',color:'#ffffff'}, anim:'slam', bar:'bottom', L1:{show:true,pos:'bc',scale:.85,anim:'fade'} }),
+    mkSlide({ bg:{color:'#0a0a0a'}, hl:{text:'ZT ELITE',size:'xl',color:'#ffffff'}, sub:{text:'24–26HP · 48" 54" 60" · Zero Turn',color:'#F36C23'}, cta:{text:'The Best Value Anywhere',size:'md',color:'#ffffff'}, anim:'punch', L1:{show:true,pos:'bl',scale:.8,anim:'slide-up'}, L2:{show:true,pos:'br',scale:.8,anim:'slide-up'} }),
+    mkSlide({ bg:{color:'#F36C23'}, hl:{text:'FIND A DEALER',color:'#ffffff'}, sub:{text:'JJ Riggs Equipment · Colville, WA',color:'#ffffff'}, cta:{text:'jjriggsequipment.com',size:'sm',color:'rgba(255,255,255,.7)'}, anim:'wipe', L1:{show:true,pos:'tc',scale:.85,anim:'fade'} })
+  ];
+  // Ensure all slides have L3 (backward compat)
+  slides.forEach(s => { if (!s.L3) s.L3 = { show:false, pos:'bc', scale:0.8, anim:'fade' }; });
+  active = 0;
+  renderAll(true);
+  resizeStage();
+  updateInfo();
+}
+
+window.addEventListener('resize', () => { resizeStage(); });
+
+// ═══════════════════════════════════════════════════
+//  STAGE SIZING
+// ═══════════════════════════════════════════════════
+function resizeStage() {
+  const isRec = document.getElementById('app').classList.contains('rec-mode');
+  const area = document.getElementById('stageArea');
+  const stageEl = document.getElementById('stage');
+  const inner = document.getElementById('stageInner');
+  const aw = Math.max(area.clientWidth  - (isRec ? 0 : 40), 100);
+  const ah = Math.max(area.clientHeight - (isRec ? 0 : 80), 100);
+  const sz = Math.min(aw, ah, isRec ? 1080 : 720);
+  stageEl.style.width = sz + 'px';
+  stageEl.style.height = sz + 'px';
+  inner.style.transform = `scale(${sz / CANVAS})`;
+}
+
+// ═══════════════════════════════════════════════════
+//  THUMBNAIL RENDERING
+// ═══════════════════════════════════════════════════
+function renderThumbs() {
+  const el = document.getElementById('slThumbs');
+  el.innerHTML = '';
+  slides.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'sl-thumb' + (i === active ? ' on' : '');
+    d.onclick = () => selectSlide(i);
+
+    // BG
+    const bg = document.createElement('div');
+    bg.className = 'th-bg';
+    // Always show backdrop color
+    bg.style.background = s.bg.color;
+    if (s.bg.type === 'image' && s.bg.imgData) {
+      bg.style.backgroundImage = `url(${s.bg.imgData})`;
+      bg.style.backgroundSize = 'cover';
+      bg.style.backgroundPosition = 'center';
+    }
+    if (s.bg.type === 'video') {
+      const playIcon = document.createElement('div');
+      playIcon.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;';
+      playIcon.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="rgba(255,255,255,.25)"><path d="M8 5v14l11-7z"/></svg>';
+      bg.appendChild(playIcon);
+    }
+    if (s.bg.overlay !== 'none') {
+      const ov = document.createElement('div');
+      ov.style.cssText = `position:absolute;inset:0;background:${ovCSS(s.bg.overlay)}`;
+      bg.appendChild(ov);
+    }
+
+    // Bars
+    if (s.bar === 'top' || s.bar === 'both') {
+      const b = document.createElement('div');
+      b.style.cssText = 'position:absolute;top:0;left:0;right:0;height:3px;background:#b61b22;z-index:2';
+      d.appendChild(b);
+    }
+    if (s.bar === 'bottom' || s.bar === 'both') {
+      const b = document.createElement('div');
+      b.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:3px;background:#b61b22;z-index:2';
+      d.appendChild(b);
+    }
+
+    // Text
+    const tc = document.createElement('div');
+    tc.className = 'th-cnt';
+    if (!s.noText && s.hl.text.trim()) {
+      const t1 = document.createElement('div');
+      t1.className = 'th-t1';
+      t1.style.color = s.hl.color;
+      t1.style.fontFamily = ff(s.hl.font);
+      t1.textContent = s.hl.text;
+      tc.appendChild(t1);
+    } else if (s.noText) {
+      const nt = document.createElement('div');
+      nt.style.cssText = 'font-size:7px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.3)';
+      nt.textContent = 'IMAGE ONLY';
+      tc.appendChild(nt);
+    }
+    if (!s.noText && s.sub.text) {
+      const t2 = document.createElement('div');
+      t2.className = 'th-t2';
+      t2.style.color = s.sub.color;
+      t2.textContent = s.sub.text;
+      tc.appendChild(t2);
+    }
+
+    // Number + duration + anim badge
+    ['th-num','th-dur','th-anim'].forEach((cls, j) => {
+      const sp = document.createElement('div');
+      sp.className = cls;
+      sp.textContent = [i+1, formatDur(s.dur), s.anim][j];
+      d.appendChild(sp);
+    });
+
+    // Logo badges
+    const lbw = document.createElement('div');
+    lbw.className = 'th-logos';
+    if (s.L1.show) { const b = document.createElement('div'); b.className = 'th-lbadge'; b.style.background='rgba(243,108,35,.8)'; b.textContent = 'BB'; lbw.appendChild(b); }
+    if (s.L2.show) { const b = document.createElement('div'); b.className = 'th-lbadge'; b.style.background = 'rgba(243,108,35,.5)'; b.textContent = 'BB+'; lbw.appendChild(b); }
+    if (s.L3 && s.L3.show) { const b = document.createElement('div'); b.className = 'th-lbadge'; b.style.background = 'rgba(182,27,34,.75)'; b.textContent = 'JJR'; lbw.appendChild(b); }
+
+    // Actions
+    const acts = document.createElement('div');
+    acts.className = 'th-acts';
+    if (i > 0) { const b = mta('↑'); b.onclick = e => { e.stopPropagation(); mvSlide(i,-1); }; acts.appendChild(b); }
+    if (i < slides.length-1) { const b = mta('↓'); b.onclick = e => { e.stopPropagation(); mvSlide(i,1); }; acts.appendChild(b); }
+    const dup = mta('⧉'); dup.onclick = e => { e.stopPropagation(); dupSlide(i); }; acts.appendChild(dup);
+    if (slides.length > 1) { const del = mta('✕','del'); del.onclick = e => { e.stopPropagation(); delSlide(i); }; acts.appendChild(del); }
+
+    d.appendChild(bg);
+    d.appendChild(tc);
+    d.appendChild(lbw);
+    d.appendChild(acts);
+    el.appendChild(d);
+  });
+}
+
+function mta(icon, extra='') {
+  const b = document.createElement('button');
+  b.className = 'ta' + (extra ? ' '+extra : '');
+  b.innerHTML = icon;
+  return b;
+}
+
+// ═══════════════════════════════════════════════════
+//  SLIDE RENDERING (STAGE)
+// ═══════════════════════════════════════════════════
+function renderSlide(animate = false) {
+  const inner = document.getElementById('stageInner');
+  const s = slides[active];
+  if (!s) return;
+  inner.innerHTML = '';
+
+  // BG — backdrop color always renders first (key for transparent PNGs)
+  const bgEl = document.createElement('div');
+  bgEl.className = 'slide-bg';
+
+  const colLayer = document.createElement('div');
+  colLayer.className = 's-bgcolor';
+  colLayer.style.background = s.bg.color;
+  bgEl.appendChild(colLayer);
+
+  if (s.bg.type === 'image' && s.bg.imgData) {
+    const imgLayer = document.createElement('div');
+    imgLayer.className = 's-bgimg' + (s.bg.kb ? ' kb-' + s.bg.kbStyle : '');
+    if (s.bg.kb) imgLayer.style.setProperty('--kb-dur', (s.dur + 1) + 's');
+    imgLayer.style.backgroundImage = `url(${s.bg.imgData})`;
+    bgEl.appendChild(imgLayer);
+  }
+  if (s.bg.type === 'video' && s.bg.videoUrl) {
+    const vid = document.createElement('video');
+    vid.id = 'bgVideo';
+    vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    vid.muted = true;
+    vid.setAttribute('playsinline','');
+    vid.loop = s.bg.videoLoop !== false;
+    const startFn = () => {
+      vid.currentTime = s.bg.videoStartTime || 0;
+      vid.playbackRate = s.bg.videoSpeed || 1.0;
+      vid.play().catch(()=>{});
+    };
+    vid.addEventListener('loadedmetadata', startFn, { once:true });
+    vid.src = s.bg.videoUrl;
+    vid.load();
+    bgEl.appendChild(vid);
+  }
+
+  if (s.bg.overlay && s.bg.overlay !== 'none') {
+    const ov = document.createElement('div');
+    ov.className = 's-overlay';
+    ov.style.background = ovCSS(s.bg.overlay);
+    bgEl.appendChild(ov);
+  }
+  inner.appendChild(bgEl);
+
+  // Accent bars
+  if (s.bar === 'top' || s.bar === 'both') { const b = document.createElement('div'); b.className = 's-bar s-bar-top'; b.style.background = '#F36C23'; inner.appendChild(b); }
+  if (s.bar === 'bottom' || s.bar === 'both') { const b = document.createElement('div'); b.className = 's-bar s-bar-bottom'; b.style.background = '#F36C23'; inner.appendChild(b); }
+
+  // Text content (only if not hidden)
+  if (!s.noText) {
+    const cont = document.createElement('div');
+    cont.className = 'slide-content';
+
+    if (s.hl.text.trim()) {
+      const hl = document.createElement('div');
+      hl.className = 's-hl'; hl.id = 'shl';
+      hl.style.fontSize = HL_SIZES[s.hl.size] + 'px';
+      hl.style.color = s.hl.color;
+      hl.style.fontFamily = ff(s.hl.font);
+      hl.style.fontWeight = fw(s.hl.font);
+      if (s.hl.shadow) hl.style.textShadow = '0 2px 28px rgba(0,0,0,.6),0 1px 6px rgba(0,0,0,.9)';
+      s.hl.text.split('\n').forEach((line, li, arr) => {
+        line.split(/\s+/).filter(Boolean).forEach((word, wi, words) => {
+          const sp = document.createElement('span');
+          sp.className = 'word';
+          sp.textContent = word + (wi < words.length-1 ? ' ' : '');
+          hl.appendChild(sp);
+        });
+        if (li < arr.length-1) hl.appendChild(document.createElement('br'));
+      });
+      cont.appendChild(hl);
+    }
+
+    if (s.sub.text.trim()) {
+      const sub = document.createElement('div');
+      sub.className = 's-sub'; sub.id = 'ssub';
+      sub.style.fontSize = SUB_SIZES[s.sub.size] + 'px';
+      sub.style.color = s.sub.color;
+      sub.style.fontFamily = ff(s.sub.font);
+      sub.style.fontWeight = s.sub.font === 'inter' ? 600 : 700;
+      sub.textContent = s.sub.text;
+      cont.appendChild(sub);
+    }
+
+    if (s.cta.text.trim()) {
+      const cta = document.createElement('div');
+      cta.className = 's-cta'; cta.id = 'scta';
+      cta.style.fontSize = CTA_SIZES[s.cta.size] + 'px';
+      cta.style.color = s.cta.color;
+      cta.textContent = s.cta.text;
+      cont.appendChild(cta);
+    }
+
+    inner.appendChild(cont);
+  }
+
+  // Logos
+  ['L1','L2','L3'].forEach(key => {
+    const src = logoSrc(key);
+    const sl = s[key];
+    if (!src || !sl.show) return;
+    const wrap = document.createElement('div');
+    wrap.className = 's-logo';
+    wrap.id = 'logo-' + key;
+    wrap.dataset.anim = sl.anim;
+    wrap.style.cssText = LOGO_POS[sl.pos] || LOGO_POS.bl;
+
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.width = (LOGO_MAX_W * sl.scale) + 'px';
+    img.style.maxHeight = (LOGO_MAX_H * sl.scale) + 'px';
+    img.style.objectFit = 'contain';
+    wrap.appendChild(img);
+    inner.appendChild(wrap);
+  });
+
+  if (animate) animateIn(s);
+
+  document.getElementById('slCtr').textContent = `${active+1}/${slides.length}`;
+  updateInfo();
+}
+
+// ═══════════════════════════════════════════════════
+//  GSAP ANIMATIONS
+// ═══════════════════════════════════════════════════
+function animateIn(s) {
+  if (typeof gsap === 'undefined') return;
+  gsap.killTweensOf('*');
+
+  // BLITZ mode: instant show for very short durations
+  if (s.dur < 0.25) {
+    ['shl','ssub','scta'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) gsap.set(el, { opacity:1, y:0, x:0, scale:1, clipPath:'none', filter:'none' });
+    });
+    ['L1','L2','L3'].forEach(key => {
+      const el = document.getElementById('logo-'+key);
+      if (el) gsap.set(el, { opacity:1, scale:1, y:0 });
+    });
+    return;
+  }
+
+  const hl  = document.getElementById('shl');
+  const sub = document.getElementById('ssub');
+  const cta = document.getElementById('scta');
+  const tl  = gsap.timeline({ defaults:{ ease:'power3.out' } });
+
+  if (hl) {
+    const words = hl.querySelectorAll('.word');
+    switch(s.anim) {
+      case 'slam':
+        gsap.set(words, { y:-130, opacity:0, scaleY:1.08 });
+        tl.to(words, { y:0, opacity:1, scaleY:1, duration:.26, ease:'back.out(2)', stagger:.055 });
+        break;
+      case 'punch':
+        gsap.set(hl, { scale:1.8, opacity:0, filter:'blur(8px)' });
+        tl.to(hl, { scale:1, opacity:1, filter:'blur(0px)', duration:.38, ease:'power4.out' });
+        break;
+      case 'wipe':
+        gsap.set(hl, { clipPath:'inset(0 100% 0 0)' });
+        tl.to(hl, { clipPath:'inset(0 0% 0 0)', duration:.52 });
+        break;
+      case 'rise':
+        gsap.set(words, { y:90, opacity:0 });
+        tl.to(words, { y:0, opacity:1, duration:.38, stagger:.07 });
+        break;
+      case 'split':
+        words.forEach((w,i) => gsap.set(w, { x:i%2===0?-110:110, opacity:0 }));
+        tl.to(words, { x:0, opacity:1, duration:.36, stagger:.06 });
+        break;
+      case 'flash':
+        gsap.set(hl, { opacity:0 });
+        tl.to(hl,{opacity:1,duration:.04}).to(hl,{opacity:0,duration:.04},'+=.03')
+          .to(hl,{opacity:1,duration:.04},'+=.02').to(hl,{opacity:0,duration:.04},'+=.02')
+          .to(hl,{opacity:1,duration:.08},'+=.02');
+        break;
+      case 'drop':
+        gsap.set(words, { y:-60, opacity:0, rotation:-4 });
+        tl.to(words, { y:0, opacity:1, rotation:0, duration:.4, ease:'power2.out', stagger:.09 });
+        break;
+      case 'scale':
+        gsap.set(words, { scale:0, opacity:0, transformOrigin:'center center' });
+        tl.to(words, { scale:1, opacity:1, duration:.32, ease:'back.out(2)', stagger:.06 });
+        break;
+    }
+  }
+
+  if (sub) { gsap.set(sub,{y:28,opacity:0}); tl.to(sub,{y:0,opacity:1,duration:.38},hl?'-=.1':0); }
+  if (cta) { gsap.set(cta,{y:16,opacity:0}); tl.to(cta,{y:0,opacity:1,duration:.3},'-=.12'); }
+
+  // Logo animations — staggered after text
+  let logoDelay = 0.5;
+  ['L1','L2','L3'].forEach(key => {
+    const logoEl = document.getElementById('logo-'+key);
+    if (!logoEl) return;
+    const anim = logoEl.dataset.anim || 'fade';
+    const d = logoDelay;
+    logoDelay += 0.15;
+    switch(anim) {
+      case 'fade':
+        gsap.set(logoEl,{opacity:0});
+        tl.to(logoEl,{opacity:1,duration:.5,ease:'power2.out'},d);
+        break;
+      case 'scale':
+        gsap.set(logoEl,{scale:.5,opacity:0});
+        tl.to(logoEl,{scale:1,opacity:1,duration:.45,ease:'back.out(2)'},d);
+        break;
+      case 'slide-up':
+        gsap.set(logoEl,{y:40,opacity:0});
+        tl.to(logoEl,{y:0,opacity:1,duration:.4,ease:'power3.out'},d);
+        break;
+      case 'slide-down':
+        gsap.set(logoEl,{y:-40,opacity:0});
+        tl.to(logoEl,{y:0,opacity:1,duration:.4,ease:'power3.out'},d);
+        break;
+      case 'slam':
+        gsap.set(logoEl,{y:-80,opacity:0});
+        tl.to(logoEl,{y:0,opacity:1,duration:.3,ease:'back.out(2)'},d);
+        break;
+      case 'none': default: break; // instant
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════
+//  PLAYBACK
+// ═══════════════════════════════════════════════════
+function togglePlay() { playing ? stopPlay() : startPlay(); }
+function startPlay() {
+  playing = true;
+  document.getElementById('playBtn').textContent = '⏹ Stop';
+  document.getElementById('playDot').classList.add('on');
+  playSeq(0);
+}
+function stopPlay() {
+  playing = false;
+  clearTimeout(playTimer);
+  document.getElementById('playBtn').textContent = '▶ Play Sequence';
+  document.getElementById('playDot').classList.remove('on');
+}
+function playSeq(idx) {
+  if (!playing) return;
+  if (idx >= slides.length) idx = 0;
+  active = idx;
+  renderThumbs();
+  renderSlide(true);
+  const buf = slides[idx].dur < 0.5 ? 30 : slides[idx].dur < 1 ? 80 : 150;
+  playTimer = setTimeout(() => { if (playing) playSeq(idx+1); }, slides[idx].dur * 1000 + buf);
+}
+
+// ═══════════════════════════════════════════════════
+//  SLIDE MANAGEMENT
+// ═══════════════════════════════════════════════════
+function selectSlide(i) { if (playing) stopPlay(); active = i; renderAll(true); }
+function addSlide() {
+  const colors = ['#b61b22','#0a0a0a','#ffffff','#1a2740'];
+  const c = colors[slides.length % colors.length];
+  slides.push(mkSlide({ bg:{color:c}, hl:{text:'ADD YOUR TEXT', color: c==='#ffffff'?'#0a0a0a':'#ffffff', shadow:c!=='#ffffff'} }));
+  selectSlide(slides.length-1);
+}
+function dupSlide(i) {
+  const copy = JSON.parse(JSON.stringify(slides[i]));
+  copy.id = Date.now() + Math.random();
+  slides.splice(i+1,0,copy);
+  selectSlide(i+1);
+}
+function delSlide(i) {
+  if (slides.length <= 1) return;
+  slides.splice(i,1);
+  if (active >= slides.length) active = slides.length-1;
+  renderAll(false);
+}
+function mvSlide(i, dir) {
+  const j = i+dir;
+  if (j < 0 || j >= slides.length) return;
+  [slides[i],slides[j]] = [slides[j],slides[i]];
+  if (active===i) active=j; else if (active===j) active=i;
+  renderAll(false);
+}
+function prevSlide() { if (playing) stopPlay(); if (active>0) selectSlide(active-1); }
+function nextSlide() { if (playing) stopPlay(); if (active<slides.length-1) selectSlide(active+1); }
+
+// ═══════════════════════════════════════════════════
+//  RECORD MODE
+// ═══════════════════════════════════════════════════
+function enterRec() {
+  document.getElementById('app').classList.add('rec-mode');
+  resizeStage();
+  setTimeout(() => startPlay(), 400);
+}
+function exitRec() {
+  stopPlay();
+  document.getElementById('app').classList.remove('rec-mode');
+  resizeStage();
+}
+
+// ═══════════════════════════════════════════════════
+//  INFO
+// ═══════════════════════════════════════════════════
+function updateInfo() {
+  const total = slides.reduce((a,s) => a+s.dur, 0);
+  document.getElementById('chipInfo').textContent = `${slides.length} slides · ${total < 10 ? total.toFixed(1)+'s' : Math.round(total)+'s'}`;
+}
+
+// ═══════════════════════════════════════════════════
+//  EDITOR
+// ═══════════════════════════════════════════════════
+function renderAll(animate) { renderThumbs(); renderSlide(animate); renderEditor(); }
+function renderEditor() {
+  const body = document.getElementById('edBody');
+  const s = slides[active];
+  if (!s) return;
+  body.innerHTML = buildEditor(s);
+  bindEditorDrop();
+}
+
+function buildVidControls(s) {
+  const dur = s.bg.videoDuration || 120;
+  const start = (s.bg.videoStartTime || 0).toFixed(1);
+  const startLabel = formatVideoTime(s.bg.videoStartTime || 0);
+  const speeds = [0.25, 0.5, 1.0, 1.5, 2.0, 4.0];
+  const curSpeed = s.bg.videoSpeed || 1.0;
+  const loopOn = s.bg.videoLoop !== false;
+
+  let speedBtns = speeds.map(spd => {
+    const on = curSpeed === spd ? ' on' : '';
+    return `<button class="szb${on}" onclick="setVidProp('videoSpeed',${spd});renderSlide(false)">${spd}\xd7</button>`;
+  }).join('');
+
+  return `
+    <div class="f">
+      <span class="fl">⏱ Start Time</span>
+      <div class="dur-row">
+        <input type="number" class="dur-ms" style="width:80px" id="vidStart"
+          min="0" max="${dur}" step="0.1" value="${start}"
+          oninput="setVidProp('videoStartTime',parseFloat(this.value)||0)">
+        <span class="dur-unit">sec</span>
+        <span class="dur-badge">${startLabel}</span>
+      </div>
+      <input type="range" min="0" max="${dur}" step="0.1" value="${start}"
+        style="width:100%;accent-color:var(--red);cursor:pointer;margin-top:5px"
+        oninput="setVidProp('videoStartTime',parseFloat(this.value));document.getElementById('vidStart').value=parseFloat(this.value).toFixed(1)">
+    </div>
+    <div class="f">
+      <span class="fl">▶ Playback Speed</span>
+      <div class="szr">${speedBtns}</div>
+    </div>
+    <div class="f">
+      <div class="togr">
+        <span class="tog-lbl">Loop video</span>
+        <button class="tog ${loopOn ? 'on' : ''}" onclick="setVidProp('videoLoop',!slides[active].bg.videoLoop)"></button>
+      </div>
+    </div>
+    <div class="f">
+      <button class="dp-apply-all" onclick="jumpVideoToStart()">▶ Jump to start time</button>
+    </div>
+  `;
+}
+
+function buildEditor(s) {
+  const hasImg = s.bg.type === 'image' && s.bg.imgData;
+  const hasVid = s.bg.type === 'video' && s.bg.videoUrl;
+
+  return `
+<!-- PRESETS -->
+<div class="preset-row">
+  <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#444;display:flex;align-items:center;padding-right:4px">QUICK:</span>
+  ${['Deal','Feature','Price','Find Dealer','Blank'].map((p,i)=>`<div class="pchip" onclick="applyPreset('${['deal','feature','price','cta','blank'][i]}')"> ${p}</div>`).join('')}
+</div>
+
+<!-- BACKGROUND -->
+<div class="esec">
+  <div class="esec-hdr"><span class="esec-title">Background</span></div>
+  <div class="esec-body">
+    <div class="f">
+      <span class="fl">Backdrop Color <span style="color:#444;font-size:8px;letter-spacing:.05em">(shows through transparent PNG)</span></span>
+      <div class="swatches">
+        ${csw('#F36C23','sw-orange',s.bg.color,"setBgColor('#F36C23')")}
+        ${csw('#0a0a0a','sw-black',s.bg.color,"setBgColor('#0a0a0a')")}
+        ${csw('#ffffff','sw-white',s.bg.color,"setBgColor('#ffffff')")}
+        ${csw('#b61b22','sw-red',s.bg.color,"setBgColor('#b61b22')")}
+        <input type="color" value="${s.bg.color}" oninput="setBgColorCustom(this.value)" title="Custom">
+      </div>
+    </div>
+    <div class="f">
+      <span class="fl">Image / Video Background</span>
+      <div class="upl" id="bgDrop">
+        <input type="file" accept="image/*,video/*,.mov,.mp4,.webm,.m4v" onchange="handleBgMedia(event)">
+        ${hasImg ? `<img class="upl-img show" src="${s.bg.imgData}">` : ''}
+        ${hasVid ? `<div style="display:flex;align-items:center;gap:10px;padding:6px 0;color:#ccc">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#F36C23"><path d="M8 5v14l11-7z"/></svg>
+          <div><div style="font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase">Video loaded</div>
+          <div style="font-size:9px;color:#666;margin-top:2px">Start ${formatVideoTime(s.bg.videoStartTime||0)} · ${s.bg.videoSpeed||1}× speed</div></div>
+        </div>` : ''}
+        <div style="color:#555;font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">${(hasImg||hasVid)?'📁 Click to change':'📁 Image or Video · drag & drop'}</div>
+      </div>
+      ${(hasImg||hasVid)?`<div style="display:flex;gap:5px;margin-top:5px"><button class="mini-btn danger" onclick="clearBgImg()">✕ Remove</button></div>`:''}
+    </div>
+    ${hasVid ? buildVidControls(s) : ''}
+    ${hasImg?`
+    <div class="f">
+      <span class="fl">Ken Burns</span>
+      <div class="togr"><span class="tog-lbl">Enabled</span>
+        <button class="tog ${s.bg.kb?'on':''}" onclick="toggleKB()"></button>
+      </div>
+      ${s.bg.kb?`<div style="margin-top:8px"><div class="gbts">
+        ${['in','out','pan','pand'].map((k,i)=>cgb(['ZOOM IN','ZOOM OUT','PAN →','PAN ↕'][i],s.bg.kbStyle===k,`setKB('${k}')`)).join('')}
+      </div></div>`:''}
+    </div>
+    <div class="f">
+      <span class="fl">Image Overlay</span>
+      <div class="ovr">
+        ${['none','dark','darker','orange','fire','grad'].map(o=>covb(o.toUpperCase(),s.bg.overlay===o,`setOverlay('${o}')`)).join('')}
+      </div>
+    </div>`:''}
+    <div class="f">
+      <span class="fl">Accent Bar</span>
+      <div class="gbts">
+        ${['none','top','bottom','both'].map(b=>cgb(b.toUpperCase(),s.bar===b,`setBar('${b}')`)).join('')}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEXT LAYERS -->
+<div class="esec">
+  <div class="esec-hdr">
+    <span class="esec-title">Text</span>
+    <div style="display:flex;align-items:center;gap:6px;font-size:9px;color:#555">
+      <span>No Text</span>
+      <button class="tog ${s.noText?'on':''}" onclick="toggleNoText()"></button>
+    </div>
+  </div>
+  <div class="esec-body">
+    ${s.noText ? `<div class="no-text-banner">Text hidden — image/logo only slide</div>` : `
+    <div class="f">
+      <span class="fl">Headline</span>
+      <textarea class="fi" rows="2" placeholder="ZERO DOWN" oninput="updHL('text',this.value)">${s.hl.text}</textarea>
+    </div>
+    <div class="f">
+      <span class="fl">Font</span>
+      <div class="fnr">
+        ${cfnb('fn-bebas','bebas',s.hl.font,"updHL('font','bebas');renderAll(true)",'Bebas')}
+        ${cfnb('fn-oswald','oswald',s.hl.font,"updHL('font','oswald');renderAll(true)",'Oswald')}
+        ${cfnb('fn-inter','inter',s.hl.font,"updHL('font','inter');renderAll(true)",'Inter')}
+      </div>
+    </div>
+    <div class="f">
+      <span class="fl">Size</span>
+      <div class="szr">
+        ${['sm','md','lg','xl','massive'].map((v,i)=>cszb(['S','M','L','XL','MAX'][i],v,s.hl.size,`updHL('size','${v}');renderAll(true)`)).join('')}
+      </div>
+    </div>
+    <div class="f">
+      <span class="fl">Color</span>
+      <div class="swatches">
+        ${csw('#ffffff','sw-white',s.hl.color,"updHL('color','#ffffff');renderAll(true)")}
+        ${csw('#0a0a0a','sw-black',s.hl.color,"updHL('color','#0a0a0a');renderAll(true)")}
+        ${csw('#F36C23','sw-orange',s.hl.color,"updHL('color','#F36C23');renderAll(true)")}
+        ${csw('#b61b22','sw-red',s.hl.color,"updHL('color','#b61b22');renderAll(true)")}
+        <input type="color" value="${s.hl.color}" oninput="updHL('color',this.value);renderSlide(false)">
+      </div>
+    </div>
+    <div class="f" style="margin-top:4px">
+      <div class="togr"><span class="tog-lbl" style="font-size:10px;color:#666">Text shadow</span>
+        <button class="tog ${s.hl.shadow?'on':''}" onclick="updHL('shadow',!slides[active].hl.shadow);renderAll(true)"></button>
+      </div>
+    </div>
+    <div style="height:8px;border-top:1px solid var(--border2);margin:10px 0 6px"></div>
+    <div class="f">
+      <span class="fl">Subtext</span>
+      <textarea class="fi" rows="2" placeholder="Supporting text…" oninput="updSub('text',this.value)">${s.sub.text}</textarea>
+    </div>
+    <div class="f">
+      <div class="fnr">
+        ${cfnb('fn-bebas','bebas',s.sub.font,"updSub('font','bebas');renderAll(false)",'Bebas')}
+        ${cfnb('fn-oswald','oswald',s.sub.font,"updSub('font','oswald');renderAll(false)",'Oswald')}
+        ${cfnb('fn-inter','inter',s.sub.font,"updSub('font','inter');renderAll(false)",'Inter')}
+      </div>
+    </div>
+    <div class="f">
+      <div class="szr">
+        ${['xs','sm','md','lg','xl'].map((v,i)=>cszb(['XS','S','M','L','XL'][i],v,s.sub.size,`updSub('size','${v}');renderAll(false)`)).join('')}
+      </div>
+    </div>
+    <div class="f">
+      <div class="swatches">
+        ${csw('#ffffff','sw-white',s.sub.color,"updSub('color','#ffffff');renderAll(false)")}
+        ${csw('#0a0a0a','sw-black',s.sub.color,"updSub('color','#0a0a0a');renderAll(false)")}
+        ${csw('#F36C23','sw-orange',s.sub.color,"updSub('color','#F36C23');renderAll(false)")}
+        ${csw('#b61b22','sw-red',s.sub.color,"updSub('color','#b61b22');renderAll(false)")}
+        <input type="color" value="${s.sub.color}" oninput="updSub('color',this.value);renderSlide(false)">
+      </div>
+    </div>
+    <div style="height:8px;border-top:1px solid var(--border2);margin:10px 0 6px"></div>
+    <div class="f">
+      <span class="fl">Accent / CTA Line</span>
+      <input type="text" class="fi" placeholder="e.g. CALL TODAY · (509) 738-2985" value="${s.cta.text}" oninput="updCTA('text',this.value)">
+    </div>
+    <div class="f">
+      <div class="szr">
+        ${['sm','md','lg'].map((v,i)=>cszb(['S','M','L'][i],v,s.cta.size,`updCTA('size','${v}');renderAll(false)`)).join('')}
+      </div>
+    </div>
+    <div class="f">
+      <div class="swatches">
+        ${csw('#f0c000','sw-yellow',s.cta.color,"updCTA('color','#f0c000');renderAll(false)")}
+        ${csw('#ffffff','sw-white',s.cta.color,"updCTA('color','#ffffff');renderAll(false)")}
+        ${csw('#b61b22','sw-red',s.cta.color,"updCTA('color','#b61b22');renderAll(false)")}
+        ${csw('#0a0a0a','sw-black',s.cta.color,"updCTA('color','#0a0a0a');renderAll(false)")}
+        <input type="color" value="${s.cta.color}" oninput="updCTA('color',this.value);renderSlide(false)">
+      </div>
+    </div>`}
+  </div>
+</div>
+
+<!-- LOGOS -->
+<div class="esec">
+  <div class="esec-hdr"><span class="esec-title">Logos</span></div>
+  <div class="esec-body">
+    ${buildLogoCard('L1', s)}
+    ${buildLogoCard('L2', s)}
+    ${buildLogoCard('L3', s)}
+  </div>
+</div>
+
+<!-- ANIMATION -->
+<div class="esec">
+  <div class="esec-hdr"><span class="esec-title">Headline Animation</span></div>
+  <div class="esec-body">
+    <div class="f">
+      <div class="gbts">
+        ${['slam','punch','wipe','rise','split','flash','drop','scale'].map(a=>cgb(a.toUpperCase(),s.anim===a,`setAnim('${a}')`)).join('')}
+      </div>
+    </div>
+    <button class="add-sl-btn" style="margin:8px 0 0;width:100%;font-size:10px;padding:8px" onclick="renderSlide(true)">▶ Preview Animation</button>
+  </div>
+</div>
+
+<!-- TIMING -->
+<div class="esec">
+  <div class="esec-hdr"><span class="esec-title">Timing</span></div>
+  <div class="esec-body">
+    <div class="f">
+      <span class="fl">Duration</span>
+      <div class="dur-row">
+        <input type="number" class="dur-ms" id="durMsInput"
+          min="50" max="8000" step="50"
+          value="${Math.round(s.dur*1000)}"
+          oninput="setDurMs(parseInt(this.value)||100)">
+        <span class="dur-unit">ms</span>
+        <span class="dur-badge">${formatDur(s.dur)}</span>
+      </div>
+      <input type="range" id="durRange" min="50" max="8000" step="50"
+        value="${Math.round(s.dur*1000)}" style="width:100%;accent-color:var(--orange);cursor:pointer;margin-bottom:8px"
+        oninput="setDurMs(parseInt(this.value))">
+    </div>
+    <div class="f">
+      <div class="dur-presets">
+        <div class="dp-row">
+          <span class="dp-label">BLITZ</span>
+          ${[100,200,300,500].map(ms=>`<button class="dp-btn${Math.round(s.dur*1000)===ms?' on':''}" data-ms="${ms}" onclick="setDurMs(${ms})">${ms}ms</button>`).join('')}
+        </div>
+        <div class="dp-row">
+          <span class="dp-label">QUICK</span>
+          ${[750,1000,1500,2000].map(ms=>`<button class="dp-btn${Math.round(s.dur*1000)===ms?' on':''}" data-ms="${ms}" onclick="setDurMs(${ms})">${ms<1000?ms+'ms':(ms/1000)+'s'}</button>`).join('')}
+        </div>
+        <div class="dp-row">
+          <span class="dp-label">HOLD</span>
+          ${[3000,4000,5000,8000].map(ms=>`<button class="dp-btn${Math.round(s.dur*1000)===ms?' on':''}" data-ms="${ms}" onclick="setDurMs(${ms})">${ms/1000}s</button>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="f">
+      <button class="dp-apply-all" onclick="applyDurToAll(${Math.round(s.dur*1000)})">
+        ↓ Apply ${formatDur(s.dur)} to all slides
+      </button>
+    </div>
+  </div>
+</div>
+
+<div style="height:30px"></div>
+  `;
+}
+
+function buildLogoCard(key, s) {
+  const logo = gLogos[key];
+  const sl = s[key];
+  const src = logoSrc(key);
+  const name = logo.name;
+  return `
+<div class="logo-card">
+  <div class="logo-card-hdr">
+    <span class="logo-card-title">Logo — ${name}</span>
+    <div style="display:flex;align-items:center;gap:6px;font-size:9px;color:#555">
+      <span>Show</span>
+      <button class="tog ${sl.show?'on':''}" onclick="toggleLogo('${key}')"></button>
+    </div>
+  </div>
+  <div class="logo-preview-strip" style="background:${s.bg.color}">
+    ${src ? `<img src="${src}" style="max-width:180px;max-height:36px;object-fit:contain">` : '<span style="font-size:9px;color:#555">NOT LOADED</span>'}
+  </div>
+  <div class="f">
+    <div class="upl" style="padding:7px">
+      <input type="file" accept="image/*" onchange="handleLogoUpload('${key}',event)">
+      <div style="font-size:9px;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:.04em">
+        ${logo.uploadedData ? '📷 Change upload' : '📷 Upload custom'}
+      </div>
+    </div>
+    ${logo.uploadedData ? `<div style="display:flex;gap:5px;margin-top:4px"><button class="mini-btn danger" onclick="clearLogoUpload('${key}')">✕ Reset to default</button></div>` : ''}
+  </div>
+  ${sl.show ? `
+  <div class="f">
+    <span class="fl">Position</span>
+    <div class="lpos-grid">
+      ${Object.keys(POS_ICONS).map(p=>`<button class="lpos-btn${sl.pos===p?' on':''}" onclick="setLogoPos('${key}','${p}')" title="${p}">${POS_ICONS[p]}</button>`).join('')}
+    </div>
+  </div>
+  <div class="f">
+    <span class="fl">Scale: <span id="scl-${key}">${sl.scale.toFixed(1)}×</span></span>
+    <div class="rangr">
+      <input type="range" min=".2" max="2" step=".05" value="${sl.scale}" oninput="setLogoScale('${key}',this.value)">
+      <span class="rng-v" id="sclv-${key}">${sl.scale.toFixed(1)}×</span>
+    </div>
+  </div>
+  <div class="f">
+    <span class="fl">Animation</span>
+    <div class="animr">
+      ${['none','fade','scale','slide-up','slide-down','slam'].map(a=>`<button class="animb${sl.anim===a?' on':''}" onclick="setLogoAnim('${key}','${a}')">${a.toUpperCase()}</button>`).join('')}
+    </div>
+  </div>` : ''}
+</div>`;
+}
+
+// ═══════════════════════════════════════════════════
+//  HTML HELPERS
+// ═══════════════════════════════════════════════════
+function csw(color, cls, current, click) {
+  return `<div class="sw ${cls}${current===color?' on':''}" onclick="${click}" title="${color}"></div>`;
+}
+function cgb(label, active, click) {
+  return `<button class="gb${active?' on':''}" onclick="${click}">${label}</button>`;
+}
+function cszb(label, val, current, click) {
+  return `<button class="szb${current===val?' on':''}" onclick="${click}">${label}</button>`;
+}
+function cfnb(cls, val, current, click, label) {
+  return `<button class="fnb ${cls}${current===val?' on':''}" onclick="${click}">${label}</button>`;
+}
+function covb(label, active, click) {
+  return `<button class="ovb${active?' on':''}" onclick="${click}">${label}</button>`;
+}
+
+function bindEditorDrop() {
+  const drop = document.getElementById('bgDrop');
+  if (!drop) return;
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('drag'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('drag'));
+  drop.addEventListener('drop', e => {
+    e.preventDefault(); drop.classList.remove('drag');
+    const f = e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) loadImgFile(f, d => {
+      slides[active].bg.imgData = d;
+      slides[active].bg.type = 'image';
+      if (slides[active].bg.overlay === 'none') slides[active].bg.overlay = 'dark';
+      renderAll(true);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════
+//  EDITOR ACTIONS
+// ═══════════════════════════════════════════════════
+function updHL(k, v)  { slides[active].hl[k] = v; renderSlide(false); renderThumbs(); }
+function updSub(k, v) { slides[active].sub[k] = v; renderSlide(false); renderThumbs(); }
+function updCTA(k, v) { slides[active].cta[k] = v; renderSlide(false); }
+
+function setBgColor(c) { slides[active].bg.color = c; slides[active].bg.type = 'color'; renderAll(true); }
+function setBgColorCustom(c) { slides[active].bg.color = c; slides[active].bg.type = 'color'; renderSlide(false); renderThumbs(); }
+function handleBgImg(e) { handleBgMedia(e); }
+function handleBgMedia(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const isVid = f.type.startsWith('video/') || /\.(mp4|mov|webm|m4v)$/i.test(f.name);
+  if (isVid) {
+    if (slides[active].bg.videoUrl) URL.revokeObjectURL(slides[active].bg.videoUrl);
+    const url = URL.createObjectURL(f);
+    slides[active].bg.videoUrl = url;
+    slides[active].bg.type = 'video';
+    slides[active].bg.imgData = null;
+    slides[active].bg.videoStartTime = 0;
+    slides[active].bg.videoSpeed = 1.0;
+    slides[active].bg.videoLoop = true;
+    if (slides[active].bg.overlay === 'none') slides[active].bg.overlay = 'dark';
+    // Read duration
+    const tmpVid = document.createElement('video');
+    tmpVid.src = url;
+    tmpVid.addEventListener('loadedmetadata', () => {
+      slides[active].bg.videoDuration = Math.floor(tmpVid.duration);
+      renderEditor();
+    }, { once:true });
+    renderAll(true);
+  } else {
+    loadImgFile(f, d => {
+      slides[active].bg.imgData = d;
+      slides[active].bg.videoUrl = null;
+      slides[active].bg.type = 'image';
+      if (slides[active].bg.overlay === 'none') slides[active].bg.overlay = 'dark';
+      renderAll(true);
+    });
+  }
+}
+function clearBgImg() {
+  if (slides[active].bg.videoUrl) URL.revokeObjectURL(slides[active].bg.videoUrl);
+  slides[active].bg.imgData = null;
+  slides[active].bg.videoUrl = null;
+  slides[active].bg.type = 'color';
+  renderAll(true);
+}
+function toggleKB() { slides[active].bg.kb = !slides[active].bg.kb; renderAll(true); }
+function setKB(style) { slides[active].bg.kbStyle = style; renderAll(true); }
+function setOverlay(v) { slides[active].bg.overlay = v; renderAll(false); }
+function setBar(v) { slides[active].bar = v; renderAll(false); }
+function toggleNoText() { slides[active].noText = !slides[active].noText; renderAll(true); }
+function setAnim(a) { slides[active].anim = a; renderSlide(true); renderEditor(); }
+function formatDur(secs) {
+  if (secs < 1.0) return Math.round(secs * 1000) + 'ms';
+  return secs % 1 === 0 ? secs + 's' : secs.toFixed(1) + 's';
+}
+
+function setDurMs(ms) {
+  ms = Math.max(50, Math.min(8000, Math.round(ms) || 100));
+  slides[active].dur = ms / 1000;
+  // Sync all inputs
+  const msInput = document.getElementById('durMsInput');
+  const range   = document.getElementById('durRange');
+  if (msInput) msInput.value = ms;
+  if (range)   range.value = ms;
+  // Update preset highlight
+  document.querySelectorAll('.dp-btn').forEach(b => {
+    b.classList.toggle('on', parseInt(b.dataset.ms) === ms);
+  });
+  renderThumbs(); updateInfo();
+}
+
+function setDur(v) {
+  setDurMs(Math.round(parseFloat(v) * 1000));
+}
+
+function applyDurToAll(ms) {
+  ms = Math.max(50, Math.min(8000, ms));
+  slides.forEach(s => s.dur = ms / 1000);
+  renderAll(false);
+}
+
+// Logo
+function toggleLogo(key) { slides[active][key].show = !slides[active][key].show; renderAll(false); }
+function setLogoPos(key, pos) { slides[active][key].pos = pos; renderSlide(true); renderEditor(); }
+function setLogoScale(key, v) {
+  slides[active][key].scale = parseFloat(v);
+  const a = document.getElementById('scl-'+key); if (a) a.textContent = parseFloat(v).toFixed(1)+'×';
+  const b = document.getElementById('sclv-'+key); if (b) b.textContent = parseFloat(v).toFixed(1)+'×';
+  renderSlide(false);
+}
+function setLogoAnim(key, anim) { slides[active][key].anim = anim; renderSlide(true); renderEditor(); }
+function handleLogoUpload(key, e) {
+  const f = e.target.files[0]; if (!f) return;
+  loadImgFile(f, d => { gLogos[key].uploadedData = d; renderAll(false); });
+}
+function clearLogoUpload(key) { gLogos[key].uploadedData = null; renderAll(false); }
+
+// ═══════════════════════════════════════════════════
+//  PRESETS
+// ═══════════════════════════════════════════════════
+function applyPreset(type) {
+  const s = slides[active];
+  switch(type) {
+    case 'deal':
+      Object.assign(s.bg,{type:'color',color:'#0a0a0a',imgData:null,overlay:'none',kb:false});
+      Object.assign(s.hl,{text:'ZERO DOWN',font:'bebas',size:'massive',color:'#F36C23',shadow:true});
+      Object.assign(s.sub,{text:'On Select Bad Boy Mowers',font:'inter',size:'lg',color:'#ffffff'});
+      Object.assign(s.cta,{text:'LIMITED TIME OFFER',size:'md',color:'#ffffff'});
+      s.noText=false; s.anim='slam'; s.bar='bottom';
+      Object.assign(s.L1,{show:true,pos:'bc',scale:.9,anim:'fade'});
+      break;
+    case 'feature':
+      Object.assign(s.bg,{type:'color',color:'#0a0a0a',imgData:null,overlay:'fire',kb:true,kbStyle:'in'});
+      Object.assign(s.hl,{text:'ZT ELITE',font:'bebas',size:'xl',color:'#ffffff',shadow:true});
+      Object.assign(s.sub,{text:'26HP · 48" 54" 60" Zero Turn',font:'inter',size:'md',color:'#F36C23'});
+      Object.assign(s.cta,{text:'The Best Value Anywhere',size:'lg',color:'#ffffff'});
+      s.noText=false; s.anim='punch'; s.bar='bottom';
+      Object.assign(s.L1,{show:true,pos:'bl',scale:.8,anim:'slide-up'});
+      Object.assign(s.L2,{show:true,pos:'br',scale:.8,anim:'slide-up'});
+      break;
+    case 'price':
+      Object.assign(s.bg,{type:'color',color:'#0a0a0a',imgData:null,overlay:'none',kb:false});
+      Object.assign(s.hl,{text:'$0 DOWN',font:'bebas',size:'massive',color:'#F36C23',shadow:true});
+      Object.assign(s.sub,{text:'1.99% APR · 60 Months OAC',font:'inter',size:'lg',color:'#ffffff'});
+      Object.assign(s.cta,{text:'See dealer for details · Limited time offer',size:'sm',color:'#555'});
+      s.noText=false; s.anim='punch'; s.bar='none';
+      Object.assign(s.L1,{show:true,pos:'bc',scale:.85,anim:'fade'});
+      break;
+    case 'cta':
+      Object.assign(s.bg,{type:'color',color:'#F36C23',imgData:null,overlay:'none',kb:false});
+      Object.assign(s.hl,{text:'FIND A DEALER',font:'bebas',size:'massive',color:'#ffffff',shadow:false});
+      Object.assign(s.sub,{text:'JJ Riggs Equipment · Colville, WA',font:'inter',size:'md',color:'#ffffff'});
+      Object.assign(s.cta,{text:'jjriggsequipment.com · 509-738-2985',size:'sm',color:'rgba(255,255,255,.75)'});
+      s.noText=false; s.anim='wipe'; s.bar='none';
+      Object.assign(s.L1,{show:true,pos:'tc',scale:.85,anim:'fade'});
+      break;
+    case 'blank':
+      Object.assign(s.bg,{type:'color',color:'#0a0a0a',imgData:null,overlay:'none',kb:false});
+      s.noText=true; s.anim='slam'; s.bar='none';
+      break;
+  }
+  renderAll(true);
+}
+
+// ═══════════════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════════════
+function ff(font) { return font==='bebas'?"'Bebas Neue',sans-serif":font==='inter'?"'Inter',sans-serif":"'Oswald',sans-serif"; }
+function fw(font) { return font==='bebas'?400:font==='inter'?700:800; }
+function formatVideoTime(secs) {
+  secs = secs || 0;
+  const m = Math.floor(secs / 60);
+  const s = (secs % 60).toFixed(1);
+  return m > 0 ? `${m}:${String(Math.floor(secs%60)).padStart(2,'0')}` : `${secs.toFixed(1)}s`;
+}
+function setVidProp(key, val) {
+  slides[active].bg[key] = val;
+  const vid = document.getElementById('bgVideo');
+  if (vid) {
+    if (key === 'videoStartTime') vid.currentTime = val;
+    if (key === 'videoSpeed')     vid.playbackRate = val;
+    if (key === 'videoLoop')      vid.loop = val;
+  }
+  renderEditor(); renderThumbs();
+}
+function jumpVideoToStart() {
+  const s = slides[active];
+  const vid = document.getElementById('bgVideo');
+  if (vid) { vid.currentTime = s.bg.videoStartTime||0; vid.playbackRate = s.bg.videoSpeed||1.0; vid.play().catch(()=>{}); }
+}
+function ovCSS(type) {
+  return {
+    dark:   'rgba(0,0,0,.5)',
+    darker: 'rgba(0,0,0,.68)',
+    red:    'rgba(182,27,34,.72)',
+    orange: 'rgba(243,108,35,.65)',
+    fire:   'linear-gradient(135deg,rgba(180,30,10,.75) 0%,rgba(243,108,35,.65) 100%)',
+    grad:   'linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.1) 55%,transparent 100%)'
+  }[type]||'transparent';
+}
+function loadImgFile(file, cb) {
+  const r = new FileReader();
+  r.onload = e => cb(e.target.result);
+  r.readAsDataURL(file);
+}
+
+// ═══════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  init();
+  // Small delay to let fonts load before first render
+  setTimeout(() => renderSlide(true), 300);
+});
+</script>
+</body>
+</html>
