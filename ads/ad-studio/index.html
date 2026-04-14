@@ -140,6 +140,24 @@ input[type=color]{width:28px;height:28px;padding:2px;border-radius:3px;cursor:po
 .preset-btn:hover{border-color:var(--accent);color:var(--accent);}
 
 /* FONT PICKER */
+/* Export */
+.ctrl-export{background:transparent;color:var(--dim);border:1px solid var(--border);}
+.ctrl-export:hover{border-color:var(--accent);color:var(--accent);}
+#export-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);flex-direction:column;align-items:center;justify-content:center;gap:20px;}
+#export-overlay.show{display:flex;}
+#export-overlay .eo-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:.1em;color:#fff;}
+#export-overlay .eo-status{font-size:13px;color:var(--dim);letter-spacing:.06em;}
+#export-overlay .eo-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--accent);margin-right:8px;animation:eo-pulse 1s infinite;}
+@keyframes eo-pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+#export-overlay .eo-progress{width:300px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+#export-overlay .eo-bar{height:100%;width:0%;background:var(--accent);transition:width .3s;}
+#export-overlay .eo-cancel{padding:8px 20px;background:transparent;border:1px solid var(--border);border-radius:3px;color:var(--dim);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;margin-top:10px;transition:all .15s;}
+#export-overlay .eo-cancel:hover{border-color:#888;color:#ccc;}
+#export-toast{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:300;padding:10px 20px;border-radius:4px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;box-shadow:0 4px 24px rgba(0,0,0,.6);transition:opacity .3s;}
+#export-toast.success{display:block;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);color:#4ade80;}
+#export-toast.error{display:block;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#f87171;}
+#export-toast.info{display:block;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.4);color:#a5b4fc;}
+
 #font-picker{position:absolute;right:0;top:0;width:316px;background:var(--panel2);border:1px solid var(--border2);border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.8);z-index:20;display:none;flex-direction:column;max-height:440px;}
 #font-picker.open{display:flex;}
 #fp-search{margin:8px;background:var(--panel);border:1px solid var(--border2);color:var(--text);border-radius:3px;padding:6px 9px;font-size:12px;outline:none;}
@@ -669,7 +687,187 @@ function init() {
   buildStaticUI();
   selectSlide(0);
   resizeStage();
-  window.addEventListener('resize', resizeStage);
+  // ═══════════════════════════════════════════════════
+//  VIDEO EXPORT
+// ═══════════════════════════════════════════════════
+let exportRecorder = null;
+let exportStream = null;
+let exportCancelled = false;
+
+function openExportDialog() {
+  // Check browser support
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+    showExportToast('error', 'Your browser does not support screen capture. Try Chrome or Edge.');
+    return;
+  }
+
+  // Detect best format
+  const mp4OK = typeof MediaRecorder !== 'undefined' &&
+    MediaRecorder.isTypeSupported('video/mp4;codecs=avc1');
+  const ext = mp4OK ? 'MP4' : 'WebM';
+
+  // Confirm with user
+  if (!confirm(
+    'Export will record your slide sequence as .' + ext + '.\n\n' +
+    '1. Click OK\n' +
+    '2. In the browser dialog, choose "This Tab" and click Share\n' +
+    '3. Slides will play automatically\n' +
+    '4. File downloads when finished\n\n' +
+    'Ready to export?'
+  )) return;
+
+  startExport();
+}
+
+async function startExport() {
+  exportCancelled = false;
+
+  // Detect format
+  const mp4OK = typeof MediaRecorder !== 'undefined' &&
+    MediaRecorder.isTypeSupported('video/mp4;codecs=avc1');
+  const mime = mp4OK ? 'video/mp4;codecs=avc1' :
+    (MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm');
+  const ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
+
+  // Enter record mode
+  document.getElementById('app').classList.add('rec-mode');
+  resizeStage();
+  await sleep(600);
+
+  // Show export overlay
+  showExportOverlay('Requesting screen capture…');
+
+  // Request tab capture
+  try {
+    exportStream = await navigator.mediaDevices.getDisplayMedia({
+      video: { frameRate: 30, width: { ideal: 1920 }, height: { ideal: 1080 } },
+      audio: false,
+      preferCurrentTab: true,
+      selfBrowserSurface: 'include'
+    });
+  } catch (err) {
+    exitRecordMode();
+    hideExportOverlay();
+    showExportToast('info', 'Export cancelled — screen capture was not granted.');
+    return;
+  }
+
+  if (exportCancelled) { cleanupExport(); return; }
+
+  // Setup recorder
+  const chunks = [];
+  exportRecorder = new MediaRecorder(exportStream, {
+    mimeType: mime,
+    videoBitsPerSecond: 10000000
+  });
+
+  exportRecorder.ondataavailable = function(e) {
+    if (e.data && e.data.size > 0) chunks.push(e.data);
+  };
+
+  exportRecorder.onstop = function() {
+    cleanupExportStream();
+    if (exportCancelled || chunks.length === 0) {
+      exitRecordMode();
+      hideExportOverlay();
+      if (!exportCancelled) showExportToast('error', 'Export failed — no data captured.');
+      return;
+    }
+    const blob = new Blob(chunks, { type: mime });
+    const sizeMB = (blob.size / 1024 / 1024).toFixed(1);
+    downloadBlob(blob, 'ad-export-' + Date.now() + '.' + ext);
+    exitRecordMode();
+    hideExportOverlay();
+    showExportToast('success', 'Exported ' + ext.toUpperCase() + ' (' + sizeMB + ' MB) — check your downloads.');
+  };
+
+  // Handle user stopping the share
+  exportStream.getVideoTracks()[0].addEventListener('ended', function() {
+    if (exportRecorder && exportRecorder.state === 'recording') {
+      exportRecorder.stop();
+    }
+  });
+
+  // Start recording
+  exportRecorder.start(100);
+  showExportOverlay('Recording slides…');
+  hideExportOverlay(); // hide overlay so it doesn't appear in recording
+
+  // Small delay to ensure overlay is gone
+  await sleep(300);
+
+  // Play all slides sequentially
+  var totalDur = slides.reduce(function(a, s) { return a + s.dur; }, 0);
+  var elapsed = 0;
+
+  for (var idx = 0; idx < slides.length; idx++) {
+    if (exportCancelled) break;
+    active = idx;
+    renderSlide(true);
+
+    var dur = slides[idx].dur * 1000 + (slides[idx].dur < 0.5 ? 30 : 120);
+    await sleep(dur);
+    elapsed += slides[idx].dur;
+  }
+
+  // Hold last slide briefly
+  await sleep(400);
+
+  // Stop recording
+  if (exportRecorder && exportRecorder.state === 'recording') {
+    exportRecorder.stop();
+  }
+}
+
+function cancelExport() {
+  exportCancelled = true;
+  if (exportRecorder && exportRecorder.state === 'recording') {
+    exportRecorder.stop();
+  }
+  cleanupExportStream();
+  exitRecordMode();
+  hideExportOverlay();
+  showExportToast('info', 'Export cancelled.');
+}
+
+function cleanupExportStream() {
+  if (exportStream) {
+    exportStream.getTracks().forEach(function(t) { t.stop(); });
+    exportStream = null;
+  }
+  exportRecorder = null;
+}
+
+function downloadBlob(blob, filename) {
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function() { URL.revokeObjectURL(url); a.remove(); }, 2000);
+}
+
+function showExportOverlay(msg) {
+  var ov = document.getElementById('export-overlay');
+  ov.classList.add('show');
+  document.getElementById('eo-status').innerHTML = '<span class="eo-dot"></span>' + (msg || 'Preparing…');
+}
+
+function hideExportOverlay() {
+  document.getElementById('export-overlay').classList.remove('show');
+}
+
+function showExportToast(type, msg) {
+  var toast = document.getElementById('export-toast');
+  toast.className = type;
+  toast.textContent = msg;
+  setTimeout(function() { toast.className = ''; }, 5000);
+}
+
+function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+window.addEventListener('resize', resizeStage);
   document.addEventListener('click', handleOutsideClick);
 }
 
@@ -2109,5 +2307,14 @@ document.addEventListener('keydown', function(e) {
 // ============================================================
 init();
 </script>
+<!-- Export Overlay -->
+<div id="export-overlay">
+  <div class="eo-title">EXPORTING VIDEO</div>
+  <div class="eo-status" id="eo-status"><span class="eo-dot"></span>Preparing…</div>
+  <div class="eo-progress"><div class="eo-bar" id="eo-bar"></div></div>
+  <button class="eo-cancel" onclick="cancelExport()">Cancel</button>
+</div>
+<div id="export-toast"></div>
+
 </body>
 </html>
