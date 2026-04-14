@@ -1395,131 +1395,166 @@ function loadImgFile(file, cb) {
 //  BOOT
 // ═══════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════
-//  VIDEO EXPORT (Canvas Frame Capture — no screen share needed)
+//  VIDEO EXPORT — Animated Frame Capture
+//  Steps through each slide's GSAP animation frame-by-frame,
+//  captures each frame via html2canvas, encodes to MP4/WebM.
 // ═══════════════════════════════════════════════════
 let exportCancelled = false;
 
 function openExportDialog() {
   if (slides.length === 0) { alert('No slides to export.'); return; }
-  var totalSec = slides.reduce(function(a,s){ return a + s.dur; }, 0);
+  var totalSec = slides.reduce(function(a,s){ return a+s.dur; },0);
+  var est = Math.max(8, Math.round(totalSec * 1.5 + slides.length * 3));
   if (!confirm(
-    'Export ' + slides.length + ' slides (~' + totalSec.toFixed(1) + 's) as video.\n\n' +
-    'Each slide is captured as a frame — no screen sharing required.\n\n' +
-    'This may take ' + Math.max(5, Math.round(slides.length * 2)) + '-' + Math.round(slides.length * 4) + ' seconds.\nReady?'
+    'Export ' + slides.length + ' slides (' + totalSec.toFixed(1) + 's) with full animations.\n\n' +
+    'Each animation frame is captured individually.\n' +
+    'Estimated time: ~' + est + ' seconds.\n\nReady?'
   )) return;
   startExport();
 }
 
 async function startExport() {
   exportCancelled = false;
-  showExportOverlay('Loading renderer…');
 
-  // ── Step 1: Load html2canvas from CDN ──────────────────────
+  // ── Load html2canvas ───────────────────────────────────────
   if (!window.html2canvas) {
+    showExportOverlay('Loading renderer…');
     try {
-      await new Promise(function(resolve, reject) {
+      await new Promise(function(res, rej) {
         var s = document.createElement('script');
         s.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
-        s.onload = resolve;
-        s.onerror = reject;
+        s.onload = res; s.onerror = rej;
         document.head.appendChild(s);
       });
     } catch(e) {
       hideExportOverlay();
-      showExportToast('error', 'Failed to load renderer. Check internet connection.');
+      showExportToast('error', 'Failed to load renderer.');
       return;
     }
   }
 
-  // ── Step 2: Detect format ──────────────────────────────────
+  // ── Detect format ──────────────────────────────────────────
   var mp4OK = typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('video/mp4;codecs=avc1');
   var webmOK = typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('video/webm;codecs=vp9');
   var mime = mp4OK ? 'video/mp4;codecs=avc1' : (webmOK ? 'video/webm;codecs=vp9' : 'video/webm');
   var ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
 
-  // ── Step 3: Create recording canvas at full 1080×1080 ──────
+  // ── Setup recording canvas (1080×1080) ─────────────────────
   var RW = 1080, RH = 1080;
   var recCanvas = document.createElement('canvas');
-  recCanvas.width = RW;
-  recCanvas.height = RH;
-  var recCtx = recCanvas.getContext('2d');
-  recCtx.fillStyle = '#000';
-  recCtx.fillRect(0, 0, RW, RH);
+  recCanvas.width = RW; recCanvas.height = RH;
+  var rctx = recCanvas.getContext('2d');
+  rctx.fillStyle = '#000';
+  rctx.fillRect(0, 0, RW, RH);
 
-  // ── Step 4: Setup MediaRecorder on canvas stream ───────────
+  // ── captureStream + MediaRecorder ──────────────────────────
   var stream = recCanvas.captureStream(30);
   var chunks = [];
   var recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 8000000 });
   recorder.ondataavailable = function(e) { if (e.data && e.data.size > 0) chunks.push(e.data); };
 
-  // Frame draw loop: continuously redraws currentFrame to feed the stream
-  var currentFrame = null;
-  var drawingFrames = true;
-  function frameLoop() {
-    if (!drawingFrames) return;
-    if (currentFrame) {
-      recCtx.drawImage(currentFrame, 0, 0, RW, RH);
-    }
-    requestAnimationFrame(frameLoop);
-  }
-  frameLoop();
+  // Frame pump: continuously redraws curFrame to feed the stream
+  var curFrame = null;
+  var pumping = true;
+  (function pump() {
+    if (!pumping) return;
+    if (curFrame) rctx.drawImage(curFrame, 0, 0, RW, RH);
+    requestAnimationFrame(pump);
+  })();
 
   // Start recording
   recorder.start(100);
-  showExportOverlay('Capturing slide 1/' + slides.length + '…');
+  showExportOverlay('Starting…');
 
-  // ── Step 5: Capture each slide ─────────────────────────────
+  // ── Capture config ─────────────────────────────────────────
+  var ANIM_FPS = 12;               // frames per second for animation phase
   var stageInner = document.getElementById('stageInner');
   var stageEl = document.getElementById('stage');
-  var savedTransform = stageInner.style.transform;
+  var savedXform = stageInner.style.transform;
+  var savedW = stageEl.style.width;
+  var savedH = stageEl.style.height;
 
-  for (var i = 0; i < slides.length; i++) {
-    if (exportCancelled) break;
-    showExportOverlay('Capturing slide ' + (i+1) + '/' + slides.length + '…');
+  // Helper: capture one frame from stageInner at 1080px
+  async function captureFrame() {
+    return await html2canvas(stageInner, {
+      width: 1080, height: 1080, scale: 1,
+      useCORS: true, allowTaint: true,
+      backgroundColor: null, logging: false
+    });
+  }
 
-    // Render slide content (no animation — just final state)
-    active = i;
-    renderSlide(false);
-    await exSleep(150); // let fonts/images settle
-
-    // Temporarily remove scale transform for clean 1080×1080 capture
+  // Helper: set stage to full-res for capture
+  function stageFullRes() {
     stageInner.style.transform = 'none';
     stageEl.style.width = '1080px';
     stageEl.style.height = '1080px';
-    stageEl.style.overflow = 'hidden';
-    await exSleep(50);
-
-    // Capture with html2canvas
-    try {
-      var captured = await html2canvas(stageInner, {
-        width: 1080,
-        height: 1080,
-        scale: 1,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null,
-        logging: false
-      });
-      currentFrame = captured;
-    } catch(e) {
-      console.warn('Frame capture failed for slide ' + i, e);
-      // Draw a solid color fallback
-      recCtx.fillStyle = slides[i].bg.color || '#000';
-      recCtx.fillRect(0, 0, RW, RH);
-    }
-
-    // Restore transform
-    stageInner.style.transform = savedTransform;
-    resizeStage();
-
-    // Hold this frame for the slide's duration
-    var holdMs = Math.max(slides[i].dur * 1000, 100);
-    await exSleep(holdMs);
   }
 
-  // ── Step 6: Hold last frame + stop ─────────────────────────
-  await exSleep(500);
-  drawingFrames = false;
+  // Helper: restore stage to normal view
+  function stageRestore() {
+    stageInner.style.transform = savedXform;
+    stageEl.style.width = savedW;
+    stageEl.style.height = savedH;
+  }
+
+  // ── Process each slide ─────────────────────────────────────
+  var totalFramesCaptured = 0;
+
+  for (var si = 0; si < slides.length; si++) {
+    if (exportCancelled) break;
+    var sl = slides[si];
+    showExportOverlay('Slide ' + (si+1) + '/' + slides.length + ' — animating…');
+
+    // 1) Render slide WITH animation (starts GSAP timeline)
+    active = si;
+    renderSlide(true);
+
+    // 2) Immediately pause GSAP global timeline
+    gsap.globalTimeline.pause();
+    var t0 = gsap.globalTimeline.time();
+
+    // 3) Set stage to 1080px for capture
+    stageFullRes();
+    await exSleep(60);
+
+    // 4) Step through animation frames
+    //    Animation typically lasts 0.5–1.5s depending on stagger/word count
+    var animDur = Math.min(2.0, sl.dur);
+    var numAnimFrames = Math.ceil(animDur * ANIM_FPS);
+
+    for (var f = 0; f <= numAnimFrames; f++) {
+      if (exportCancelled) break;
+
+      // Seek GSAP to this frame's time
+      gsap.globalTimeline.time(t0 + (f / ANIM_FPS));
+
+      // Capture the current state
+      try {
+        curFrame = await captureFrame();
+        totalFramesCaptured++;
+      } catch(e) {
+        console.warn('Frame capture failed', e);
+      }
+
+      // Yield to let the draw pump push this frame to the stream
+      await new Promise(function(r) { requestAnimationFrame(r); });
+    }
+
+    // 5) Hold the final frame for remaining duration
+    showExportOverlay('Slide ' + (si+1) + '/' + slides.length + ' — holding…');
+    var holdMs = Math.max(0, (sl.dur - animDur) * 1000);
+    if (holdMs > 50) await exSleep(holdMs);
+
+    // 6) Clean up GSAP + restore stage
+    gsap.globalTimeline.resume();
+    gsap.killTweensOf('*');
+    stageRestore();
+    resizeStage();
+  }
+
+  // ── Finalize ───────────────────────────────────────────────
+  await exSleep(500); // hold last frame a beat
+  pumping = false;
   recorder.stop();
 
   showExportOverlay('Encoding ' + ext.toUpperCase() + '…');
@@ -1535,7 +1570,8 @@ async function startExport() {
       var sizeMB = (blob.size / 1024 / 1024).toFixed(1);
       exDownload(blob, 'badboy-export-' + Date.now() + '.' + ext);
       hideExportOverlay();
-      showExportToast('success', 'Exported .' + ext.toUpperCase() + ' (' + sizeMB + ' MB) — check downloads');
+      showExportToast('success',
+        'Exported .' + ext.toUpperCase() + ' (' + sizeMB + ' MB · ' + totalFramesCaptured + ' frames) — check downloads');
       resolve();
     };
   });
@@ -1543,6 +1579,7 @@ async function startExport() {
 
 function cancelExport() {
   exportCancelled = true;
+  if (typeof gsap !== 'undefined') { gsap.globalTimeline.resume(); gsap.killTweensOf('*'); }
   hideExportOverlay();
   showExportToast('info', 'Export cancelled.');
 }
@@ -1557,13 +1594,13 @@ function exDownload(blob, filename) {
 function showExportOverlay(msg) {
   var ov = document.getElementById('export-overlay');
   ov.classList.add('show');
-  document.getElementById('eo-status').innerHTML = '<span class="eo-dot"></span>' + (msg || 'Preparing…');
+  document.getElementById('eo-status').innerHTML = '<span class="eo-dot"></span>' + (msg || 'Working…');
 }
 function hideExportOverlay() { document.getElementById('export-overlay').classList.remove('show'); }
 function showExportToast(type, msg) {
   var t = document.getElementById('export-toast');
   t.className = type; t.textContent = msg;
-  setTimeout(function() { t.className = ''; }, 6000);
+  setTimeout(function() { t.className = ''; }, 7000);
 }
 function exSleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
 
