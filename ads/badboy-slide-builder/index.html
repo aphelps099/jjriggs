@@ -1395,20 +1395,30 @@ function loadImgFile(file, cb) {
 //  BOOT
 // ═══════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════
-//  VIDEO EXPORT — Animated Frame Capture
-//  Steps through each slide's GSAP animation frame-by-frame,
-//  captures each frame via html2canvas, encodes to MP4/WebM.
+//  VIDEO EXPORT — v4: Video BG + Logos + High-FPS Animation
 // ═══════════════════════════════════════════════════
 let exportCancelled = false;
 
 function openExportDialog() {
-  if (slides.length === 0) { alert('No slides to export.'); return; }
+  if (slides.length === 0) { alert('No slides.'); return; }
   var totalSec = slides.reduce(function(a,s){ return a+s.dur; },0);
-  var est = Math.max(8, Math.round(totalSec * 1.5 + slides.length * 3));
+
+  // Check for external-URL logos (CORS warning)
+  var logoWarns = [];
+  ['L1','L2','L3'].forEach(function(k) {
+    if (!gLogos[k]) return;
+    var anySlideUsesIt = slides.some(function(s) { return s[k] && s[k].show; });
+    if (!anySlideUsesIt) return;
+    var src = gLogos[k].uploadedData || gLogos[k].src;
+    if (src && !src.startsWith('data:')) logoWarns.push(gLogos[k].name);
+  });
+  var warn = logoWarns.length
+    ? '\n\n⚠ Logos from URLs (' + logoWarns.join(', ') + ') may not export due to CORS.\nFor best results, re-upload them via the Logo section.'
+    : '';
+
   if (!confirm(
-    'Export ' + slides.length + ' slides (' + totalSec.toFixed(1) + 's) with full animations.\n\n' +
-    'Each animation frame is captured individually.\n' +
-    'Estimated time: ~' + est + ' seconds.\n\nReady?'
+    'Export ' + slides.length + ' slides (' + totalSec.toFixed(1) + 's) with full animations.\n' +
+    'Video backgrounds, text animations, and logos included.' + warn + '\n\nReady?'
   )) return;
   startExport();
 }
@@ -1423,186 +1433,209 @@ async function startExport() {
       await new Promise(function(res, rej) {
         var s = document.createElement('script');
         s.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
-        s.onload = res; s.onerror = rej;
-        document.head.appendChild(s);
+        s.onload = res; s.onerror = rej; document.head.appendChild(s);
       });
-    } catch(e) {
-      hideExportOverlay();
-      showExportToast('error', 'Failed to load renderer.');
-      return;
-    }
+    } catch(e) { hideExportOverlay(); showExportToast('error','Failed to load renderer.'); return; }
   }
 
+  // ── Try to pre-convert external logo URLs to data URLs ─────
+  showExportOverlay('Preparing logos…');
+  await preloadLogosForExport();
+
   // ── Detect format ──────────────────────────────────────────
-  var mp4OK = typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('video/mp4;codecs=avc1');
-  var webmOK = typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('video/webm;codecs=vp9');
+  var mp4OK = typeof MediaRecorder!=='undefined' && MediaRecorder.isTypeSupported('video/mp4;codecs=avc1');
+  var webmOK = typeof MediaRecorder!=='undefined' && MediaRecorder.isTypeSupported('video/webm;codecs=vp9');
   var mime = mp4OK ? 'video/mp4;codecs=avc1' : (webmOK ? 'video/webm;codecs=vp9' : 'video/webm');
   var ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
 
-  // ── Setup recording canvas (1080×1080) ─────────────────────
-  var RW = 1080, RH = 1080;
+  // ── Recording canvas ──────────────────────────────────────
+  var RW=1080, RH=1080;
   var recCanvas = document.createElement('canvas');
-  recCanvas.width = RW; recCanvas.height = RH;
+  recCanvas.width=RW; recCanvas.height=RH;
   var rctx = recCanvas.getContext('2d');
-  rctx.fillStyle = '#000';
-  rctx.fillRect(0, 0, RW, RH);
+  rctx.fillStyle='#000'; rctx.fillRect(0,0,RW,RH);
 
-  // ── captureStream + MediaRecorder ──────────────────────────
   var stream = recCanvas.captureStream(30);
   var chunks = [];
-  var recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 8000000 });
-  recorder.ondataavailable = function(e) { if (e.data && e.data.size > 0) chunks.push(e.data); };
+  var recorder = new MediaRecorder(stream, { mimeType:mime, videoBitsPerSecond:10000000 });
+  recorder.ondataavailable = function(e){ if(e.data&&e.data.size>0) chunks.push(e.data); };
 
-  // Frame pump: continuously redraws curFrame to feed the stream
+  // Frame pump
   var curFrame = null;
   var pumping = true;
-  (function pump() {
-    if (!pumping) return;
-    if (curFrame) rctx.drawImage(curFrame, 0, 0, RW, RH);
-    requestAnimationFrame(pump);
-  })();
+  (function pump(){ if(!pumping) return; if(curFrame) rctx.drawImage(curFrame,0,0,RW,RH); requestAnimationFrame(pump); })();
 
-  // Start recording
   recorder.start(100);
   showExportOverlay('Starting…');
 
-  // ── Capture config ─────────────────────────────────────────
-  var ANIM_FPS = 12;               // frames per second for animation phase
+  // ── References ─────────────────────────────────────────────
   var stageInner = document.getElementById('stageInner');
   var stageEl = document.getElementById('stage');
   var savedXform = stageInner.style.transform;
   var savedW = stageEl.style.width;
   var savedH = stageEl.style.height;
+  var totalFrames = 0;
 
-  // Helper: capture one frame from stageInner at 1080px
+  function goFullRes() {
+    stageInner.style.transform='none';
+    stageEl.style.width='1080px';
+    stageEl.style.height='1080px';
+  }
+  function restoreRes() {
+    stageInner.style.transform=savedXform;
+    stageEl.style.width=savedW;
+    stageEl.style.height=savedH;
+  }
+
+  // ── Capture one frame (handles video swap) ─────────────────
   async function captureFrame() {
-    return await html2canvas(stageInner, {
-      width: 1080, height: 1080, scale: 1,
-      useCORS: true, allowTaint: true,
-      backgroundColor: null, logging: false
+    // Swap <video> → <canvas> so html2canvas can capture the current frame
+    var swaps = [];
+    stageInner.querySelectorAll('video').forEach(function(vid) {
+      if (vid.readyState >= 2) {
+        var c = document.createElement('canvas');
+        c.width = vid.videoWidth || 1920;
+        c.height = vid.videoHeight || 1080;
+        c.style.cssText = vid.style.cssText;
+        c.className = vid.className;
+        c.id = vid.id;
+        c.getContext('2d').drawImage(vid, 0, 0, c.width, c.height);
+        vid.parentNode.replaceChild(c, vid);
+        swaps.push({c:c, v:vid});
+      }
     });
-  }
 
-  // Helper: set stage to full-res for capture
-  function stageFullRes() {
-    stageInner.style.transform = 'none';
-    stageEl.style.width = '1080px';
-    stageEl.style.height = '1080px';
-  }
+    var result = await html2canvas(stageInner, {
+      width:1080, height:1080, scale:1,
+      useCORS:true, allowTaint:false,
+      backgroundColor:null, logging:false
+    });
 
-  // Helper: restore stage to normal view
-  function stageRestore() {
-    stageInner.style.transform = savedXform;
-    stageEl.style.width = savedW;
-    stageEl.style.height = savedH;
+    // Restore <video> elements
+    swaps.forEach(function(s){ if(s.c.parentNode) s.c.parentNode.replaceChild(s.v, s.c); });
+    return result;
   }
 
   // ── Process each slide ─────────────────────────────────────
-  var totalFramesCaptured = 0;
-
   for (var si = 0; si < slides.length; si++) {
     if (exportCancelled) break;
     var sl = slides[si];
-    showExportOverlay('Slide ' + (si+1) + '/' + slides.length + ' — animating…');
 
-    // 1) Render slide WITH animation (starts GSAP timeline)
+    // Adaptive FPS: blitz slides get higher rate
+    var fps = sl.dur < 0.5 ? 30 : (sl.dur < 1.5 ? 24 : 15);
+    var animDur = Math.min(2.0, sl.dur);
+    var numAnimFrames = Math.ceil(animDur * fps);
+
+    showExportOverlay('Slide ' + (si+1) + '/' + slides.length + ' — rendering ' + numAnimFrames + ' frames…');
+
+    // Render slide WITH animation
     active = si;
     renderSlide(true);
 
-    // 2) Immediately pause GSAP global timeline
+    // Pause GSAP immediately
     gsap.globalTimeline.pause();
     var t0 = gsap.globalTimeline.time();
 
-    // 3) Set stage to 1080px for capture
-    stageFullRes();
-    await exSleep(60);
+    // Set stage to full 1080px
+    goFullRes();
+    await exSleep(80);
 
-    // 4) Step through animation frames
-    //    Animation typically lasts 0.5–1.5s depending on stagger/word count
-    var animDur = Math.min(2.0, sl.dur);
-    var numAnimFrames = Math.ceil(animDur * ANIM_FPS);
-
+    // Step through animation frames
     for (var f = 0; f <= numAnimFrames; f++) {
       if (exportCancelled) break;
+      gsap.globalTimeline.time(t0 + (f / fps));
+      await exSleep(10); // let DOM update
 
-      // Seek GSAP to this frame's time
-      gsap.globalTimeline.time(t0 + (f / ANIM_FPS));
-
-      // Capture the current state
       try {
         curFrame = await captureFrame();
-        totalFramesCaptured++;
-      } catch(e) {
-        console.warn('Frame capture failed', e);
-      }
+        totalFrames++;
+      } catch(e) { console.warn('Frame error', e); }
 
-      // Yield to let the draw pump push this frame to the stream
-      await new Promise(function(r) { requestAnimationFrame(r); });
+      // Yield to draw pump
+      await new Promise(function(r){ requestAnimationFrame(r); });
     }
 
-    // 5) Hold the final frame for remaining duration
-    showExportOverlay('Slide ' + (si+1) + '/' + slides.length + ' — holding…');
+    // Hold last frame for remaining duration
     var holdMs = Math.max(0, (sl.dur - animDur) * 1000);
-    if (holdMs > 50) await exSleep(holdMs);
+    if (holdMs > 50) {
+      showExportOverlay('Slide ' + (si+1) + '/' + slides.length + ' — holding ' + (holdMs/1000).toFixed(1) + 's…');
+      await exSleep(holdMs);
+    }
 
-    // 6) Clean up GSAP + restore stage
+    // Resume + cleanup
     gsap.globalTimeline.resume();
     gsap.killTweensOf('*');
-    stageRestore();
+    restoreRes();
     resizeStage();
   }
 
   // ── Finalize ───────────────────────────────────────────────
-  await exSleep(500); // hold last frame a beat
+  await exSleep(400);
   pumping = false;
   recorder.stop();
-
   showExportOverlay('Encoding ' + ext.toUpperCase() + '…');
 
   await new Promise(function(resolve) {
     recorder.onstop = function() {
-      stream.getTracks().forEach(function(t) { t.stop(); });
-      if (exportCancelled || chunks.length === 0) {
-        hideExportOverlay();
-        return resolve();
-      }
-      var blob = new Blob(chunks, { type: mime });
-      var sizeMB = (blob.size / 1024 / 1024).toFixed(1);
+      stream.getTracks().forEach(function(t){ t.stop(); });
+      if (exportCancelled || chunks.length===0) { hideExportOverlay(); return resolve(); }
+      var blob = new Blob(chunks, {type:mime});
+      var sizeMB = (blob.size/1024/1024).toFixed(1);
       exDownload(blob, 'badboy-export-' + Date.now() + '.' + ext);
       hideExportOverlay();
-      showExportToast('success',
-        'Exported .' + ext.toUpperCase() + ' (' + sizeMB + ' MB · ' + totalFramesCaptured + ' frames) — check downloads');
+      showExportToast('success','Exported .' + ext.toUpperCase() + ' (' + sizeMB + ' MB · ' + totalFrames + ' anim frames)');
       resolve();
     };
   });
 }
 
-function cancelExport() {
-  exportCancelled = true;
-  if (typeof gsap !== 'undefined') { gsap.globalTimeline.resume(); gsap.killTweensOf('*'); }
-  hideExportOverlay();
-  showExportToast('info', 'Export cancelled.');
+// ── Pre-convert external logo URLs to data URLs ──────────────
+async function preloadLogosForExport() {
+  var keys = ['L1','L2'];
+  if (gLogos.L3) keys.push('L3');
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    if (!gLogos[k] || gLogos[k].uploadedData) continue; // already a data URL
+    var src = gLogos[k].src;
+    if (!src || src.startsWith('data:')) continue;
+    try {
+      var img = new Image();
+      img.crossOrigin = 'anonymous';
+      await new Promise(function(res, rej) { img.onload=res; img.onerror=rej; img.src=src; });
+      var c = document.createElement('canvas');
+      c.width = Math.max(img.naturalWidth, 200);
+      c.height = Math.max(img.naturalHeight, 60);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      gLogos[k].uploadedData = c.toDataURL('image/png');
+      // Re-render so the slide uses data URL
+      renderSlide(false);
+    } catch(e) {
+      console.warn('Could not pre-load logo ' + k + ' for export (CORS). Upload manually for best results.');
+    }
+  }
 }
 
-function exDownload(blob, filename) {
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url; a.download = filename;
-  document.body.appendChild(a); a.click();
-  setTimeout(function() { URL.revokeObjectURL(url); a.remove(); }, 2000);
+function cancelExport() {
+  exportCancelled = true;
+  if (typeof gsap!=='undefined') { gsap.globalTimeline.resume(); gsap.killTweensOf('*'); }
+  hideExportOverlay(); showExportToast('info','Export cancelled.');
+}
+
+function exDownload(blob, fn) {
+  var u=URL.createObjectURL(blob); var a=document.createElement('a');
+  a.href=u; a.download=fn; document.body.appendChild(a); a.click();
+  setTimeout(function(){URL.revokeObjectURL(u);a.remove();},2000);
 }
 function showExportOverlay(msg) {
-  var ov = document.getElementById('export-overlay');
-  ov.classList.add('show');
-  document.getElementById('eo-status').innerHTML = '<span class="eo-dot"></span>' + (msg || 'Working…');
+  var o=document.getElementById('export-overlay'); o.classList.add('show');
+  document.getElementById('eo-status').innerHTML='<span class="eo-dot"></span>'+(msg||'Working…');
 }
-function hideExportOverlay() { document.getElementById('export-overlay').classList.remove('show'); }
-function showExportToast(type, msg) {
-  var t = document.getElementById('export-toast');
-  t.className = type; t.textContent = msg;
-  setTimeout(function() { t.className = ''; }, 7000);
+function hideExportOverlay(){document.getElementById('export-overlay').classList.remove('show');}
+function showExportToast(type,msg){
+  var t=document.getElementById('export-toast'); t.className=type; t.textContent=msg;
+  setTimeout(function(){t.className='';},7000);
 }
-function exSleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+function exSleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
 
 window.addEventListener('DOMContentLoaded', () => {
   init();
