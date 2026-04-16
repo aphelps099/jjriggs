@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Studio — Playback Renderer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1080px;overflow:hidden;background:#000}
+body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.stage{position:relative;width:1080px;height:1080px;overflow:hidden}
+.slide-bg{position:absolute;inset:0;overflow:hidden}
+.s-bgcolor{position:absolute;inset:0}
+.s-bgimg{position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform}
+
+@keyframes kbIn{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.13) translate(-1%,-1%)}}
+@keyframes kbOut{0%{transform:scale(1.13) translate(-1%,-1%)}100%{transform:scale(1) translate(1%,.5%)}}
+@keyframes kbPan{0%{transform:scale(1.1) translate(-3%,0)}100%{transform:scale(1.1) translate(3%,0)}}
+@keyframes kbPanD{0%{transform:scale(1.1) translate(0,-2%)}100%{transform:scale(1.1) translate(0,2%)}}
+.kb-in{animation:kbIn var(--kb-dur,6s) ease-in-out forwards}
+.kb-out{animation:kbOut var(--kb-dur,6s) ease-in-out forwards}
+.kb-pan{animation:kbPan var(--kb-dur,6s) ease-in-out forwards}
+.kb-pand{animation:kbPanD var(--kb-dur,6s) ease-in-out forwards}
+
+.s-overlay{position:absolute;inset:0;pointer-events:none}
+.s-bar{position:absolute;left:0;right:0;height:10px}
+.s-bar-top{top:0}.s-bar-bottom{bottom:0}
+
+.slide-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px;text-align:center}
+.s-hl{font-weight:400;line-height:.92;letter-spacing:.04em;text-transform:uppercase;word-break:break-word;max-width:100%}
+.s-hl .word{display:inline-block;white-space:pre}
+.s-sub{font-weight:600;line-height:1.3;margin-top:22px;letter-spacing:.05em;text-transform:uppercase}
+.s-cta{font-family:'Bebas Neue',sans-serif;text-transform:uppercase;letter-spacing:.1em;margin-top:16px}
+
+.s-logo{position:absolute;display:flex;align-items:center;justify-content:center}
+.s-logo img{object-fit:contain;display:block}
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+
+<script>
+// Constants from main app
+const CANVAS = 1080;
+const HL_SIZES  = { massive:148, xl:108, lg:80, md:58, sm:42 };
+const SUB_SIZES = { xl:52, lg:40, md:30, sm:22, xs:17 };
+const CTA_SIZES = { lg:48, md:36, sm:26 };
+const LOGO_MAX_W = 320;
+const LOGO_MAX_H = 110;
+const LOGO_POS = {
+  tl: 'top:44px;left:44px',
+  tc: 'top:44px;left:50%;transform:translateX(-50%)',
+  tr: 'top:44px;right:44px',
+  ml: 'top:50%;left:44px;transform:translateY(-50%)',
+  cc: 'top:50%;left:50%;transform:translate(-50%,-50%)',
+  mr: 'top:50%;right:44px;transform:translateY(-50%)',
+  bl: 'bottom:44px;left:44px',
+  bc: 'bottom:44px;left:50%;transform:translateX(-50%)',
+  br: 'bottom:44px;right:44px'
+};
+
+let slideData = null;
+let logoImages = {};
+
+function ff(font) { return font==='bebas'?"'Bebas Neue',sans-serif":font==='inter'?"'Inter',sans-serif":"'Oswald',sans-serif"; }
+function fw(font) { return font==='bebas'?400:font==='inter'?700:800; }
+
+function ovCSS(type) {
+  return {
+    dark:   'rgba(0,0,0,.5)',
+    darker: 'rgba(0,0,0,.68)',
+    red:    'rgba(182,27,34,.72)',
+    orange: 'rgba(243,108,35,.65)',
+    fire:   'linear-gradient(135deg,rgba(180,30,10,.75) 0%,rgba(243,108,35,.65) 100%)',
+    grad:   'linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.1) 55%,transparent 100%)'
+  }[type]||'transparent';
+}
+
+// Pre-load logo images from base64
+async function preloadLogos(logos) {
+  logoImages = {};
+  for (const [key, logo] of Object.entries(logos)) {
+    if (!logo.src) continue;
+    try {
+      const img = new Image();
+      img.src = logo.src;
+      await new Promise((r, j) => { img.onload = r; img.onerror = j; });
+      logoImages[key] = img;
+    } catch(e) { console.warn('Logo load failed:', key); }
+  }
+}
+
+// Load slide data from server
+window.loadSlideData = async function(data) {
+  slideData = data;
+  if (data.logos) await preloadLogos(data.logos);
+  if (data.slides && data.slides.length > 0) {
+    showSlide(0, false);
+  }
+};
+
+// Render a single slide to the stage
+window.showSlide = function(idx, animate) {
+  const stage = document.getElementById('stage');
+  const s = slideData.slides[idx];
+  if (!s) return;
+  stage.innerHTML = '';
+
+  // BG
+  const bgEl = document.createElement('div');
+  bgEl.className = 'slide-bg';
+
+  const colLayer = document.createElement('div');
+  colLayer.className = 's-bgcolor';
+  colLayer.style.background = s.bg.color;
+  bgEl.appendChild(colLayer);
+
+  if (s.bg.type === 'image' && s.bg.imgData) {
+    const imgLayer = document.createElement('div');
+    imgLayer.className = 's-bgimg' + (s.bg.kb ? ' kb-' + s.bg.kbStyle : '');
+    if (s.bg.kb) imgLayer.style.setProperty('--kb-dur', (s.dur + 1) + 's');
+    imgLayer.style.backgroundImage = `url(${s.bg.imgData})`;
+    bgEl.appendChild(imgLayer);
+  }
+
+  if (s.bg.overlay && s.bg.overlay !== 'none') {
+    const ov = document.createElement('div');
+    ov.className = 's-overlay';
+    ov.style.background = ovCSS(s.bg.overlay);
+    bgEl.appendChild(ov);
+  }
+  stage.appendChild(bgEl);
+
+  // Accent bars
+  const barColor = (slideData.brand && slideData.brand.barColor) || '#F36C23';
+  if (s.bar === 'top' || s.bar === 'both') {
+    const b = document.createElement('div');
+    b.className = 's-bar s-bar-top'; b.style.background = barColor;
+    stage.appendChild(b);
+  }
+  if (s.bar === 'bottom' || s.bar === 'both') {
+    const b = document.createElement('div');
+    b.className = 's-bar s-bar-bottom'; b.style.background = barColor;
+    stage.appendChild(b);
+  }
+
+  // Text
+  if (!s.noText) {
+    const cont = document.createElement('div');
+    cont.className = 'slide-content';
+
+    if (s.hl.text.trim()) {
+      const hl = document.createElement('div');
+      hl.className = 's-hl'; hl.id = 'shl';
+      hl.style.fontSize = HL_SIZES[s.hl.size] + 'px';
+      hl.style.color = s.hl.color;
+      hl.style.fontFamily = ff(s.hl.font);
+      hl.style.fontWeight = fw(s.hl.font);
+      if (s.hl.shadow) hl.style.textShadow = '0 2px 28px rgba(0,0,0,.6),0 1px 6px rgba(0,0,0,.9)';
+      s.hl.text.split('\n').forEach((line, li, arr) => {
+        line.split(/\s+/).filter(Boolean).forEach((word, wi, words) => {
+          const sp = document.createElement('span');
+          sp.className = 'word';
+          sp.textContent = word + (wi < words.length-1 ? ' ' : '');
+          hl.appendChild(sp);
+        });
+        if (li < arr.length-1) hl.appendChild(document.createElement('br'));
+      });
+      cont.appendChild(hl);
+    }
+
+    if (s.sub.text.trim()) {
+      const sub = document.createElement('div');
+      sub.className = 's-sub'; sub.id = 'ssub';
+      sub.style.fontSize = SUB_SIZES[s.sub.size] + 'px';
+      sub.style.color = s.sub.color;
+      sub.style.fontFamily = ff(s.sub.font);
+      sub.style.fontWeight = s.sub.font === 'inter' ? 600 : 700;
+      sub.textContent = s.sub.text;
+      cont.appendChild(sub);
+    }
+
+    if (s.cta.text.trim()) {
+      const cta = document.createElement('div');
+      cta.className = 's-cta'; cta.id = 'scta';
+      cta.style.fontSize = CTA_SIZES[s.cta.size] + 'px';
+      cta.style.color = s.cta.color;
+      cta.textContent = s.cta.text;
+      cont.appendChild(cta);
+    }
+
+    stage.appendChild(cont);
+  }
+
+  // Logos
+  ['L1','L2','L3'].forEach(key => {
+    const sl = s[key];
+    const img = logoImages[key];
+    if (!sl || !sl.show || !img) return;
+    const wrap = document.createElement('div');
+    wrap.className = 's-logo';
+    wrap.id = 'logo-' + key;
+    wrap.dataset.anim = sl.anim;
+    wrap.style.cssText = LOGO_POS[sl.pos] || LOGO_POS.bl;
+
+    const imgEl = document.createElement('img');
+    imgEl.src = img.src;
+    imgEl.style.width = (LOGO_MAX_W * sl.scale) + 'px';
+    imgEl.style.maxHeight = (LOGO_MAX_H * sl.scale) + 'px';
+    imgEl.style.objectFit = 'contain';
+    wrap.appendChild(imgEl);
+    stage.appendChild(wrap);
+  });
+
+  if (animate) animateIn(s);
+};
+
+// GSAP animations (identical to main app)
+function animateIn(s) {
+  if (typeof gsap === 'undefined') return;
+  gsap.killTweensOf('*');
+
+  if (s.dur < 0.25) {
+    ['shl','ssub','scta'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) gsap.set(el, { opacity:1, y:0, x:0, scale:1, clipPath:'none', filter:'none' });
+    });
+    ['L1','L2','L3'].forEach(key => {
+      const el = document.getElementById('logo-'+key);
+      if (el) gsap.set(el, { opacity:1, scale:1, y:0 });
+    });
+    return;
+  }
+
+  const hl  = document.getElementById('shl');
+  const sub = document.getElementById('ssub');
+  const cta = document.getElementById('scta');
+  const tl  = gsap.timeline({ defaults:{ ease:'power3.out' } });
+
+  if (hl) {
+    const words = hl.querySelectorAll('.word');
+    switch(s.anim) {
+      case 'slam':
+        gsap.set(words, { y:-130, opacity:0, scaleY:1.08 });
+        tl.to(words, { y:0, opacity:1, scaleY:1, duration:.26, ease:'back.out(2)', stagger:.055 });
+        break;
+      case 'punch':
+        gsap.set(hl, { scale:1.8, opacity:0, filter:'blur(8px)' });
+        tl.to(hl, { scale:1, opacity:1, filter:'blur(0px)', duration:.38, ease:'power4.out' });
+        break;
+      case 'wipe':
+        gsap.set(hl, { clipPath:'inset(0 100% 0 0)' });
+        tl.to(hl, { clipPath:'inset(0 0% 0 0)', duration:.52 });
+        break;
+      case 'rise':
+        gsap.set(words, { y:90, opacity:0 });
+        tl.to(words, { y:0, opacity:1, duration:.38, stagger:.07 });
+        break;
+      case 'split':
+        words.forEach((w,i) => gsap.set(w, { x:i%2===0?-110:110, opacity:0 }));
+        tl.to(words, { x:0, opacity:1, duration:.36, stagger:.06 });
+        break;
+      case 'flash':
+        gsap.set(hl, { opacity:0 });
+        tl.to(hl,{opacity:1,duration:.04}).to(hl,{opacity:0,duration:.04},'+=.03')
+          .to(hl,{opacity:1,duration:.04},'+=.02').to(hl,{opacity:0,duration:.04},'+=.02')
+          .to(hl,{opacity:1,duration:.08},'+=.02');
+        break;
+      case 'drop':
+        gsap.set(words, { y:-60, opacity:0, rotation:-4 });
+        tl.to(words, { y:0, opacity:1, rotation:0, duration:.4, ease:'power2.out', stagger:.09 });
+        break;
+      case 'scale':
+        gsap.set(words, { scale:0, opacity:0, transformOrigin:'center center' });
+        tl.to(words, { scale:1, opacity:1, duration:.32, ease:'back.out(2)', stagger:.06 });
+        break;
+    }
+  }
+
+  if (sub) { gsap.set(sub,{y:28,opacity:0}); tl.to(sub,{y:0,opacity:1,duration:.38},hl?'-=.1':0); }
+  if (cta) { gsap.set(cta,{y:16,opacity:0}); tl.to(cta,{y:0,opacity:1,duration:.3},'-=.12'); }
+
+  let logoDelay = 0.5;
+  ['L1','L2','L3'].forEach(key => {
+    const logoEl = document.getElementById('logo-'+key);
+    if (!logoEl) return;
+    const anim = logoEl.dataset.anim || 'fade';
+    const d = logoDelay;
+    logoDelay += 0.15;
+    switch(anim) {
+      case 'fade':
+        gsap.set(logoEl,{opacity:0});
+        tl.to(logoEl,{opacity:1,duration:.5,ease:'power2.out'},d);
+        break;
+      case 'scale':
+        gsap.set(logoEl,{scale:.5,opacity:0});
+        tl.to(logoEl,{scale:1,opacity:1,duration:.45,ease:'back.out(2)'},d);
+        break;
+      case 'slide-up':
+        gsap.set(logoEl,{y:40,opacity:0});
+        tl.to(logoEl,{y:0,opacity:1,duration:.4,ease:'power3.out'},d);
+        break;
+      case 'slide-down':
+        gsap.set(logoEl,{y:-40,opacity:0});
+        tl.to(logoEl,{y:0,opacity:1,duration:.4,ease:'power3.out'},d);
+        break;
+      case 'slam':
+        gsap.set(logoEl,{y:-80,opacity:0});
+        tl.to(logoEl,{y:0,opacity:1,duration:.3,ease:'back.out(2)'},d);
+        break;
+      case 'none': default: break;
+    }
+  });
+}
+</script>
+</body>
+</html>

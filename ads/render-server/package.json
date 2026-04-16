@@ -1,0 +1,15 @@
+{
+  "name": "ad-studio-render-server",
+  "version": "2.0.0",
+  "description": "Server-side video renderer for Ad Studio — Playwright + ffmpeg → H.264 MP4",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "install-browser": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "playwright": "^1.49.0"
+  }
+}
