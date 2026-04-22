@@ -6,212 +6,272 @@
     <title>Bad Boy Launch — ACP / JJ Riggs 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
             background: #0a0a0a;
-            color: #888;
+            color: #b8b8b8;
             line-height: 1.7;
+            font-size: 17px;
             -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 820px;
             margin: 0 auto;
-            padding: 60px 40px;
+            padding: 70px 44px;
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: #555;
+            color: #666;
             text-decoration: none;
-            font-size: 13px;
-            margin-bottom: 40px;
+            font-size: 14px;
+            margin-bottom: 48px;
             transition: color 0.2s;
         }
 
         .back-link:hover { color: #F36C23; }
 
+        /* Hero */
         .header {
             margin-bottom: 60px;
-            padding-bottom: 40px;
+            padding-bottom: 48px;
             border-bottom: 1px solid #1a1a1a;
         }
 
         .header-label {
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #F36C23;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         h1 {
-            font-size: 32px;
-            font-weight: 700;
+            font-size: 44px;
+            font-weight: 800;
             color: #fff;
-            margin-bottom: 8px;
-            line-height: 1.2;
+            margin-bottom: 14px;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
         }
 
         .header-sub {
-            font-size: 15px;
-            color: #666;
+            font-size: 18px;
+            color: #888;
         }
 
+        /* Intro */
         .intro {
             background: #111;
             border: 1px solid #1a1a1a;
-            border-left: 3px solid #F36C23;
+            border-left: 4px solid #F36C23;
             border-radius: 8px;
-            padding: 24px 28px;
-            margin-bottom: 50px;
+            padding: 28px 32px;
+            margin-bottom: 56px;
         }
 
         .intro p {
-            font-size: 14px;
-            color: #aaa;
-            margin-bottom: 10px;
+            font-size: 17px;
+            color: #c8c8c8;
+            margin-bottom: 14px;
         }
 
         .intro p:last-child { margin-bottom: 0; }
 
-        .intro strong { color: #fff; }
+        .intro strong { color: #fff; font-weight: 700; }
 
-        .project-details {
-            background: #111;
-            border: 1px solid #1a1a1a;
+        /* Headline stat block */
+        .stat-block {
+            background: linear-gradient(135deg, #1a0f08 0%, #111 100%);
+            border: 1px solid #2a1a0f;
             border-radius: 8px;
             padding: 32px;
-            margin-bottom: 50px;
+            margin-bottom: 56px;
+            text-align: center;
         }
 
-        .project-details h2 {
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: #F36C23;
+            line-height: 1;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
             font-size: 14px;
             font-weight: 600;
             color: #fff;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .stat-sub {
+            font-size: 16px;
+            color: #aaa;
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        /* Project Details */
+        .project-details {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 36px;
+            margin-bottom: 60px;
+        }
+
+        .project-details h2 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #F36C23;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
         }
 
         .project-row {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
+            padding: 14px 0;
             border-bottom: 1px solid #1a1a1a;
         }
 
         .project-row:last-child { border-bottom: none; }
 
         .project-row .label {
-            color: #666;
-            font-size: 14px;
+            color: #888;
+            font-size: 15px;
         }
 
         .project-row .value {
             color: #fff;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600;
             text-align: right;
         }
 
         .project-row .value.total {
             color: #F36C23;
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
         }
 
-        .section { margin-bottom: 50px; }
+        /* Section */
+        .section { margin-bottom: 64px; }
 
-        .section h2 {
-            font-size: 18px;
-            font-weight: 600;
+        .section > h2 {
+            font-size: 26px;
+            font-weight: 800;
             color: #fff;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
         }
 
-        .section h2::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #1a1a1a;
+        .section-intro {
+            font-size: 16px;
+            color: #999;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #1a1a1a;
         }
 
         /* Option Cards */
         .option-card {
             background: #111;
             border: 1px solid #1a1a1a;
-            border-radius: 8px;
-            padding: 28px 32px;
-            margin-bottom: 24px;
+            border-radius: 10px;
+            padding: 32px 36px;
+            margin-bottom: 28px;
             position: relative;
         }
 
         .option-card.recommended {
             border-color: #F36C23;
-            box-shadow: 0 0 0 1px rgba(243, 108, 35, 0.3);
+            box-shadow: 0 0 0 1px rgba(243, 108, 35, 0.4), 0 20px 40px -20px rgba(243, 108, 35, 0.25);
         }
 
         .option-badge {
             position: absolute;
-            top: -10px;
-            right: 24px;
+            top: -12px;
+            right: 28px;
             background: #F36C23;
             color: #0a0a0a;
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            padding: 4px 12px;
-            border-radius: 3px;
+            padding: 5px 14px;
+            border-radius: 4px;
         }
 
         .option-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 8px;
-            gap: 12px;
+            margin-bottom: 10px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
         .option-title {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
             color: #fff;
+            letter-spacing: -0.3px;
         }
 
         .option-price {
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 26px;
+            font-weight: 800;
             color: #F36C23;
             white-space: nowrap;
+            letter-spacing: -0.5px;
         }
 
         .option-tagline {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 18px;
+            font-size: 16px;
+            color: #999;
+            margin-bottom: 20px;
         }
 
         .option-timeline {
-            font-size: 12px;
-            color: #78828e;
-            background: rgba(120, 130, 142, 0.1);
-            padding: 4px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #aaa;
+            background: rgba(120, 130, 142, 0.12);
+            padding: 5px 12px;
             border-radius: 4px;
             display: inline-block;
-            margin-bottom: 18px;
+            margin-bottom: 22px;
+        }
+
+        /* Deliverable subheads inside option cards */
+        .deliverable-group {
+            margin-bottom: 20px;
+        }
+
+        .deliverable-group:last-child { margin-bottom: 0; }
+
+        .deliverable-group h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: #F36C23;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            padding-top: 8px;
         }
 
         .deliverable-list {
@@ -221,58 +281,25 @@
         .deliverable-item {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            padding: 10px 0;
-            font-size: 14px;
-            color: #bbb;
+            gap: 14px;
+            padding: 12px 0;
+            font-size: 16px;
+            color: #c8c8c8;
             border-bottom: 1px solid #1a1a1a;
+            line-height: 1.55;
         }
 
         .deliverable-item:last-child { border-bottom: none; }
 
         .deliverable-item::before {
-            content: '→';
+            content: '✓';
             color: #F36C23;
             font-weight: 700;
             margin-top: 1px;
+            flex-shrink: 0;
         }
 
-        .includes-note {
-            font-size: 12px;
-            color: #666;
-            font-style: italic;
-            padding: 8px 0 12px;
-        }
-
-        /* Strategy Box */
-        .strategy-box {
-            background: #111;
-            border: 1px solid #1a1a1a;
-            border-radius: 8px;
-            padding: 24px 28px;
-            margin-bottom: 24px;
-        }
-
-        .strategy-box h3 {
-            font-size: 13px;
-            font-weight: 600;
-            color: #F36C23;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-
-        .strategy-box p {
-            font-size: 14px;
-            color: #aaa;
-            margin-bottom: 10px;
-        }
-
-        .strategy-box p:last-child { margin-bottom: 0; }
-
-        .strategy-box strong { color: #fff; }
-
-        /* Audit table */
+        /* Audit list */
         .audit-list {
             list-style: none;
         }
@@ -280,11 +307,12 @@
         .audit-item {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            padding: 10px 0;
-            font-size: 13px;
-            color: #aaa;
+            gap: 14px;
+            padding: 14px 0;
+            font-size: 16px;
+            color: #c8c8c8;
             border-bottom: 1px solid #1a1a1a;
+            line-height: 1.55;
         }
 
         .audit-item:last-child { border-bottom: none; }
@@ -292,9 +320,57 @@
         .audit-item::before {
             content: '•';
             color: #F36C23;
+            font-size: 22px;
             font-weight: 700;
-            margin-top: 1px;
+            margin-top: -2px;
             flex-shrink: 0;
+            line-height: 1;
+        }
+
+        /* Homepage strategy callout */
+        .callout-box {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 10px;
+            padding: 32px 36px;
+            margin-bottom: 28px;
+        }
+
+        .callout-box h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #F36C23;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+        }
+
+        .callout-box p {
+            font-size: 17px;
+            color: #c8c8c8;
+            margin-bottom: 14px;
+            line-height: 1.7;
+        }
+
+        .callout-box p:last-child { margin-bottom: 0; }
+
+        .callout-box strong { color: #fff; font-weight: 700; }
+
+        /* Simple next steps */
+        .next-step {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 20px 28px;
+            margin-bottom: 14px;
+            font-size: 18px;
+            color: #ddd;
+        }
+
+        .next-step strong {
+            color: #F36C23;
+            font-weight: 700;
+            margin-right: 10px;
         }
 
         /* Contact */
@@ -302,22 +378,26 @@
             background: #111;
             border: 1px solid #1a1a1a;
             border-radius: 8px;
-            padding: 24px;
-            margin-top: 40px;
+            padding: 28px;
+            margin-top: 48px;
         }
 
         .contact-box h3 {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
             color: #fff;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .contact-box p {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 4px;
+            font-size: 15px;
+            color: #888;
+            margin-bottom: 6px;
         }
+
+        .contact-box strong { color: #fff; font-size: 16px; }
 
         .contact-box a {
             color: #F36C23;
@@ -327,22 +407,28 @@
         .contact-box a:hover { text-decoration: underline; }
 
         .footer {
-            margin-top: 60px;
-            padding-top: 30px;
+            margin-top: 64px;
+            padding-top: 32px;
             border-top: 1px solid #1a1a1a;
             text-align: center;
         }
 
         .footer p {
-            font-size: 12px;
+            font-size: 13px;
             color: #444;
         }
 
-        @media (max-width: 600px) {
-            .container { padding: 40px 24px; }
+        @media (max-width: 640px) {
+            body { font-size: 16px; }
+            .container { padding: 44px 24px; }
+            h1 { font-size: 32px; }
+            .section > h2 { font-size: 22px; }
             .project-row { flex-direction: column; gap: 4px; }
             .project-row .value { text-align: left; }
             .option-header { flex-direction: column; }
+            .stat-number { font-size: 40px; }
+            .option-card { padding: 26px 24px; }
+            .callout-box { padding: 26px 24px; }
         }
     </style>
 </head>
@@ -351,17 +437,24 @@
     <div class="container">
         <a href="index.html" class="back-link">&larr; Back to Brand Guide</a>
 
+        <!-- Hero -->
         <header class="header">
             <div class="header-label">Proposal — Phase 2</div>
-            <h1>Bad Boy Launch<br>+ Bad Boy-First Site Refresh</h1>
+            <h1>Bad Boy Launch<br>+ Conversion-Focused Site Refresh</h1>
             <p class="header-sub">Project proposal for Andrew Alluis / JJ Riggs Equipment</p>
         </header>
 
         <!-- Intro -->
         <div class="intro">
-            <p><strong>The opportunity.</strong> JJ Riggs just picked up Bad Boy Tractors — and right now there are zero Bad Boy Tractor dealers listed in Washington state. We can own the "Bad Boy Tractors Washington" search term before any other regional dealer shows up.</p>
-            <p><strong>The direction.</strong> With TYM gradually being phased out, the homepage and navigation are being repositioned around Bad Boy as the lead brand. TYM stays on the site for existing inventory and service, but Bad Boy becomes the face of the dealership going forward.</p>
-            <p><strong>The plan.</strong> A Bad Boy-first homepage and navigation rebuild, new product pages, and a search-visibility push — sized to pay for itself with one or two tractor sales.</p>
+            <p><strong>The direction.</strong> With TYM phasing down and Bad Boy Tractors coming on, the site needs to reposition around Bad Boy as the lead brand — homepage, navigation, and new product pages all centered on the new line.</p>
+            <p><strong>The opportunity.</strong> There are currently zero Bad Boy Tractor dealers listed in Washington state. We can own the regional search term before any competitor shows up.</p>
+        </div>
+
+        <!-- Stat block -->
+        <div class="stat-block">
+            <div class="stat-number">400+</div>
+            <div class="stat-label">Google Search Clicks — Last 30 Days</div>
+            <div class="stat-sub">Organic traffic is already working. The job of this project is to <strong style="color:#fff">convert that traffic into sales</strong> with a homepage built around clear calls to action.</div>
         </div>
 
         <!-- Project Details -->
@@ -389,38 +482,69 @@
             </div>
         </div>
 
-        <!-- Site Audit Summary -->
+        <!-- Site Audit -->
         <section class="section">
-            <h2>Site Audit — What We're Working With</h2>
+            <h2>Where The Site Stands Today</h2>
+            <p class="section-intro">Quick audit of what's working, what isn't, and what needs to change.</p>
             <ul class="audit-list">
-                <li class="audit-item">Bad Boy is currently buried — only Bad Boy Mowers is visible, with no Bad Boy Tractors presence at all.</li>
-                <li class="audit-item">TYM is leading the navigation and homepage, which is out of sync with the new direction of the business.</li>
-                <li class="audit-item">Nav still uses the legacy URL <em>/branson-tym-tractors/</em> from the pre-TYM era — hurts SEO and credibility.</li>
-                <li class="audit-item">Homepage is visually strong but light on content — missing financing CTA, testimonials, and trust signals.</li>
+                <li class="audit-item">Bad Boy is buried — only Bad Boy Mowers is visible. No Bad Boy Tractors presence at all.</li>
+                <li class="audit-item">TYM is currently leading the navigation and homepage, which is out of sync with the new direction of the business.</li>
+                <li class="audit-item">Navigation still uses the legacy <em>/branson-tym-tractors/</em> URL from the pre-TYM era — hurts SEO and credibility.</li>
+                <li class="audit-item">Homepage is visually strong but light on conversion elements — no financing CTA, no testimonials, no clear path from visitor to quote request.</li>
                 <li class="audit-item">Footer has no sitemap links, which limits internal SEO and crawlability.</li>
-                <li class="audit-item">Platform is WordPress + Flatsome + WooCommerce (catalog mode) + Gravity Forms + Rank Math — good foundation. We're refining, not rebuilding.</li>
+                <li class="audit-item">Platform is solid — WordPress + Flatsome + WooCommerce (catalog mode) + Gravity Forms + Rank Math. We're refining, not rebuilding.</li>
             </ul>
         </section>
 
-        <!-- Options -->
+        <!-- Homepage Strategy -->
+        <section class="section">
+            <h2>What The New Homepage Does</h2>
+            <p class="section-intro">Organic traffic is already flowing — 400+ Google clicks in the last 30 days. The homepage redesign is built to turn that traffic into quote requests and showroom visits.</p>
+
+            <div class="callout-box">
+                <h3>Conversion-First Design Goals</h3>
+                <p><strong>Lead with Bad Boy.</strong> New hero featuring Bad Boy Tractors as the primary brand. TYM repositioned as supporting inventory below the fold.</p>
+                <p><strong>Clear path to action.</strong> Every section ends with a visible CTA — Get a Quote, See Inventory, Schedule Service, Apply for Financing.</p>
+                <p><strong>Trust signals.</strong> Customer testimonials, Google review widget, and local Colville roots featured prominently — Andrew's reputation is a conversion asset we're not currently using.</p>
+                <p><strong>Financing visible.</strong> Dedicated financing CTA on the homepage. Most tractor buyers need financing and most current visitors don't know JJ Riggs offers it.</p>
+                <p><strong>Bad Boy-first navigation.</strong> Bad Boy Tractors becomes the primary TRACTORS entry. TYM listed as a secondary item. Footer rebuilt with full sitemap-style links.</p>
+            </div>
+        </section>
+
+        <!-- Inside Pages -->
+        <section class="section">
+            <h2>New Bad Boy Tractor Pages — Inside The Site</h2>
+            <p class="section-intro">The homepage brings traffic in. These interior pages are where the sale actually happens.</p>
+
+            <div class="callout-box">
+                <h3>Dedicated Product Pages For Every Series</h3>
+                <p>We build out a full set of Bad Boy Tractor pages living under <em>/bad-boy-tractors/</em> — a main category hub plus individual pages for each series.</p>
+                <p><strong>Main hub:</strong> <em>/bad-boy-tractors/</em> — overview, lineup comparison, "why Bad Boy" section, clear quote CTA.</p>
+                <p><strong>Series pages:</strong> one dedicated page per series (10 Series sub-compact, 25/30 Series compact, 40 Series, new 50 Series) — each with model specs, photos, use cases, financing callout, and quote request form.</p>
+                <p><strong>Supporting SEO pages:</strong> "Bad Boy Tractors in Washington State," "TYM vs Bad Boy Compact Tractor Comparison," plus seasonal/use-case content — these feed the organic traffic that's already driving 400+ clicks a month.</p>
+                <p>Every interior page follows the same conversion pattern: hero → specs → use cases → financing → quote form. Consistent, fast, built to close.</p>
+            </div>
+        </section>
+
+        <!-- Three Options -->
         <section class="section">
             <h2>Three Options</h2>
+            <p class="section-intro">Pick the level that matches where JJ Riggs wants to go in 2026.</p>
 
             <!-- Option A -->
             <div class="option-card">
                 <div class="option-header">
-                    <div class="option-title">Option A — Essentials</div>
+                    <div class="option-title">Essentials</div>
                     <div class="option-price">$2,400</div>
                 </div>
-                <p class="option-tagline">The minimum needed to get Bad Boy live on the site and indexed — no homepage or nav rebuild.</p>
+                <p class="option-tagline">Get Bad Boy on the site and indexed. No homepage or nav rebuild.</p>
                 <div class="option-timeline">2 – 3 weeks</div>
                 <ul class="deliverable-list">
-                    <li class="deliverable-item">New <em>/bad-boy-tractors/</em> category hub with series breakdown (10, 25, 30, 40, 50 Series)</li>
-                    <li class="deliverable-item">Minor nav update — add Bad Boy Tractors entry, retire /branson-tym-tractors/ slug with proper 301 redirects</li>
-                    <li class="deliverable-item">Homepage Bad Boy Tractors panel inserted into existing layout (no full redesign)</li>
-                    <li class="deliverable-item">Two SEO pages — "Bad Boy Tractors in Washington State" + "TYM vs Bad Boy Compact Tractor Comparison"</li>
+                    <li class="deliverable-item">Bad Boy Tractors category hub page at <em>/bad-boy-tractors/</em></li>
+                    <li class="deliverable-item">Minor nav update — add Bad Boy Tractors, retire legacy /branson-tym-tractors/ slug with 301 redirects</li>
+                    <li class="deliverable-item">Homepage Bad Boy Tractors panel inserted into existing layout</li>
+                    <li class="deliverable-item">Two SEO pages — "Bad Boy Tractors Washington" + "TYM vs Bad Boy Compact Tractor Comparison"</li>
                     <li class="deliverable-item">Schema markup and meta tag updates for the new product line</li>
-                    <li class="deliverable-item">Google Business Profile update with Bad Boy Tractors added as a category</li>
                 </ul>
             </div>
 
@@ -428,75 +552,73 @@
             <div class="option-card recommended">
                 <div class="option-badge">Recommended</div>
                 <div class="option-header">
-                    <div class="option-title">Option B — Launch</div>
+                    <div class="option-title">Full Homepage</div>
                     <div class="option-price">$5,200</div>
                 </div>
-                <p class="option-tagline">Everything in Option A plus a real homepage refresh and a launch push.</p>
+                <p class="option-tagline">Everything in Essentials plus the conversion-focused homepage rebuild and full interior page buildout.</p>
                 <div class="option-timeline">4 – 5 weeks</div>
-                <ul class="deliverable-list">
-                    <li class="deliverable-item">Everything in Option A</li>
-                    <li class="deliverable-item">Homepage redesign — Bad Boy-led hero, Bad Boy Tractors as the #1 panel, Bad Boy Mowers #2, TYM repositioned as supporting inventory, financing CTA block, testimonial section</li>
-                    <li class="deliverable-item">Navigation rebuild — Bad Boy Tractors as the primary TRACTORS entry, TYM listed as a secondary sub-item</li>
-                    <li class="deliverable-item">Footer rebuild — full sitemap-style navigation (Bad Boy Tractors · Bad Boy Mowers · TYM · Implements · Service · Financing · Contact)</li>
-                    <li class="deliverable-item">Three additional Bad Boy SEO pages — 10 Series sub-compact, 25/30 Series compact, new 50 Series</li>
-                    <li class="deliverable-item">One Bad Boy Tractors launch video ad built in the Ad Studio tool (ready for Facebook/Instagram/TikTok)</li>
-                    <li class="deliverable-item">Facebook and Instagram launch campaign setup — Meta Pixel, conversion tracking, audience config</li>
-                </ul>
-                <p class="includes-note">Ad spend is billed directly to JJ Riggs by Meta and is not included in the project total. Recommended starting budget: $300 – $500 for the launch window.</p>
+
+                <div class="deliverable-group">
+                    <h4>Homepage &amp; Navigation</h4>
+                    <ul class="deliverable-list">
+                        <li class="deliverable-item">Homepage redesign — Bad Boy-led hero, conversion CTAs throughout, testimonial section, financing block</li>
+                        <li class="deliverable-item">Navigation rebuild — Bad Boy Tractors as primary TRACTORS entry, TYM as secondary sub-item</li>
+                        <li class="deliverable-item">Footer rebuild with full sitemap links</li>
+                    </ul>
+                </div>
+
+                <div class="deliverable-group">
+                    <h4>Interior Tractor Pages (New)</h4>
+                    <ul class="deliverable-list">
+                        <li class="deliverable-item">Bad Boy Tractors main hub page with lineup comparison</li>
+                        <li class="deliverable-item">Four dedicated series pages — 10, 25/30, 40, and new 50 Series — each with specs, photos, use cases, quote form</li>
+                        <li class="deliverable-item">Three supporting SEO pages targeting high-intent regional search</li>
+                    </ul>
+                </div>
+
+                <div class="deliverable-group">
+                    <h4>Launch Assets</h4>
+                    <ul class="deliverable-list">
+                        <li class="deliverable-item">Bad Boy Tractors launch video ad built in the Ad Studio tool, sized for Facebook and Instagram</li>
+                        <li class="deliverable-item">Everything in the Essentials tier</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Option C -->
             <div class="option-card">
                 <div class="option-header">
-                    <div class="option-title">Option C — Launch + Co-Pilot</div>
+                    <div class="option-title">Full Homepage + Monthly</div>
                     <div class="option-price">$5,200 + $650/mo</div>
                 </div>
-                <p class="option-tagline">Option B plus ongoing SEO and content support so momentum doesn't stall.</p>
+                <p class="option-tagline">Full Homepage tier plus ongoing SEO and content support so momentum doesn't stall.</p>
                 <div class="option-timeline">4 – 5 weeks launch, then monthly</div>
                 <ul class="deliverable-list">
-                    <li class="deliverable-item">Everything in Option B</li>
+                    <li class="deliverable-item">Everything in Full Homepage</li>
                     <li class="deliverable-item">Monthly — one new SEO article (seasonal buying guides, comparison content)</li>
-                    <li class="deliverable-item">Monthly — Google Business Profile posts and performance report</li>
+                    <li class="deliverable-item">Monthly — performance report with traffic, conversions, and recommendations</li>
                     <li class="deliverable-item">Quarterly — technical SEO audit, schema review, competitor scan</li>
                 </ul>
             </div>
         </section>
 
-        <!-- Math Box -->
+        <!-- Why this pays -->
         <section class="section">
             <h2>The Math</h2>
-            <div class="strategy-box">
+            <div class="callout-box">
                 <h3>Why This Pays For Itself</h3>
-                <p>A single Bad Boy compact tractor retails in the <strong>$12,000 – $25,000</strong> range. If this project drives <strong>one</strong> tractor sale we wouldn't have captured otherwise, the Recommended option returns 2 – 5x the investment.</p>
-                <p>Bad Boy also offers co-op marketing reimbursement for qualifying dealer advertising. Once we confirm JJ Riggs' co-op eligibility and submit the right documentation, a meaningful portion of the launch ad creative and campaign spend is typically reimbursable.</p>
-                <p><strong>Net investment after co-op reimbursement is often significantly lower than the sticker price.</strong> We'll handle the submission paperwork as part of the launch.</p>
-            </div>
-        </section>
-
-        <!-- Not Included -->
-        <section class="section">
-            <h2>Scope Boundaries</h2>
-            <div class="strategy-box">
-                <h3>Not Included In This Phase</h3>
-                <p>To keep the scope tight and the budget honest, the following are <strong>intentionally excluded</strong> from this proposal:</p>
-                <p>— Pre-existing Constant Contact items carry over from Phase 1 and will complete as soon as the pending account access is available. No new email marketing work is being quoted here.</p>
-                <p>— Live inventory integration (WooCommerce remains in catalog mode).</p>
-                <p>— Paid ad spend — Andrew pays Meta directly.</p>
-                <p>— Full rebuild of internal product pages outside the tractor categories.</p>
-                <p>— Dealer application paperwork for Bad Boy Tractors (assumed complete before launch).</p>
+                <p>A single Bad Boy compact tractor retails in the <strong>$12,000 – $25,000</strong> range. One sale we wouldn't have otherwise captured returns 2 – 5x the investment.</p>
+                <p>Bad Boy also offers co-op marketing reimbursement for qualifying dealer advertising. Once JJ Riggs' co-op eligibility is confirmed, a meaningful portion of launch ad creative is typically reimbursable — I'll handle the submission paperwork as part of the project.</p>
             </div>
         </section>
 
         <!-- Next Steps -->
         <section class="section">
-            <h2>Next Steps</h2>
-            <div class="strategy-box">
-                <h3>To Move Forward</h3>
-                <p>1. Andrew confirms Bad Boy Tractors dealer status is active (or timeline to active).</p>
-                <p>2. Andrew picks an option — A, B, or C.</p>
-                <p>3. 50% deposit to kick off, 50% at launch. Same billing setup as Phase 1.</p>
-                <p>4. Kick-off call scheduled within one week of approval.</p>
-            </div>
+            <h2>Next Step — Pick An Option</h2>
+            <p class="section-intro">Reply with one and we kick off the week after.</p>
+            <div class="next-step"><strong>1.</strong> Essentials — $2,400</div>
+            <div class="next-step"><strong>2.</strong> Full Homepage — $5,200</div>
+            <div class="next-step"><strong>3.</strong> Full Homepage + Monthly — $5,200 + $650/mo</div>
         </section>
 
         <!-- Contact -->
