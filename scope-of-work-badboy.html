@@ -489,7 +489,6 @@
             <ul class="audit-list">
                 <li class="audit-item">Bad Boy is buried — only Bad Boy Mowers is visible. No Bad Boy Tractors presence at all.</li>
                 <li class="audit-item">TYM is currently leading the navigation and homepage, which is out of sync with the new direction of the business.</li>
-                <li class="audit-item">Navigation still uses the legacy <em>/branson-tym-tractors/</em> URL from the pre-TYM era — hurts SEO and credibility.</li>
                 <li class="audit-item">Homepage is visually strong but light on conversion elements — no financing CTA, no testimonials, no clear path from visitor to quote request.</li>
                 <li class="audit-item">Footer has no sitemap links, which limits internal SEO and crawlability.</li>
                 <li class="audit-item">Platform is solid — WordPress + Flatsome + WooCommerce (catalog mode) + Gravity Forms + Rank Math. We're refining, not rebuilding.</li>
@@ -507,22 +506,48 @@
                 <p><strong>Clear path to action.</strong> Every section ends with a visible CTA — Get a Quote, See Inventory, Schedule Service, Apply for Financing.</p>
                 <p><strong>Trust signals.</strong> Customer testimonials, Google review widget, and local Colville roots featured prominently — Andrew's reputation is a conversion asset we're not currently using.</p>
                 <p><strong>Financing visible.</strong> Dedicated financing CTA on the homepage. Most tractor buyers need financing and most current visitors don't know JJ Riggs offers it.</p>
-                <p><strong>Bad Boy-first navigation.</strong> Bad Boy Tractors becomes the primary TRACTORS entry. TYM listed as a secondary item. Footer rebuilt with full sitemap-style links.</p>
+                <p><strong>Bad Boy-first navigation.</strong> Bad Boy Tractors becomes the primary TRACTORS entry. Existing TYM inventory moves off the main nav and lives on Facebook and an internal inventory page for customers who ask. Footer rebuilt with full sitemap-style links to support SEO.</p>
             </div>
         </section>
 
         <!-- Inside Pages -->
         <section class="section">
-            <h2>New Bad Boy Tractor Pages — Inside The Site</h2>
-            <p class="section-intro">The homepage brings traffic in. These interior pages are where the sale actually happens.</p>
+            <h2>Interior Tractor Pages — Built On A Shared Template</h2>
+            <p class="section-intro">The homepage brings traffic in. These interior pages are where the sale actually happens — and they're a lighter lift than they sound, because Bad Boy supplies most of the content.</p>
 
             <div class="callout-box">
-                <h3>Dedicated Product Pages For Every Series</h3>
-                <p>We build out a full set of Bad Boy Tractor pages living under <em>/bad-boy-tractors/</em> — a main category hub plus individual pages for each series.</p>
-                <p><strong>Main hub:</strong> <em>/bad-boy-tractors/</em> — overview, lineup comparison, "why Bad Boy" section, clear quote CTA.</p>
-                <p><strong>Series pages:</strong> one dedicated page per series (10 Series sub-compact, 25/30 Series compact, 40 Series, new 50 Series) — each with model specs, photos, use cases, financing callout, and quote request form.</p>
-                <p><strong>Supporting SEO pages:</strong> "Bad Boy Tractors in Washington State," "TYM vs Bad Boy Compact Tractor Comparison," plus seasonal/use-case content — these feed the organic traffic that's already driving 400+ clicks a month.</p>
-                <p>Every interior page follows the same conversion pattern: hero → specs → use cases → financing → quote form. Consistent, fast, built to close.</p>
+                <h3>Bad Boy's Tractor Lineup Is Tighter Than Expected</h3>
+                <p>Bad Boy currently sells <strong>8 total tractor models</strong> — the 1022 and 1025 Sub-Compacts, the 3026 Compact, the 4025 and 4035 (including a cab version) in the 40 Series, and the new 5045 and 5055 in the 50 Series. That's the entire lineup.</p>
+                <p><strong>Bad Boy HQ provides all the official content</strong> — full spec sheets, product photography, feature descriptions, and downloadable brochures for every model through their dealer portal. We pull approved assets, not write from scratch.</p>
+            </div>
+
+            <div class="callout-box">
+                <h3>The Build Approach</h3>
+                <p><strong>One reusable template</strong> designed once, used for all 8 models. Consistent look, fast to deploy, easy to update when Bad Boy adds models.</p>
+                <p><strong>Main hub page</strong> at <em>/bad-boy-tractors/</em> — lineup overview, series comparison, why Bad Boy, quote CTA.</p>
+                <p><strong>Eight model pages</strong> — each using the shared template with model-specific specs, photos, and use cases pulled from Bad Boy's approved content.</p>
+                <p><strong>Three supporting SEO pages</strong> — "Bad Boy Tractors in Washington State," a compact tractor buyer's guide, and a seasonal use-case article — these feed the organic traffic that's already driving 400+ clicks a month.</p>
+                <p>Every interior page follows the same conversion pattern: hero → specs → use cases → financing → quote form.</p>
+            </div>
+        </section>
+
+        <!-- Redirect Strategy -->
+        <section class="section">
+            <h2>301 Redirect Strategy</h2>
+            <p class="section-intro">Protecting the 400+ monthly organic clicks as we transition the site.</p>
+
+            <div class="callout-box">
+                <h3>What A 301 Redirect Does</h3>
+                <p>A 301 redirect tells Google that a page has permanently moved to a new URL. It preserves the SEO ranking, incoming links, and traffic from the old URL and passes them to the new one — so we don't lose the organic authority already built up.</p>
+                <p><strong>Why this matters here:</strong> the current nav uses a legacy <em>/branson-tym-tractors/</em> URL from the pre-TYM era, and TYM pages are about to move. Without redirects, Google would see broken pages, drop the rankings, and the 400+ monthly clicks would start shrinking fast.</p>
+            </div>
+
+            <div class="callout-box">
+                <h3>The Plan</h3>
+                <p><strong>Map every existing URL</strong> before we touch anything. Pull the current sitemap plus Google Search Console data so we know every ranking page.</p>
+                <p><strong>Build a redirect table</strong> pairing each old URL to its new destination — TYM product pages to new Bad Boy equivalents or to a retained TYM inventory page, legacy Branson slugs to the new Bad Boy hub, and so on.</p>
+                <p><strong>Implement with Rank Math</strong> (already installed on the site) — clean, logged redirects that are easy to audit later.</p>
+                <p><strong>Verify after launch</strong> — crawl the site, confirm every old URL resolves correctly, and monitor Search Console for errors during the first two weeks.</p>
             </div>
         </section>
 
@@ -541,9 +566,10 @@
                 <div class="option-timeline">2 – 3 weeks</div>
                 <ul class="deliverable-list">
                     <li class="deliverable-item">Bad Boy Tractors category hub page at <em>/bad-boy-tractors/</em></li>
-                    <li class="deliverable-item">Minor nav update — add Bad Boy Tractors, retire legacy /branson-tym-tractors/ slug with 301 redirects</li>
+                    <li class="deliverable-item">Minor nav update — add Bad Boy Tractors entry</li>
                     <li class="deliverable-item">Homepage Bad Boy Tractors panel inserted into existing layout</li>
-                    <li class="deliverable-item">Two SEO pages — "Bad Boy Tractors Washington" + "TYM vs Bad Boy Compact Tractor Comparison"</li>
+                    <li class="deliverable-item">Two SEO pages — "Bad Boy Tractors Washington" + compact tractor buyer's guide</li>
+                    <li class="deliverable-item">Basic 301 redirect setup for legacy /branson-tym-tractors/ URL</li>
                     <li class="deliverable-item">Schema markup and meta tag updates for the new product line</li>
                 </ul>
             </div>
@@ -562,7 +588,7 @@
                     <h4>Homepage &amp; Navigation</h4>
                     <ul class="deliverable-list">
                         <li class="deliverable-item">Homepage redesign — Bad Boy-led hero, conversion CTAs throughout, testimonial section, financing block</li>
-                        <li class="deliverable-item">Navigation rebuild — Bad Boy Tractors as primary TRACTORS entry, TYM as secondary sub-item</li>
+                        <li class="deliverable-item">Navigation rebuild — Bad Boy Tractors as the primary TRACTORS entry; TYM inventory moves off main nav to Facebook + a retained inventory page</li>
                         <li class="deliverable-item">Footer rebuild with full sitemap links</li>
                     </ul>
                 </div>
@@ -570,9 +596,11 @@
                 <div class="deliverable-group">
                     <h4>Interior Tractor Pages (New)</h4>
                     <ul class="deliverable-list">
-                        <li class="deliverable-item">Bad Boy Tractors main hub page with lineup comparison</li>
-                        <li class="deliverable-item">Four dedicated series pages — 10, 25/30, 40, and new 50 Series — each with specs, photos, use cases, quote form</li>
+                        <li class="deliverable-item">One reusable Bad Boy tractor page template, designed once, used for all 8 models</li>
+                        <li class="deliverable-item">Bad Boy Tractors main hub page with full lineup comparison</li>
+                        <li class="deliverable-item">Eight model pages built on the shared template — 1022, 1025, 3026, 4025, 4035, 4035 Cab, 5045, 5055 — each with specs, photos, use cases, financing callout, and quote form</li>
                         <li class="deliverable-item">Three supporting SEO pages targeting high-intent regional search</li>
+                        <li class="deliverable-item">Full 301 redirect map built and implemented in Rank Math</li>
                     </ul>
                 </div>
 
