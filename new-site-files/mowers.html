@@ -23,15 +23,13 @@
 </script>
 
 <style>
-:root{--ink:#14171a;--ink-2:#1b2025;--ink-3:#0f1215;--bone:#f3f1ea;--white:#fbfbf9;--steel:#8b939c;--steel-2:#c3c8ce;--red:#cf1f2a;--red-deep:#a5151f;--line:rgba(255,255,255,.12);--line-2:rgba(255,255,255,.06);--lined:rgba(20,23,26,.14);--maxw:1280px;--gut:clamp(1.4rem,5vw,4rem)}
+:root{--ink:#14171a;--ink-2:#1b2025;--ink-3:#0f1215;--bone:#f3f1ea;--white:#fbfbf9;--steel:#8b939c;--steel-2:#c3c8ce;--red:#cf1f2a;--red-deep:#a5151f;--line:rgba(255,255,255,.12);--line-2:rgba(255,255,255,.06);--lined:rgba(20,23,26,.32);--maxw:1280px;--gut:clamp(1.4rem,5vw,4rem)}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
 body{font-family:"Switzer",system-ui,-apple-system,sans-serif;background:var(--ink);color:var(--white);line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}img{display:block;max-width:100%;height:auto}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gut)}
-.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--steel-2);display:inline-block}
-.eyebrow .dot{color:var(--steel)}
 h1,h2,h3{font-family:"Bebas Neue","Switzer",sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.012em;line-height:.92}
 .h1{font-size:clamp(2.6rem,6.5vw,5rem);letter-spacing:.01em;line-height:.9}
 .lead{font-family:"Switzer";color:var(--steel-2);font-weight:400;font-size:clamp(1rem,1.5vw,1.14rem);line-height:1.55}
@@ -41,9 +39,7 @@ h1,h2,h3{font-family:"Bebas Neue","Switzer",sans-serif;font-weight:400;text-tran
 .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:var(--red-deep)}
 .btn-ghost{border-color:rgba(255,255,255,.32);color:#fff}.btn-ghost:hover{border-color:#fff;background:#fff;color:var(--ink)}
 .btn-dark{border-color:rgba(20,23,26,.3);color:var(--ink)}.btn-dark:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-/* angle-cut label — reusable JJ Riggs motif */
-.cut-tab{display:inline-block;background:var(--ink);color:#fff;font-family:"Bebas Neue",sans-serif;font-size:clamp(.95rem,1.4vw,1.2rem);letter-spacing:.08em;text-transform:uppercase;line-height:1;padding:.55rem 1.6rem .55rem 1.1rem;clip-path:polygon(0 0,100% 0,calc(100% - 16px) 100%,0 100%)}
-.cut-tab.cut-tab--red{background:var(--red)}
+.cut-tab{display:inline-block;background:var(--ink-2);color:#fff;font-family:"Bebas Neue",sans-serif;font-size:clamp(.95rem,1.4vw,1.2rem);letter-spacing:.08em;text-transform:uppercase;line-height:1;padding:.55rem 1.6rem .55rem 1.1rem;clip-path:polygon(0 0,100% 0,calc(100% - 16px) 100%,0 100%)}
 
 /* HEADER */
 .topbar{background:var(--ink-3);border-bottom:1px solid var(--line-2)}
@@ -85,76 +81,81 @@ h1,h2,h3{font-family:"Bebas Neue","Switzer",sans-serif;font-weight:400;text-tran
 .mobile-menu ul{list-style:none}.mobile-menu a{display:block;padding:1rem var(--gut);font-weight:500;color:var(--steel-2);border-top:1px solid var(--line-2);letter-spacing:.02em}.mobile-menu a:hover{color:#fff}
 .skip{position:absolute;left:-999px;top:0;background:var(--red);color:#fff;padding:.7rem 1rem;z-index:200}.skip:focus{left:0}
 
-/* PAGE HEAD — compact, plain */
-.page-head{background:var(--ink);border-bottom:1px solid var(--line-2)}
-.page-head .wrap{padding-top:2.2rem;padding-bottom:2.4rem;display:flex;align-items:center;justify-content:space-between;gap:clamp(1.5rem,4vw,3rem)}
-.page-head h1{font-size:clamp(2.1rem,4.5vw,3.2rem);margin:.8rem 0 .45rem}
-.page-head .lead{max-width:56ch}
-.page-head .bb-logo{width:clamp(150px,18vw,230px);height:auto;flex:0 0 auto}
-@media(max-width:720px){.page-head .wrap{flex-direction:column;align-items:flex-start;gap:1.2rem}.page-head .bb-logo{width:150px}}
-
-/* JUMP BAR — three anchor links, no hidden filters */
-html{scroll-padding-top:84px}
-.jump{background:var(--ink-3);border-top:1px solid var(--line)}
-.jump .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:840px}
-.jump a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;padding:1.05rem .6rem;border-left:1px solid var(--line);transition:background .15s;min-height:64px;text-align:center}
-.jump a:first-child{border-left:0}
-.jump a:hover{background:rgba(255,255,255,.04)}
-.jump .jname{font-family:"Bebas Neue",sans-serif;font-size:1.5rem;letter-spacing:.04em;color:#fff;line-height:1}
-.jump .jcount{font-size:.7rem;letter-spacing:.05em;color:var(--steel)}
-@media(max-width:620px){.jump .jname{font-size:1.1rem}.jump .jcount{font-size:.62rem}}
-
-/* CALL-FIRST LINE */
-.callout{background:var(--bone);color:var(--ink);padding:1.1rem 0 0}
-.callout .inner{border:1.5px solid var(--red);background:#fff;padding:.85rem 1.1rem;text-align:center;font-size:.97rem;color:#3a3f45}
-.callout a{color:var(--red);font-weight:700;white-space:nowrap}
-.callout a:hover{text-decoration:underline}
-
-/* LINEUP — plain stacked lists, everything visible */
-.lineup{background:var(--bone);color:var(--ink);padding-top:clamp(1.8rem,3.5vw,2.6rem)}
-.lineup.last{padding-bottom:clamp(2.2rem,4vw,3.2rem)}
-.cat-head{background:var(--ink);color:#fff;padding:.9rem 1.1rem .95rem;border-bottom:3px solid var(--red);display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.2rem 1rem}
-.cat-head h2{font-size:clamp(1.5rem,3vw,2rem);letter-spacing:.05em}
-.cat-head .ccount{font-size:.72rem;color:var(--steel-2);letter-spacing:.05em;white-space:nowrap}
-.cat-head .csub{width:100%;font-size:.88rem;color:var(--steel-2);margin-top:.15rem}
-
-/* FEATURED PICK — one per section */
-.feat{background:#fff;border:1px solid #c9c5b8;border-top:0;display:flex;align-items:stretch}
-.feat .fpic{flex:0 0 46%;min-height:240px;background:#e8e5dc;border-right:1px solid #e3dfd3;overflow:hidden}
-.feat .fpic img{width:100%;height:100%;object-fit:cover}
-.feat .finf{flex:1;padding:1.3rem 1.4rem;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:.55rem}
-.ftag{background:var(--red);color:#fff;font-size:.66rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.3rem .6rem}
-.feat h3{font-size:clamp(1.7rem,3.4vw,2.4rem);letter-spacing:.03em;color:var(--ink)}
-.feat .use{color:#3a3f45;font-size:1rem;line-height:1.5}
-.feat .fmeta{color:#6a7077;font-size:.84rem}
-.feat .btn{margin-top:.45rem}
-@media(max-width:700px){
-  .feat{flex-direction:column}
-  .feat .fpic{flex-basis:auto;min-height:0;height:190px;border-right:0;border-bottom:1px solid #e3dfd3}
-  .feat .finf{padding:1.1rem 1rem 1.3rem}
+/* SHOP BY USE band — title, brand badge, and categories in one block */
+.sizes{background:var(--bone);color:var(--ink);padding:clamp(1.6rem,3vw,2.4rem) 0 clamp(1.5rem,3vw,2.2rem)}
+.sizes-flex{display:flex;gap:clamp(1.4rem,3.5vw,2.8rem);align-items:center}
+.pick-col{flex:0 0 280px;display:flex;flex-direction:column;align-items:flex-start}
+.pick-col h1{font-size:clamp(1.9rem,3.4vw,2.7rem);color:var(--ink);margin:.7rem 0 .35rem}
+.pick-col .lead{color:#5a6066;font-size:.95rem;line-height:1.5;margin-bottom:1.1rem}
+.bbadge{background:#fff;border:1px solid #c9c5b8;padding:1rem 1.2rem;display:flex;align-items:center;justify-content:center;width:100%}
+.bbadge img{height:36px;width:auto;object-fit:contain}
+.sizes .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;flex:1}
+.size-card{background:transparent;text-align:center;padding:.6rem .6rem .9rem;display:flex;flex-direction:column;align-items:center;position:relative}
+.size-card+.size-card::before{content:"";position:absolute;left:calc(-.5rem - 1px);top:6%;bottom:6%;width:2px;background:var(--ink);transform:skewX(-14deg)}
+@media(max-width:680px){.size-card+.size-card::before{display:none}}
+.size-card h2{font-size:1.65rem;color:var(--ink)}
+.size-card .hp{font-family:"Bebas Neue",sans-serif;font-size:1.2rem;color:rgba(20,23,26,.8);letter-spacing:.05em;margin-top:.15rem;transition:color .15s}
+.size-card.active .hp{color:var(--red)}
+.size-card img{height:clamp(100px,13vw,145px);width:auto;object-fit:contain;margin:.4rem 0 .8rem;mix-blend-mode:darken}
+.vm-link{background:none;border:0;cursor:pointer;font-family:inherit;font-size:.92rem;font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px;padding:.4rem .2rem;transition:color .15s}
+.vm-link:hover{color:var(--red)}
+@media(max-width:900px){
+  .sizes-flex{flex-direction:column;align-items:stretch}
+  .pick-col{flex:0 0 auto}
+}
+@media(max-width:680px){
+  .sizes .grid{grid-template-columns:1fr}
+  .size-card{flex-direction:row;text-align:left;align-items:center;gap:1rem;padding:.8rem .4rem}
+  .size-card .sc-txt{flex:1}
+  .size-card img{height:74px;margin:0;order:-1}
+  .vm-link{font-size:.85rem}
+  .size-card h2{font-size:1.3rem}
+  .size-card .hp{font-size:1rem}
 }
 
-/* FULL LINEUP — classic bordered table */
-.mtable-wrap{border:1px solid #c9c5b8;border-top:0;background:#fff;overflow:hidden}
-.mtable{width:100%;border-collapse:collapse;font-size:.92rem;color:var(--ink)}
-.mtable th{background:var(--ink-2);color:#fff;font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:.98rem;letter-spacing:.07em;text-align:left;padding:.55rem .9rem}
-.mtable td{padding:.7rem .9rem;border-top:1px solid #e3dfd3;vertical-align:middle}
-.mtable tr.m{cursor:pointer;transition:background .12s}
-.mtable tr.m.alt{background:#faf8f1}
-.mtable tr.m:hover{background:#f1ede1}
-.mtable .mname a{color:var(--ink);font-weight:600}
-.mtable tr.m:hover .mname a{color:var(--red)}
-.mtable tr.tdv td{background:#e8e5dc;font-family:"Bebas Neue",sans-serif;font-size:1rem;letter-spacing:.07em;color:#4a525c;padding:.45rem .9rem}
-.mtable .good{color:#5a6066;font-size:.86rem}
-.mtable .num{white-space:nowrap}
-@media(max-width:640px){
-  .mtable .good,.mtable th.h-good{display:none}
-  .mtable td,.mtable th{padding:.6rem .55rem}
-  .mtable{font-size:.84rem}
-}
-
-/* small tag next to a model name */
-.tag{display:inline-block;vertical-align:middle;background:var(--red);color:#fff;font-family:"Switzer",sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .45rem;margin-left:.5rem;transform:translateY(-1px)}
+/* STAGE — the carousel */
+.stage{background:#fff;color:var(--ink);padding:clamp(1.4rem,3vw,2.2rem) 0 clamp(2.6rem,5vw,4rem)}
+.stage-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.6rem}
+.stage-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem);color:var(--ink)}
+.stage-head h2 .cb{color:var(--red)}
+.size-card.active h2{color:var(--red)}
+.size-card.active .vm-link{color:var(--red)}
+.hp-tab{background:none;border:0;border-bottom:3px solid transparent;font-family:"Bebas Neue",sans-serif;font-size:1.2rem;letter-spacing:.04em;color:#6a7077;padding:.7rem 1rem;cursor:pointer;transition:color .15s;margin-bottom:-1px}
+.hp-tab:hover{color:var(--ink)}
+.hp-tab.active{color:var(--ink);border-bottom-color:var(--red)}
+.stage-controls{display:flex;align-items:center;justify-content:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:.4rem}
+.stage-meta{font-size:.76rem;letter-spacing:.04em;color:#6a7077}
+.carousel{position:relative;margin-top:.8rem}
+.car-arrow{position:absolute;top:42%;transform:translateY(-50%);z-index:5;width:46px;height:62px;background:var(--ink);color:#fff;border:0;font-size:1.6rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;opacity:.85}
+.car-arrow:hover{opacity:1;background:var(--red)}.car-arrow.prev{left:0}.car-arrow.next{right:0}
+.car-arrow:disabled{opacity:.18;cursor:default}
+.carousel-viewport{position:relative;height:clamp(230px,30vw,360px);overflow:hidden}
+.carousel-track{position:relative;height:100%}
+.slide{position:absolute;top:50%;left:50%;height:90%;transition:transform .4s ease,opacity .4s ease;opacity:0;pointer-events:none}
+.slide img{height:100%;width:auto;max-width:none;object-fit:contain;mix-blend-mode:multiply}
+.slide.is-active{transform:translate(-50%,-50%) scale(1);opacity:1;z-index:3}
+.slide.is-prev{transform:translate(-122%,-46%) scale(.6);opacity:.38;z-index:1}
+.slide.is-next{transform:translate(22%,-46%) scale(.6);opacity:.38;z-index:1}
+.stage-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#6a7077;gap:.4rem}
+.stage-empty h3{font-size:1.5rem;color:var(--ink)}
+@media(max-width:720px){.slide.is-prev,.slide.is-next{opacity:0}}
+.caption{text-align:center;margin-top:.3rem}
+.caption h2{font-size:clamp(1.8rem,4vw,2.8rem);line-height:.9;color:var(--ink)}
+.caption .cb{color:var(--red)}
+.caption .hpline{font-family:"Bebas Neue",sans-serif;font-size:clamp(1rem,1.8vw,1.25rem);letter-spacing:.05em;color:var(--red);margin-top:.2rem}
+.specrow{display:flex;justify-content:center;margin:.8rem auto 0;max-width:560px;border:1px solid var(--lined);background:#fff}
+.specrow .spec{flex:1;padding:.55rem .7rem;text-align:center;border-left:1px solid var(--lined)}
+.specrow .spec:first-child{border-left:0}
+.specrow .sl{display:block;font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#7a8087;margin-bottom:.2rem}
+.specrow .sv{font-family:"Bebas Neue",sans-serif;font-size:1.1rem;letter-spacing:.02em;color:var(--ink)}
+.cap-actions{display:flex;justify-content:center;gap:.7rem;flex-wrap:wrap;margin-top:.9rem}
+.cap-actions .btn{padding:.75rem 1.3rem;font-size:.78rem}
+.thumb-strip{margin-top:1rem;overflow-x:auto}
+.thumb-strip-inner{display:flex;gap:.55rem;justify-content:center;min-width:min-content;padding-bottom:.4rem}
+.thumb{flex:0 0 auto;width:84px;height:62px;background:var(--bone);border:1px solid var(--lined);cursor:pointer;padding:.3rem;transition:.15s}
+.thumb img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.thumb:hover{border-color:rgba(20,23,26,.4)}
+.thumb.active{border:2px solid var(--red)}
 
 /* LOCAL BAND — contained panel */
 .local{background:var(--bone);color:var(--ink);padding:clamp(1.8rem,3.5vw,2.6rem) 0}
@@ -174,6 +175,7 @@ html{scroll-padding-top:84px}
 /* CTA STRIP */
 .cta-strip{background-color:var(--ink-2);background-image:linear-gradient(rgba(11,13,16,.85),rgba(11,13,16,.8)),url('img/rocks-bg.jpg');background-size:cover;background-position:center;border-top:1px solid var(--line);padding:clamp(2.6rem,5vw,4rem) 0;text-align:center}
 .cta-strip h2{font-size:clamp(1.9rem,4vw,3rem)}
+.cta-strip .cs-sub{color:var(--steel-2);font-size:1.02rem;max-width:56ch;margin:.7rem auto 0}
 .cta-strip .cs-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.4rem}
 
 /* FOOTER */
@@ -219,9 +221,9 @@ html{scroll-padding-top:84px}
             <ul class="sm-list">
             <li><a href="tractors.html" data-img="https://jjriggsequipment.com/wp-content/uploads/2024/10/t25_ld_360_2_frontright.png" data-logos="https://jjriggsequipment.com/wp-content/uploads/2024/09/tym-1.png|img/bb_logo_horizontal_orange.svg">Tractors</a></li>
             <li><a href="index-redesign.html#lineup" data-img="https://badboycountry.com/images/content_photos/tractors/implements/cutter_sd_4_5_6_studio_3.png" data-logos="https://jjriggsequipment.com/wp-content/uploads/2024/10/IronCraft-Attachments-Logo-1.svg|https://jjriggsequipment.com/wp-content/uploads/2024/10/braber-equipment-logo-png.png">Implements</a></li>
-            <li><a class="current" href="mowers.html" data-img="JJ-RIGGS-ADS-BUILDER/badboy-images/menu_maverick.jpg" data-logos="img/bb_logo_horizontal_orange.svg">Mowers</a></li>
+            <li><a class="current" href="mowers.html" data-img="JJ-RIGGS-ADS-BUILDER/badboy-images/zt_elite_mowing.jpg" data-logos="img/bb_logo_horizontal_orange.svg">Mowers</a></li>
             </ul>
-            <div class="sm-preview"><div class="sm-img"><img id="smPreview" src="JJ-RIGGS-ADS-BUILDER/badboy-images/menu_maverick.jpg" alt="" loading="lazy"></div><div class="sm-logos" id="smLogos"><img src="img/bb_logo_horizontal_orange.svg" alt=""></div></div>
+            <div class="sm-preview"><div class="sm-img"><img id="smPreview" src="JJ-RIGGS-ADS-BUILDER/badboy-images/zt_elite_mowing.jpg" alt="" loading="lazy"></div><div class="sm-logos" id="smLogos"><img src="img/bb_logo_horizontal_orange.svg" alt=""></div></div>
           </div>
         </li>
         <li><a class="nav-top" href="service.html">Service</a></li>
@@ -249,68 +251,31 @@ html{scroll-padding-top:84px}
 
 <main id="main">
 
-  <section class="page-head" aria-labelledby="t-h1">
+  <section class="sizes" aria-labelledby="t-h1">
     <div class="wrap">
-      <div>
-        <span class="cut-tab">Equipment · Mowers</span>
-        <h1 class="h1" id="t-h1">Bad Boy Mowers</h1>
-        <p class="lead">Zero-turns, stand-ons and walk-behinds. Sold and serviced here in Colville.</p>
+      <div class="sizes-flex">
+        <div class="pick-col">
+          <span class="cut-tab">Equipment · Mowers</span>
+          <h1 id="t-h1">Bad Boy Mowers</h1>
+          <p class="lead">Zero-turns, stand-ons and walk-behinds. Sold and serviced here in Colville.</p>
+          <div class="bbadge"><img src="img/bb_logo_horizontal_orange.svg" alt="Bad Boy Mowers — authorized dealer" /></div>
+        </div>
+        <div class="grid" id="sizeGrid"></div>
       </div>
-      <img class="bb-logo" src="img/bb_logo_horizontal_orange.svg" alt="Bad Boy Mowers — authorized dealer" />
     </div>
   </section>
 
-  <nav class="jump" aria-label="Jump to a mower category" id="stage">
+  <section class="stage" id="stage" aria-label="Mower lineup">
     <div class="wrap">
-      <a href="#residential"><span class="jname">For your yard</span><span class="jcount" data-jc="Residential"></span></a>
-      <a href="#commercial"><span class="jname">Acreage &amp; pro</span><span class="jcount" data-jc="Commercial"></span></a>
-      <a href="#electric"><span class="jname">Battery</span><span class="jcount" data-jc="Electric"></span></a>
-    </div>
-  </nav>
-
-  <div class="callout">
-    <div class="wrap"><p class="inner">Not sure which one? Call <a href="tel:+15097382985">509-738-2985</a> — tell us what you're mowing and we'll point you right.</p></div>
-  </div>
-
-  <section class="lineup" id="residential" aria-labelledby="res-h">
-    <div class="wrap">
-      <header class="cat-head">
-        <h2 id="res-h">For Your Yard</h2><span class="ccount" data-cc="Residential"></span>
-        <p class="csub">Home zero-turns for lawns and small acreage. Most folks shop here.</p>
-      </header>
-      <div class="feat" data-feat="Residential"></div>
-      <div class="mtable-wrap"><table class="mtable" data-table="Residential">
-        <thead><tr><th>Model</th><th>HP</th><th>Deck</th><th class="h-good">Good for</th></tr></thead>
-        <tbody></tbody>
-      </table></div>
-    </div>
-  </section>
-
-  <section class="lineup" id="commercial" aria-labelledby="com-h">
-    <div class="wrap">
-      <header class="cat-head">
-        <h2 id="com-h">For Big Acreage &amp; All-Day Work</h2><span class="ccount" data-cc="Commercial"></span>
-        <p class="csub">Heavier builds for large properties, rough ground, and mowing crews.</p>
-      </header>
-      <div class="feat" data-feat="Commercial"></div>
-      <div class="mtable-wrap"><table class="mtable" data-table="Commercial">
-        <thead><tr><th>Model</th><th>HP</th><th>Deck</th><th class="h-good">Good for</th></tr></thead>
-        <tbody></tbody>
-      </table></div>
-    </div>
-  </section>
-
-  <section class="lineup last" id="electric" aria-labelledby="ele-h">
-    <div class="wrap">
-      <header class="cat-head">
-        <h2 id="ele-h">Battery-Powered</h2><span class="ccount" data-cc="Electric"></span>
-        <p class="csub">No gas, no fumes, less noise. Charge it in the garage.</p>
-      </header>
-      <div class="feat" data-feat="Electric"></div>
-      <div class="mtable-wrap"><table class="mtable" data-table="Electric">
-        <thead><tr><th>Model</th><th>HP</th><th>Deck</th><th class="h-good">Good for</th></tr></thead>
-        <tbody></tbody>
-      </table></div>
+      <div class="stage-head"><h2 id="stageCat" aria-live="polite"></h2><span class="stage-meta" id="stageMeta" aria-live="polite"></span></div>
+      <div class="hp-tabs" id="typeTabs" role="tablist" aria-label="Mower type"></div>
+      <div class="carousel">
+        <button class="car-arrow prev" id="carPrev" aria-label="Previous mower">‹</button>
+        <button class="car-arrow next" id="carNext" aria-label="Next mower">›</button>
+        <div class="carousel-viewport" id="carViewport"><div class="carousel-track" id="carTrack"></div></div>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+      <div class="thumb-strip" id="thumbStrip"></div>
     </div>
   </section>
 
@@ -332,7 +297,8 @@ html{scroll-padding-top:84px}
 
   <section class="cta-strip" aria-labelledby="cs-h">
     <div class="wrap">
-      <h2 class="h2" id="cs-h">Need help choosing? <span class="accent">Ask Andrew.</span></h2>
+      <h2 class="h2" id="cs-h">Not sure which one? <span class="accent">We'll point you right.</span></h2>
+      <p class="cs-sub">Call and tell us what you're mowing, or come hear one run.</p>
       <div class="cs-actions">
         <a class="btn btn-red" href="schedule-visit.html" data-intent="schedule">Schedule a Visit <span class="arw" aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="tel:+15097382985">Call 509-738-2985</a>
@@ -354,7 +320,7 @@ html{scroll-padding-top:84px}
         <p class="foot-contact">685 Elm Tree Dr, Colville, WA 99114<br><a href="tel:+15097382985">509-738-2985</a> · <a href="mailto:sales@jjriggsequipment.com">sales@jjriggsequipment.com</a></p>
       </div>
       <nav class="foot-col" aria-labelledby="f-equip"><p class="foot-col-title" id="f-equip">Equipment</p>
-        <ul><li><a href="tractors.html">Bad Boy Tractors</a></li><li><a href="tractors.html">TYM Tractors</a></li><li><a href="mowers.html">Bad Boy Mowers</a></li><li><a href="index-redesign.html#lineup">Implements</a></li></ul>
+        <ul><li><a href="tractors.html">TYM Tractors</a></li><li><a href="tractors.html">Bad Boy Tractors</a></li><li><a href="mowers.html">Bad Boy Mowers</a></li><li><a href="index-redesign.html#lineup">Implements</a></li></ul>
       </nav>
       <nav class="foot-col" aria-labelledby="f-dealer"><p class="foot-col-title" id="f-dealer">Dealer</p>
         <ul><li><a href="service.html">Service &amp; Repair</a></li><li><a href="schedule-visit.html">Financing</a></li><li><a href="index-redesign.html#reviews">Reviews</a></li><li><a href="schedule-visit.html">Get a Quote</a></li></ul>
@@ -389,116 +355,131 @@ html{scroll-padding-top:84px}
   });}
 
   var ALL=(window.MOWER_MODELS||[]);
+  var CATS=['Residential','Commercial','Electric'];
   var TYPES=['all','Zero Turn','Stand-On','Walk-Behind','Push'];
   var TYPELABEL={'all':'All','Zero Turn':'Zero-Turn','Stand-On':'Stand-On','Walk-Behind':'Walk-Behind','Push':'Push'};
-
-  /* One plain line per model — what it's for, not a spec sheet. */
-  var USE={
-    'Rebel':'Serious power for big lawns and rough acreage.',
-    'ZT Elite':'The sweet spot for most home yards around here.',
-    'ZT Avenger':'Wide stance and a smooth cut on uneven ground.',
-    'Rebel SD':'Rebel toughness, sized for the homeowner.',
-    'Maverick':'Easy to run, easy to own. A neighborhood favorite.',
-    'MZ Magnum':'A lot of mower for the money.',
-    'Revolt SD':'Stand-on that fits through gates and tight spots.',
-    'MZ Rambler':'Our smallest zero-turn. Fits through gates, stores easy.',
-    'Rogue':'Top of the line. Built for all-day, every-day mowing.',
-    'Rebel X':'Big-acreage muscle with commercial guts.',
-    'Revolt X':'Heavy-duty stand-on for crews.',
-    'Renegade Gas':'Commercial cutting without the diesel.',
-    'Revolt':'Stand-on workhorse in four deck sizes.',
-    'Maverick HD':'Commercial build in a homeowner-friendly size.',
-    'Renegade Diesel':'Perkins diesel. Sips fuel on the big jobs.',
-    'Raider':'Walk-behind for banks, slopes, and trim work.',
-    'Self-Propelled Gas Push Mower':'Commercial-grade push mower for trim work.',
-    'E-Magnum':'Battery zero-turn. No gas, no fumes, less noise.',
-    '80V Self-Propelled Mower':'Battery push mower for the lawn around the house.'
+  var CATSUB={'Residential':'For the yard at home','Commercial':'Big acreage & crews','Electric':'No gas, less noise'};
+  var CATIMG={
+    'Residential':'JJ-RIGGS-ADS-BUILDER/badboy-images/menu_maverick.jpg',
+    'Commercial':'JJ-RIGGS-ADS-BUILDER/badboy-images/menu_rogue.jpg',
+    'Electric':'JJ-RIGGS-ADS-BUILDER/badboy-images/menu_e_magnum.jpg'
   };
 
-  function deckPhrase(s){
+  var state={cat:'Residential',type:'all',index:0};
+
+  function sslug(s){return String(s).toLowerCase().replace(/\s+/g,'-');}
+
+  /* restore from hash: #cat=commercial&type=zero-turn&m=2 */
+  (function(){
+    var h=location.hash.replace(/^#/,'');if(!h)return;
+    var p={};h.split('&').forEach(function(kv){var x=kv.split('=');if(x.length===2)p[x[0]]=decodeURIComponent(x[1]);});
+    if(p.cat){var c=CATS.filter(function(x){return sslug(x)===p.cat;})[0];if(c)state.cat=c;}
+    if(p.type){var t=TYPES.filter(function(x){return sslug(x)===p.type;})[0];if(t)state.type=t;}
+    if(p.m&&!isNaN(+p.m))state.index=Math.max(0,+p.m);
+  })();
+  function writeHash(){
+    var parts=['cat='+sslug(state.cat)];
+    if(state.type!=='all')parts.push('type='+sslug(state.type));
+    if(state.index>0)parts.push('m='+state.index);
+    history.replaceState(null,'','#'+parts.join('&'));
+  }
+
+  var tabsEl=document.getElementById('typeTabs'),meta=document.getElementById('stageMeta'),catEl=document.getElementById('stageCat'),
+      track=document.getElementById('carTrack'),cap=document.getElementById('caption'),thumbs=document.getElementById('thumbStrip'),
+      prev=document.getElementById('carPrev'),next=document.getElementById('carNext'),vp=document.getElementById('carViewport');
+
+  function inCat(){return ALL.filter(function(m){return m.cat===state.cat;}).sort(function(a,b){return b.hp-a.hp;});}
+  function typesPresent(){var ms=inCat();return TYPES.filter(function(t){return t==='all'||ms.some(function(m){return m.type===t;});});}
+  function filtered(){return inCat().filter(function(m){return state.type==='all'||m.type===state.type;});}
+
+  function deckList(s){var d=s?s.split(',').map(function(x){return x.trim();}):[];return d.length?d.join(' · ')+'″':'—';}
+  function deckLine(s){
     var d=s?s.split(',').map(function(x){return x.trim();}):[];
     if(!d.length)return '';
-    if(d.length===1)return d[0]+'″ deck';
-    return d.slice(0,-1).join(', ')+' or '+d[d.length-1]+'″ deck';
+    return d.length===1?d[0]+'″ deck':d[0]+'–'+d[d.length-1]+'″ decks';
   }
-  function metaLine(m){
+
+  /* category cards — the trio, built from data */
+  function renderSizes(){
+    var grid=document.getElementById('sizeGrid');
+    grid.innerHTML=CATS.map(function(c){
+      return '<div class="size-card">'
+        +'<img src="'+CATIMG[c]+'" alt="Bad Boy '+c+' mower" loading="lazy" />'
+        +'<div class="sc-txt"><h2>'+c+'</h2><p class="hp">'+CATSUB[c]+'</p></div>'
+        +'<button class="vm-link" type="button" data-cat="'+c+'">'+(c===state.cat?'Now Viewing':'View Models')+'</button>'
+        +'</div>';
+    }).join('');
+    grid.querySelectorAll('.size-card').forEach(function(card,i){card.classList.toggle('active',CATS[i]===state.cat);});
+    grid.querySelectorAll('[data-cat]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        state.cat=btn.dataset.cat;state.type='all';state.index=0;
+        render();
+        document.getElementById('stage').scrollIntoView({behavior:'smooth'});
+      });
+    });
+  }
+
+  function renderTabs(){
+    tabsEl.innerHTML='';
+    typesPresent().forEach(function(t){
+      var on=state.type===t;
+      var b=document.createElement('button');b.type='button';b.className='hp-tab'+(on?' active':'');
+      b.setAttribute('aria-pressed',on);b.textContent=TYPELABEL[t];
+      b.addEventListener('click',function(){state.type=t;state.index=0;render();});
+      tabsEl.appendChild(b);
+    });
+  }
+  function renderSlides(){
+    var items=filtered();track.innerHTML='';
+    if(!items.length){track.innerHTML='<div class="stage-empty"><h3>No mowers here.</h3><p>Try another type.</p></div>';
+      cap.innerHTML='';thumbs.innerHTML='';prev.disabled=true;next.disabled=true;meta.textContent='';return;}
+    if(state.index>=items.length)state.index=0;
+    items.forEach(function(m,i){var el=document.createElement('div');el.className='slide';el.dataset.index=i;
+      el.innerHTML='<img src="'+m.image+'" alt="Bad Boy '+m.model+' mower" loading="lazy">';track.appendChild(el);});
+    position();caption();renderThumbs();prev.disabled=items.length<=1;next.disabled=items.length<=1;
+    meta.textContent=items.length+(items.length===1?' model':' models');
+  }
+  function position(){var items=filtered();if(!items.length)return;var n=items.length,i=state.index,p=(i-1+n)%n,nx=(i+1)%n;
+    track.querySelectorAll('.slide').forEach(function(s){var idx=+s.dataset.index;s.classList.remove('is-active','is-prev','is-next');
+      if(idx===i)s.classList.add('is-active');else if(idx===p&&n>1)s.classList.add('is-prev');else if(idx===nx&&n>1)s.classList.add('is-next');
+      else{s.style.opacity='0';s.style.pointerEvents='none';return;}s.style.opacity='';s.style.pointerEvents='';});}
+  function caption(){var items=filtered();var m=items[state.index];if(!m){cap.innerHTML='';return;}
+    var specs=[];
+    if(m.engine)specs.push(['Engine',m.engine.replace(/,\s*/g,' · ')]);
+    specs.push(['Decks',deckList(m.decks)]);
+    specs.push(['Fuel',m.fuel||'—']);
+    var row='<div class="specrow">'+specs.map(function(s){return '<div class="spec"><span class="sl">'+s[0]+'</span><span class="sv">'+s[1]+'</span></div>';}).join('')+'</div>';
     var bits=[TYPELABEL[m.type]||m.type];
     if(m.hp>0)bits.push(m.hp+' HP');
-    var dp=deckPhrase(m.decks);if(dp)bits.push(dp);
-    if(m.fuel==='Diesel')bits.push('Diesel');
-    if(m.fuel==='Electric')bits.push('Battery');
-    return bits.join(' · ');
+    var dl=deckLine(m.decks);if(dl)bits.push(dl);
+    if(m.fuel&&m.fuel!=='Gas')bits.push(m.fuel);
+    cap.innerHTML='<h2><span class="cb">Bad Boy</span> '+m.model+'</h2>'
+      +'<p class="hpline">'+bits.join(' · ')+'</p>'+row
+      +'<div class="cap-actions"><a class="btn btn-red" href="mower.html?m='+encodeURIComponent(m.model)+'">View details <span class="arw" aria-hidden="true">→</span></a>'
+      +'<a class="btn btn-dark" href="schedule-visit.html" data-intent="schedule">Schedule a Visit</a></div>';
   }
-  function typeOrder(t){var i=TYPES.indexOf(t);return i<0?99:i;}
-
-  /* Dealer's picks — Andrew: edit these lines to flag whatever you'd
-     point a customer at first. Key must match the model name exactly. */
-  var PICKS={
-    'ZT Elite':'Most popular',
-    'MZ Magnum':'Best value',
-    'Rogue':"The pro's pick",
-    'E-Magnum':'Our battery pick'
-  };
-  /* Which model gets the big spotlight in each section. */
-  var FEAT={'Residential':'ZT Elite','Commercial':'Rogue','Electric':'E-Magnum'};
-
-  var TYPE_PLURAL={'Zero Turn':'Zero-Turns','Stand-On':'Stand-Ons','Walk-Behind':'Walk-Behinds','Push':'Push Mowers'};
-
-  function href(m){return 'mower.html?m='+encodeURIComponent(m.model);}
-  function deckList(s){
-    var d=s?s.split(',').map(function(x){return x.trim();}):[];
-    return d.length?d.join(' · ')+'″':'—';
+  function renderThumbs(){var items=filtered();thumbs.innerHTML='';var wrap=document.createElement('div');wrap.className='thumb-strip-inner';
+    items.forEach(function(m,i){var t=document.createElement('button');t.type='button';t.className='thumb'+(i===state.index?' active':'');
+      t.setAttribute('aria-label','Bad Boy '+m.model);t.innerHTML='<img src="'+m.image+'" alt="">';
+      t.addEventListener('click',function(){state.index=i;position();caption();markThumb();writeHash();});wrap.appendChild(t);});
+    thumbs.appendChild(wrap);markThumb();}
+  function markThumb(){thumbs.querySelectorAll('.thumb').forEach(function(t,i){t.classList.toggle('active',i===state.index);});
+    var a=thumbs.querySelector('.thumb.active');
+    if(a)thumbs.scrollTo({left:a.offsetLeft-(thumbs.clientWidth-a.offsetWidth)/2,behavior:'smooth'});}
+  function move(d){var items=filtered();if(!items.length)return;state.index=(state.index+d+items.length)%items.length;position();caption();markThumb();writeHash();}
+  function render(){
+    catEl.innerHTML=state.cat+' <span class="cb">Mowers</span>';
+    renderSizes();renderTabs();renderSlides();writeHash();
   }
 
-  // Featured pick per section
-  document.querySelectorAll('[data-feat]').forEach(function(el){
-    var m=ALL.filter(function(x){return x.model===FEAT[el.dataset.feat];})[0];
-    if(!m){el.style.display='none';return;}
-    el.innerHTML='<div class="fpic"><img src="'+m.image+'" alt="Bad Boy '+m.model+'" loading="lazy"></div>'
-      +'<div class="finf">'
-      +'<span class="ftag">Andrew’s pick · '+(PICKS[m.model]||'')+'</span>'
-      +'<h3>'+m.model+'</h3>'
-      +'<p class="use">'+(USE[m.model]||'')+'</p>'
-      +'<p class="fmeta">'+metaLine(m)+'</p>'
-      +'<a class="btn btn-red" href="'+href(m)+'">See the '+m.model+' <span class="arw" aria-hidden="true">→</span></a>'
-      +'</div>';
-  });
+  prev.addEventListener('click',function(){move(-1);});
+  next.addEventListener('click',function(){move(1);});
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')move(-1);else if(e.key==='ArrowRight')move(1);});
+  (function(el){var x=0,dx=0,on=false;el.addEventListener('touchstart',function(e){on=true;x=e.touches[0].clientX;dx=0;},{passive:true});
+    el.addEventListener('touchmove',function(e){if(on)dx=e.touches[0].clientX-x;},{passive:true});
+    el.addEventListener('touchend',function(){if(!on)return;on=false;if(Math.abs(dx)>40)move(dx<0?1:-1);});})(vp);
 
-  // Full lineup tables — every model, type divider rows, whole row tappable.
-  document.querySelectorAll('[data-table]').forEach(function(tbl){
-    var cat=tbl.dataset.table;
-    var items=ALL.filter(function(m){return m.cat===cat;})
-      .sort(function(a,b){return typeOrder(a.type)-typeOrder(b.type)||b.hp-a.hp;});
-    var html='',lastType=null,useDividers=items.length>3,alt=false;
-    items.forEach(function(m){
-      if(useDividers&&m.type!==lastType){
-        html+='<tr class="tdv"><td colspan="4">'+(TYPE_PLURAL[m.type]||m.type)+'</td></tr>';
-        lastType=m.type;alt=false;
-      }
-      var tag=PICKS[m.model]?'<span class="tag">'+PICKS[m.model]+'</span>':'';
-      html+='<tr class="m'+(alt?' alt':'')+'" data-href="'+href(m)+'">'
-        +'<td class="mname"><a href="'+href(m)+'">'+m.model+'</a>'+tag+'</td>'
-        +'<td class="num">'+(m.hp>0?m.hp:'—')+'</td>'
-        +'<td class="num">'+deckList(m.decks)+'</td>'
-        +'<td class="good">'+(USE[m.model]||'')+'</td>'
-        +'</tr>';
-      alt=!alt;
-    });
-    tbl.querySelector('tbody').innerHTML=html;
-  });
-  document.querySelectorAll('.mtable tr.m').forEach(function(tr){
-    tr.addEventListener('click',function(e){
-      if(e.target.closest('a'))return;
-      window.location.href=tr.dataset.href;
-    });
-  });
-  document.querySelectorAll('[data-jc]').forEach(function(el){
-    el.textContent=ALL.filter(function(m){return m.cat===el.dataset.jc;}).length+' models';
-  });
-  document.querySelectorAll('[data-cc]').forEach(function(el){
-    var n=ALL.filter(function(m){return m.cat===el.dataset.cc;}).length;
-    el.textContent=n+(n===1?' model':' models');
-  });
+  render();
 })();
 </script>
 <script src="js/analytics.js"></script>
